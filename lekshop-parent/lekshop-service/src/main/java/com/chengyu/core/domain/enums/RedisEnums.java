@@ -140,7 +140,11 @@ public enum RedisEnums {
 	/**
 	 * 绑定买号配置
 	 */
-	CONFIG_BUYER("rds-ConfigBuyer");
+	CONFIG_BUYER("rds-ConfigBuyer"),
+	/**
+	 * 订单配置
+	 */
+	CONFIG_ORDER("rds-ConfigOrder");
 
 	private final String key;
 
