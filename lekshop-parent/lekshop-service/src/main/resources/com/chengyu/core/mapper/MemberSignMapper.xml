@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomSignMapper">
+
+	  <select id="getSignDays" resultType="java.lang.Integer">
+		SELECT
+			count(*) days
+		FROM
+			(
+				SELECT
+					date_sub(a.sign_date, INTERVAL 1 DAY) sign_date,
+					(
+						@i := DATE_ADD(@i, INTERVAL - 1 DAY)
+					) today
+				FROM
+					ums_member_sign a
+				INNER JOIN (
+					SELECT
+						@i := max(sign_date)
+					FROM
+						mall_sign
+					WHERE
+						sign_date = curdate()
+					OR sign_date = DATE_ADD(curdate(), INTERVAL - 1 DAY)
+				) b
+				WHERE
+					a.member_id = #{memberId}
+				ORDER BY
+					a.sign_date DESC
+			) c
+		WHERE
+			today = sign_date
+	</select>
+</mapper>

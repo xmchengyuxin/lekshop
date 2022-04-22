@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomMemberWithdrawMapper">
+	  <select id="countWithdraw" resultType="com.chengyu.core.domain.result.WithdrawCountResult">
+	    select 
+	    	sum(amount) amount,
+	    	sum(fee) fee,
+	    	sum(total_amount) totalAmount
+	    from ums_member_withdraw
+	    where 1=1
+	    <if test="form.orderNo != null">
+	        and order_no like concat('%',#{form.orderNo},'%')
+	    </if>
+	    <if test="form.dateFrom != null and form.dateTo != null">
+			<choose>
+				<when test="form.statusList != null">
+					and upd_time &gt;= #{form.dateFrom} and upd_time &lt;= #{form.dateTo}
+				</when>
+				<otherwise>
+					and add_time &gt;= #{form.dateFrom} and add_time &lt;= #{form.dateTo}
+				</otherwise>
+			</choose>
+	    </if>
+	    <if test="form.status != null">
+	        and status = #{form.status}
+	    </if>
+	    <if test="form.type != null">
+	        and type = #{form.type}
+	    </if>
+	     <if test="form.bankAccount != null">
+	        and bank_account = #{form.bankAccount}
+	    </if>
+	    <if test="form.memberId != null">
+		  and member_id = #{form.memberId}
+	  </if>
+	    <if test="form.memberName != null">
+	     	and member_name like concat('%',#{form.memberName},'%')
+	    </if>
+	    <if test="form.statusList != null">
+	        and status in
+	         <foreach close=")" collection="form.statusList" item="item" open="(" separator=",">
+	            #{item}
+	          </foreach>
+	    </if>
+		  <if test="form.idList != null">
+			  and id in
+			  <foreach close=")" collection="form.idList" item="item" open="(" separator=",">
+				  #{item}
+			  </foreach>
+		  </if>
+	  </select>
+</mapper>

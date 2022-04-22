@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomConfigAccountMapper">
+
+  	  <update id="addAmount">
+	    update config_account
+	    set
+	      total_income = total_income+#{amount}
+		  <if test="isUpdateToday == true">
+			  , today_income = today_income+#{amount}
+		  </if>
+	    where id = #{accountId,jdbcType=INTEGER}
+	  </update>  
+	  
+	  <update id="reduceAmount">
+	    update ums_member_account
+	    set
+	      total_income = total_income-#{amount}
+		  <if test="isUpdateToday == true">
+			  , today_income = today_income-#{amount}
+		  </if>
+	    where id = #{accountId,jdbcType=INTEGER}
+	  </update>  
+
+</mapper>

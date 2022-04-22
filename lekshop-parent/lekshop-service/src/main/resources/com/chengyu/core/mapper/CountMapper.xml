@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomCountMapper">
+  <!--<select id="countTaskAdvancesNum" resultType="java.util.Map">
+    select
+      count(*) publishNum ,&lt;!&ndash;已发布&ndash;&gt;
+      count((status = 1) or null) waitTakeNum,&lt;!&ndash;待接手&ndash;&gt;
+      count((status = 2) or null) takedNum,&lt;!&ndash;已接手&ndash;&gt;
+      count((status = 3) or null) waitDeliveryNum,&lt;!&ndash;待发货&ndash;&gt;
+      count((status = 4) or null) waitReceiveNum,&lt;!&ndash;待收货&ndash;&gt;
+      count((status = 5) or null) waitVerifyNum,&lt;!&ndash;待审核&ndash;&gt;
+      count((status = 6) or null) finishNum&lt;!&ndash;已完成&ndash;&gt;
+    from task_advances
+    where del_ind = 0 and member_id = #{memberId}
+  </select>-->
+
+</mapper>

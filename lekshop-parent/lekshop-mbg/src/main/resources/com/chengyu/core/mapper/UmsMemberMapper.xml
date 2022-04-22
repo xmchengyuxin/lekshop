@@ -1,0 +1,1046 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.UmsMemberMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.UmsMember">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="group_icon" jdbcType="VARCHAR" property="groupIcon" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="kf_open_id" jdbcType="VARCHAR" property="kfOpenId" />
+    <result column="xcx_open_id" jdbcType="VARCHAR" property="xcxOpenId" />
+    <result column="gzh_open_id" jdbcType="VARCHAR" property="gzhOpenId" />
+    <result column="unionid" jdbcType="VARCHAR" property="unionid" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="weixin" jdbcType="VARCHAR" property="weixin" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="pay_password" jdbcType="VARCHAR" property="payPassword" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="province_code" jdbcType="VARCHAR" property="provinceCode" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="person_sign" jdbcType="VARCHAR" property="personSign" />
+    <result column="method" jdbcType="INTEGER" property="method" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="phone_status" jdbcType="INTEGER" property="phoneStatus" />
+    <result column="realname_status" jdbcType="INTEGER" property="realnameStatus" />
+    <result column="bank_status" jdbcType="INTEGER" property="bankStatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="tjr_id" jdbcType="INTEGER" property="tjrId" />
+    <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
+    <result column="register_ip" jdbcType="VARCHAR" property="registerIp" />
+    <result column="register_ip_address" jdbcType="VARCHAR" property="registerIpAddress" />
+    <result column="register_url" jdbcType="VARCHAR" property="registerUrl" />
+    <result column="mission_config_id" jdbcType="INTEGER" property="missionConfigId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+    <result column="registration_id" jdbcType="VARCHAR" property="registrationId" />
+    <result column="secret" jdbcType="VARCHAR" property="secret" />
+    <result column="secret_answer" jdbcType="VARCHAR" property="secretAnswer" />
+    <result column="punishment_status" jdbcType="INTEGER" property="punishmentStatus" />
+    <result column="tjr_uid" jdbcType="INTEGER" property="tjrUid" />
+    <result column="ime_id" jdbcType="VARCHAR" property="imeId" />
+    <result column="invite_status" jdbcType="INTEGER" property="inviteStatus" />
+    <result column="freeze_reason" jdbcType="VARCHAR" property="freezeReason" />
+    <result column="withdraw_limit" jdbcType="INTEGER" property="withdrawLimit" />
+    <result column="remind_voice" jdbcType="INTEGER" property="remindVoice" />
+    <result column="gzh_focus_status" jdbcType="INTEGER" property="gzhFocusStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uid, group_id, group_name, group_icon, type, code, kf_open_id, xcx_open_id, gzh_open_id, 
+    unionid, head_img, weixin, gender, realname, nickname, phone, email, qq, birthday, 
+    age, password, pay_password, province, province_code, city, city_code, area, area_code, 
+    address, person_sign, method, status, phone_status, realname_status, bank_status, 
+    remark, tjr_id, invite_code, register_ip, register_ip_address, register_url, mission_config_id, 
+    add_time, add_by, upd_time, upd_by, registration_id, secret, secret_answer, punishment_status, 
+    tjr_uid, ime_id, invite_status, freeze_reason, withdraw_limit, remind_voice, gzh_focus_status
+  </sql>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.UmsMemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ums_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ums_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ums_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.UmsMemberExample">
+    delete from ums_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.UmsMember">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ums_member (uid, group_id, group_name, 
+      group_icon, type, code, 
+      kf_open_id, xcx_open_id, gzh_open_id, 
+      unionid, head_img, weixin, 
+      gender, realname, nickname, 
+      phone, email, qq, birthday, 
+      age, password, pay_password, 
+      province, province_code, city, 
+      city_code, area, area_code, 
+      address, person_sign, method, 
+      status, phone_status, realname_status, 
+      bank_status, remark, tjr_id, 
+      invite_code, register_ip, register_ip_address, 
+      register_url, mission_config_id, add_time, 
+      add_by, upd_time, upd_by, 
+      registration_id, secret, secret_answer, 
+      punishment_status, tjr_uid, ime_id, 
+      invite_status, freeze_reason, withdraw_limit, 
+      remind_voice, gzh_focus_status)
+    values (#{uid,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, 
+      #{groupIcon,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{kfOpenId,jdbcType=VARCHAR}, #{xcxOpenId,jdbcType=VARCHAR}, #{gzhOpenId,jdbcType=VARCHAR}, 
+      #{unionid,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{age,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{cityCode,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{personSign,jdbcType=VARCHAR}, #{method,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{phoneStatus,jdbcType=INTEGER}, #{realnameStatus,jdbcType=INTEGER}, 
+      #{bankStatus,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{tjrId,jdbcType=INTEGER}, 
+      #{inviteCode,jdbcType=VARCHAR}, #{registerIp,jdbcType=VARCHAR}, #{registerIpAddress,jdbcType=VARCHAR}, 
+      #{registerUrl,jdbcType=VARCHAR}, #{missionConfigId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, 
+      #{registrationId,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR}, #{secretAnswer,jdbcType=VARCHAR}, 
+      #{punishmentStatus,jdbcType=INTEGER}, #{tjrUid,jdbcType=INTEGER}, #{imeId,jdbcType=VARCHAR}, 
+      #{inviteStatus,jdbcType=INTEGER}, #{freezeReason,jdbcType=VARCHAR}, #{withdrawLimit,jdbcType=INTEGER}, 
+      #{remindVoice,jdbcType=INTEGER}, #{gzhFocusStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsMember">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ums_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="groupIcon != null">
+        group_icon,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="kfOpenId != null">
+        kf_open_id,
+      </if>
+      <if test="xcxOpenId != null">
+        xcx_open_id,
+      </if>
+      <if test="gzhOpenId != null">
+        gzh_open_id,
+      </if>
+      <if test="unionid != null">
+        unionid,
+      </if>
+      <if test="headImg != null">
+        head_img,
+      </if>
+      <if test="weixin != null">
+        weixin,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="payPassword != null">
+        pay_password,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="provinceCode != null">
+        province_code,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="personSign != null">
+        person_sign,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="phoneStatus != null">
+        phone_status,
+      </if>
+      <if test="realnameStatus != null">
+        realname_status,
+      </if>
+      <if test="bankStatus != null">
+        bank_status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="tjrId != null">
+        tjr_id,
+      </if>
+      <if test="inviteCode != null">
+        invite_code,
+      </if>
+      <if test="registerIp != null">
+        register_ip,
+      </if>
+      <if test="registerIpAddress != null">
+        register_ip_address,
+      </if>
+      <if test="registerUrl != null">
+        register_url,
+      </if>
+      <if test="missionConfigId != null">
+        mission_config_id,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addBy != null">
+        add_by,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+      <if test="updBy != null">
+        upd_by,
+      </if>
+      <if test="registrationId != null">
+        registration_id,
+      </if>
+      <if test="secret != null">
+        secret,
+      </if>
+      <if test="secretAnswer != null">
+        secret_answer,
+      </if>
+      <if test="punishmentStatus != null">
+        punishment_status,
+      </if>
+      <if test="tjrUid != null">
+        tjr_uid,
+      </if>
+      <if test="imeId != null">
+        ime_id,
+      </if>
+      <if test="inviteStatus != null">
+        invite_status,
+      </if>
+      <if test="freezeReason != null">
+        freeze_reason,
+      </if>
+      <if test="withdrawLimit != null">
+        withdraw_limit,
+      </if>
+      <if test="remindVoice != null">
+        remind_voice,
+      </if>
+      <if test="gzhFocusStatus != null">
+        gzh_focus_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupIcon != null">
+        #{groupIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="kfOpenId != null">
+        #{kfOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="xcxOpenId != null">
+        #{xcxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="gzhOpenId != null">
+        #{gzhOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null">
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="personSign != null">
+        #{personSign,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="phoneStatus != null">
+        #{phoneStatus,jdbcType=INTEGER},
+      </if>
+      <if test="realnameStatus != null">
+        #{realnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bankStatus != null">
+        #{bankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tjrId != null">
+        #{tjrId,jdbcType=INTEGER},
+      </if>
+      <if test="inviteCode != null">
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIp != null">
+        #{registerIp,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIpAddress != null">
+        #{registerIpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registerUrl != null">
+        #{registerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="missionConfigId != null">
+        #{missionConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="registrationId != null">
+        #{registrationId,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null">
+        #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="secretAnswer != null">
+        #{secretAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="punishmentStatus != null">
+        #{punishmentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tjrUid != null">
+        #{tjrUid,jdbcType=INTEGER},
+      </if>
+      <if test="imeId != null">
+        #{imeId,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteStatus != null">
+        #{inviteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="freezeReason != null">
+        #{freezeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawLimit != null">
+        #{withdrawLimit,jdbcType=INTEGER},
+      </if>
+      <if test="remindVoice != null">
+        #{remindVoice,jdbcType=INTEGER},
+      </if>
+      <if test="gzhFocusStatus != null">
+        #{gzhFocusStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.UmsMemberExample" resultType="java.lang.Long">
+    select count(*) from ums_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ums_member
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupName != null">
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupIcon != null">
+        group_icon = #{record.groupIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kfOpenId != null">
+        kf_open_id = #{record.kfOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xcxOpenId != null">
+        xcx_open_id = #{record.xcxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzhOpenId != null">
+        gzh_open_id = #{record.gzhOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionid != null">
+        unionid = #{record.unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headImg != null">
+        head_img = #{record.headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixin != null">
+        weixin = #{record.weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null">
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPassword != null">
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null">
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null">
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personSign != null">
+        person_sign = #{record.personSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null">
+        method = #{record.method,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.phoneStatus != null">
+        phone_status = #{record.phoneStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.realnameStatus != null">
+        realname_status = #{record.realnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankStatus != null">
+        bank_status = #{record.bankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tjrId != null">
+        tjr_id = #{record.tjrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.inviteCode != null">
+        invite_code = #{record.inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerIp != null">
+        register_ip = #{record.registerIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerIpAddress != null">
+        register_ip_address = #{record.registerIpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerUrl != null">
+        register_url = #{record.registerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionConfigId != null">
+        mission_config_id = #{record.missionConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addBy != null">
+        add_by = #{record.addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updBy != null">
+        upd_by = #{record.updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registrationId != null">
+        registration_id = #{record.registrationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secret != null">
+        secret = #{record.secret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secretAnswer != null">
+        secret_answer = #{record.secretAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.punishmentStatus != null">
+        punishment_status = #{record.punishmentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.tjrUid != null">
+        tjr_uid = #{record.tjrUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.imeId != null">
+        ime_id = #{record.imeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inviteStatus != null">
+        invite_status = #{record.inviteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.freezeReason != null">
+        freeze_reason = #{record.freezeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.withdrawLimit != null">
+        withdraw_limit = #{record.withdrawLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.remindVoice != null">
+        remind_voice = #{record.remindVoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.gzhFocusStatus != null">
+        gzh_focus_status = #{record.gzhFocusStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ums_member
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      group_name = #{record.groupName,jdbcType=VARCHAR},
+      group_icon = #{record.groupIcon,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      kf_open_id = #{record.kfOpenId,jdbcType=VARCHAR},
+      xcx_open_id = #{record.xcxOpenId,jdbcType=VARCHAR},
+      gzh_open_id = #{record.gzhOpenId,jdbcType=VARCHAR},
+      unionid = #{record.unionid,jdbcType=VARCHAR},
+      head_img = #{record.headImg,jdbcType=VARCHAR},
+      weixin = #{record.weixin,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      age = #{record.age,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=VARCHAR},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      person_sign = #{record.personSign,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      phone_status = #{record.phoneStatus,jdbcType=INTEGER},
+      realname_status = #{record.realnameStatus,jdbcType=INTEGER},
+      bank_status = #{record.bankStatus,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      tjr_id = #{record.tjrId,jdbcType=INTEGER},
+      invite_code = #{record.inviteCode,jdbcType=VARCHAR},
+      register_ip = #{record.registerIp,jdbcType=VARCHAR},
+      register_ip_address = #{record.registerIpAddress,jdbcType=VARCHAR},
+      register_url = #{record.registerUrl,jdbcType=VARCHAR},
+      mission_config_id = #{record.missionConfigId,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR},
+      registration_id = #{record.registrationId,jdbcType=VARCHAR},
+      secret = #{record.secret,jdbcType=VARCHAR},
+      secret_answer = #{record.secretAnswer,jdbcType=VARCHAR},
+      punishment_status = #{record.punishmentStatus,jdbcType=INTEGER},
+      tjr_uid = #{record.tjrUid,jdbcType=INTEGER},
+      ime_id = #{record.imeId,jdbcType=VARCHAR},
+      invite_status = #{record.inviteStatus,jdbcType=INTEGER},
+      freeze_reason = #{record.freezeReason,jdbcType=VARCHAR},
+      withdraw_limit = #{record.withdrawLimit,jdbcType=INTEGER},
+      remind_voice = #{record.remindVoice,jdbcType=INTEGER},
+      gzh_focus_status = #{record.gzhFocusStatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.UmsMember">
+    update ums_member
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupIcon != null">
+        group_icon = #{groupIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="kfOpenId != null">
+        kf_open_id = #{kfOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="xcxOpenId != null">
+        xcx_open_id = #{xcxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="gzhOpenId != null">
+        gzh_open_id = #{gzhOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        unionid = #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null">
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="personSign != null">
+        person_sign = #{personSign,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="phoneStatus != null">
+        phone_status = #{phoneStatus,jdbcType=INTEGER},
+      </if>
+      <if test="realnameStatus != null">
+        realname_status = #{realnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bankStatus != null">
+        bank_status = #{bankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tjrId != null">
+        tjr_id = #{tjrId,jdbcType=INTEGER},
+      </if>
+      <if test="inviteCode != null">
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIp != null">
+        register_ip = #{registerIp,jdbcType=VARCHAR},
+      </if>
+      <if test="registerIpAddress != null">
+        register_ip_address = #{registerIpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registerUrl != null">
+        register_url = #{registerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="missionConfigId != null">
+        mission_config_id = #{missionConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        add_by = #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        upd_by = #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="registrationId != null">
+        registration_id = #{registrationId,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null">
+        secret = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="secretAnswer != null">
+        secret_answer = #{secretAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="punishmentStatus != null">
+        punishment_status = #{punishmentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tjrUid != null">
+        tjr_uid = #{tjrUid,jdbcType=INTEGER},
+      </if>
+      <if test="imeId != null">
+        ime_id = #{imeId,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteStatus != null">
+        invite_status = #{inviteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="freezeReason != null">
+        freeze_reason = #{freezeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawLimit != null">
+        withdraw_limit = #{withdrawLimit,jdbcType=INTEGER},
+      </if>
+      <if test="remindVoice != null">
+        remind_voice = #{remindVoice,jdbcType=INTEGER},
+      </if>
+      <if test="gzhFocusStatus != null">
+        gzh_focus_status = #{gzhFocusStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.UmsMember">
+    update ums_member
+    set uid = #{uid,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=INTEGER},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      group_icon = #{groupIcon,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      kf_open_id = #{kfOpenId,jdbcType=VARCHAR},
+      xcx_open_id = #{xcxOpenId,jdbcType=VARCHAR},
+      gzh_open_id = #{gzhOpenId,jdbcType=VARCHAR},
+      unionid = #{unionid,jdbcType=VARCHAR},
+      head_img = #{headImg,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      age = #{age,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      person_sign = #{personSign,jdbcType=VARCHAR},
+      method = #{method,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      phone_status = #{phoneStatus,jdbcType=INTEGER},
+      realname_status = #{realnameStatus,jdbcType=INTEGER},
+      bank_status = #{bankStatus,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      tjr_id = #{tjrId,jdbcType=INTEGER},
+      invite_code = #{inviteCode,jdbcType=VARCHAR},
+      register_ip = #{registerIp,jdbcType=VARCHAR},
+      register_ip_address = #{registerIpAddress,jdbcType=VARCHAR},
+      register_url = #{registerUrl,jdbcType=VARCHAR},
+      mission_config_id = #{missionConfigId,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR},
+      registration_id = #{registrationId,jdbcType=VARCHAR},
+      secret = #{secret,jdbcType=VARCHAR},
+      secret_answer = #{secretAnswer,jdbcType=VARCHAR},
+      punishment_status = #{punishmentStatus,jdbcType=INTEGER},
+      tjr_uid = #{tjrUid,jdbcType=INTEGER},
+      ime_id = #{imeId,jdbcType=VARCHAR},
+      invite_status = #{inviteStatus,jdbcType=INTEGER},
+      freeze_reason = #{freezeReason,jdbcType=VARCHAR},
+      withdraw_limit = #{withdrawLimit,jdbcType=INTEGER},
+      remind_voice = #{remindVoice,jdbcType=INTEGER},
+      gzh_focus_status = #{gzhFocusStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

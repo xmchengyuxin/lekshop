@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomMemberRechargeMapper">
+	  <select id="getRechargeTemplateList" resultType="com.chengyu.core.model.UmsMemberRecharge">
+	    select
+	      DISTINCT remit_realname,
+		  remit_bank as remitBank,
+		  remit_realname as remitRealname,
+		  remit_account as remitAccount,
+		  add_time
+	    from ums_member_recharge
+	    where member_id = #{memberId} and status = '1' and paymethod = '4'
+	    order by add_time desc
+	  </select>
+</mapper>

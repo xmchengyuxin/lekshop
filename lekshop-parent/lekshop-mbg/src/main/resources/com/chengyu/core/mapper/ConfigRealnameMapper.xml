@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.ConfigRealnameMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.ConfigRealname">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="realname_status" jdbcType="INTEGER" property="realnameStatus" />
+    <result column="realname_need_phone_code" jdbcType="INTEGER" property="realnameNeedPhoneCode" />
+    <result column="need_hand_img" jdbcType="INTEGER" property="needHandImg" />
+    <result column="bank_status" jdbcType="INTEGER" property="bankStatus" />
+    <result column="bank_need_phone_code" jdbcType="INTEGER" property="bankNeedPhoneCode" />
+    <result column="syn_realname" jdbcType="INTEGER" property="synRealname" />
+    <result column="third_realname_status" jdbcType="INTEGER" property="thirdRealnameStatus" />
+    <result column="third_bank_status" jdbcType="INTEGER" property="thirdBankStatus" />
+    <result column="bank_phone_status" jdbcType="INTEGER" property="bankPhoneStatus" />
+    <result column="charge_num" jdbcType="INTEGER" property="chargeNum" />
+    <result column="charge_fee" jdbcType="DECIMAL" property="chargeFee" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+    <result column="weixin_need" jdbcType="INTEGER" property="weixinNeed" />
+    <result column="zfb_need" jdbcType="INTEGER" property="zfbNeed" />
+    <result column="realname_bank_same" jdbcType="INTEGER" property="realnameBankSame" />
+    <result column="weixin_img_need" jdbcType="INTEGER" property="weixinImgNeed" />
+    <result column="zfb_img_need" jdbcType="INTEGER" property="zfbImgNeed" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, group_id, group_name, realname_status, realname_need_phone_code, need_hand_img, 
+    bank_status, bank_need_phone_code, syn_realname, third_realname_status, third_bank_status, 
+    bank_phone_status, charge_num, charge_fee, add_time, add_by, upd_time, upd_by, weixin_need, 
+    zfb_need, realname_bank_same, weixin_img_need, zfb_img_need
+  </sql>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.ConfigRealnameExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config_realname
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from config_realname
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from config_realname
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.ConfigRealnameExample">
+    delete from config_realname
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.ConfigRealname">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into config_realname (group_id, group_name, realname_status, 
+      realname_need_phone_code, need_hand_img, bank_status, 
+      bank_need_phone_code, syn_realname, third_realname_status, 
+      third_bank_status, bank_phone_status, charge_num, 
+      charge_fee, add_time, add_by, 
+      upd_time, upd_by, weixin_need, 
+      zfb_need, realname_bank_same, weixin_img_need, 
+      zfb_img_need)
+    values (#{groupId,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{realnameStatus,jdbcType=INTEGER}, 
+      #{realnameNeedPhoneCode,jdbcType=INTEGER}, #{needHandImg,jdbcType=INTEGER}, #{bankStatus,jdbcType=INTEGER}, 
+      #{bankNeedPhoneCode,jdbcType=INTEGER}, #{synRealname,jdbcType=INTEGER}, #{thirdRealnameStatus,jdbcType=INTEGER}, 
+      #{thirdBankStatus,jdbcType=INTEGER}, #{bankPhoneStatus,jdbcType=INTEGER}, #{chargeNum,jdbcType=INTEGER}, 
+      #{chargeFee,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, #{weixinNeed,jdbcType=INTEGER}, 
+      #{zfbNeed,jdbcType=INTEGER}, #{realnameBankSame,jdbcType=INTEGER}, #{weixinImgNeed,jdbcType=INTEGER}, 
+      #{zfbImgNeed,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.ConfigRealname">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into config_realname
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="realnameStatus != null">
+        realname_status,
+      </if>
+      <if test="realnameNeedPhoneCode != null">
+        realname_need_phone_code,
+      </if>
+      <if test="needHandImg != null">
+        need_hand_img,
+      </if>
+      <if test="bankStatus != null">
+        bank_status,
+      </if>
+      <if test="bankNeedPhoneCode != null">
+        bank_need_phone_code,
+      </if>
+      <if test="synRealname != null">
+        syn_realname,
+      </if>
+      <if test="thirdRealnameStatus != null">
+        third_realname_status,
+      </if>
+      <if test="thirdBankStatus != null">
+        third_bank_status,
+      </if>
+      <if test="bankPhoneStatus != null">
+        bank_phone_status,
+      </if>
+      <if test="chargeNum != null">
+        charge_num,
+      </if>
+      <if test="chargeFee != null">
+        charge_fee,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addBy != null">
+        add_by,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+      <if test="updBy != null">
+        upd_by,
+      </if>
+      <if test="weixinNeed != null">
+        weixin_need,
+      </if>
+      <if test="zfbNeed != null">
+        zfb_need,
+      </if>
+      <if test="realnameBankSame != null">
+        realname_bank_same,
+      </if>
+      <if test="weixinImgNeed != null">
+        weixin_img_need,
+      </if>
+      <if test="zfbImgNeed != null">
+        zfb_img_need,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="realnameStatus != null">
+        #{realnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="realnameNeedPhoneCode != null">
+        #{realnameNeedPhoneCode,jdbcType=INTEGER},
+      </if>
+      <if test="needHandImg != null">
+        #{needHandImg,jdbcType=INTEGER},
+      </if>
+      <if test="bankStatus != null">
+        #{bankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bankNeedPhoneCode != null">
+        #{bankNeedPhoneCode,jdbcType=INTEGER},
+      </if>
+      <if test="synRealname != null">
+        #{synRealname,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRealnameStatus != null">
+        #{thirdRealnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="thirdBankStatus != null">
+        #{thirdBankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bankPhoneStatus != null">
+        #{bankPhoneStatus,jdbcType=INTEGER},
+      </if>
+      <if test="chargeNum != null">
+        #{chargeNum,jdbcType=INTEGER},
+      </if>
+      <if test="chargeFee != null">
+        #{chargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinNeed != null">
+        #{weixinNeed,jdbcType=INTEGER},
+      </if>
+      <if test="zfbNeed != null">
+        #{zfbNeed,jdbcType=INTEGER},
+      </if>
+      <if test="realnameBankSame != null">
+        #{realnameBankSame,jdbcType=INTEGER},
+      </if>
+      <if test="weixinImgNeed != null">
+        #{weixinImgNeed,jdbcType=INTEGER},
+      </if>
+      <if test="zfbImgNeed != null">
+        #{zfbImgNeed,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.ConfigRealnameExample" resultType="java.lang.Long">
+    select count(*) from config_realname
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update config_realname
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupName != null">
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realnameStatus != null">
+        realname_status = #{record.realnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.realnameNeedPhoneCode != null">
+        realname_need_phone_code = #{record.realnameNeedPhoneCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.needHandImg != null">
+        need_hand_img = #{record.needHandImg,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankStatus != null">
+        bank_status = #{record.bankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankNeedPhoneCode != null">
+        bank_need_phone_code = #{record.bankNeedPhoneCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.synRealname != null">
+        syn_realname = #{record.synRealname,jdbcType=INTEGER},
+      </if>
+      <if test="record.thirdRealnameStatus != null">
+        third_realname_status = #{record.thirdRealnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.thirdBankStatus != null">
+        third_bank_status = #{record.thirdBankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankPhoneStatus != null">
+        bank_phone_status = #{record.bankPhoneStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargeNum != null">
+        charge_num = #{record.chargeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargeFee != null">
+        charge_fee = #{record.chargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addBy != null">
+        add_by = #{record.addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updBy != null">
+        upd_by = #{record.updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinNeed != null">
+        weixin_need = #{record.weixinNeed,jdbcType=INTEGER},
+      </if>
+      <if test="record.zfbNeed != null">
+        zfb_need = #{record.zfbNeed,jdbcType=INTEGER},
+      </if>
+      <if test="record.realnameBankSame != null">
+        realname_bank_same = #{record.realnameBankSame,jdbcType=INTEGER},
+      </if>
+      <if test="record.weixinImgNeed != null">
+        weixin_img_need = #{record.weixinImgNeed,jdbcType=INTEGER},
+      </if>
+      <if test="record.zfbImgNeed != null">
+        zfb_img_need = #{record.zfbImgNeed,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update config_realname
+    set id = #{record.id,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      group_name = #{record.groupName,jdbcType=VARCHAR},
+      realname_status = #{record.realnameStatus,jdbcType=INTEGER},
+      realname_need_phone_code = #{record.realnameNeedPhoneCode,jdbcType=INTEGER},
+      need_hand_img = #{record.needHandImg,jdbcType=INTEGER},
+      bank_status = #{record.bankStatus,jdbcType=INTEGER},
+      bank_need_phone_code = #{record.bankNeedPhoneCode,jdbcType=INTEGER},
+      syn_realname = #{record.synRealname,jdbcType=INTEGER},
+      third_realname_status = #{record.thirdRealnameStatus,jdbcType=INTEGER},
+      third_bank_status = #{record.thirdBankStatus,jdbcType=INTEGER},
+      bank_phone_status = #{record.bankPhoneStatus,jdbcType=INTEGER},
+      charge_num = #{record.chargeNum,jdbcType=INTEGER},
+      charge_fee = #{record.chargeFee,jdbcType=DECIMAL},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR},
+      weixin_need = #{record.weixinNeed,jdbcType=INTEGER},
+      zfb_need = #{record.zfbNeed,jdbcType=INTEGER},
+      realname_bank_same = #{record.realnameBankSame,jdbcType=INTEGER},
+      weixin_img_need = #{record.weixinImgNeed,jdbcType=INTEGER},
+      zfb_img_need = #{record.zfbImgNeed,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.ConfigRealname">
+    update config_realname
+    <set>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="realnameStatus != null">
+        realname_status = #{realnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="realnameNeedPhoneCode != null">
+        realname_need_phone_code = #{realnameNeedPhoneCode,jdbcType=INTEGER},
+      </if>
+      <if test="needHandImg != null">
+        need_hand_img = #{needHandImg,jdbcType=INTEGER},
+      </if>
+      <if test="bankStatus != null">
+        bank_status = #{bankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bankNeedPhoneCode != null">
+        bank_need_phone_code = #{bankNeedPhoneCode,jdbcType=INTEGER},
+      </if>
+      <if test="synRealname != null">
+        syn_realname = #{synRealname,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRealnameStatus != null">
+        third_realname_status = #{thirdRealnameStatus,jdbcType=INTEGER},
+      </if>
+      <if test="thirdBankStatus != null">
+        third_bank_status = #{thirdBankStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bankPhoneStatus != null">
+        bank_phone_status = #{bankPhoneStatus,jdbcType=INTEGER},
+      </if>
+      <if test="chargeNum != null">
+        charge_num = #{chargeNum,jdbcType=INTEGER},
+      </if>
+      <if test="chargeFee != null">
+        charge_fee = #{chargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        add_by = #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        upd_by = #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinNeed != null">
+        weixin_need = #{weixinNeed,jdbcType=INTEGER},
+      </if>
+      <if test="zfbNeed != null">
+        zfb_need = #{zfbNeed,jdbcType=INTEGER},
+      </if>
+      <if test="realnameBankSame != null">
+        realname_bank_same = #{realnameBankSame,jdbcType=INTEGER},
+      </if>
+      <if test="weixinImgNeed != null">
+        weixin_img_need = #{weixinImgNeed,jdbcType=INTEGER},
+      </if>
+      <if test="zfbImgNeed != null">
+        zfb_img_need = #{zfbImgNeed,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.ConfigRealname">
+    update config_realname
+    set group_id = #{groupId,jdbcType=INTEGER},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      realname_status = #{realnameStatus,jdbcType=INTEGER},
+      realname_need_phone_code = #{realnameNeedPhoneCode,jdbcType=INTEGER},
+      need_hand_img = #{needHandImg,jdbcType=INTEGER},
+      bank_status = #{bankStatus,jdbcType=INTEGER},
+      bank_need_phone_code = #{bankNeedPhoneCode,jdbcType=INTEGER},
+      syn_realname = #{synRealname,jdbcType=INTEGER},
+      third_realname_status = #{thirdRealnameStatus,jdbcType=INTEGER},
+      third_bank_status = #{thirdBankStatus,jdbcType=INTEGER},
+      bank_phone_status = #{bankPhoneStatus,jdbcType=INTEGER},
+      charge_num = #{chargeNum,jdbcType=INTEGER},
+      charge_fee = #{chargeFee,jdbcType=DECIMAL},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR},
+      weixin_need = #{weixinNeed,jdbcType=INTEGER},
+      zfb_need = #{zfbNeed,jdbcType=INTEGER},
+      realname_bank_same = #{realnameBankSame,jdbcType=INTEGER},
+      weixin_img_need = #{weixinImgNeed,jdbcType=INTEGER},
+      zfb_img_need = #{zfbImgNeed,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

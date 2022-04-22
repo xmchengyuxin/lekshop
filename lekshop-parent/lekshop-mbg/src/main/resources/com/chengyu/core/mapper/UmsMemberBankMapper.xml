@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.UmsMemberBankMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.UmsMemberBank">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="bank" jdbcType="VARCHAR" property="bank" />
+    <result column="bank_sub" jdbcType="VARCHAR" property="bankSub" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="province_code" jdbcType="VARCHAR" property="provinceCode" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+    <result column="zfb_account" jdbcType="VARCHAR" property="zfbAccount" />
+    <result column="wx_account" jdbcType="VARCHAR" property="wxAccount" />
+    <result column="zfb_erweima" jdbcType="VARCHAR" property="zfbErweima" />
+    <result column="wx_erweima" jdbcType="VARCHAR" property="wxErweima" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_id, member_name, account_name, id_card, bank, bank_sub, bank_account, 
+    province, province_code, city, city_code, area, area_code, num, status, reason, add_time, 
+    add_by, upd_time, upd_by, zfb_account, wx_account, zfb_erweima, wx_erweima
+  </sql>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.UmsMemberBankExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ums_member_bank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ums_member_bank
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ums_member_bank
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.UmsMemberBankExample">
+    delete from ums_member_bank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.UmsMemberBank">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ums_member_bank (member_id, member_name, account_name, 
+      id_card, bank, bank_sub, 
+      bank_account, province, province_code, 
+      city, city_code, area, 
+      area_code, num, status, 
+      reason, add_time, add_by, 
+      upd_time, upd_by, zfb_account, 
+      wx_account, zfb_erweima, wx_erweima
+      )
+    values (#{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{bankSub,jdbcType=VARCHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{reason,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, #{zfbAccount,jdbcType=VARCHAR}, 
+      #{wxAccount,jdbcType=VARCHAR}, #{zfbErweima,jdbcType=VARCHAR}, #{wxErweima,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsMemberBank">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ums_member_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="memberName != null">
+        member_name,
+      </if>
+      <if test="accountName != null">
+        account_name,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="bank != null">
+        bank,
+      </if>
+      <if test="bankSub != null">
+        bank_sub,
+      </if>
+      <if test="bankAccount != null">
+        bank_account,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="provinceCode != null">
+        province_code,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addBy != null">
+        add_by,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+      <if test="updBy != null">
+        upd_by,
+      </if>
+      <if test="zfbAccount != null">
+        zfb_account,
+      </if>
+      <if test="wxAccount != null">
+        wx_account,
+      </if>
+      <if test="zfbErweima != null">
+        zfb_erweima,
+      </if>
+      <if test="wxErweima != null">
+        wx_erweima,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankSub != null">
+        #{bankSub,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="zfbAccount != null">
+        #{zfbAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAccount != null">
+        #{wxAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="zfbErweima != null">
+        #{zfbErweima,jdbcType=VARCHAR},
+      </if>
+      <if test="wxErweima != null">
+        #{wxErweima,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.UmsMemberBankExample" resultType="java.lang.Long">
+    select count(*) from ums_member_bank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ums_member_bank
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberName != null">
+        member_name = #{record.memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountName != null">
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCard != null">
+        id_card = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bank != null">
+        bank = #{record.bank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankSub != null">
+        bank_sub = #{record.bankSub,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccount != null">
+        bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null">
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null">
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.num != null">
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addBy != null">
+        add_by = #{record.addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updBy != null">
+        upd_by = #{record.updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zfbAccount != null">
+        zfb_account = #{record.zfbAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxAccount != null">
+        wx_account = #{record.wxAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zfbErweima != null">
+        zfb_erweima = #{record.zfbErweima,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxErweima != null">
+        wx_erweima = #{record.wxErweima,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ums_member_bank
+    set id = #{record.id,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      member_name = #{record.memberName,jdbcType=VARCHAR},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      id_card = #{record.idCard,jdbcType=VARCHAR},
+      bank = #{record.bank,jdbcType=VARCHAR},
+      bank_sub = #{record.bankSub,jdbcType=VARCHAR},
+      bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      num = #{record.num,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR},
+      zfb_account = #{record.zfbAccount,jdbcType=VARCHAR},
+      wx_account = #{record.wxAccount,jdbcType=VARCHAR},
+      zfb_erweima = #{record.zfbErweima,jdbcType=VARCHAR},
+      wx_erweima = #{record.wxErweima,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.UmsMemberBank">
+    update ums_member_bank
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankSub != null">
+        bank_sub = #{bankSub,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        add_by = #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        upd_by = #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="zfbAccount != null">
+        zfb_account = #{zfbAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAccount != null">
+        wx_account = #{wxAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="zfbErweima != null">
+        zfb_erweima = #{zfbErweima,jdbcType=VARCHAR},
+      </if>
+      <if test="wxErweima != null">
+        wx_erweima = #{wxErweima,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.UmsMemberBank">
+    update ums_member_bank
+    set member_id = #{memberId,jdbcType=INTEGER},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      bank_sub = #{bankSub,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR},
+      zfb_account = #{zfbAccount,jdbcType=VARCHAR},
+      wx_account = #{wxAccount,jdbcType=VARCHAR},
+      zfb_erweima = #{zfbErweima,jdbcType=VARCHAR},
+      wx_erweima = #{wxErweima,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

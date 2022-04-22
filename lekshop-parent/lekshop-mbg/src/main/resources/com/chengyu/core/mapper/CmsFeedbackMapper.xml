@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CmsFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.CmsFeedback">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="imgs" jdbcType="VARCHAR" property="imgs" />
+    <result column="video" jdbcType="VARCHAR" property="video" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_id, member_name, type, content, imgs, video, phone, status, add_time, 
+    add_by, upd_time, upd_by
+  </sql>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.CmsFeedbackExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cms_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_feedback
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cms_feedback
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.CmsFeedbackExample">
+    delete from cms_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.CmsFeedback">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cms_feedback (member_id, member_name, type, 
+      content, imgs, video, 
+      phone, status, add_time, 
+      add_by, upd_time, upd_by
+      )
+    values (#{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{imgs,jdbcType=VARCHAR}, #{video,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.CmsFeedback">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cms_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="memberName != null">
+        member_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="imgs != null">
+        imgs,
+      </if>
+      <if test="video != null">
+        video,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addBy != null">
+        add_by,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+      <if test="updBy != null">
+        upd_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null">
+        #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null">
+        #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        #{updBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.CmsFeedbackExample" resultType="java.lang.Long">
+    select count(*) from cms_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cms_feedback
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberName != null">
+        member_name = #{record.memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgs != null">
+        imgs = #{record.imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.video != null">
+        video = #{record.video,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addBy != null">
+        add_by = #{record.addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updBy != null">
+        upd_by = #{record.updBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cms_feedback
+    set id = #{record.id,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      member_name = #{record.memberName,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      imgs = #{record.imgs,jdbcType=VARCHAR},
+      video = #{record.video,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.CmsFeedback">
+    update cms_feedback
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null">
+        imgs = #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null">
+        video = #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        add_by = #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        upd_by = #{updBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.CmsFeedback">
+    update cms_feedback
+    set member_id = #{memberId,jdbcType=INTEGER},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      imgs = #{imgs,jdbcType=VARCHAR},
+      video = #{video,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.RepShopMonthMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.RepShopMonth">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="month" jdbcType="VARCHAR" property="month" />
+    <result column="business_amount" jdbcType="DECIMAL" property="businessAmount" />
+    <result column="delivery_amount" jdbcType="DECIMAL" property="deliveryAmount" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="member_num" jdbcType="INTEGER" property="memberNum" />
+    <result column="cancel_num" jdbcType="INTEGER" property="cancelNum" />
+    <result column="refund_num" jdbcType="INTEGER" property="refundNum" />
+    <result column="good_comment_num" jdbcType="INTEGER" property="goodCommentNum" />
+    <result column="medium_comment_num" jdbcType="INTEGER" property="mediumCommentNum" />
+    <result column="bad_comment_num" jdbcType="INTEGER" property="badCommentNum" />
+    <result column="goods_amount" jdbcType="DECIMAL" property="goodsAmount" />
+    <result column="coupon_amount" jdbcType="DECIMAL" property="couponAmount" />
+    <result column="refund_rate" jdbcType="DECIMAL" property="refundRate" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, shop_id, shop_name, month, business_amount, delivery_amount, order_num, member_num, 
+    cancel_num, refund_num, good_comment_num, medium_comment_num, bad_comment_num, goods_amount, 
+    coupon_amount, refund_rate, add_time, add_by, upd_time, upd_by
+  </sql>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.RepShopMonthExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rep_shop_month
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rep_shop_month
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rep_shop_month
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.RepShopMonthExample">
+    delete from rep_shop_month
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.RepShopMonth">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into rep_shop_month (shop_id, shop_name, month, 
+      business_amount, delivery_amount, order_num, 
+      member_num, cancel_num, refund_num, 
+      good_comment_num, medium_comment_num, bad_comment_num, 
+      goods_amount, coupon_amount, refund_rate, 
+      add_time, add_by, upd_time, 
+      upd_by)
+    values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, 
+      #{businessAmount,jdbcType=DECIMAL}, #{deliveryAmount,jdbcType=DECIMAL}, #{orderNum,jdbcType=INTEGER}, 
+      #{memberNum,jdbcType=INTEGER}, #{cancelNum,jdbcType=INTEGER}, #{refundNum,jdbcType=INTEGER}, 
+      #{goodCommentNum,jdbcType=INTEGER}, #{mediumCommentNum,jdbcType=INTEGER}, #{badCommentNum,jdbcType=INTEGER}, 
+      #{goodsAmount,jdbcType=DECIMAL}, #{couponAmount,jdbcType=DECIMAL}, #{refundRate,jdbcType=DECIMAL}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
+      #{updBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.RepShopMonth">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into rep_shop_month
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="businessAmount != null">
+        business_amount,
+      </if>
+      <if test="deliveryAmount != null">
+        delivery_amount,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="memberNum != null">
+        member_num,
+      </if>
+      <if test="cancelNum != null">
+        cancel_num,
+      </if>
+      <if test="refundNum != null">
+        refund_num,
+      </if>
+      <if test="goodCommentNum != null">
+        good_comment_num,
+      </if>
+      <if test="mediumCommentNum != null">
+        medium_comment_num,
+      </if>
+      <if test="badCommentNum != null">
+        bad_comment_num,
+      </if>
+      <if test="goodsAmount != null">
+        goods_amount,
+      </if>
+      <if test="couponAmount != null">
+        coupon_amount,
+      </if>
+      <if test="refundRate != null">
+        refund_rate,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addBy != null">
+        add_by,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+      <if test="updBy != null">
+        upd_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="businessAmount != null">
+        #{businessAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryAmount != null">
+        #{deliveryAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="memberNum != null">
+        #{memberNum,jdbcType=INTEGER},
+      </if>
+      <if test="cancelNum != null">
+        #{cancelNum,jdbcType=INTEGER},
+      </if>
+      <if test="refundNum != null">
+        #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodCommentNum != null">
+        #{goodCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="mediumCommentNum != null">
+        #{mediumCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="badCommentNum != null">
+        #{badCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAmount != null">
+        #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponAmount != null">
+        #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundRate != null">
+        #{refundRate,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        #{updBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.RepShopMonthExample" resultType="java.lang.Long">
+    select count(*) from rep_shop_month
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rep_shop_month
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessAmount != null">
+        business_amount = #{record.businessAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliveryAmount != null">
+        delivery_amount = #{record.deliveryAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderNum != null">
+        order_num = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberNum != null">
+        member_num = #{record.memberNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.cancelNum != null">
+        cancel_num = #{record.cancelNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundNum != null">
+        refund_num = #{record.refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodCommentNum != null">
+        good_comment_num = #{record.goodCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.mediumCommentNum != null">
+        medium_comment_num = #{record.mediumCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.badCommentNum != null">
+        bad_comment_num = #{record.badCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsAmount != null">
+        goods_amount = #{record.goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponAmount != null">
+        coupon_amount = #{record.couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundRate != null">
+        refund_rate = #{record.refundRate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addBy != null">
+        add_by = #{record.addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updBy != null">
+        upd_by = #{record.updBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rep_shop_month
+    set id = #{record.id,jdbcType=INTEGER},
+      shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      month = #{record.month,jdbcType=VARCHAR},
+      business_amount = #{record.businessAmount,jdbcType=DECIMAL},
+      delivery_amount = #{record.deliveryAmount,jdbcType=DECIMAL},
+      order_num = #{record.orderNum,jdbcType=INTEGER},
+      member_num = #{record.memberNum,jdbcType=INTEGER},
+      cancel_num = #{record.cancelNum,jdbcType=INTEGER},
+      refund_num = #{record.refundNum,jdbcType=INTEGER},
+      good_comment_num = #{record.goodCommentNum,jdbcType=INTEGER},
+      medium_comment_num = #{record.mediumCommentNum,jdbcType=INTEGER},
+      bad_comment_num = #{record.badCommentNum,jdbcType=INTEGER},
+      goods_amount = #{record.goodsAmount,jdbcType=DECIMAL},
+      coupon_amount = #{record.couponAmount,jdbcType=DECIMAL},
+      refund_rate = #{record.refundRate,jdbcType=DECIMAL},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.RepShopMonth">
+    update rep_shop_month
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="businessAmount != null">
+        business_amount = #{businessAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryAmount != null">
+        delivery_amount = #{deliveryAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="memberNum != null">
+        member_num = #{memberNum,jdbcType=INTEGER},
+      </if>
+      <if test="cancelNum != null">
+        cancel_num = #{cancelNum,jdbcType=INTEGER},
+      </if>
+      <if test="refundNum != null">
+        refund_num = #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodCommentNum != null">
+        good_comment_num = #{goodCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="mediumCommentNum != null">
+        medium_comment_num = #{mediumCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="badCommentNum != null">
+        bad_comment_num = #{badCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAmount != null">
+        goods_amount = #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponAmount != null">
+        coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundRate != null">
+        refund_rate = #{refundRate,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        add_by = #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        upd_by = #{updBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.RepShopMonth">
+    update rep_shop_month
+    set shop_id = #{shopId,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      month = #{month,jdbcType=VARCHAR},
+      business_amount = #{businessAmount,jdbcType=DECIMAL},
+      delivery_amount = #{deliveryAmount,jdbcType=DECIMAL},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      member_num = #{memberNum,jdbcType=INTEGER},
+      cancel_num = #{cancelNum,jdbcType=INTEGER},
+      refund_num = #{refundNum,jdbcType=INTEGER},
+      good_comment_num = #{goodCommentNum,jdbcType=INTEGER},
+      medium_comment_num = #{mediumCommentNum,jdbcType=INTEGER},
+      bad_comment_num = #{badCommentNum,jdbcType=INTEGER},
+      goods_amount = #{goodsAmount,jdbcType=DECIMAL},
+      coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      refund_rate = #{refundRate,jdbcType=DECIMAL},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

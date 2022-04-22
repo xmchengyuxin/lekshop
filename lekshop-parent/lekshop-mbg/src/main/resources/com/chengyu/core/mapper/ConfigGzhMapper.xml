@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.ConfigGzhMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.ConfigGzh">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="gzh_name" jdbcType="VARCHAR" property="gzhName" />
+    <result column="gzh_img" jdbcType="VARCHAR" property="gzhImg" />
+    <result column="seller_status" jdbcType="INTEGER" property="sellerStatus" />
+    <result column="buyer_status" jdbcType="INTEGER" property="buyerStatus" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+    <result column="sms_notice_status" jdbcType="INTEGER" property="smsNoticeStatus" />
+    <result column="sms_new_task" jdbcType="INTEGER" property="smsNewTask" />
+    <result column="sms_need_comment" jdbcType="INTEGER" property="smsNeedComment" />
+    <result column="sms_comment_reject" jdbcType="INTEGER" property="smsCommentReject" />
+    <result column="sms_order_will_quit" jdbcType="INTEGER" property="smsOrderWillQuit" />
+    <result column="sms_close_account" jdbcType="INTEGER" property="smsCloseAccount" />
+    <result column="sms_withdraw_sus" jdbcType="INTEGER" property="smsWithdrawSus" />
+    <result column="sms_withdraw_fail" jdbcType="INTEGER" property="smsWithdrawFail" />
+    <result column="sms_order_reject" jdbcType="INTEGER" property="smsOrderReject" />
+    <result column="sms_confirm_order" jdbcType="INTEGER" property="smsConfirmOrder" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chengyu.core.model.ConfigGzh">
+    <result column="gzh_content" jdbcType="LONGVARCHAR" property="gzhContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, gzh_name, gzh_img, seller_status, buyer_status, add_time, add_by, upd_time, upd_by, 
+    sms_notice_status, sms_new_task, sms_need_comment, sms_comment_reject, sms_order_will_quit, 
+    sms_close_account, sms_withdraw_sus, sms_withdraw_fail, sms_order_reject, sms_confirm_order
+  </sql>
+  <sql id="Blob_Column_List">
+    gzh_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.chengyu.core.model.ConfigGzhExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from config_gzh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.ConfigGzhExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config_gzh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from config_gzh
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from config_gzh
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.ConfigGzhExample">
+    delete from config_gzh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.ConfigGzh">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into config_gzh (gzh_name, gzh_img, seller_status, 
+      buyer_status, add_time, add_by, 
+      upd_time, upd_by, sms_notice_status, 
+      sms_new_task, sms_need_comment, sms_comment_reject, 
+      sms_order_will_quit, sms_close_account, sms_withdraw_sus, 
+      sms_withdraw_fail, sms_order_reject, sms_confirm_order, 
+      gzh_content)
+    values (#{gzhName,jdbcType=VARCHAR}, #{gzhImg,jdbcType=VARCHAR}, #{sellerStatus,jdbcType=INTEGER}, 
+      #{buyerStatus,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, #{smsNoticeStatus,jdbcType=INTEGER}, 
+      #{smsNewTask,jdbcType=INTEGER}, #{smsNeedComment,jdbcType=INTEGER}, #{smsCommentReject,jdbcType=INTEGER}, 
+      #{smsOrderWillQuit,jdbcType=INTEGER}, #{smsCloseAccount,jdbcType=INTEGER}, #{smsWithdrawSus,jdbcType=INTEGER}, 
+      #{smsWithdrawFail,jdbcType=INTEGER}, #{smsOrderReject,jdbcType=INTEGER}, #{smsConfirmOrder,jdbcType=INTEGER}, 
+      #{gzhContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.ConfigGzh">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into config_gzh
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gzhName != null">
+        gzh_name,
+      </if>
+      <if test="gzhImg != null">
+        gzh_img,
+      </if>
+      <if test="sellerStatus != null">
+        seller_status,
+      </if>
+      <if test="buyerStatus != null">
+        buyer_status,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addBy != null">
+        add_by,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+      <if test="updBy != null">
+        upd_by,
+      </if>
+      <if test="smsNoticeStatus != null">
+        sms_notice_status,
+      </if>
+      <if test="smsNewTask != null">
+        sms_new_task,
+      </if>
+      <if test="smsNeedComment != null">
+        sms_need_comment,
+      </if>
+      <if test="smsCommentReject != null">
+        sms_comment_reject,
+      </if>
+      <if test="smsOrderWillQuit != null">
+        sms_order_will_quit,
+      </if>
+      <if test="smsCloseAccount != null">
+        sms_close_account,
+      </if>
+      <if test="smsWithdrawSus != null">
+        sms_withdraw_sus,
+      </if>
+      <if test="smsWithdrawFail != null">
+        sms_withdraw_fail,
+      </if>
+      <if test="smsOrderReject != null">
+        sms_order_reject,
+      </if>
+      <if test="smsConfirmOrder != null">
+        sms_confirm_order,
+      </if>
+      <if test="gzhContent != null">
+        gzh_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gzhName != null">
+        #{gzhName,jdbcType=VARCHAR},
+      </if>
+      <if test="gzhImg != null">
+        #{gzhImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerStatus != null">
+        #{sellerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="buyerStatus != null">
+        #{buyerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="smsNoticeStatus != null">
+        #{smsNoticeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="smsNewTask != null">
+        #{smsNewTask,jdbcType=INTEGER},
+      </if>
+      <if test="smsNeedComment != null">
+        #{smsNeedComment,jdbcType=INTEGER},
+      </if>
+      <if test="smsCommentReject != null">
+        #{smsCommentReject,jdbcType=INTEGER},
+      </if>
+      <if test="smsOrderWillQuit != null">
+        #{smsOrderWillQuit,jdbcType=INTEGER},
+      </if>
+      <if test="smsCloseAccount != null">
+        #{smsCloseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="smsWithdrawSus != null">
+        #{smsWithdrawSus,jdbcType=INTEGER},
+      </if>
+      <if test="smsWithdrawFail != null">
+        #{smsWithdrawFail,jdbcType=INTEGER},
+      </if>
+      <if test="smsOrderReject != null">
+        #{smsOrderReject,jdbcType=INTEGER},
+      </if>
+      <if test="smsConfirmOrder != null">
+        #{smsConfirmOrder,jdbcType=INTEGER},
+      </if>
+      <if test="gzhContent != null">
+        #{gzhContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.ConfigGzhExample" resultType="java.lang.Long">
+    select count(*) from config_gzh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update config_gzh
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.gzhName != null">
+        gzh_name = #{record.gzhName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzhImg != null">
+        gzh_img = #{record.gzhImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sellerStatus != null">
+        seller_status = #{record.sellerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyerStatus != null">
+        buyer_status = #{record.buyerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addBy != null">
+        add_by = #{record.addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updBy != null">
+        upd_by = #{record.updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsNoticeStatus != null">
+        sms_notice_status = #{record.smsNoticeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsNewTask != null">
+        sms_new_task = #{record.smsNewTask,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsNeedComment != null">
+        sms_need_comment = #{record.smsNeedComment,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsCommentReject != null">
+        sms_comment_reject = #{record.smsCommentReject,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsOrderWillQuit != null">
+        sms_order_will_quit = #{record.smsOrderWillQuit,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsCloseAccount != null">
+        sms_close_account = #{record.smsCloseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsWithdrawSus != null">
+        sms_withdraw_sus = #{record.smsWithdrawSus,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsWithdrawFail != null">
+        sms_withdraw_fail = #{record.smsWithdrawFail,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsOrderReject != null">
+        sms_order_reject = #{record.smsOrderReject,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsConfirmOrder != null">
+        sms_confirm_order = #{record.smsConfirmOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.gzhContent != null">
+        gzh_content = #{record.gzhContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update config_gzh
+    set id = #{record.id,jdbcType=INTEGER},
+      gzh_name = #{record.gzhName,jdbcType=VARCHAR},
+      gzh_img = #{record.gzhImg,jdbcType=VARCHAR},
+      seller_status = #{record.sellerStatus,jdbcType=INTEGER},
+      buyer_status = #{record.buyerStatus,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR},
+      sms_notice_status = #{record.smsNoticeStatus,jdbcType=INTEGER},
+      sms_new_task = #{record.smsNewTask,jdbcType=INTEGER},
+      sms_need_comment = #{record.smsNeedComment,jdbcType=INTEGER},
+      sms_comment_reject = #{record.smsCommentReject,jdbcType=INTEGER},
+      sms_order_will_quit = #{record.smsOrderWillQuit,jdbcType=INTEGER},
+      sms_close_account = #{record.smsCloseAccount,jdbcType=INTEGER},
+      sms_withdraw_sus = #{record.smsWithdrawSus,jdbcType=INTEGER},
+      sms_withdraw_fail = #{record.smsWithdrawFail,jdbcType=INTEGER},
+      sms_order_reject = #{record.smsOrderReject,jdbcType=INTEGER},
+      sms_confirm_order = #{record.smsConfirmOrder,jdbcType=INTEGER},
+      gzh_content = #{record.gzhContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update config_gzh
+    set id = #{record.id,jdbcType=INTEGER},
+      gzh_name = #{record.gzhName,jdbcType=VARCHAR},
+      gzh_img = #{record.gzhImg,jdbcType=VARCHAR},
+      seller_status = #{record.sellerStatus,jdbcType=INTEGER},
+      buyer_status = #{record.buyerStatus,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR},
+      sms_notice_status = #{record.smsNoticeStatus,jdbcType=INTEGER},
+      sms_new_task = #{record.smsNewTask,jdbcType=INTEGER},
+      sms_need_comment = #{record.smsNeedComment,jdbcType=INTEGER},
+      sms_comment_reject = #{record.smsCommentReject,jdbcType=INTEGER},
+      sms_order_will_quit = #{record.smsOrderWillQuit,jdbcType=INTEGER},
+      sms_close_account = #{record.smsCloseAccount,jdbcType=INTEGER},
+      sms_withdraw_sus = #{record.smsWithdrawSus,jdbcType=INTEGER},
+      sms_withdraw_fail = #{record.smsWithdrawFail,jdbcType=INTEGER},
+      sms_order_reject = #{record.smsOrderReject,jdbcType=INTEGER},
+      sms_confirm_order = #{record.smsConfirmOrder,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.ConfigGzh">
+    update config_gzh
+    <set>
+      <if test="gzhName != null">
+        gzh_name = #{gzhName,jdbcType=VARCHAR},
+      </if>
+      <if test="gzhImg != null">
+        gzh_img = #{gzhImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerStatus != null">
+        seller_status = #{sellerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="buyerStatus != null">
+        buyer_status = #{buyerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        add_by = #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        upd_by = #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="smsNoticeStatus != null">
+        sms_notice_status = #{smsNoticeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="smsNewTask != null">
+        sms_new_task = #{smsNewTask,jdbcType=INTEGER},
+      </if>
+      <if test="smsNeedComment != null">
+        sms_need_comment = #{smsNeedComment,jdbcType=INTEGER},
+      </if>
+      <if test="smsCommentReject != null">
+        sms_comment_reject = #{smsCommentReject,jdbcType=INTEGER},
+      </if>
+      <if test="smsOrderWillQuit != null">
+        sms_order_will_quit = #{smsOrderWillQuit,jdbcType=INTEGER},
+      </if>
+      <if test="smsCloseAccount != null">
+        sms_close_account = #{smsCloseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="smsWithdrawSus != null">
+        sms_withdraw_sus = #{smsWithdrawSus,jdbcType=INTEGER},
+      </if>
+      <if test="smsWithdrawFail != null">
+        sms_withdraw_fail = #{smsWithdrawFail,jdbcType=INTEGER},
+      </if>
+      <if test="smsOrderReject != null">
+        sms_order_reject = #{smsOrderReject,jdbcType=INTEGER},
+      </if>
+      <if test="smsConfirmOrder != null">
+        sms_confirm_order = #{smsConfirmOrder,jdbcType=INTEGER},
+      </if>
+      <if test="gzhContent != null">
+        gzh_content = #{gzhContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chengyu.core.model.ConfigGzh">
+    update config_gzh
+    set gzh_name = #{gzhName,jdbcType=VARCHAR},
+      gzh_img = #{gzhImg,jdbcType=VARCHAR},
+      seller_status = #{sellerStatus,jdbcType=INTEGER},
+      buyer_status = #{buyerStatus,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR},
+      sms_notice_status = #{smsNoticeStatus,jdbcType=INTEGER},
+      sms_new_task = #{smsNewTask,jdbcType=INTEGER},
+      sms_need_comment = #{smsNeedComment,jdbcType=INTEGER},
+      sms_comment_reject = #{smsCommentReject,jdbcType=INTEGER},
+      sms_order_will_quit = #{smsOrderWillQuit,jdbcType=INTEGER},
+      sms_close_account = #{smsCloseAccount,jdbcType=INTEGER},
+      sms_withdraw_sus = #{smsWithdrawSus,jdbcType=INTEGER},
+      sms_withdraw_fail = #{smsWithdrawFail,jdbcType=INTEGER},
+      sms_order_reject = #{smsOrderReject,jdbcType=INTEGER},
+      sms_confirm_order = #{smsConfirmOrder,jdbcType=INTEGER},
+      gzh_content = #{gzhContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.ConfigGzh">
+    update config_gzh
+    set gzh_name = #{gzhName,jdbcType=VARCHAR},
+      gzh_img = #{gzhImg,jdbcType=VARCHAR},
+      seller_status = #{sellerStatus,jdbcType=INTEGER},
+      buyer_status = #{buyerStatus,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR},
+      sms_notice_status = #{smsNoticeStatus,jdbcType=INTEGER},
+      sms_new_task = #{smsNewTask,jdbcType=INTEGER},
+      sms_need_comment = #{smsNeedComment,jdbcType=INTEGER},
+      sms_comment_reject = #{smsCommentReject,jdbcType=INTEGER},
+      sms_order_will_quit = #{smsOrderWillQuit,jdbcType=INTEGER},
+      sms_close_account = #{smsCloseAccount,jdbcType=INTEGER},
+      sms_withdraw_sus = #{smsWithdrawSus,jdbcType=INTEGER},
+      sms_withdraw_fail = #{smsWithdrawFail,jdbcType=INTEGER},
+      sms_order_reject = #{smsOrderReject,jdbcType=INTEGER},
+      sms_confirm_order = #{smsConfirmOrder,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.PmsGoodsMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.PmsGoods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="cate_pid" jdbcType="INTEGER" property="catePid" />
+    <result column="cate_tid" jdbcType="INTEGER" property="cateTid" />
+    <result column="cate_id" jdbcType="INTEGER" property="cateId" />
+    <result column="shop_cate_id" jdbcType="INTEGER" property="shopCateId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="main_img" jdbcType="VARCHAR" property="mainImg" />
+    <result column="main_video" jdbcType="VARCHAR" property="mainVideo" />
+    <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="stock_type" jdbcType="INTEGER" property="stockType" />
+    <result column="freight_template_id" jdbcType="INTEGER" property="freightTemplateId" />
+    <result column="point_num" jdbcType="INTEGER" property="pointNum" />
+    <result column="sell_num" jdbcType="INTEGER" property="sellNum" />
+    <result column="pay_num" jdbcType="INTEGER" property="payNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="good_comment_num" jdbcType="INTEGER" property="goodCommentNum" />
+    <result column="bad_comment_num" jdbcType="INTEGER" property="badCommentNum" />
+    <result column="collection_num" jdbcType="INTEGER" property="collectionNum" />
+    <result column="group_type" jdbcType="INTEGER" property="groupType" />
+    <result column="group_num" jdbcType="INTEGER" property="groupNum" />
+    <result column="group_limit_hours" jdbcType="INTEGER" property="groupLimitHours" />
+    <result column="group_limit_buy" jdbcType="INTEGER" property="groupLimitBuy" />
+    <result column="group_single_buy" jdbcType="INTEGER" property="groupSingleBuy" />
+    <result column="seckill_begin_time" jdbcType="TIMESTAMP" property="seckillBeginTime" />
+    <result column="seckill_end_time" jdbcType="TIMESTAMP" property="seckillEndTime" />
+    <result column="seckill_limit_num" jdbcType="INTEGER" property="seckillLimitNum" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chengyu.core.model.PmsGoods">
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, shop_id, shop_name, cate_pid, cate_tid, cate_id, shop_cate_id, type, title, description, 
+    main_img, main_video, goods_img, sort, weight, status, stock_type, freight_template_id, 
+    point_num, sell_num, pay_num, comment_num, good_comment_num, bad_comment_num, collection_num, 
+    group_type, group_num, group_limit_hours, group_limit_buy, group_single_buy, seckill_begin_time, 
+    seckill_end_time, seckill_limit_num, add_time, add_by, upd_time, upd_by
+  </sql>
+  <sql id="Blob_Column_List">
+    detail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.chengyu.core.model.PmsGoodsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pms_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.PmsGoodsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pms_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pms_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pms_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.PmsGoodsExample">
+    delete from pms_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.PmsGoods">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pms_goods (shop_id, shop_name, cate_pid, 
+      cate_tid, cate_id, shop_cate_id, 
+      type, title, description, 
+      main_img, main_video, goods_img, 
+      sort, weight, status, 
+      stock_type, freight_template_id, point_num, 
+      sell_num, pay_num, comment_num, 
+      good_comment_num, bad_comment_num, collection_num, 
+      group_type, group_num, group_limit_hours, 
+      group_limit_buy, group_single_buy, seckill_begin_time, 
+      seckill_end_time, seckill_limit_num, add_time, 
+      add_by, upd_time, upd_by, 
+      detail)
+    values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{catePid,jdbcType=INTEGER}, 
+      #{cateTid,jdbcType=INTEGER}, #{cateId,jdbcType=INTEGER}, #{shopCateId,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{mainImg,jdbcType=VARCHAR}, #{mainVideo,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{stockType,jdbcType=INTEGER}, #{freightTemplateId,jdbcType=INTEGER}, #{pointNum,jdbcType=INTEGER}, 
+      #{sellNum,jdbcType=INTEGER}, #{payNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
+      #{goodCommentNum,jdbcType=INTEGER}, #{badCommentNum,jdbcType=INTEGER}, #{collectionNum,jdbcType=INTEGER}, 
+      #{groupType,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, #{groupLimitHours,jdbcType=INTEGER}, 
+      #{groupLimitBuy,jdbcType=INTEGER}, #{groupSingleBuy,jdbcType=INTEGER}, #{seckillBeginTime,jdbcType=TIMESTAMP}, 
+      #{seckillEndTime,jdbcType=TIMESTAMP}, #{seckillLimitNum,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.PmsGoods">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pms_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="catePid != null">
+        cate_pid,
+      </if>
+      <if test="cateTid != null">
+        cate_tid,
+      </if>
+      <if test="cateId != null">
+        cate_id,
+      </if>
+      <if test="shopCateId != null">
+        shop_cate_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="mainImg != null">
+        main_img,
+      </if>
+      <if test="mainVideo != null">
+        main_video,
+      </if>
+      <if test="goodsImg != null">
+        goods_img,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="stockType != null">
+        stock_type,
+      </if>
+      <if test="freightTemplateId != null">
+        freight_template_id,
+      </if>
+      <if test="pointNum != null">
+        point_num,
+      </if>
+      <if test="sellNum != null">
+        sell_num,
+      </if>
+      <if test="payNum != null">
+        pay_num,
+      </if>
+      <if test="commentNum != null">
+        comment_num,
+      </if>
+      <if test="goodCommentNum != null">
+        good_comment_num,
+      </if>
+      <if test="badCommentNum != null">
+        bad_comment_num,
+      </if>
+      <if test="collectionNum != null">
+        collection_num,
+      </if>
+      <if test="groupType != null">
+        group_type,
+      </if>
+      <if test="groupNum != null">
+        group_num,
+      </if>
+      <if test="groupLimitHours != null">
+        group_limit_hours,
+      </if>
+      <if test="groupLimitBuy != null">
+        group_limit_buy,
+      </if>
+      <if test="groupSingleBuy != null">
+        group_single_buy,
+      </if>
+      <if test="seckillBeginTime != null">
+        seckill_begin_time,
+      </if>
+      <if test="seckillEndTime != null">
+        seckill_end_time,
+      </if>
+      <if test="seckillLimitNum != null">
+        seckill_limit_num,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addBy != null">
+        add_by,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+      <if test="updBy != null">
+        upd_by,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="catePid != null">
+        #{catePid,jdbcType=INTEGER},
+      </if>
+      <if test="cateTid != null">
+        #{cateTid,jdbcType=INTEGER},
+      </if>
+      <if test="cateId != null">
+        #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="shopCateId != null">
+        #{shopCateId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImg != null">
+        #{mainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="mainVideo != null">
+        #{mainVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImg != null">
+        #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="stockType != null">
+        #{stockType,jdbcType=INTEGER},
+      </if>
+      <if test="freightTemplateId != null">
+        #{freightTemplateId,jdbcType=INTEGER},
+      </if>
+      <if test="pointNum != null">
+        #{pointNum,jdbcType=INTEGER},
+      </if>
+      <if test="sellNum != null">
+        #{sellNum,jdbcType=INTEGER},
+      </if>
+      <if test="payNum != null">
+        #{payNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodCommentNum != null">
+        #{goodCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="badCommentNum != null">
+        #{badCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectionNum != null">
+        #{collectionNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupType != null">
+        #{groupType,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null">
+        #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupLimitHours != null">
+        #{groupLimitHours,jdbcType=INTEGER},
+      </if>
+      <if test="groupLimitBuy != null">
+        #{groupLimitBuy,jdbcType=INTEGER},
+      </if>
+      <if test="groupSingleBuy != null">
+        #{groupSingleBuy,jdbcType=INTEGER},
+      </if>
+      <if test="seckillBeginTime != null">
+        #{seckillBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seckillEndTime != null">
+        #{seckillEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seckillLimitNum != null">
+        #{seckillLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.PmsGoodsExample" resultType="java.lang.Long">
+    select count(*) from pms_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pms_goods
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catePid != null">
+        cate_pid = #{record.catePid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cateTid != null">
+        cate_tid = #{record.cateTid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cateId != null">
+        cate_id = #{record.cateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopCateId != null">
+        shop_cate_id = #{record.shopCateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainImg != null">
+        main_img = #{record.mainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainVideo != null">
+        main_video = #{record.mainVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsImg != null">
+        goods_img = #{record.goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockType != null">
+        stock_type = #{record.stockType,jdbcType=INTEGER},
+      </if>
+      <if test="record.freightTemplateId != null">
+        freight_template_id = #{record.freightTemplateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointNum != null">
+        point_num = #{record.pointNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellNum != null">
+        sell_num = #{record.sellNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.payNum != null">
+        pay_num = #{record.payNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentNum != null">
+        comment_num = #{record.commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodCommentNum != null">
+        good_comment_num = #{record.goodCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.badCommentNum != null">
+        bad_comment_num = #{record.badCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectionNum != null">
+        collection_num = #{record.collectionNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupType != null">
+        group_type = #{record.groupType,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupNum != null">
+        group_num = #{record.groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupLimitHours != null">
+        group_limit_hours = #{record.groupLimitHours,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupLimitBuy != null">
+        group_limit_buy = #{record.groupLimitBuy,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupSingleBuy != null">
+        group_single_buy = #{record.groupSingleBuy,jdbcType=INTEGER},
+      </if>
+      <if test="record.seckillBeginTime != null">
+        seckill_begin_time = #{record.seckillBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.seckillEndTime != null">
+        seckill_end_time = #{record.seckillEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.seckillLimitNum != null">
+        seckill_limit_num = #{record.seckillLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addBy != null">
+        add_by = #{record.addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updBy != null">
+        upd_by = #{record.updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null">
+        detail = #{record.detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update pms_goods
+    set id = #{record.id,jdbcType=INTEGER},
+      shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      cate_pid = #{record.catePid,jdbcType=INTEGER},
+      cate_tid = #{record.cateTid,jdbcType=INTEGER},
+      cate_id = #{record.cateId,jdbcType=INTEGER},
+      shop_cate_id = #{record.shopCateId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      main_img = #{record.mainImg,jdbcType=VARCHAR},
+      main_video = #{record.mainVideo,jdbcType=VARCHAR},
+      goods_img = #{record.goodsImg,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      stock_type = #{record.stockType,jdbcType=INTEGER},
+      freight_template_id = #{record.freightTemplateId,jdbcType=INTEGER},
+      point_num = #{record.pointNum,jdbcType=INTEGER},
+      sell_num = #{record.sellNum,jdbcType=INTEGER},
+      pay_num = #{record.payNum,jdbcType=INTEGER},
+      comment_num = #{record.commentNum,jdbcType=INTEGER},
+      good_comment_num = #{record.goodCommentNum,jdbcType=INTEGER},
+      bad_comment_num = #{record.badCommentNum,jdbcType=INTEGER},
+      collection_num = #{record.collectionNum,jdbcType=INTEGER},
+      group_type = #{record.groupType,jdbcType=INTEGER},
+      group_num = #{record.groupNum,jdbcType=INTEGER},
+      group_limit_hours = #{record.groupLimitHours,jdbcType=INTEGER},
+      group_limit_buy = #{record.groupLimitBuy,jdbcType=INTEGER},
+      group_single_buy = #{record.groupSingleBuy,jdbcType=INTEGER},
+      seckill_begin_time = #{record.seckillBeginTime,jdbcType=TIMESTAMP},
+      seckill_end_time = #{record.seckillEndTime,jdbcType=TIMESTAMP},
+      seckill_limit_num = #{record.seckillLimitNum,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pms_goods
+    set id = #{record.id,jdbcType=INTEGER},
+      shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      cate_pid = #{record.catePid,jdbcType=INTEGER},
+      cate_tid = #{record.cateTid,jdbcType=INTEGER},
+      cate_id = #{record.cateId,jdbcType=INTEGER},
+      shop_cate_id = #{record.shopCateId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      main_img = #{record.mainImg,jdbcType=VARCHAR},
+      main_video = #{record.mainVideo,jdbcType=VARCHAR},
+      goods_img = #{record.goodsImg,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      stock_type = #{record.stockType,jdbcType=INTEGER},
+      freight_template_id = #{record.freightTemplateId,jdbcType=INTEGER},
+      point_num = #{record.pointNum,jdbcType=INTEGER},
+      sell_num = #{record.sellNum,jdbcType=INTEGER},
+      pay_num = #{record.payNum,jdbcType=INTEGER},
+      comment_num = #{record.commentNum,jdbcType=INTEGER},
+      good_comment_num = #{record.goodCommentNum,jdbcType=INTEGER},
+      bad_comment_num = #{record.badCommentNum,jdbcType=INTEGER},
+      collection_num = #{record.collectionNum,jdbcType=INTEGER},
+      group_type = #{record.groupType,jdbcType=INTEGER},
+      group_num = #{record.groupNum,jdbcType=INTEGER},
+      group_limit_hours = #{record.groupLimitHours,jdbcType=INTEGER},
+      group_limit_buy = #{record.groupLimitBuy,jdbcType=INTEGER},
+      group_single_buy = #{record.groupSingleBuy,jdbcType=INTEGER},
+      seckill_begin_time = #{record.seckillBeginTime,jdbcType=TIMESTAMP},
+      seckill_end_time = #{record.seckillEndTime,jdbcType=TIMESTAMP},
+      seckill_limit_num = #{record.seckillLimitNum,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      add_by = #{record.addBy,jdbcType=VARCHAR},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      upd_by = #{record.updBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.PmsGoods">
+    update pms_goods
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="catePid != null">
+        cate_pid = #{catePid,jdbcType=INTEGER},
+      </if>
+      <if test="cateTid != null">
+        cate_tid = #{cateTid,jdbcType=INTEGER},
+      </if>
+      <if test="cateId != null">
+        cate_id = #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="shopCateId != null">
+        shop_cate_id = #{shopCateId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImg != null">
+        main_img = #{mainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="mainVideo != null">
+        main_video = #{mainVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImg != null">
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="stockType != null">
+        stock_type = #{stockType,jdbcType=INTEGER},
+      </if>
+      <if test="freightTemplateId != null">
+        freight_template_id = #{freightTemplateId,jdbcType=INTEGER},
+      </if>
+      <if test="pointNum != null">
+        point_num = #{pointNum,jdbcType=INTEGER},
+      </if>
+      <if test="sellNum != null">
+        sell_num = #{sellNum,jdbcType=INTEGER},
+      </if>
+      <if test="payNum != null">
+        pay_num = #{payNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        comment_num = #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodCommentNum != null">
+        good_comment_num = #{goodCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="badCommentNum != null">
+        bad_comment_num = #{badCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectionNum != null">
+        collection_num = #{collectionNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupType != null">
+        group_type = #{groupType,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null">
+        group_num = #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupLimitHours != null">
+        group_limit_hours = #{groupLimitHours,jdbcType=INTEGER},
+      </if>
+      <if test="groupLimitBuy != null">
+        group_limit_buy = #{groupLimitBuy,jdbcType=INTEGER},
+      </if>
+      <if test="groupSingleBuy != null">
+        group_single_buy = #{groupSingleBuy,jdbcType=INTEGER},
+      </if>
+      <if test="seckillBeginTime != null">
+        seckill_begin_time = #{seckillBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seckillEndTime != null">
+        seckill_end_time = #{seckillEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seckillLimitNum != null">
+        seckill_limit_num = #{seckillLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addBy != null">
+        add_by = #{addBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updBy != null">
+        upd_by = #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chengyu.core.model.PmsGoods">
+    update pms_goods
+    set shop_id = #{shopId,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      cate_pid = #{catePid,jdbcType=INTEGER},
+      cate_tid = #{cateTid,jdbcType=INTEGER},
+      cate_id = #{cateId,jdbcType=INTEGER},
+      shop_cate_id = #{shopCateId,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      main_img = #{mainImg,jdbcType=VARCHAR},
+      main_video = #{mainVideo,jdbcType=VARCHAR},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      stock_type = #{stockType,jdbcType=INTEGER},
+      freight_template_id = #{freightTemplateId,jdbcType=INTEGER},
+      point_num = #{pointNum,jdbcType=INTEGER},
+      sell_num = #{sellNum,jdbcType=INTEGER},
+      pay_num = #{payNum,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      good_comment_num = #{goodCommentNum,jdbcType=INTEGER},
+      bad_comment_num = #{badCommentNum,jdbcType=INTEGER},
+      collection_num = #{collectionNum,jdbcType=INTEGER},
+      group_type = #{groupType,jdbcType=INTEGER},
+      group_num = #{groupNum,jdbcType=INTEGER},
+      group_limit_hours = #{groupLimitHours,jdbcType=INTEGER},
+      group_limit_buy = #{groupLimitBuy,jdbcType=INTEGER},
+      group_single_buy = #{groupSingleBuy,jdbcType=INTEGER},
+      seckill_begin_time = #{seckillBeginTime,jdbcType=TIMESTAMP},
+      seckill_end_time = #{seckillEndTime,jdbcType=TIMESTAMP},
+      seckill_limit_num = #{seckillLimitNum,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.PmsGoods">
+    update pms_goods
+    set shop_id = #{shopId,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      cate_pid = #{catePid,jdbcType=INTEGER},
+      cate_tid = #{cateTid,jdbcType=INTEGER},
+      cate_id = #{cateId,jdbcType=INTEGER},
+      shop_cate_id = #{shopCateId,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      main_img = #{mainImg,jdbcType=VARCHAR},
+      main_video = #{mainVideo,jdbcType=VARCHAR},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      stock_type = #{stockType,jdbcType=INTEGER},
+      freight_template_id = #{freightTemplateId,jdbcType=INTEGER},
+      point_num = #{pointNum,jdbcType=INTEGER},
+      sell_num = #{sellNum,jdbcType=INTEGER},
+      pay_num = #{payNum,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      good_comment_num = #{goodCommentNum,jdbcType=INTEGER},
+      bad_comment_num = #{badCommentNum,jdbcType=INTEGER},
+      collection_num = #{collectionNum,jdbcType=INTEGER},
+      group_type = #{groupType,jdbcType=INTEGER},
+      group_num = #{groupNum,jdbcType=INTEGER},
+      group_limit_hours = #{groupLimitHours,jdbcType=INTEGER},
+      group_limit_buy = #{groupLimitBuy,jdbcType=INTEGER},
+      group_single_buy = #{groupSingleBuy,jdbcType=INTEGER},
+      seckill_begin_time = #{seckillBeginTime,jdbcType=TIMESTAMP},
+      seckill_end_time = #{seckillEndTime,jdbcType=TIMESTAMP},
+      seckill_limit_num = #{seckillLimitNum,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=VARCHAR},
+      upd_time = #{updTime,jdbcType=TIMESTAMP},
+      upd_by = #{updBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

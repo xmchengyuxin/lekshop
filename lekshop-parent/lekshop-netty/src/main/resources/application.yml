@@ -1,0 +1,12 @@
+# netty配置
+netty:
+  tcp:
+    port: 8008
+  thread:
+    bosscount: 2
+    workercount: 2
+  so:
+    keepalive: true
+    backlog: 1024
+logging:
+  path: C:/java/prod/jar/logs

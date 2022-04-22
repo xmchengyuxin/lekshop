@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.PmsGoodsSkuMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.PmsGoodsSku">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="attr_symbol_path" jdbcType="VARCHAR" property="attrSymbolPath" />
+    <result column="stock_no" jdbcType="VARCHAR" property="stockNo" />
+    <result column="ori_price" jdbcType="DECIMAL" property="oriPrice" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goods_id, attr_symbol_path, stock_no, ori_price, price, stock, weight, img
+  </sql>
+  <select id="selectByExample" parameterType="com.chengyu.core.model.PmsGoodsSkuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pms_goods_sku
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pms_goods_sku
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pms_goods_sku
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.PmsGoodsSkuExample">
+    delete from pms_goods_sku
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chengyu.core.model.PmsGoodsSku">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pms_goods_sku (goods_id, attr_symbol_path, stock_no, 
+      ori_price, price, stock, 
+      weight, img)
+    values (#{goodsId,jdbcType=INTEGER}, #{attrSymbolPath,jdbcType=VARCHAR}, #{stockNo,jdbcType=VARCHAR}, 
+      #{oriPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, 
+      #{weight,jdbcType=DECIMAL}, #{img,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.PmsGoodsSku">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pms_goods_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="attrSymbolPath != null">
+        attr_symbol_path,
+      </if>
+      <if test="stockNo != null">
+        stock_no,
+      </if>
+      <if test="oriPrice != null">
+        ori_price,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="stock != null">
+        stock,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="attrSymbolPath != null">
+        #{attrSymbolPath,jdbcType=VARCHAR},
+      </if>
+      <if test="stockNo != null">
+        #{stockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oriPrice != null">
+        #{oriPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chengyu.core.model.PmsGoodsSkuExample" resultType="java.lang.Long">
+    select count(*) from pms_goods_sku
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pms_goods_sku
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrSymbolPath != null">
+        attr_symbol_path = #{record.attrSymbolPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockNo != null">
+        stock_no = #{record.stockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oriPrice != null">
+        ori_price = #{record.oriPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stock != null">
+        stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.img != null">
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pms_goods_sku
+    set id = #{record.id,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      attr_symbol_path = #{record.attrSymbolPath,jdbcType=VARCHAR},
+      stock_no = #{record.stockNo,jdbcType=VARCHAR},
+      ori_price = #{record.oriPrice,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=DECIMAL},
+      stock = #{record.stock,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=DECIMAL},
+      img = #{record.img,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.PmsGoodsSku">
+    update pms_goods_sku
+    <set>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="attrSymbolPath != null">
+        attr_symbol_path = #{attrSymbolPath,jdbcType=VARCHAR},
+      </if>
+      <if test="stockNo != null">
+        stock_no = #{stockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oriPrice != null">
+        ori_price = #{oriPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.PmsGoodsSku">
+    update pms_goods_sku
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      attr_symbol_path = #{attrSymbolPath,jdbcType=VARCHAR},
+      stock_no = #{stockNo,jdbcType=VARCHAR},
+      ori_price = #{oriPrice,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      stock = #{stock,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DECIMAL},
+      img = #{img,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

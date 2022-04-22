@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.chengyu.lekshop</groupId>
+    <artifactId>lekshop-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>lekshop-service</name>
+    <description>统一接口包</description>
+
+    <parent>
+        <groupId>com.chengyu.lekshop</groupId>
+        <artifactId>lekshop-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+    	 <dependency>
+            <groupId>com.chengyu.lekshop</groupId>
+            <artifactId>lekshop-common</artifactId>
+        </dependency>
+        
+         <dependency>
+            <groupId>com.chengyu.lekshop</groupId>
+            <artifactId>lekshop-mbg</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.chengyu.lekshop</groupId>
+            <artifactId>lekshop-security</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <!--redis依赖配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        
+        <dependency>
+		     <groupId>com.qiniu</groupId>
+		     <artifactId>qiniu-java-sdk</artifactId>
+		</dependency>
+		
+		<!-- 阿里SDK -->
+		<dependency>
+	    <groupId>com.aliyun</groupId>
+		    <artifactId>aliyun-java-sdk-core</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.aliyun</groupId>
+		    <artifactId>aliyun-java-sdk-ecs</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>com.alipay.sdk</groupId>
+		  <artifactId>alipay-sdk-java</artifactId>
+		</dependency>
+		
+		<!-- xml转实体 -->
+		<dependency>
+		 <groupId>xpp3</groupId>
+		 <artifactId>xpp3_min</artifactId>
+		</dependency>
+		<dependency>
+		 <groupId>com.thoughtworks.xstream</groupId>
+		 <artifactId>xstream</artifactId>
+		</dependency>
+		
+		<!-- 极光推送 -->
+		<dependency>
+		    <groupId>cn.jpush.api</groupId>
+		    <artifactId>jpush-client</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>cn.jpush.api</groupId>
+		    <artifactId>jmessage-client</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>cn.jpush.api</groupId>
+		    <artifactId>jiguang-common</artifactId>
+		</dependency>
+	    <dependency>
+	        <groupId>io.netty</groupId>
+	        <artifactId>netty-all</artifactId>
+	    </dependency>
+	    
+	    <!-- 微信支付 -->
+	    <dependency>
+            <groupId>com.github.wxpay</groupId>
+            <artifactId>wxpay-sdk</artifactId>
+        </dependency>
+		
+		<dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+       	</dependency>
+       	
+       	<dependency>
+		    <groupId>com.github.wechatpay-apiv3</groupId>
+		    <artifactId>wechatpay-apache-httpclient</artifactId>
+		</dependency>
+        
+        <dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+		</dependency>
+        	
+        <!-- 百度AI智能识别 -->
+	    <dependency>
+		    <groupId>com.baidu.aip</groupId>
+		    <artifactId>java-sdk</artifactId>
+		</dependency>
+		
+		<!--SpringBoot集成QuartZ-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
+
+		<!--Kaptcha是一个基于SimpleCaptcha的验证码开源项目-->
+		<dependency>
+			<groupId>com.github.penggle</groupId>
+			<artifactId>kaptcha</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>

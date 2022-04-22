@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomAdminIndexMapper">
+	
+	<!-- 会员数量,今日注册,接手数量,商家数量 -->
+	<select id="countMember" resultType="java.util.Map">
+	    select
+	      	count(*) totalNum,
+	      	count((to_days(add_time) = to_days(now())) or null) todayMemberNum,
+	      	count((type = 1) or null) buyerNum,
+	      	count((type = 2) or null) sellerNum
+      	from ums_member
+      	where status = '1'
+	</select>
+
+	<!-- 统计最近10天的数据 -->
+	<select id="countMemberNumByLastTenDays" resultType="java.util.Map">
+		select
+			date(add_time) addTime, COUNT(*) num
+		from ums_member
+		where status = '1'
+		  and DATE_SUB(CURDATE(), INTERVAL 10 DAY) &lt;= date(add_time)
+		GROUP BY date(add_time) order by date(add_time) asc
+	</select>
+
+	<!-- 待审核身份证 -->
+	<select id="countVerifyIdCardNum" resultType="java.util.Map">
+	    select
+	      	count(*) idcardVerifyNum
+      	from ums_member_realname
+      	where status = 0
+	</select>
+
+	<!-- 待审核银行卡 -->
+	<select id="countVerifyBankNum" resultType="java.util.Map">
+	    select
+	      	count(*) bankVerifyNum
+      	from ums_member_bank
+      	where status = 0
+	</select>
+
+	<!-- 待审核充值 -->
+	<select id="countVerifyRechargeNum" resultType="java.util.Map">
+	    select
+	      	count(*) rechargeVerifyNum
+      	from ums_member_recharge
+      	where status = '0'
+	</select>
+
+	<!-- 待审核提现 -->
+	<select id="countVerifyWithdrawNum" resultType="java.util.Map">
+	    select
+	      	count(*) withdrawVerifyNum
+      	from ums_member_withdraw
+      	where status = '0'
+	</select>
+
+	<!-- 充值总额 -->
+	<select id="countRechargeAmount" resultType="java.util.Map">
+	    select
+	    	ifnull(sum(real_amount),0) rechargeAmount
+      	from ums_member_recharge
+      	where status = '1'
+	</select>
+
+	<!-- 提现总额 -->
+	<select id="countWithdrawAmount" resultType="java.util.Map">
+	    select
+	      	ifnull(sum(total_amount),0) withdrawAmount
+      	from ums_member_withdraw
+      	where status = '1'
+	</select>
+
+	<!-- 用户账户金额 -->
+	<select id="countMemberAccount" resultType="java.util.Map">
+	    select
+	      	ifnull(sum(amount+freeze_amount),0) totalBalance,
+	      	ifnull(sum(mission+freeze_mission),0) totalMission,
+	      	ifnull(sum(spmission+freeze_spmission),0) totalSpmission
+      	from ums_member_account
+	</select>
+
+</mapper>

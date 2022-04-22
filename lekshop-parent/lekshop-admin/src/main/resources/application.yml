@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: dev #默认为开发环境
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: lekshop-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: Bearer  #JWT负载中拿到开头
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /doc.html
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /druid/**
+      - /actuator/**
+      - /sso/**
+      - /home/**
+      - /common/**
+      - /common/**/**
+      - /common/**/**/**
+      - /system/common/login
+      - /system/getWebInfo
+      - /system/upload
+      - /system/uploadVideo
+      - /system/beat
+
