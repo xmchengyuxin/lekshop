@@ -10,13 +10,7 @@ import java.util.List;
 @Setter
 public class BaseSearchForm {
 
-	private Integer subId;
-
 	private String keyword;
-
-	private Integer agentId;
-
-	private Integer staffId;
 
 	private Integer status;
 

@@ -54,42 +54,6 @@ public enum RedisEnums {
 	 */
 	APPROVE_CONFIG_KEY("rds-sys-approveConfig"),
 	/**
-	 * 淘发客缓存key
-	 */
-	TAOFAKE_CONFIG_KEY("rds-sys-taofakeConfig"),
-	/**
-	 * V兔工具缓存key
-	 */
-	VRABBIT_CONFIG_KEY("rds-sys-vrabbitConfig"),
-	/**
-	 * 小飞象缓存key
-	 */
-	XIAOFEIXIANG_CONFIG_KEY("rds-sys-xiaofeixiangConfig"),
-	/**
-	 * 丰巢缓存key
-	 */
-	FENGCHAO_CONFIG_KEY("rds-sys-fengchaoConfig"),
-	/**
-	 * 礼品缓存key
-	 */
-	GIFT_CONFIG_KEY("rds-sys-giftConfig"),
-	/**
-	 * 淘宝智能助手缓存key
-	 */
-	TB_ASSISTANT_CONFIG_KEY("rds-sys-tbAssistantConfig"),
-	/**
-	 * 查电商缓存key
-	 */
-	CHADIANSHANG_CONFIG_KEY("rds-sys-chadianshangConfig"),
-	/**
-	 * 订单侠缓存key
-	 */
-	DINGDANXIA_CONFIG_KEY("rds-sys-dingdanxiaConfig"),
-	/**
-	 * 京东万象缓存key
-	 */
-	JDWX_CONFIG_KEY("rds-sys-jdwxConfig"),
-	/**
 	 * 极光配置缓存key
 	 */
 	JIGUANG_CONFIG_KEY("rds-sys-jiguangConfig"),
@@ -98,10 +62,6 @@ public enum RedisEnums {
 	 */
 	MEMBER_GROUP_KEY("rds-ums-memberGroup"),
 	/**
-	 * 充值卡缓存key
-	 */
-	RECHARGE_CARD("rds-config-rechargeCard"),
-	/**
 	 * 公众号配置缓存key
 	 */
 	GZH_CONFIG("rds-config-gzh"),
@@ -109,18 +69,6 @@ public enum RedisEnums {
 	 * 电商网站类别缓存key
 	 */
 	SHOP_CATE("rds-config-shopCate"),
-	/**
-	 * 商品标签缓存key
-	 */
-	SHOP_TARGET("rds-config-shopTarget"),
-	/**
-	 * 已选任务缓存key
-	 */
-	TASK_CHECKED("rds-task-checked"),
-	/**
-	 * 待匹配任务缓存key
-	 */
-	TASK_WAIT_GRAB("rds-task-wait-grab"),
 	/**
 	 * 微信模板消息
 	 */
@@ -134,17 +82,13 @@ public enum RedisEnums {
 	 */
 	THIRD_WARN("rds-third-warn"),
 	/**
-	 * 接单配置
-	 */
-	CONFIG_TASK_BUY("rds-ConfigTaskBuy"),
-	/**
-	 * 绑定买号配置
-	 */
-	CONFIG_BUYER("rds-ConfigBuyer"),
-	/**
 	 * 订单配置
 	 */
-	CONFIG_ORDER("rds-ConfigOrder");
+	CONFIG_ORDER("rds-ConfigOrder"),
+	/**
+	 * 店铺服务
+	 */
+	SHOP_SERVICE("rds-ShopService");
 
 	private final String key;
 
