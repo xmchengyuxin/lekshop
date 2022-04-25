@@ -355,6 +355,66 @@ public class UmsShopConfigExample {
             return (Criteria) this;
         }
 
+        public Criteria andDeliveryFeeTypeIsNull() {
+            addCriterion("delivery_fee_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeIsNotNull() {
+            addCriterion("delivery_fee_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeEqualTo(Integer value) {
+            addCriterion("delivery_fee_type =", value, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeNotEqualTo(Integer value) {
+            addCriterion("delivery_fee_type <>", value, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeGreaterThan(Integer value) {
+            addCriterion("delivery_fee_type >", value, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("delivery_fee_type >=", value, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeLessThan(Integer value) {
+            addCriterion("delivery_fee_type <", value, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("delivery_fee_type <=", value, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeIn(List<Integer> values) {
+            addCriterion("delivery_fee_type in", values, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeNotIn(List<Integer> values) {
+            addCriterion("delivery_fee_type not in", values, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeBetween(Integer value1, Integer value2) {
+            addCriterion("delivery_fee_type between", value1, value2, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeliveryFeeTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("delivery_fee_type not between", value1, value2, "deliveryFeeType");
+            return (Criteria) this;
+        }
+
         public Criteria andWelcomeIsNull() {
             addCriterion("welcome is null");
             return (Criteria) this;

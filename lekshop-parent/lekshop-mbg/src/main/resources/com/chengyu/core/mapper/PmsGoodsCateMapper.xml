@@ -8,7 +8,6 @@
     <result column="img" jdbcType="VARCHAR" property="img" />
     <result column="target" jdbcType="VARCHAR" property="target" />
     <result column="pid" jdbcType="INTEGER" property="pid" />
-    <result column="tid" jdbcType="INTEGER" property="tid" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
@@ -75,8 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, level, img, target, pid, tid, sort, status, add_time, add_by, upd_time, 
-    upd_by
+    id, name, level, img, target, pid, sort, status, add_time, add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.PmsGoodsCateExample" resultMap="BaseResultMap">
     select
@@ -113,11 +111,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into pms_goods_cate (name, level, img, 
-      target, pid, tid, sort, 
+      target, pid, sort, 
       status, add_time, add_by, 
       upd_time, upd_by)
     values (#{name,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, 
-      #{target,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{target,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
       #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR})
   </insert>
@@ -141,9 +139,6 @@
       </if>
       <if test="pid != null">
         pid,
-      </if>
-      <if test="tid != null">
-        tid,
       </if>
       <if test="sort != null">
         sort,
@@ -179,9 +174,6 @@
       </if>
       <if test="pid != null">
         #{pid,jdbcType=INTEGER},
-      </if>
-      <if test="tid != null">
-        #{tid,jdbcType=INTEGER},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
@@ -230,9 +222,6 @@
       <if test="record.pid != null">
         pid = #{record.pid,jdbcType=INTEGER},
       </if>
-      <if test="record.tid != null">
-        tid = #{record.tid,jdbcType=INTEGER},
-      </if>
       <if test="record.sort != null">
         sort = #{record.sort,jdbcType=INTEGER},
       </if>
@@ -264,7 +253,6 @@
       img = #{record.img,jdbcType=VARCHAR},
       target = #{record.target,jdbcType=VARCHAR},
       pid = #{record.pid,jdbcType=INTEGER},
-      tid = #{record.tid,jdbcType=INTEGER},
       sort = #{record.sort,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -292,9 +280,6 @@
       </if>
       <if test="pid != null">
         pid = #{pid,jdbcType=INTEGER},
-      </if>
-      <if test="tid != null">
-        tid = #{tid,jdbcType=INTEGER},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
@@ -324,7 +309,6 @@
       img = #{img,jdbcType=VARCHAR},
       target = #{target,jdbcType=VARCHAR},
       pid = #{pid,jdbcType=INTEGER},
-      tid = #{tid,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},

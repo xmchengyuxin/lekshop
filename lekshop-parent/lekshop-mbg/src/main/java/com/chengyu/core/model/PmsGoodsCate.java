@@ -23,9 +23,6 @@ public class PmsGoodsCate implements Serializable {
     @ApiModelProperty(value = "一级分类ID")
     private Integer pid;
 
-    @ApiModelProperty(value = "二级分类ID")
-    private Integer tid;
-
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
@@ -94,14 +91,6 @@ public class PmsGoodsCate implements Serializable {
         this.pid = pid;
     }
 
-    public Integer getTid() {
-        return tid;
-    }
-
-    public void setTid(Integer tid) {
-        this.tid = tid;
-    }
-
     public Integer getSort() {
         return sort;
     }
@@ -162,7 +151,6 @@ public class PmsGoodsCate implements Serializable {
         sb.append(", img=").append(img);
         sb.append(", target=").append(target);
         sb.append(", pid=").append(pid);
-        sb.append(", tid=").append(tid);
         sb.append(", sort=").append(sort);
         sb.append(", status=").append(status);
         sb.append(", addTime=").append(addTime);

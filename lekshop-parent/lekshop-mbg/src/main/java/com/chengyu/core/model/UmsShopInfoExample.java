@@ -565,6 +565,76 @@ public class UmsShopInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andBrandImgIsNull() {
+            addCriterion("brand_img is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgIsNotNull() {
+            addCriterion("brand_img is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgEqualTo(String value) {
+            addCriterion("brand_img =", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgNotEqualTo(String value) {
+            addCriterion("brand_img <>", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgGreaterThan(String value) {
+            addCriterion("brand_img >", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgGreaterThanOrEqualTo(String value) {
+            addCriterion("brand_img >=", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgLessThan(String value) {
+            addCriterion("brand_img <", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgLessThanOrEqualTo(String value) {
+            addCriterion("brand_img <=", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgLike(String value) {
+            addCriterion("brand_img like", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgNotLike(String value) {
+            addCriterion("brand_img not like", value, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgIn(List<String> values) {
+            addCriterion("brand_img in", values, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgNotIn(List<String> values) {
+            addCriterion("brand_img not in", values, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgBetween(String value1, String value2) {
+            addCriterion("brand_img between", value1, value2, "brandImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andBrandImgNotBetween(String value1, String value2) {
+            addCriterion("brand_img not between", value1, value2, "brandImg");
+            return (Criteria) this;
+        }
+
         public Criteria andPhoneIsNull() {
             addCriterion("phone is null");
             return (Criteria) this;

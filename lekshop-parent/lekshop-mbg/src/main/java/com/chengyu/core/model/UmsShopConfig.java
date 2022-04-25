@@ -17,6 +17,9 @@ public class UmsShopConfig implements Serializable {
     @ApiModelProperty(value = "类目样式>>1一级类目-大图>>2一级类目-九宫格>>3二级类目>>4多级类目样式")
     private Integer cateStyle;
 
+    @ApiModelProperty(value = "运费组合策略>>1运费叠加>>2以最低结算>>3以最高结算")
+    private Integer deliveryFeeType;
+
     @ApiModelProperty(value = "IM欢迎消息")
     private String welcome;
 
@@ -106,6 +109,14 @@ public class UmsShopConfig implements Serializable {
 
     public void setCateStyle(Integer cateStyle) {
         this.cateStyle = cateStyle;
+    }
+
+    public Integer getDeliveryFeeType() {
+        return deliveryFeeType;
+    }
+
+    public void setDeliveryFeeType(Integer deliveryFeeType) {
+        this.deliveryFeeType = deliveryFeeType;
     }
 
     public String getWelcome() {
@@ -270,6 +281,7 @@ public class UmsShopConfig implements Serializable {
         sb.append(", shopId=").append(shopId);
         sb.append(", shopName=").append(shopName);
         sb.append(", cateStyle=").append(cateStyle);
+        sb.append(", deliveryFeeType=").append(deliveryFeeType);
         sb.append(", welcome=").append(welcome);
         sb.append(", kdPrint=").append(kdPrint);
         sb.append(", kdDelivery=").append(kdDelivery);

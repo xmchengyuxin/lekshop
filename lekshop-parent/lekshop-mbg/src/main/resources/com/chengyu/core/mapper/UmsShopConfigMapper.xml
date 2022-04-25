@@ -6,6 +6,7 @@
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
     <result column="cate_style" jdbcType="INTEGER" property="cateStyle" />
+    <result column="delivery_fee_type" jdbcType="INTEGER" property="deliveryFeeType" />
     <result column="welcome" jdbcType="VARCHAR" property="welcome" />
     <result column="kd_print" jdbcType="INTEGER" property="kdPrint" />
     <result column="kd_delivery" jdbcType="INTEGER" property="kdDelivery" />
@@ -85,10 +86,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, shop_id, shop_name, cate_style, welcome, kd_print, kd_delivery, kd_secret, kd_key, 
-    kd_account, kd_password, kd_equipment_id, kd_template_id, send_name, send_phone, 
-    send_address, return_name, return_phone, return_address, add_time, add_by, upd_time, 
-    upd_by
+    id, shop_id, shop_name, cate_style, delivery_fee_type, welcome, kd_print, kd_delivery, 
+    kd_secret, kd_key, kd_account, kd_password, kd_equipment_id, kd_template_id, send_name, 
+    send_phone, send_address, return_name, return_phone, return_address, add_time, add_by, 
+    upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.UmsShopConfigExample" resultMap="BaseResultMap">
     select
@@ -125,21 +126,21 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_shop_config (shop_id, shop_name, cate_style, 
-      welcome, kd_print, kd_delivery, 
-      kd_secret, kd_key, kd_account, 
-      kd_password, kd_equipment_id, kd_template_id, 
-      send_name, send_phone, send_address, 
-      return_name, return_phone, return_address, 
-      add_time, add_by, upd_time, 
-      upd_by)
+      delivery_fee_type, welcome, kd_print, 
+      kd_delivery, kd_secret, kd_key, 
+      kd_account, kd_password, kd_equipment_id, 
+      kd_template_id, send_name, send_phone, 
+      send_address, return_name, return_phone, 
+      return_address, add_time, add_by, 
+      upd_time, upd_by)
     values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{cateStyle,jdbcType=INTEGER}, 
-      #{welcome,jdbcType=VARCHAR}, #{kdPrint,jdbcType=INTEGER}, #{kdDelivery,jdbcType=INTEGER}, 
-      #{kdSecret,jdbcType=VARCHAR}, #{kdKey,jdbcType=VARCHAR}, #{kdAccount,jdbcType=VARCHAR}, 
-      #{kdPassword,jdbcType=VARCHAR}, #{kdEquipmentId,jdbcType=VARCHAR}, #{kdTemplateId,jdbcType=VARCHAR}, 
-      #{sendName,jdbcType=VARCHAR}, #{sendPhone,jdbcType=VARCHAR}, #{sendAddress,jdbcType=VARCHAR}, 
-      #{returnName,jdbcType=VARCHAR}, #{returnPhone,jdbcType=VARCHAR}, #{returnAddress,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
-      #{updBy,jdbcType=VARCHAR})
+      #{deliveryFeeType,jdbcType=INTEGER}, #{welcome,jdbcType=VARCHAR}, #{kdPrint,jdbcType=INTEGER}, 
+      #{kdDelivery,jdbcType=INTEGER}, #{kdSecret,jdbcType=VARCHAR}, #{kdKey,jdbcType=VARCHAR}, 
+      #{kdAccount,jdbcType=VARCHAR}, #{kdPassword,jdbcType=VARCHAR}, #{kdEquipmentId,jdbcType=VARCHAR}, 
+      #{kdTemplateId,jdbcType=VARCHAR}, #{sendName,jdbcType=VARCHAR}, #{sendPhone,jdbcType=VARCHAR}, 
+      #{sendAddress,jdbcType=VARCHAR}, #{returnName,jdbcType=VARCHAR}, #{returnPhone,jdbcType=VARCHAR}, 
+      #{returnAddress,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsShopConfig">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -155,6 +156,9 @@
       </if>
       <if test="cateStyle != null">
         cate_style,
+      </if>
+      <if test="deliveryFeeType != null">
+        delivery_fee_type,
       </if>
       <if test="welcome != null">
         welcome,
@@ -223,6 +227,9 @@
       </if>
       <if test="cateStyle != null">
         #{cateStyle,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryFeeType != null">
+        #{deliveryFeeType,jdbcType=INTEGER},
       </if>
       <if test="welcome != null">
         #{welcome,jdbcType=VARCHAR},
@@ -304,6 +311,9 @@
       <if test="record.cateStyle != null">
         cate_style = #{record.cateStyle,jdbcType=INTEGER},
       </if>
+      <if test="record.deliveryFeeType != null">
+        delivery_fee_type = #{record.deliveryFeeType,jdbcType=INTEGER},
+      </if>
       <if test="record.welcome != null">
         welcome = #{record.welcome,jdbcType=VARCHAR},
       </if>
@@ -372,6 +382,7 @@
       shop_id = #{record.shopId,jdbcType=INTEGER},
       shop_name = #{record.shopName,jdbcType=VARCHAR},
       cate_style = #{record.cateStyle,jdbcType=INTEGER},
+      delivery_fee_type = #{record.deliveryFeeType,jdbcType=INTEGER},
       welcome = #{record.welcome,jdbcType=VARCHAR},
       kd_print = #{record.kdPrint,jdbcType=INTEGER},
       kd_delivery = #{record.kdDelivery,jdbcType=INTEGER},
@@ -406,6 +417,9 @@
       </if>
       <if test="cateStyle != null">
         cate_style = #{cateStyle,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryFeeType != null">
+        delivery_fee_type = #{deliveryFeeType,jdbcType=INTEGER},
       </if>
       <if test="welcome != null">
         welcome = #{welcome,jdbcType=VARCHAR},
@@ -472,6 +486,7 @@
     set shop_id = #{shopId,jdbcType=INTEGER},
       shop_name = #{shopName,jdbcType=VARCHAR},
       cate_style = #{cateStyle,jdbcType=INTEGER},
+      delivery_fee_type = #{deliveryFeeType,jdbcType=INTEGER},
       welcome = #{welcome,jdbcType=VARCHAR},
       kd_print = #{kdPrint,jdbcType=INTEGER},
       kd_delivery = #{kdDelivery,jdbcType=INTEGER},

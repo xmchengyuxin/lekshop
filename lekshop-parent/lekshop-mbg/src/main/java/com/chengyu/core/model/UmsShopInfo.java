@@ -26,6 +26,9 @@ public class UmsShopInfo implements Serializable {
     @ApiModelProperty(value = "证件图片")
     private String cardImg;
 
+    @ApiModelProperty(value = "商标证书")
+    private String brandImg;
+
     @ApiModelProperty(value = "手机号")
     private String phone;
 
@@ -133,6 +136,14 @@ public class UmsShopInfo implements Serializable {
 
     public void setCardImg(String cardImg) {
         this.cardImg = cardImg;
+    }
+
+    public String getBrandImg() {
+        return brandImg;
+    }
+
+    public void setBrandImg(String brandImg) {
+        this.brandImg = brandImg;
     }
 
     public String getPhone() {
@@ -292,6 +303,7 @@ public class UmsShopInfo implements Serializable {
         sb.append(", realname=").append(realname);
         sb.append(", idcard=").append(idcard);
         sb.append(", cardImg=").append(cardImg);
+        sb.append(", brandImg=").append(brandImg);
         sb.append(", phone=").append(phone);
         sb.append(", weixin=").append(weixin);
         sb.append(", name=").append(name);
