@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.getAllShopCoupons">
+
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.UmsShopCoupon">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="use_type" jdbcType="INTEGER" property="useType" />
+    <result column="use_goods_ids" jdbcType="VARCHAR" property="useGoodsIds" />
+    <result column="use_goods_cate_ids" jdbcType="VARCHAR" property="useGoodsCateIds" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="full_amount" jdbcType="DECIMAL" property="fullAmount" />
+    <result column="total_num" jdbcType="INTEGER" property="totalNum" />
+    <result column="draw_num" jdbcType="INTEGER" property="drawNum" />
+    <result column="limit_num" jdbcType="INTEGER" property="limitNum" />
+    <result column="validity_type" jdbcType="INTEGER" property="validityType" />
+    <result column="validity_days" jdbcType="INTEGER" property="validityDays" />
+    <result column="fixed_begin_date" jdbcType="DATE" property="fixedBeginDate" />
+    <result column="fixed_end_date" jdbcType="DATE" property="fixedEndDate" />
+    <result column="begin_date" jdbcType="DATE" property="beginDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="rules" jdbcType="VARCHAR" property="rules" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_by" jdbcType="VARCHAR" property="addBy" />
+    <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+    <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, shop_id, shop_name, name, type, use_type, use_goods_ids, use_goods_cate_ids,
+    amount, full_amount, total_num, draw_num, limit_num, validity_type, validity_days,
+    fixed_begin_date, fixed_end_date, begin_date, end_date, rules, status, add_time,
+    add_by, upd_time, upd_by
+  </sql>
+
+  <select id="getAllShopCoupons" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ums_shop_coupon
+    where shop_id = #{shopId} and use_type = 1
+    order by amount desc
+
+    union  all
+
+    select
+    <include refid="Base_Column_List" />
+    from ums_shop_coupon
+    where shop_id = #{shopId} and use_type = 2
+    <if test="goodsId != null">
+      and use_goods_ids like concat('%',#{goodsId},'%')
+    </if>
+    order by amount desc
+
+    union  all
+
+    select
+    <include refid="Base_Column_List" />
+    from ums_shop_coupon
+    where shop_id = #{shopId} and use_type = 3
+    <if test="goodsCateId != null">
+      and use_goods_cate_ids like concat('%',#{goodsCateId},'%')
+    </if>
+    order by amount desc
+
+  </select>
+</mapper>

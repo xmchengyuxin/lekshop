@@ -53,4 +53,77 @@ public class ShopEnums {
 		}
 	}
 
+	/**
+	 * 优惠券枚举
+	 */
+	@Getter
+	public enum CouponType{
+		/**满减券**/
+		FULL_REDUCE_COUPON(1),
+		/**折扣券**/
+		DISCOUNT_COUPON(2);
+
+		private final int value;
+
+		CouponType(int value){
+			this.value = value;
+		}
+	}
+
+	/**
+	 * 优惠券可用范围枚举
+	 */
+	@Getter
+	public enum CouponUseType{
+		/**全部商品**/
+		ALL_GOODS(1),
+		/**指定商品**/
+		SOME_GOODS(2),
+		/**指定分类**/
+		SOME_CATE(3);
+
+		private final int value;
+
+		CouponUseType(int value){
+			this.value = value;
+		}
+	}
+
+	/**
+	 * 优惠券有效时间类型
+	 */
+	@Getter
+	public enum CouponValidityType{
+		/**长期有效**/
+		LONG_TERM(1),
+		/**有限天数**/
+		LIMIT_DAYS(2),
+		/**固定时间**/
+		FIXED_TIME(3);
+
+		private final int value;
+
+		CouponValidityType(int value){
+			this.value = value;
+		}
+	}
+
+	/**
+	 * 优惠券有效时间类型
+	 */
+	@Getter
+	public enum CouponStatus{
+		/**发放中**/
+		SENDING(1),
+		/**已领完**/
+		END(2),
+		/**已过期**/
+		EXPIRED(3);
+
+		private final int value;
+
+		CouponStatus(int value){
+			this.value = value;
+		}
+	}
 }
