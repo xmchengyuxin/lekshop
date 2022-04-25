@@ -126,4 +126,23 @@ public class ShopEnums {
 			this.value = value;
 		}
 	}
+
+	/**
+	 * 计价方式
+	 */
+	@Getter
+	public enum FreightValuteType{
+		/**按件数**/
+		BY_NUMBER(1),
+		/**按重量**/
+		BY_WEIGHT(2),
+		/**按体积**/
+		BY_BULK(3);
+
+		private final int value;
+
+		FreightValuteType(int value){
+			this.value = value;
+		}
+	}
 }

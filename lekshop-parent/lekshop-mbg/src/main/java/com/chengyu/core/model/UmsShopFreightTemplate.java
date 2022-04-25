@@ -24,13 +24,13 @@ public class UmsShopFreightTemplate implements Serializable {
     private Integer valuteType;
 
     @ApiModelProperty(value = "首件(几件内运费)")
-    private Integer defaultFirstNum;
+    private BigDecimal defaultFirstNum;
 
     @ApiModelProperty(value = "首件价格(几件内运费为多少)")
     private BigDecimal defaultFirstPrice;
 
     @ApiModelProperty(value = "续件(每续几件运费)")
-    private Integer defaultSecondNum;
+    private BigDecimal defaultSecondNum;
 
     @ApiModelProperty(value = "续件价格(每续几件内运费为多少)")
     private BigDecimal defaultSecondPrice;
@@ -88,11 +88,11 @@ public class UmsShopFreightTemplate implements Serializable {
         this.valuteType = valuteType;
     }
 
-    public Integer getDefaultFirstNum() {
+    public BigDecimal getDefaultFirstNum() {
         return defaultFirstNum;
     }
 
-    public void setDefaultFirstNum(Integer defaultFirstNum) {
+    public void setDefaultFirstNum(BigDecimal defaultFirstNum) {
         this.defaultFirstNum = defaultFirstNum;
     }
 
@@ -104,11 +104,11 @@ public class UmsShopFreightTemplate implements Serializable {
         this.defaultFirstPrice = defaultFirstPrice;
     }
 
-    public Integer getDefaultSecondNum() {
+    public BigDecimal getDefaultSecondNum() {
         return defaultSecondNum;
     }
 
-    public void setDefaultSecondNum(Integer defaultSecondNum) {
+    public void setDefaultSecondNum(BigDecimal defaultSecondNum) {
         this.defaultSecondNum = defaultSecondNum;
     }
 

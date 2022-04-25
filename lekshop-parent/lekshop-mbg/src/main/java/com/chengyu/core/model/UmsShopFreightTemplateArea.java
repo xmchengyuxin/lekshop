@@ -12,13 +12,13 @@ public class UmsShopFreightTemplateArea implements Serializable {
     private Integer templateId;
 
     @ApiModelProperty(value = "首件(几件内运费)")
-    private Integer firstNum;
+    private BigDecimal firstNum;
 
     @ApiModelProperty(value = "首件价格(几件内运费为多少)")
     private BigDecimal firstPrice;
 
     @ApiModelProperty(value = "续件(每续几件运费)")
-    private Integer secondNum;
+    private BigDecimal secondNum;
 
     @ApiModelProperty(value = "续件价格(每续几件内运费为多少)")
     private BigDecimal secondPrice;
@@ -56,11 +56,11 @@ public class UmsShopFreightTemplateArea implements Serializable {
         this.templateId = templateId;
     }
 
-    public Integer getFirstNum() {
+    public BigDecimal getFirstNum() {
         return firstNum;
     }
 
-    public void setFirstNum(Integer firstNum) {
+    public void setFirstNum(BigDecimal firstNum) {
         this.firstNum = firstNum;
     }
 
@@ -72,11 +72,11 @@ public class UmsShopFreightTemplateArea implements Serializable {
         this.firstPrice = firstPrice;
     }
 
-    public Integer getSecondNum() {
+    public BigDecimal getSecondNum() {
         return secondNum;
     }
 
-    public void setSecondNum(Integer secondNum) {
+    public void setSecondNum(BigDecimal secondNum) {
         this.secondNum = secondNum;
     }
 

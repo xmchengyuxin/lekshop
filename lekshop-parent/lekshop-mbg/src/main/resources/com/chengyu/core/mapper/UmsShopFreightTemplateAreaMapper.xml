@@ -4,9 +4,9 @@
   <resultMap id="BaseResultMap" type="com.chengyu.core.model.UmsShopFreightTemplateArea">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="template_id" jdbcType="INTEGER" property="templateId" />
-    <result column="first_num" jdbcType="INTEGER" property="firstNum" />
+    <result column="first_num" jdbcType="DECIMAL" property="firstNum" />
     <result column="first_price" jdbcType="DECIMAL" property="firstPrice" />
-    <result column="second_num" jdbcType="INTEGER" property="secondNum" />
+    <result column="second_num" jdbcType="DECIMAL" property="secondNum" />
     <result column="second_price" jdbcType="DECIMAL" property="secondPrice" />
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="province_code" jdbcType="VARCHAR" property="provinceCode" />
@@ -115,8 +115,8 @@
       second_num, second_price, province, 
       province_code, city, city_code, 
       area, area_code)
-    values (#{templateId,jdbcType=INTEGER}, #{firstNum,jdbcType=INTEGER}, #{firstPrice,jdbcType=DECIMAL}, 
-      #{secondNum,jdbcType=INTEGER}, #{secondPrice,jdbcType=DECIMAL}, #{province,jdbcType=VARCHAR}, 
+    values (#{templateId,jdbcType=INTEGER}, #{firstNum,jdbcType=DECIMAL}, #{firstPrice,jdbcType=DECIMAL}, 
+      #{secondNum,jdbcType=DECIMAL}, #{secondPrice,jdbcType=DECIMAL}, #{province,jdbcType=VARCHAR}, 
       #{provinceCode,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR})
   </insert>
@@ -165,13 +165,13 @@
         #{templateId,jdbcType=INTEGER},
       </if>
       <if test="firstNum != null">
-        #{firstNum,jdbcType=INTEGER},
+        #{firstNum,jdbcType=DECIMAL},
       </if>
       <if test="firstPrice != null">
         #{firstPrice,jdbcType=DECIMAL},
       </if>
       <if test="secondNum != null">
-        #{secondNum,jdbcType=INTEGER},
+        #{secondNum,jdbcType=DECIMAL},
       </if>
       <if test="secondPrice != null">
         #{secondPrice,jdbcType=DECIMAL},
@@ -212,13 +212,13 @@
         template_id = #{record.templateId,jdbcType=INTEGER},
       </if>
       <if test="record.firstNum != null">
-        first_num = #{record.firstNum,jdbcType=INTEGER},
+        first_num = #{record.firstNum,jdbcType=DECIMAL},
       </if>
       <if test="record.firstPrice != null">
         first_price = #{record.firstPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.secondNum != null">
-        second_num = #{record.secondNum,jdbcType=INTEGER},
+        second_num = #{record.secondNum,jdbcType=DECIMAL},
       </if>
       <if test="record.secondPrice != null">
         second_price = #{record.secondPrice,jdbcType=DECIMAL},
@@ -250,9 +250,9 @@
     update ums_shop_freight_template_area
     set id = #{record.id,jdbcType=INTEGER},
       template_id = #{record.templateId,jdbcType=INTEGER},
-      first_num = #{record.firstNum,jdbcType=INTEGER},
+      first_num = #{record.firstNum,jdbcType=DECIMAL},
       first_price = #{record.firstPrice,jdbcType=DECIMAL},
-      second_num = #{record.secondNum,jdbcType=INTEGER},
+      second_num = #{record.secondNum,jdbcType=DECIMAL},
       second_price = #{record.secondPrice,jdbcType=DECIMAL},
       province = #{record.province,jdbcType=VARCHAR},
       province_code = #{record.provinceCode,jdbcType=VARCHAR},
@@ -271,13 +271,13 @@
         template_id = #{templateId,jdbcType=INTEGER},
       </if>
       <if test="firstNum != null">
-        first_num = #{firstNum,jdbcType=INTEGER},
+        first_num = #{firstNum,jdbcType=DECIMAL},
       </if>
       <if test="firstPrice != null">
         first_price = #{firstPrice,jdbcType=DECIMAL},
       </if>
       <if test="secondNum != null">
-        second_num = #{secondNum,jdbcType=INTEGER},
+        second_num = #{secondNum,jdbcType=DECIMAL},
       </if>
       <if test="secondPrice != null">
         second_price = #{secondPrice,jdbcType=DECIMAL},
@@ -306,9 +306,9 @@
   <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.UmsShopFreightTemplateArea">
     update ums_shop_freight_template_area
     set template_id = #{templateId,jdbcType=INTEGER},
-      first_num = #{firstNum,jdbcType=INTEGER},
+      first_num = #{firstNum,jdbcType=DECIMAL},
       first_price = #{firstPrice,jdbcType=DECIMAL},
-      second_num = #{secondNum,jdbcType=INTEGER},
+      second_num = #{secondNum,jdbcType=DECIMAL},
       second_price = #{secondPrice,jdbcType=DECIMAL},
       province = #{province,jdbcType=VARCHAR},
       province_code = #{provinceCode,jdbcType=VARCHAR},

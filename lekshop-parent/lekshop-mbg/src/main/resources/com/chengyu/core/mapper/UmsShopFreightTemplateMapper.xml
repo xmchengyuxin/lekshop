@@ -8,9 +8,9 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="valute_type" jdbcType="INTEGER" property="valuteType" />
-    <result column="default_first_num" jdbcType="INTEGER" property="defaultFirstNum" />
+    <result column="default_first_num" jdbcType="DECIMAL" property="defaultFirstNum" />
     <result column="default_first_price" jdbcType="DECIMAL" property="defaultFirstPrice" />
-    <result column="default_second_num" jdbcType="INTEGER" property="defaultSecondNum" />
+    <result column="default_second_num" jdbcType="DECIMAL" property="defaultSecondNum" />
     <result column="default_second_price" jdbcType="DECIMAL" property="defaultSecondPrice" />
     <result column="delivery_time" jdbcType="VARCHAR" property="deliveryTime" />
   </resultMap>
@@ -115,8 +115,8 @@
       default_first_price, default_second_num, default_second_price, 
       delivery_time)
     values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{valuteType,jdbcType=INTEGER}, #{defaultFirstNum,jdbcType=INTEGER}, 
-      #{defaultFirstPrice,jdbcType=DECIMAL}, #{defaultSecondNum,jdbcType=INTEGER}, #{defaultSecondPrice,jdbcType=DECIMAL}, 
+      #{type,jdbcType=INTEGER}, #{valuteType,jdbcType=INTEGER}, #{defaultFirstNum,jdbcType=DECIMAL}, 
+      #{defaultFirstPrice,jdbcType=DECIMAL}, #{defaultSecondNum,jdbcType=DECIMAL}, #{defaultSecondPrice,jdbcType=DECIMAL}, 
       #{deliveryTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsShopFreightTemplate">
@@ -173,13 +173,13 @@
         #{valuteType,jdbcType=INTEGER},
       </if>
       <if test="defaultFirstNum != null">
-        #{defaultFirstNum,jdbcType=INTEGER},
+        #{defaultFirstNum,jdbcType=DECIMAL},
       </if>
       <if test="defaultFirstPrice != null">
         #{defaultFirstPrice,jdbcType=DECIMAL},
       </if>
       <if test="defaultSecondNum != null">
-        #{defaultSecondNum,jdbcType=INTEGER},
+        #{defaultSecondNum,jdbcType=DECIMAL},
       </if>
       <if test="defaultSecondPrice != null">
         #{defaultSecondPrice,jdbcType=DECIMAL},
@@ -217,13 +217,13 @@
         valute_type = #{record.valuteType,jdbcType=INTEGER},
       </if>
       <if test="record.defaultFirstNum != null">
-        default_first_num = #{record.defaultFirstNum,jdbcType=INTEGER},
+        default_first_num = #{record.defaultFirstNum,jdbcType=DECIMAL},
       </if>
       <if test="record.defaultFirstPrice != null">
         default_first_price = #{record.defaultFirstPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.defaultSecondNum != null">
-        default_second_num = #{record.defaultSecondNum,jdbcType=INTEGER},
+        default_second_num = #{record.defaultSecondNum,jdbcType=DECIMAL},
       </if>
       <if test="record.defaultSecondPrice != null">
         default_second_price = #{record.defaultSecondPrice,jdbcType=DECIMAL},
@@ -244,9 +244,9 @@
       name = #{record.name,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       valute_type = #{record.valuteType,jdbcType=INTEGER},
-      default_first_num = #{record.defaultFirstNum,jdbcType=INTEGER},
+      default_first_num = #{record.defaultFirstNum,jdbcType=DECIMAL},
       default_first_price = #{record.defaultFirstPrice,jdbcType=DECIMAL},
-      default_second_num = #{record.defaultSecondNum,jdbcType=INTEGER},
+      default_second_num = #{record.defaultSecondNum,jdbcType=DECIMAL},
       default_second_price = #{record.defaultSecondPrice,jdbcType=DECIMAL},
       delivery_time = #{record.deliveryTime,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -272,13 +272,13 @@
         valute_type = #{valuteType,jdbcType=INTEGER},
       </if>
       <if test="defaultFirstNum != null">
-        default_first_num = #{defaultFirstNum,jdbcType=INTEGER},
+        default_first_num = #{defaultFirstNum,jdbcType=DECIMAL},
       </if>
       <if test="defaultFirstPrice != null">
         default_first_price = #{defaultFirstPrice,jdbcType=DECIMAL},
       </if>
       <if test="defaultSecondNum != null">
-        default_second_num = #{defaultSecondNum,jdbcType=INTEGER},
+        default_second_num = #{defaultSecondNum,jdbcType=DECIMAL},
       </if>
       <if test="defaultSecondPrice != null">
         default_second_price = #{defaultSecondPrice,jdbcType=DECIMAL},
@@ -296,9 +296,9 @@
       name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       valute_type = #{valuteType,jdbcType=INTEGER},
-      default_first_num = #{defaultFirstNum,jdbcType=INTEGER},
+      default_first_num = #{defaultFirstNum,jdbcType=DECIMAL},
       default_first_price = #{defaultFirstPrice,jdbcType=DECIMAL},
-      default_second_num = #{defaultSecondNum,jdbcType=INTEGER},
+      default_second_num = #{defaultSecondNum,jdbcType=DECIMAL},
       default_second_price = #{defaultSecondPrice,jdbcType=DECIMAL},
       delivery_time = #{deliveryTime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

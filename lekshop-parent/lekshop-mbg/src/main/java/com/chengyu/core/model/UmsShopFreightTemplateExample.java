@@ -495,52 +495,52 @@ public class UmsShopFreightTemplateExample {
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumEqualTo(Integer value) {
+        public Criteria andDefaultFirstNumEqualTo(BigDecimal value) {
             addCriterion("default_first_num =", value, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumNotEqualTo(Integer value) {
+        public Criteria andDefaultFirstNumNotEqualTo(BigDecimal value) {
             addCriterion("default_first_num <>", value, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumGreaterThan(Integer value) {
+        public Criteria andDefaultFirstNumGreaterThan(BigDecimal value) {
             addCriterion("default_first_num >", value, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumGreaterThanOrEqualTo(Integer value) {
+        public Criteria andDefaultFirstNumGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("default_first_num >=", value, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumLessThan(Integer value) {
+        public Criteria andDefaultFirstNumLessThan(BigDecimal value) {
             addCriterion("default_first_num <", value, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumLessThanOrEqualTo(Integer value) {
+        public Criteria andDefaultFirstNumLessThanOrEqualTo(BigDecimal value) {
             addCriterion("default_first_num <=", value, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumIn(List<Integer> values) {
+        public Criteria andDefaultFirstNumIn(List<BigDecimal> values) {
             addCriterion("default_first_num in", values, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumNotIn(List<Integer> values) {
+        public Criteria andDefaultFirstNumNotIn(List<BigDecimal> values) {
             addCriterion("default_first_num not in", values, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumBetween(Integer value1, Integer value2) {
+        public Criteria andDefaultFirstNumBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("default_first_num between", value1, value2, "defaultFirstNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultFirstNumNotBetween(Integer value1, Integer value2) {
+        public Criteria andDefaultFirstNumNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("default_first_num not between", value1, value2, "defaultFirstNum");
             return (Criteria) this;
         }
@@ -615,52 +615,52 @@ public class UmsShopFreightTemplateExample {
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumEqualTo(Integer value) {
+        public Criteria andDefaultSecondNumEqualTo(BigDecimal value) {
             addCriterion("default_second_num =", value, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumNotEqualTo(Integer value) {
+        public Criteria andDefaultSecondNumNotEqualTo(BigDecimal value) {
             addCriterion("default_second_num <>", value, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumGreaterThan(Integer value) {
+        public Criteria andDefaultSecondNumGreaterThan(BigDecimal value) {
             addCriterion("default_second_num >", value, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumGreaterThanOrEqualTo(Integer value) {
+        public Criteria andDefaultSecondNumGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("default_second_num >=", value, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumLessThan(Integer value) {
+        public Criteria andDefaultSecondNumLessThan(BigDecimal value) {
             addCriterion("default_second_num <", value, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumLessThanOrEqualTo(Integer value) {
+        public Criteria andDefaultSecondNumLessThanOrEqualTo(BigDecimal value) {
             addCriterion("default_second_num <=", value, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumIn(List<Integer> values) {
+        public Criteria andDefaultSecondNumIn(List<BigDecimal> values) {
             addCriterion("default_second_num in", values, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumNotIn(List<Integer> values) {
+        public Criteria andDefaultSecondNumNotIn(List<BigDecimal> values) {
             addCriterion("default_second_num not in", values, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumBetween(Integer value1, Integer value2) {
+        public Criteria andDefaultSecondNumBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("default_second_num between", value1, value2, "defaultSecondNum");
             return (Criteria) this;
         }
 
-        public Criteria andDefaultSecondNumNotBetween(Integer value1, Integer value2) {
+        public Criteria andDefaultSecondNumNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("default_second_num not between", value1, value2, "defaultSecondNum");
             return (Criteria) this;
         }
