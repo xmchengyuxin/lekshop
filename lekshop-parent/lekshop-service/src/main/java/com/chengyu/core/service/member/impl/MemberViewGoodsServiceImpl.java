@@ -3,9 +3,11 @@ package com.chengyu.core.service.member.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import com.chengyu.core.mapper.PmsGoodsMapper;
-import com.chengyu.core.mapper.PmsGoodsSkuMapper;
 import com.chengyu.core.mapper.UmsMemberViewGoodsMapper;
-import com.chengyu.core.model.*;
+import com.chengyu.core.model.PmsGoods;
+import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.model.UmsMemberViewGoods;
+import com.chengyu.core.model.UmsMemberViewGoodsExample;
 import com.chengyu.core.service.member.MemberViewGoodsService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +30,6 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 	private UmsMemberViewGoodsMapper memberViewGoodsMapper;
 	@Autowired
 	private PmsGoodsMapper goodsMapper;
-	@Autowired
-	private PmsGoodsSkuMapper goodsSkuMapper;
 
 	@Override
 	public List<UmsMemberViewGoods> getMemberViewGoodsList(Integer memberId, Date date, Integer page, Integer pageSize) {
@@ -70,12 +69,7 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 			viewGoods.setGoodsId(goods.getId());
 			viewGoods.setGoodsName(goods.getTitle());
 			viewGoods.setGoodsMainImg(goods.getMainImg());
-
-			PmsGoodsSkuExample skuExample = new PmsGoodsSkuExample();
-			skuExample.setOrderByClause("price asc");
-			skuExample.createCriteria().andGoodsIdEqualTo(goods.getId());
-			List<PmsGoodsSku> priceList = goodsSkuMapper.selectByExample(skuExample);
-			viewGoods.setPrice(CollectionUtil.isNotEmpty(priceList) ? priceList.get(0).getPrice() : BigDecimal.ZERO);
+			viewGoods.setPrice(goods.getPrice());
 			viewGoods.setAddTime(DateUtil.date());
 			viewGoods.setUpdTime(viewGoods.getAddTime());
 			memberViewGoodsMapper.insert(viewGoods);

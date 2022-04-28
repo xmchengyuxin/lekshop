@@ -2,6 +2,7 @@ package com.chengyu.core.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class PmsGoods implements Serializable {
@@ -43,6 +44,9 @@ public class PmsGoods implements Serializable {
 
     @ApiModelProperty(value = "商品图片")
     private String goodsImg;
+
+    @ApiModelProperty(value = "价格")
+    private BigDecimal price;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
@@ -223,6 +227,14 @@ public class PmsGoods implements Serializable {
 
     public void setGoodsImg(String goodsImg) {
         this.goodsImg = goodsImg;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Integer getSort() {
@@ -444,6 +456,7 @@ public class PmsGoods implements Serializable {
         sb.append(", mainImg=").append(mainImg);
         sb.append(", mainVideo=").append(mainVideo);
         sb.append(", goodsImg=").append(goodsImg);
+        sb.append(", price=").append(price);
         sb.append(", sort=").append(sort);
         sb.append(", weight=").append(weight);
         sb.append(", status=").append(status);
