@@ -1,0 +1,99 @@
+package com.chengyu.core.service.member.impl;
+
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
+import com.chengyu.core.mapper.PmsGoodsMapper;
+import com.chengyu.core.mapper.PmsGoodsSkuMapper;
+import com.chengyu.core.mapper.UmsMemberViewGoodsMapper;
+import com.chengyu.core.model.*;
+import com.chengyu.core.service.member.MemberViewGoodsService;
+import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @title  浏览商品
+ * @author LeGreen
+ * @date   2022/4/28
+ */
+@Service
+public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
+	
+	@Autowired
+	private UmsMemberViewGoodsMapper memberViewGoodsMapper;
+	@Autowired
+	private PmsGoodsMapper goodsMapper;
+	@Autowired
+	private PmsGoodsSkuMapper goodsSkuMapper;
+
+	@Override
+	public List<UmsMemberViewGoods> getMemberViewGoodsList(Integer memberId, Date date, Integer page, Integer pageSize) {
+		PageHelper.startPage(page, pageSize);
+
+		UmsMemberViewGoodsExample example = new UmsMemberViewGoodsExample();
+		example.setOrderByClause("add_time desc");
+		UmsMemberViewGoodsExample.Criteria criteria = example.createCriteria();
+		if(memberId != null){
+			criteria.andMemberIdEqualTo(memberId);
+		}
+		if(date != null){
+			criteria.andDateEqualTo(date);
+		}
+		return memberViewGoodsMapper.selectByExample(example);
+	}
+
+	@Override
+	public void viewGoods(UmsMember member, Integer goodsId) {
+		UmsMemberViewGoodsExample example = new UmsMemberViewGoodsExample();
+		example.setOrderByClause("upd_time desc");
+		example.createCriteria().andMemberIdEqualTo(member.getId()).andGoodsIdEqualTo(goodsId).andDateEqualTo(DateUtil.date());
+		List<UmsMemberViewGoods> list = memberViewGoodsMapper.selectByExample(example);
+		if(CollectionUtil.isNotEmpty(list)){
+			//更新浏览时间
+			UmsMemberViewGoods updateViewGoods = new UmsMemberViewGoods();
+			updateViewGoods.setId(list.get(0).getId());
+			updateViewGoods.setUpdTime(DateUtil.date());
+			memberViewGoodsMapper.updateByPrimaryKeySelective(updateViewGoods);
+		}else{
+			UmsMemberViewGoods viewGoods = new UmsMemberViewGoods();
+			viewGoods.setMemberId(member.getId());
+			viewGoods.setMemberName(member.getNickname());
+			viewGoods.setHeadImg(member.getHeadImg());
+
+			PmsGoods goods = goodsMapper.selectByPrimaryKey(goodsId);
+			viewGoods.setGoodsId(goods.getId());
+			viewGoods.setGoodsName(goods.getTitle());
+			viewGoods.setGoodsMainImg(goods.getMainImg());
+
+			PmsGoodsSkuExample skuExample = new PmsGoodsSkuExample();
+			skuExample.setOrderByClause("price asc");
+			skuExample.createCriteria().andGoodsIdEqualTo(goods.getId());
+			List<PmsGoodsSku> priceList = goodsSkuMapper.selectByExample(skuExample);
+			viewGoods.setPrice(CollectionUtil.isNotEmpty(priceList) ? priceList.get(0).getPrice() : BigDecimal.ZERO);
+			viewGoods.setAddTime(DateUtil.date());
+			viewGoods.setUpdTime(viewGoods.getAddTime());
+			memberViewGoodsMapper.insert(viewGoods);
+		}
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void deleteViewGoods(Integer viewGoodsId) {
+		memberViewGoodsMapper.deleteByPrimaryKey(viewGoodsId);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void deleteViewGoodsByMemberId(Integer memberId) {
+		UmsMemberViewGoodsExample example = new UmsMemberViewGoodsExample();
+		example.createCriteria().andMemberIdEqualTo(memberId);
+		memberViewGoodsMapper.deleteByExample(example);
+	}
+
+}

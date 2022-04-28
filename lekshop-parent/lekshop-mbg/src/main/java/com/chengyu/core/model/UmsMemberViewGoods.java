@@ -9,6 +9,9 @@ public class UmsMemberViewGoods implements Serializable {
     @ApiModelProperty(value = "主键ID")
     private Integer id;
 
+    @ApiModelProperty(value = "浏览时间")
+    private Date date;
+
     @ApiModelProperty(value = "用户ID")
     private Integer memberId;
 
@@ -49,6 +52,14 @@ public class UmsMemberViewGoods implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Integer getMemberId() {
@@ -146,6 +157,7 @@ public class UmsMemberViewGoods implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", date=").append(date);
         sb.append(", memberId=").append(memberId);
         sb.append(", memberName=").append(memberName);
         sb.append(", headImg=").append(headImg);
