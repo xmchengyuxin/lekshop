@@ -12,20 +12,11 @@ public class OmsOrderRefund implements Serializable {
     @ApiModelProperty(value = "退款单号")
     private String refundNo;
 
-    @ApiModelProperty(value = "1普通商品>>2秒杀商品>>3拼团商品")
-    private Integer type;
-
-    @ApiModelProperty(value = "1整单退款 2部分退款")
-    private Integer refundType;
-
-    @ApiModelProperty(value = "1仅退款 2退货退款")
-    private Integer refundInd;
-
     @ApiModelProperty(value = "订单ID")
     private Integer orderId;
 
-    @ApiModelProperty(value = "订单号")
-    private String orderNo;
+    @ApiModelProperty(value = "订单详情ID")
+    private Integer detailId;
 
     @ApiModelProperty(value = "用户ID")
     private Integer memberId;
@@ -35,6 +26,9 @@ public class OmsOrderRefund implements Serializable {
 
     @ApiModelProperty(value = "头像")
     private String headImg;
+
+    @ApiModelProperty(value = "1仅退款 2退货退款")
+    private Integer refundInd;
 
     @ApiModelProperty(value = "下单时间")
     private Date buyTime;
@@ -51,41 +45,46 @@ public class OmsOrderRefund implements Serializable {
     @ApiModelProperty(value = "退款金额")
     private BigDecimal refundAmount;
 
-    @ApiModelProperty(value = "优惠券ID")
-    private Integer couponId;
-
     @ApiModelProperty(value = "退款原因")
     private String reason;
 
     @ApiModelProperty(value = "退款凭证")
     private String img;
 
-    @ApiModelProperty(value = "0申请中 1已退款 2已驳回")
+    @ApiModelProperty(value = "0申请退款>>1等待卖家退货>>2卖家已退货>>3商家已拒绝>>4平台介入>>5退款完成>>6退款关闭")
     private Integer status;
-
-    @ApiModelProperty(value = "审核原因")
-    private String verifyReason;
-
-    @ApiModelProperty(value = "审核时间")
-    private Date verifyTime;
-
-    @ApiModelProperty(value = "退款说明")
-    private String remark;
-
-    @ApiModelProperty(value = "预计自动退款时间")
-    private Date autoRefundTime;
 
     @ApiModelProperty(value = "支付方式")
     private String payMethod;
 
-    @ApiModelProperty(value = "是否客服介入  0 否  1是")
-    private Integer kefuInStatus;
+    @ApiModelProperty(value = "退单时间")
+    private Date refundTime;
 
-    @ApiModelProperty(value = "物流名称")
-    private String logisticsName;
+    @ApiModelProperty(value = "商品ID")
+    private Integer goodsId;
 
-    @ApiModelProperty(value = "物流单号")
-    private String logisticsNo;
+    private String goodsName;
+
+    @ApiModelProperty(value = "主图")
+    private String goodsMainImg;
+
+    @ApiModelProperty(value = "商品规格名称")
+    private String goodsParamName;
+
+    @ApiModelProperty(value = "退货收件人")
+    private String returnName;
+
+    @ApiModelProperty(value = "退货电话")
+    private String returnPhone;
+
+    @ApiModelProperty(value = "退货地址")
+    private String returnAddress;
+
+    @ApiModelProperty(value = "物流方式")
+    private String deliveryType;
+
+    @ApiModelProperty(value = "第三方配送单号")
+    private String deliveryNo;
 
     @ApiModelProperty(value = "添加时间")
     private Date addTime;
@@ -117,30 +116,6 @@ public class OmsOrderRefund implements Serializable {
         this.refundNo = refundNo;
     }
 
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Integer getRefundType() {
-        return refundType;
-    }
-
-    public void setRefundType(Integer refundType) {
-        this.refundType = refundType;
-    }
-
-    public Integer getRefundInd() {
-        return refundInd;
-    }
-
-    public void setRefundInd(Integer refundInd) {
-        this.refundInd = refundInd;
-    }
-
     public Integer getOrderId() {
         return orderId;
     }
@@ -149,12 +124,12 @@ public class OmsOrderRefund implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getOrderNo() {
-        return orderNo;
+    public Integer getDetailId() {
+        return detailId;
     }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
+    public void setDetailId(Integer detailId) {
+        this.detailId = detailId;
     }
 
     public Integer getMemberId() {
@@ -179,6 +154,14 @@ public class OmsOrderRefund implements Serializable {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public Integer getRefundInd() {
+        return refundInd;
+    }
+
+    public void setRefundInd(Integer refundInd) {
+        this.refundInd = refundInd;
     }
 
     public Date getBuyTime() {
@@ -221,14 +204,6 @@ public class OmsOrderRefund implements Serializable {
         this.refundAmount = refundAmount;
     }
 
-    public Integer getCouponId() {
-        return couponId;
-    }
-
-    public void setCouponId(Integer couponId) {
-        this.couponId = couponId;
-    }
-
     public String getReason() {
         return reason;
     }
@@ -253,38 +228,6 @@ public class OmsOrderRefund implements Serializable {
         this.status = status;
     }
 
-    public String getVerifyReason() {
-        return verifyReason;
-    }
-
-    public void setVerifyReason(String verifyReason) {
-        this.verifyReason = verifyReason;
-    }
-
-    public Date getVerifyTime() {
-        return verifyTime;
-    }
-
-    public void setVerifyTime(Date verifyTime) {
-        this.verifyTime = verifyTime;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Date getAutoRefundTime() {
-        return autoRefundTime;
-    }
-
-    public void setAutoRefundTime(Date autoRefundTime) {
-        this.autoRefundTime = autoRefundTime;
-    }
-
     public String getPayMethod() {
         return payMethod;
     }
@@ -293,28 +236,84 @@ public class OmsOrderRefund implements Serializable {
         this.payMethod = payMethod;
     }
 
-    public Integer getKefuInStatus() {
-        return kefuInStatus;
+    public Date getRefundTime() {
+        return refundTime;
     }
 
-    public void setKefuInStatus(Integer kefuInStatus) {
-        this.kefuInStatus = kefuInStatus;
+    public void setRefundTime(Date refundTime) {
+        this.refundTime = refundTime;
     }
 
-    public String getLogisticsName() {
-        return logisticsName;
+    public Integer getGoodsId() {
+        return goodsId;
     }
 
-    public void setLogisticsName(String logisticsName) {
-        this.logisticsName = logisticsName;
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
     }
 
-    public String getLogisticsNo() {
-        return logisticsNo;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setLogisticsNo(String logisticsNo) {
-        this.logisticsNo = logisticsNo;
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getGoodsMainImg() {
+        return goodsMainImg;
+    }
+
+    public void setGoodsMainImg(String goodsMainImg) {
+        this.goodsMainImg = goodsMainImg;
+    }
+
+    public String getGoodsParamName() {
+        return goodsParamName;
+    }
+
+    public void setGoodsParamName(String goodsParamName) {
+        this.goodsParamName = goodsParamName;
+    }
+
+    public String getReturnName() {
+        return returnName;
+    }
+
+    public void setReturnName(String returnName) {
+        this.returnName = returnName;
+    }
+
+    public String getReturnPhone() {
+        return returnPhone;
+    }
+
+    public void setReturnPhone(String returnPhone) {
+        this.returnPhone = returnPhone;
+    }
+
+    public String getReturnAddress() {
+        return returnAddress;
+    }
+
+    public void setReturnAddress(String returnAddress) {
+        this.returnAddress = returnAddress;
+    }
+
+    public String getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(String deliveryType) {
+        this.deliveryType = deliveryType;
+    }
+
+    public String getDeliveryNo() {
+        return deliveryNo;
+    }
+
+    public void setDeliveryNo(String deliveryNo) {
+        this.deliveryNo = deliveryNo;
     }
 
     public Date getAddTime() {
@@ -357,31 +356,31 @@ public class OmsOrderRefund implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", refundNo=").append(refundNo);
-        sb.append(", type=").append(type);
-        sb.append(", refundType=").append(refundType);
-        sb.append(", refundInd=").append(refundInd);
         sb.append(", orderId=").append(orderId);
-        sb.append(", orderNo=").append(orderNo);
+        sb.append(", detailId=").append(detailId);
         sb.append(", memberId=").append(memberId);
         sb.append(", memberName=").append(memberName);
         sb.append(", headImg=").append(headImg);
+        sb.append(", refundInd=").append(refundInd);
         sb.append(", buyTime=").append(buyTime);
         sb.append(", originalAmount=").append(originalAmount);
         sb.append(", shopId=").append(shopId);
         sb.append(", shopName=").append(shopName);
         sb.append(", refundAmount=").append(refundAmount);
-        sb.append(", couponId=").append(couponId);
         sb.append(", reason=").append(reason);
         sb.append(", img=").append(img);
         sb.append(", status=").append(status);
-        sb.append(", verifyReason=").append(verifyReason);
-        sb.append(", verifyTime=").append(verifyTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", autoRefundTime=").append(autoRefundTime);
         sb.append(", payMethod=").append(payMethod);
-        sb.append(", kefuInStatus=").append(kefuInStatus);
-        sb.append(", logisticsName=").append(logisticsName);
-        sb.append(", logisticsNo=").append(logisticsNo);
+        sb.append(", refundTime=").append(refundTime);
+        sb.append(", goodsId=").append(goodsId);
+        sb.append(", goodsName=").append(goodsName);
+        sb.append(", goodsMainImg=").append(goodsMainImg);
+        sb.append(", goodsParamName=").append(goodsParamName);
+        sb.append(", returnName=").append(returnName);
+        sb.append(", returnPhone=").append(returnPhone);
+        sb.append(", returnAddress=").append(returnAddress);
+        sb.append(", deliveryType=").append(deliveryType);
+        sb.append(", deliveryNo=").append(deliveryNo);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);

@@ -4,31 +4,31 @@
   <resultMap id="BaseResultMap" type="com.chengyu.core.model.OmsOrderRefund">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="refund_no" jdbcType="VARCHAR" property="refundNo" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="refund_type" jdbcType="INTEGER" property="refundType" />
-    <result column="refund_ind" jdbcType="INTEGER" property="refundInd" />
     <result column="order_id" jdbcType="INTEGER" property="orderId" />
-    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="detail_id" jdbcType="INTEGER" property="detailId" />
     <result column="member_id" jdbcType="INTEGER" property="memberId" />
     <result column="member_name" jdbcType="VARCHAR" property="memberName" />
     <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="refund_ind" jdbcType="INTEGER" property="refundInd" />
     <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime" />
     <result column="original_amount" jdbcType="DECIMAL" property="originalAmount" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
     <result column="refund_amount" jdbcType="DECIMAL" property="refundAmount" />
-    <result column="coupon_id" jdbcType="INTEGER" property="couponId" />
     <result column="reason" jdbcType="VARCHAR" property="reason" />
     <result column="img" jdbcType="VARCHAR" property="img" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="verify_reason" jdbcType="VARCHAR" property="verifyReason" />
-    <result column="verify_time" jdbcType="TIMESTAMP" property="verifyTime" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="auto_refund_time" jdbcType="TIMESTAMP" property="autoRefundTime" />
     <result column="pay_method" jdbcType="VARCHAR" property="payMethod" />
-    <result column="kefu_in_status" jdbcType="INTEGER" property="kefuInStatus" />
-    <result column="logistics_name" jdbcType="VARCHAR" property="logisticsName" />
-    <result column="logistics_no" jdbcType="VARCHAR" property="logisticsNo" />
+    <result column="refund_time" jdbcType="TIMESTAMP" property="refundTime" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_main_img" jdbcType="VARCHAR" property="goodsMainImg" />
+    <result column="goods_param_name" jdbcType="VARCHAR" property="goodsParamName" />
+    <result column="return_name" jdbcType="VARCHAR" property="returnName" />
+    <result column="return_phone" jdbcType="VARCHAR" property="returnPhone" />
+    <result column="return_address" jdbcType="VARCHAR" property="returnAddress" />
+    <result column="delivery_type" jdbcType="VARCHAR" property="deliveryType" />
+    <result column="delivery_no" jdbcType="VARCHAR" property="deliveryNo" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_by" jdbcType="VARCHAR" property="addBy" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
@@ -93,10 +93,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, refund_no, type, refund_type, refund_ind, order_id, order_no, member_id, member_name, 
-    head_img, buy_time, original_amount, shop_id, shop_name, refund_amount, coupon_id, 
-    reason, img, status, verify_reason, verify_time, remark, auto_refund_time, pay_method, 
-    kefu_in_status, logistics_name, logistics_no, add_time, add_by, upd_time, upd_by
+    id, refund_no, order_id, detail_id, member_id, member_name, head_img, refund_ind, 
+    buy_time, original_amount, shop_id, shop_name, refund_amount, reason, img, status, 
+    pay_method, refund_time, goods_id, goods_name, goods_main_img, goods_param_name, 
+    return_name, return_phone, return_address, delivery_type, delivery_no, add_time, 
+    add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.OmsOrderRefundExample" resultMap="BaseResultMap">
     select
@@ -132,26 +133,26 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into oms_order_refund (refund_no, type, refund_type, 
-      refund_ind, order_id, order_no, 
+    insert into oms_order_refund (refund_no, order_id, detail_id, 
       member_id, member_name, head_img, 
-      buy_time, original_amount, shop_id, 
-      shop_name, refund_amount, coupon_id, 
+      refund_ind, buy_time, original_amount, 
+      shop_id, shop_name, refund_amount, 
       reason, img, status, 
-      verify_reason, verify_time, remark, 
-      auto_refund_time, pay_method, kefu_in_status, 
-      logistics_name, logistics_no, add_time, 
+      pay_method, refund_time, goods_id, 
+      goods_name, goods_main_img, goods_param_name, 
+      return_name, return_phone, return_address, 
+      delivery_type, delivery_no, add_time, 
       add_by, upd_time, upd_by
       )
-    values (#{refundNo,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{refundType,jdbcType=INTEGER}, 
-      #{refundInd,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, 
+    values (#{refundNo,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, #{detailId,jdbcType=INTEGER}, 
       #{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, 
-      #{buyTime,jdbcType=TIMESTAMP}, #{originalAmount,jdbcType=DECIMAL}, #{shopId,jdbcType=INTEGER}, 
-      #{shopName,jdbcType=VARCHAR}, #{refundAmount,jdbcType=DECIMAL}, #{couponId,jdbcType=INTEGER}, 
+      #{refundInd,jdbcType=INTEGER}, #{buyTime,jdbcType=TIMESTAMP}, #{originalAmount,jdbcType=DECIMAL}, 
+      #{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{refundAmount,jdbcType=DECIMAL}, 
       #{reason,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{verifyReason,jdbcType=VARCHAR}, #{verifyTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
-      #{autoRefundTime,jdbcType=TIMESTAMP}, #{payMethod,jdbcType=VARCHAR}, #{kefuInStatus,jdbcType=INTEGER}, 
-      #{logisticsName,jdbcType=VARCHAR}, #{logisticsNo,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{payMethod,jdbcType=VARCHAR}, #{refundTime,jdbcType=TIMESTAMP}, #{goodsId,jdbcType=INTEGER}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsMainImg,jdbcType=VARCHAR}, #{goodsParamName,jdbcType=VARCHAR}, 
+      #{returnName,jdbcType=VARCHAR}, #{returnPhone,jdbcType=VARCHAR}, #{returnAddress,jdbcType=VARCHAR}, 
+      #{deliveryType,jdbcType=VARCHAR}, #{deliveryNo,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
       #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
       )
   </insert>
@@ -164,20 +165,11 @@
       <if test="refundNo != null">
         refund_no,
       </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="refundType != null">
-        refund_type,
-      </if>
-      <if test="refundInd != null">
-        refund_ind,
-      </if>
       <if test="orderId != null">
         order_id,
       </if>
-      <if test="orderNo != null">
-        order_no,
+      <if test="detailId != null">
+        detail_id,
       </if>
       <if test="memberId != null">
         member_id,
@@ -187,6 +179,9 @@
       </if>
       <if test="headImg != null">
         head_img,
+      </if>
+      <if test="refundInd != null">
+        refund_ind,
       </if>
       <if test="buyTime != null">
         buy_time,
@@ -203,9 +198,6 @@
       <if test="refundAmount != null">
         refund_amount,
       </if>
-      <if test="couponId != null">
-        coupon_id,
-      </if>
       <if test="reason != null">
         reason,
       </if>
@@ -215,29 +207,38 @@
       <if test="status != null">
         status,
       </if>
-      <if test="verifyReason != null">
-        verify_reason,
-      </if>
-      <if test="verifyTime != null">
-        verify_time,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="autoRefundTime != null">
-        auto_refund_time,
-      </if>
       <if test="payMethod != null">
         pay_method,
       </if>
-      <if test="kefuInStatus != null">
-        kefu_in_status,
+      <if test="refundTime != null">
+        refund_time,
       </if>
-      <if test="logisticsName != null">
-        logistics_name,
+      <if test="goodsId != null">
+        goods_id,
       </if>
-      <if test="logisticsNo != null">
-        logistics_no,
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsMainImg != null">
+        goods_main_img,
+      </if>
+      <if test="goodsParamName != null">
+        goods_param_name,
+      </if>
+      <if test="returnName != null">
+        return_name,
+      </if>
+      <if test="returnPhone != null">
+        return_phone,
+      </if>
+      <if test="returnAddress != null">
+        return_address,
+      </if>
+      <if test="deliveryType != null">
+        delivery_type,
+      </if>
+      <if test="deliveryNo != null">
+        delivery_no,
       </if>
       <if test="addTime != null">
         add_time,
@@ -256,20 +257,11 @@
       <if test="refundNo != null">
         #{refundNo,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="refundType != null">
-        #{refundType,jdbcType=INTEGER},
-      </if>
-      <if test="refundInd != null">
-        #{refundInd,jdbcType=INTEGER},
-      </if>
       <if test="orderId != null">
         #{orderId,jdbcType=INTEGER},
       </if>
-      <if test="orderNo != null">
-        #{orderNo,jdbcType=VARCHAR},
+      <if test="detailId != null">
+        #{detailId,jdbcType=INTEGER},
       </if>
       <if test="memberId != null">
         #{memberId,jdbcType=INTEGER},
@@ -279,6 +271,9 @@
       </if>
       <if test="headImg != null">
         #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="refundInd != null">
+        #{refundInd,jdbcType=INTEGER},
       </if>
       <if test="buyTime != null">
         #{buyTime,jdbcType=TIMESTAMP},
@@ -295,9 +290,6 @@
       <if test="refundAmount != null">
         #{refundAmount,jdbcType=DECIMAL},
       </if>
-      <if test="couponId != null">
-        #{couponId,jdbcType=INTEGER},
-      </if>
       <if test="reason != null">
         #{reason,jdbcType=VARCHAR},
       </if>
@@ -307,29 +299,38 @@
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="verifyReason != null">
-        #{verifyReason,jdbcType=VARCHAR},
-      </if>
-      <if test="verifyTime != null">
-        #{verifyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="autoRefundTime != null">
-        #{autoRefundTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="payMethod != null">
         #{payMethod,jdbcType=VARCHAR},
       </if>
-      <if test="kefuInStatus != null">
-        #{kefuInStatus,jdbcType=INTEGER},
+      <if test="refundTime != null">
+        #{refundTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="logisticsName != null">
-        #{logisticsName,jdbcType=VARCHAR},
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
       </if>
-      <if test="logisticsNo != null">
-        #{logisticsNo,jdbcType=VARCHAR},
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsMainImg != null">
+        #{goodsMainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsParamName != null">
+        #{goodsParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="returnName != null">
+        #{returnName,jdbcType=VARCHAR},
+      </if>
+      <if test="returnPhone != null">
+        #{returnPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="returnAddress != null">
+        #{returnAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryType != null">
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryNo != null">
+        #{deliveryNo,jdbcType=VARCHAR},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -360,20 +361,11 @@
       <if test="record.refundNo != null">
         refund_no = #{record.refundNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.type != null">
-        type = #{record.type,jdbcType=INTEGER},
-      </if>
-      <if test="record.refundType != null">
-        refund_type = #{record.refundType,jdbcType=INTEGER},
-      </if>
-      <if test="record.refundInd != null">
-        refund_ind = #{record.refundInd,jdbcType=INTEGER},
-      </if>
       <if test="record.orderId != null">
         order_id = #{record.orderId,jdbcType=INTEGER},
       </if>
-      <if test="record.orderNo != null">
-        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      <if test="record.detailId != null">
+        detail_id = #{record.detailId,jdbcType=INTEGER},
       </if>
       <if test="record.memberId != null">
         member_id = #{record.memberId,jdbcType=INTEGER},
@@ -383,6 +375,9 @@
       </if>
       <if test="record.headImg != null">
         head_img = #{record.headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundInd != null">
+        refund_ind = #{record.refundInd,jdbcType=INTEGER},
       </if>
       <if test="record.buyTime != null">
         buy_time = #{record.buyTime,jdbcType=TIMESTAMP},
@@ -399,9 +394,6 @@
       <if test="record.refundAmount != null">
         refund_amount = #{record.refundAmount,jdbcType=DECIMAL},
       </if>
-      <if test="record.couponId != null">
-        coupon_id = #{record.couponId,jdbcType=INTEGER},
-      </if>
       <if test="record.reason != null">
         reason = #{record.reason,jdbcType=VARCHAR},
       </if>
@@ -411,29 +403,38 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.verifyReason != null">
-        verify_reason = #{record.verifyReason,jdbcType=VARCHAR},
-      </if>
-      <if test="record.verifyTime != null">
-        verify_time = #{record.verifyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.autoRefundTime != null">
-        auto_refund_time = #{record.autoRefundTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.payMethod != null">
         pay_method = #{record.payMethod,jdbcType=VARCHAR},
       </if>
-      <if test="record.kefuInStatus != null">
-        kefu_in_status = #{record.kefuInStatus,jdbcType=INTEGER},
+      <if test="record.refundTime != null">
+        refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.logisticsName != null">
-        logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
       </if>
-      <if test="record.logisticsNo != null">
-        logistics_no = #{record.logisticsNo,jdbcType=VARCHAR},
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsMainImg != null">
+        goods_main_img = #{record.goodsMainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsParamName != null">
+        goods_param_name = #{record.goodsParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnName != null">
+        return_name = #{record.returnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnPhone != null">
+        return_phone = #{record.returnPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnAddress != null">
+        return_address = #{record.returnAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryType != null">
+        delivery_type = #{record.deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryNo != null">
+        delivery_no = #{record.deliveryNo,jdbcType=VARCHAR},
       </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -456,31 +457,31 @@
     update oms_order_refund
     set id = #{record.id,jdbcType=INTEGER},
       refund_no = #{record.refundNo,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=INTEGER},
-      refund_type = #{record.refundType,jdbcType=INTEGER},
-      refund_ind = #{record.refundInd,jdbcType=INTEGER},
       order_id = #{record.orderId,jdbcType=INTEGER},
-      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      detail_id = #{record.detailId,jdbcType=INTEGER},
       member_id = #{record.memberId,jdbcType=INTEGER},
       member_name = #{record.memberName,jdbcType=VARCHAR},
       head_img = #{record.headImg,jdbcType=VARCHAR},
+      refund_ind = #{record.refundInd,jdbcType=INTEGER},
       buy_time = #{record.buyTime,jdbcType=TIMESTAMP},
       original_amount = #{record.originalAmount,jdbcType=DECIMAL},
       shop_id = #{record.shopId,jdbcType=INTEGER},
       shop_name = #{record.shopName,jdbcType=VARCHAR},
       refund_amount = #{record.refundAmount,jdbcType=DECIMAL},
-      coupon_id = #{record.couponId,jdbcType=INTEGER},
       reason = #{record.reason,jdbcType=VARCHAR},
       img = #{record.img,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
-      verify_reason = #{record.verifyReason,jdbcType=VARCHAR},
-      verify_time = #{record.verifyTime,jdbcType=TIMESTAMP},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      auto_refund_time = #{record.autoRefundTime,jdbcType=TIMESTAMP},
       pay_method = #{record.payMethod,jdbcType=VARCHAR},
-      kefu_in_status = #{record.kefuInStatus,jdbcType=INTEGER},
-      logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
-      logistics_no = #{record.logisticsNo,jdbcType=VARCHAR},
+      refund_time = #{record.refundTime,jdbcType=TIMESTAMP},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_main_img = #{record.goodsMainImg,jdbcType=VARCHAR},
+      goods_param_name = #{record.goodsParamName,jdbcType=VARCHAR},
+      return_name = #{record.returnName,jdbcType=VARCHAR},
+      return_phone = #{record.returnPhone,jdbcType=VARCHAR},
+      return_address = #{record.returnAddress,jdbcType=VARCHAR},
+      delivery_type = #{record.deliveryType,jdbcType=VARCHAR},
+      delivery_no = #{record.deliveryNo,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
@@ -495,20 +496,11 @@
       <if test="refundNo != null">
         refund_no = #{refundNo,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="refundType != null">
-        refund_type = #{refundType,jdbcType=INTEGER},
-      </if>
-      <if test="refundInd != null">
-        refund_ind = #{refundInd,jdbcType=INTEGER},
-      </if>
       <if test="orderId != null">
         order_id = #{orderId,jdbcType=INTEGER},
       </if>
-      <if test="orderNo != null">
-        order_no = #{orderNo,jdbcType=VARCHAR},
+      <if test="detailId != null">
+        detail_id = #{detailId,jdbcType=INTEGER},
       </if>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -518,6 +510,9 @@
       </if>
       <if test="headImg != null">
         head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="refundInd != null">
+        refund_ind = #{refundInd,jdbcType=INTEGER},
       </if>
       <if test="buyTime != null">
         buy_time = #{buyTime,jdbcType=TIMESTAMP},
@@ -534,9 +529,6 @@
       <if test="refundAmount != null">
         refund_amount = #{refundAmount,jdbcType=DECIMAL},
       </if>
-      <if test="couponId != null">
-        coupon_id = #{couponId,jdbcType=INTEGER},
-      </if>
       <if test="reason != null">
         reason = #{reason,jdbcType=VARCHAR},
       </if>
@@ -546,29 +538,38 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="verifyReason != null">
-        verify_reason = #{verifyReason,jdbcType=VARCHAR},
-      </if>
-      <if test="verifyTime != null">
-        verify_time = #{verifyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="autoRefundTime != null">
-        auto_refund_time = #{autoRefundTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="payMethod != null">
         pay_method = #{payMethod,jdbcType=VARCHAR},
       </if>
-      <if test="kefuInStatus != null">
-        kefu_in_status = #{kefuInStatus,jdbcType=INTEGER},
+      <if test="refundTime != null">
+        refund_time = #{refundTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="logisticsName != null">
-        logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
       </if>
-      <if test="logisticsNo != null">
-        logistics_no = #{logisticsNo,jdbcType=VARCHAR},
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsMainImg != null">
+        goods_main_img = #{goodsMainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsParamName != null">
+        goods_param_name = #{goodsParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="returnName != null">
+        return_name = #{returnName,jdbcType=VARCHAR},
+      </if>
+      <if test="returnPhone != null">
+        return_phone = #{returnPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="returnAddress != null">
+        return_address = #{returnAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryType != null">
+        delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryNo != null">
+        delivery_no = #{deliveryNo,jdbcType=VARCHAR},
       </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -588,31 +589,31 @@
   <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.OmsOrderRefund">
     update oms_order_refund
     set refund_no = #{refundNo,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      refund_type = #{refundType,jdbcType=INTEGER},
-      refund_ind = #{refundInd,jdbcType=INTEGER},
       order_id = #{orderId,jdbcType=INTEGER},
-      order_no = #{orderNo,jdbcType=VARCHAR},
+      detail_id = #{detailId,jdbcType=INTEGER},
       member_id = #{memberId,jdbcType=INTEGER},
       member_name = #{memberName,jdbcType=VARCHAR},
       head_img = #{headImg,jdbcType=VARCHAR},
+      refund_ind = #{refundInd,jdbcType=INTEGER},
       buy_time = #{buyTime,jdbcType=TIMESTAMP},
       original_amount = #{originalAmount,jdbcType=DECIMAL},
       shop_id = #{shopId,jdbcType=INTEGER},
       shop_name = #{shopName,jdbcType=VARCHAR},
       refund_amount = #{refundAmount,jdbcType=DECIMAL},
-      coupon_id = #{couponId,jdbcType=INTEGER},
       reason = #{reason,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      verify_reason = #{verifyReason,jdbcType=VARCHAR},
-      verify_time = #{verifyTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR},
-      auto_refund_time = #{autoRefundTime,jdbcType=TIMESTAMP},
       pay_method = #{payMethod,jdbcType=VARCHAR},
-      kefu_in_status = #{kefuInStatus,jdbcType=INTEGER},
-      logistics_name = #{logisticsName,jdbcType=VARCHAR},
-      logistics_no = #{logisticsNo,jdbcType=VARCHAR},
+      refund_time = #{refundTime,jdbcType=TIMESTAMP},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_main_img = #{goodsMainImg,jdbcType=VARCHAR},
+      goods_param_name = #{goodsParamName,jdbcType=VARCHAR},
+      return_name = #{returnName,jdbcType=VARCHAR},
+      return_phone = #{returnPhone,jdbcType=VARCHAR},
+      return_address = #{returnAddress,jdbcType=VARCHAR},
+      delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      delivery_no = #{deliveryNo,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},

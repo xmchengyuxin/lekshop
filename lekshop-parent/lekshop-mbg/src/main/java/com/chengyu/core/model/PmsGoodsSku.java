@@ -14,8 +14,11 @@ public class PmsGoodsSku implements Serializable {
     @ApiModelProperty(value = "属性搭配方式")
     private String attrSymbolPath;
 
-    @ApiModelProperty(value = "库存")
-    private String stockNo;
+    @ApiModelProperty(value = "属性名称")
+    private String attrSymbolName;
+
+    @ApiModelProperty(value = "sku编码")
+    private String skuNo;
 
     @ApiModelProperty(value = "原价")
     private BigDecimal oriPrice;
@@ -58,12 +61,20 @@ public class PmsGoodsSku implements Serializable {
         this.attrSymbolPath = attrSymbolPath;
     }
 
-    public String getStockNo() {
-        return stockNo;
+    public String getAttrSymbolName() {
+        return attrSymbolName;
     }
 
-    public void setStockNo(String stockNo) {
-        this.stockNo = stockNo;
+    public void setAttrSymbolName(String attrSymbolName) {
+        this.attrSymbolName = attrSymbolName;
+    }
+
+    public String getSkuNo() {
+        return skuNo;
+    }
+
+    public void setSkuNo(String skuNo) {
+        this.skuNo = skuNo;
     }
 
     public BigDecimal getOriPrice() {
@@ -115,7 +126,8 @@ public class PmsGoodsSku implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", goodsId=").append(goodsId);
         sb.append(", attrSymbolPath=").append(attrSymbolPath);
-        sb.append(", stockNo=").append(stockNo);
+        sb.append(", attrSymbolName=").append(attrSymbolName);
+        sb.append(", skuNo=").append(skuNo);
         sb.append(", oriPrice=").append(oriPrice);
         sb.append(", price=").append(price);
         sb.append(", stock=").append(stock);

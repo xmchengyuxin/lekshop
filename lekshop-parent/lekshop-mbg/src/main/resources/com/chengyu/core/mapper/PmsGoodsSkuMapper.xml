@@ -5,7 +5,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
     <result column="attr_symbol_path" jdbcType="VARCHAR" property="attrSymbolPath" />
-    <result column="stock_no" jdbcType="VARCHAR" property="stockNo" />
+    <result column="attr_symbol_name" jdbcType="VARCHAR" property="attrSymbolName" />
+    <result column="sku_no" jdbcType="VARCHAR" property="skuNo" />
     <result column="ori_price" jdbcType="DECIMAL" property="oriPrice" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="stock" jdbcType="INTEGER" property="stock" />
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, goods_id, attr_symbol_path, stock_no, ori_price, price, stock, weight, img
+    id, goods_id, attr_symbol_path, attr_symbol_name, sku_no, ori_price, price, stock, 
+    weight, img
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.PmsGoodsSkuExample" resultMap="BaseResultMap">
     select
@@ -107,12 +109,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into pms_goods_sku (goods_id, attr_symbol_path, stock_no, 
-      ori_price, price, stock, 
-      weight, img)
-    values (#{goodsId,jdbcType=INTEGER}, #{attrSymbolPath,jdbcType=VARCHAR}, #{stockNo,jdbcType=VARCHAR}, 
-      #{oriPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, 
-      #{weight,jdbcType=DECIMAL}, #{img,jdbcType=VARCHAR})
+    insert into pms_goods_sku (goods_id, attr_symbol_path, attr_symbol_name, 
+      sku_no, ori_price, price, 
+      stock, weight, img)
+    values (#{goodsId,jdbcType=INTEGER}, #{attrSymbolPath,jdbcType=VARCHAR}, #{attrSymbolName,jdbcType=VARCHAR}, 
+      #{skuNo,jdbcType=VARCHAR}, #{oriPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
+      #{stock,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL}, #{img,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.PmsGoodsSku">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -126,8 +128,11 @@
       <if test="attrSymbolPath != null">
         attr_symbol_path,
       </if>
-      <if test="stockNo != null">
-        stock_no,
+      <if test="attrSymbolName != null">
+        attr_symbol_name,
+      </if>
+      <if test="skuNo != null">
+        sku_no,
       </if>
       <if test="oriPrice != null">
         ori_price,
@@ -152,8 +157,11 @@
       <if test="attrSymbolPath != null">
         #{attrSymbolPath,jdbcType=VARCHAR},
       </if>
-      <if test="stockNo != null">
-        #{stockNo,jdbcType=VARCHAR},
+      <if test="attrSymbolName != null">
+        #{attrSymbolName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuNo != null">
+        #{skuNo,jdbcType=VARCHAR},
       </if>
       <if test="oriPrice != null">
         #{oriPrice,jdbcType=DECIMAL},
@@ -190,8 +198,11 @@
       <if test="record.attrSymbolPath != null">
         attr_symbol_path = #{record.attrSymbolPath,jdbcType=VARCHAR},
       </if>
-      <if test="record.stockNo != null">
-        stock_no = #{record.stockNo,jdbcType=VARCHAR},
+      <if test="record.attrSymbolName != null">
+        attr_symbol_name = #{record.attrSymbolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skuNo != null">
+        sku_no = #{record.skuNo,jdbcType=VARCHAR},
       </if>
       <if test="record.oriPrice != null">
         ori_price = #{record.oriPrice,jdbcType=DECIMAL},
@@ -218,7 +229,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       goods_id = #{record.goodsId,jdbcType=INTEGER},
       attr_symbol_path = #{record.attrSymbolPath,jdbcType=VARCHAR},
-      stock_no = #{record.stockNo,jdbcType=VARCHAR},
+      attr_symbol_name = #{record.attrSymbolName,jdbcType=VARCHAR},
+      sku_no = #{record.skuNo,jdbcType=VARCHAR},
       ori_price = #{record.oriPrice,jdbcType=DECIMAL},
       price = #{record.price,jdbcType=DECIMAL},
       stock = #{record.stock,jdbcType=INTEGER},
@@ -237,8 +249,11 @@
       <if test="attrSymbolPath != null">
         attr_symbol_path = #{attrSymbolPath,jdbcType=VARCHAR},
       </if>
-      <if test="stockNo != null">
-        stock_no = #{stockNo,jdbcType=VARCHAR},
+      <if test="attrSymbolName != null">
+        attr_symbol_name = #{attrSymbolName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuNo != null">
+        sku_no = #{skuNo,jdbcType=VARCHAR},
       </if>
       <if test="oriPrice != null">
         ori_price = #{oriPrice,jdbcType=DECIMAL},
@@ -262,7 +277,8 @@
     update pms_goods_sku
     set goods_id = #{goodsId,jdbcType=INTEGER},
       attr_symbol_path = #{attrSymbolPath,jdbcType=VARCHAR},
-      stock_no = #{stockNo,jdbcType=VARCHAR},
+      attr_symbol_name = #{attrSymbolName,jdbcType=VARCHAR},
+      sku_no = #{skuNo,jdbcType=VARCHAR},
       ori_price = #{oriPrice,jdbcType=DECIMAL},
       price = #{price,jdbcType=DECIMAL},
       stock = #{stock,jdbcType=INTEGER},

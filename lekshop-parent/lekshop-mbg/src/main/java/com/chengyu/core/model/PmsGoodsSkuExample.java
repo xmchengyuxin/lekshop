@@ -295,73 +295,143 @@ public class PmsGoodsSkuExample {
             return (Criteria) this;
         }
 
-        public Criteria andStockNoIsNull() {
-            addCriterion("stock_no is null");
+        public Criteria andAttrSymbolNameIsNull() {
+            addCriterion("attr_symbol_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoIsNotNull() {
-            addCriterion("stock_no is not null");
+        public Criteria andAttrSymbolNameIsNotNull() {
+            addCriterion("attr_symbol_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoEqualTo(String value) {
-            addCriterion("stock_no =", value, "stockNo");
+        public Criteria andAttrSymbolNameEqualTo(String value) {
+            addCriterion("attr_symbol_name =", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoNotEqualTo(String value) {
-            addCriterion("stock_no <>", value, "stockNo");
+        public Criteria andAttrSymbolNameNotEqualTo(String value) {
+            addCriterion("attr_symbol_name <>", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoGreaterThan(String value) {
-            addCriterion("stock_no >", value, "stockNo");
+        public Criteria andAttrSymbolNameGreaterThan(String value) {
+            addCriterion("attr_symbol_name >", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoGreaterThanOrEqualTo(String value) {
-            addCriterion("stock_no >=", value, "stockNo");
+        public Criteria andAttrSymbolNameGreaterThanOrEqualTo(String value) {
+            addCriterion("attr_symbol_name >=", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoLessThan(String value) {
-            addCriterion("stock_no <", value, "stockNo");
+        public Criteria andAttrSymbolNameLessThan(String value) {
+            addCriterion("attr_symbol_name <", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoLessThanOrEqualTo(String value) {
-            addCriterion("stock_no <=", value, "stockNo");
+        public Criteria andAttrSymbolNameLessThanOrEqualTo(String value) {
+            addCriterion("attr_symbol_name <=", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoLike(String value) {
-            addCriterion("stock_no like", value, "stockNo");
+        public Criteria andAttrSymbolNameLike(String value) {
+            addCriterion("attr_symbol_name like", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoNotLike(String value) {
-            addCriterion("stock_no not like", value, "stockNo");
+        public Criteria andAttrSymbolNameNotLike(String value) {
+            addCriterion("attr_symbol_name not like", value, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoIn(List<String> values) {
-            addCriterion("stock_no in", values, "stockNo");
+        public Criteria andAttrSymbolNameIn(List<String> values) {
+            addCriterion("attr_symbol_name in", values, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoNotIn(List<String> values) {
-            addCriterion("stock_no not in", values, "stockNo");
+        public Criteria andAttrSymbolNameNotIn(List<String> values) {
+            addCriterion("attr_symbol_name not in", values, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoBetween(String value1, String value2) {
-            addCriterion("stock_no between", value1, value2, "stockNo");
+        public Criteria andAttrSymbolNameBetween(String value1, String value2) {
+            addCriterion("attr_symbol_name between", value1, value2, "attrSymbolName");
             return (Criteria) this;
         }
 
-        public Criteria andStockNoNotBetween(String value1, String value2) {
-            addCriterion("stock_no not between", value1, value2, "stockNo");
+        public Criteria andAttrSymbolNameNotBetween(String value1, String value2) {
+            addCriterion("attr_symbol_name not between", value1, value2, "attrSymbolName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoIsNull() {
+            addCriterion("sku_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoIsNotNull() {
+            addCriterion("sku_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoEqualTo(String value) {
+            addCriterion("sku_no =", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoNotEqualTo(String value) {
+            addCriterion("sku_no <>", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoGreaterThan(String value) {
+            addCriterion("sku_no >", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoGreaterThanOrEqualTo(String value) {
+            addCriterion("sku_no >=", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoLessThan(String value) {
+            addCriterion("sku_no <", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoLessThanOrEqualTo(String value) {
+            addCriterion("sku_no <=", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoLike(String value) {
+            addCriterion("sku_no like", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoNotLike(String value) {
+            addCriterion("sku_no not like", value, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoIn(List<String> values) {
+            addCriterion("sku_no in", values, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoNotIn(List<String> values) {
+            addCriterion("sku_no not in", values, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoBetween(String value1, String value2) {
+            addCriterion("sku_no between", value1, value2, "skuNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNoNotBetween(String value1, String value2) {
+            addCriterion("sku_no not between", value1, value2, "skuNo");
             return (Criteria) this;
         }
 

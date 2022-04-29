@@ -7,6 +7,7 @@
     <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
     <result column="goods_main_img" jdbcType="VARCHAR" property="goodsMainImg" />
+    <result column="goods_param_name" jdbcType="VARCHAR" property="goodsParamName" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
     <result column="member_id" jdbcType="INTEGER" property="memberId" />
@@ -16,9 +17,12 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="img" jdbcType="VARCHAR" property="img" />
-    <result column="goods_star_num" jdbcType="INTEGER" property="goodsStarNum" />
-    <result column="delivery_star_num" jdbcType="INTEGER" property="deliveryStarNum" />
-    <result column="shop_star_num" jdbcType="INTEGER" property="shopStarNum" />
+    <result column="goods_comment" jdbcType="INTEGER" property="goodsComment" />
+    <result column="avg_star_num" jdbcType="DECIMAL" property="avgStarNum" />
+    <result column="goods_star_num" jdbcType="DECIMAL" property="goodsStarNum" />
+    <result column="delivery_star_num" jdbcType="DECIMAL" property="deliveryStarNum" />
+    <result column="shop_star_num" jdbcType="DECIMAL" property="shopStarNum" />
+    <result column="logistic_star_num" jdbcType="DECIMAL" property="logisticStarNum" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_by" jdbcType="VARCHAR" property="addBy" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
@@ -83,9 +87,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, detail_id, goods_id, goods_name, goods_main_img, shop_id, shop_name, member_id, 
-    member_name, member_head_img, anonymous_status, status, content, img, goods_star_num, 
-    delivery_star_num, shop_star_num, add_time, add_by, upd_time, upd_by
+    id, detail_id, goods_id, goods_name, goods_main_img, goods_param_name, shop_id, shop_name, 
+    member_id, member_name, member_head_img, anonymous_status, status, content, img, 
+    goods_comment, avg_star_num, goods_star_num, delivery_star_num, shop_star_num, logistic_star_num, 
+    add_time, add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.OmsOrderCommentExample" resultMap="BaseResultMap">
     select
@@ -122,19 +127,23 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into oms_order_comment (detail_id, goods_id, goods_name, 
-      goods_main_img, shop_id, shop_name, 
-      member_id, member_name, member_head_img, 
-      anonymous_status, status, content, 
-      img, goods_star_num, delivery_star_num, 
-      shop_star_num, add_time, add_by, 
-      upd_time, upd_by)
+      goods_main_img, goods_param_name, shop_id, 
+      shop_name, member_id, member_name, 
+      member_head_img, anonymous_status, status, 
+      content, img, goods_comment, 
+      avg_star_num, goods_star_num, delivery_star_num, 
+      shop_star_num, logistic_star_num, add_time, 
+      add_by, upd_time, upd_by
+      )
     values (#{detailId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
-      #{goodsMainImg,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, 
-      #{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{memberHeadImg,jdbcType=VARCHAR}, 
-      #{anonymousStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
-      #{img,jdbcType=VARCHAR}, #{goodsStarNum,jdbcType=INTEGER}, #{deliveryStarNum,jdbcType=INTEGER}, 
-      #{shopStarNum,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
-      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR})
+      #{goodsMainImg,jdbcType=VARCHAR}, #{goodsParamName,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, 
+      #{shopName,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, 
+      #{memberHeadImg,jdbcType=VARCHAR}, #{anonymousStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, #{goodsComment,jdbcType=INTEGER}, 
+      #{avgStarNum,jdbcType=DECIMAL}, #{goodsStarNum,jdbcType=DECIMAL}, #{deliveryStarNum,jdbcType=DECIMAL}, 
+      #{shopStarNum,jdbcType=DECIMAL}, #{logisticStarNum,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.OmsOrderComment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -153,6 +162,9 @@
       </if>
       <if test="goodsMainImg != null">
         goods_main_img,
+      </if>
+      <if test="goodsParamName != null">
+        goods_param_name,
       </if>
       <if test="shopId != null">
         shop_id,
@@ -181,6 +193,12 @@
       <if test="img != null">
         img,
       </if>
+      <if test="goodsComment != null">
+        goods_comment,
+      </if>
+      <if test="avgStarNum != null">
+        avg_star_num,
+      </if>
       <if test="goodsStarNum != null">
         goods_star_num,
       </if>
@@ -189,6 +207,9 @@
       </if>
       <if test="shopStarNum != null">
         shop_star_num,
+      </if>
+      <if test="logisticStarNum != null">
+        logistic_star_num,
       </if>
       <if test="addTime != null">
         add_time,
@@ -215,6 +236,9 @@
       </if>
       <if test="goodsMainImg != null">
         #{goodsMainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsParamName != null">
+        #{goodsParamName,jdbcType=VARCHAR},
       </if>
       <if test="shopId != null">
         #{shopId,jdbcType=INTEGER},
@@ -243,14 +267,23 @@
       <if test="img != null">
         #{img,jdbcType=VARCHAR},
       </if>
+      <if test="goodsComment != null">
+        #{goodsComment,jdbcType=INTEGER},
+      </if>
+      <if test="avgStarNum != null">
+        #{avgStarNum,jdbcType=DECIMAL},
+      </if>
       <if test="goodsStarNum != null">
-        #{goodsStarNum,jdbcType=INTEGER},
+        #{goodsStarNum,jdbcType=DECIMAL},
       </if>
       <if test="deliveryStarNum != null">
-        #{deliveryStarNum,jdbcType=INTEGER},
+        #{deliveryStarNum,jdbcType=DECIMAL},
       </if>
       <if test="shopStarNum != null">
-        #{shopStarNum,jdbcType=INTEGER},
+        #{shopStarNum,jdbcType=DECIMAL},
+      </if>
+      <if test="logisticStarNum != null">
+        #{logisticStarNum,jdbcType=DECIMAL},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -290,6 +323,9 @@
       <if test="record.goodsMainImg != null">
         goods_main_img = #{record.goodsMainImg,jdbcType=VARCHAR},
       </if>
+      <if test="record.goodsParamName != null">
+        goods_param_name = #{record.goodsParamName,jdbcType=VARCHAR},
+      </if>
       <if test="record.shopId != null">
         shop_id = #{record.shopId,jdbcType=INTEGER},
       </if>
@@ -317,14 +353,23 @@
       <if test="record.img != null">
         img = #{record.img,jdbcType=VARCHAR},
       </if>
+      <if test="record.goodsComment != null">
+        goods_comment = #{record.goodsComment,jdbcType=INTEGER},
+      </if>
+      <if test="record.avgStarNum != null">
+        avg_star_num = #{record.avgStarNum,jdbcType=DECIMAL},
+      </if>
       <if test="record.goodsStarNum != null">
-        goods_star_num = #{record.goodsStarNum,jdbcType=INTEGER},
+        goods_star_num = #{record.goodsStarNum,jdbcType=DECIMAL},
       </if>
       <if test="record.deliveryStarNum != null">
-        delivery_star_num = #{record.deliveryStarNum,jdbcType=INTEGER},
+        delivery_star_num = #{record.deliveryStarNum,jdbcType=DECIMAL},
       </if>
       <if test="record.shopStarNum != null">
-        shop_star_num = #{record.shopStarNum,jdbcType=INTEGER},
+        shop_star_num = #{record.shopStarNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.logisticStarNum != null">
+        logistic_star_num = #{record.logisticStarNum,jdbcType=DECIMAL},
       </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -350,6 +395,7 @@
       goods_id = #{record.goodsId,jdbcType=INTEGER},
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       goods_main_img = #{record.goodsMainImg,jdbcType=VARCHAR},
+      goods_param_name = #{record.goodsParamName,jdbcType=VARCHAR},
       shop_id = #{record.shopId,jdbcType=INTEGER},
       shop_name = #{record.shopName,jdbcType=VARCHAR},
       member_id = #{record.memberId,jdbcType=INTEGER},
@@ -359,9 +405,12 @@
       status = #{record.status,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
       img = #{record.img,jdbcType=VARCHAR},
-      goods_star_num = #{record.goodsStarNum,jdbcType=INTEGER},
-      delivery_star_num = #{record.deliveryStarNum,jdbcType=INTEGER},
-      shop_star_num = #{record.shopStarNum,jdbcType=INTEGER},
+      goods_comment = #{record.goodsComment,jdbcType=INTEGER},
+      avg_star_num = #{record.avgStarNum,jdbcType=DECIMAL},
+      goods_star_num = #{record.goodsStarNum,jdbcType=DECIMAL},
+      delivery_star_num = #{record.deliveryStarNum,jdbcType=DECIMAL},
+      shop_star_num = #{record.shopStarNum,jdbcType=DECIMAL},
+      logistic_star_num = #{record.logisticStarNum,jdbcType=DECIMAL},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
@@ -384,6 +433,9 @@
       </if>
       <if test="goodsMainImg != null">
         goods_main_img = #{goodsMainImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsParamName != null">
+        goods_param_name = #{goodsParamName,jdbcType=VARCHAR},
       </if>
       <if test="shopId != null">
         shop_id = #{shopId,jdbcType=INTEGER},
@@ -412,14 +464,23 @@
       <if test="img != null">
         img = #{img,jdbcType=VARCHAR},
       </if>
+      <if test="goodsComment != null">
+        goods_comment = #{goodsComment,jdbcType=INTEGER},
+      </if>
+      <if test="avgStarNum != null">
+        avg_star_num = #{avgStarNum,jdbcType=DECIMAL},
+      </if>
       <if test="goodsStarNum != null">
-        goods_star_num = #{goodsStarNum,jdbcType=INTEGER},
+        goods_star_num = #{goodsStarNum,jdbcType=DECIMAL},
       </if>
       <if test="deliveryStarNum != null">
-        delivery_star_num = #{deliveryStarNum,jdbcType=INTEGER},
+        delivery_star_num = #{deliveryStarNum,jdbcType=DECIMAL},
       </if>
       <if test="shopStarNum != null">
-        shop_star_num = #{shopStarNum,jdbcType=INTEGER},
+        shop_star_num = #{shopStarNum,jdbcType=DECIMAL},
+      </if>
+      <if test="logisticStarNum != null">
+        logistic_star_num = #{logisticStarNum,jdbcType=DECIMAL},
       </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -442,6 +503,7 @@
       goods_id = #{goodsId,jdbcType=INTEGER},
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_main_img = #{goodsMainImg,jdbcType=VARCHAR},
+      goods_param_name = #{goodsParamName,jdbcType=VARCHAR},
       shop_id = #{shopId,jdbcType=INTEGER},
       shop_name = #{shopName,jdbcType=VARCHAR},
       member_id = #{memberId,jdbcType=INTEGER},
@@ -451,9 +513,12 @@
       status = #{status,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR},
-      goods_star_num = #{goodsStarNum,jdbcType=INTEGER},
-      delivery_star_num = #{deliveryStarNum,jdbcType=INTEGER},
-      shop_star_num = #{shopStarNum,jdbcType=INTEGER},
+      goods_comment = #{goodsComment,jdbcType=INTEGER},
+      avg_star_num = #{avgStarNum,jdbcType=DECIMAL},
+      goods_star_num = #{goodsStarNum,jdbcType=DECIMAL},
+      delivery_star_num = #{deliveryStarNum,jdbcType=DECIMAL},
+      shop_star_num = #{shopStarNum,jdbcType=DECIMAL},
+      logistic_star_num = #{logisticStarNum,jdbcType=DECIMAL},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},

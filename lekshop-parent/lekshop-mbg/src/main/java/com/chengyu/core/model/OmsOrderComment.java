@@ -2,6 +2,7 @@ package com.chengyu.core.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class OmsOrderComment implements Serializable {
@@ -19,6 +20,9 @@ public class OmsOrderComment implements Serializable {
 
     @ApiModelProperty(value = "主图")
     private String goodsMainImg;
+
+    @ApiModelProperty(value = "商品规格名称")
+    private String goodsParamName;
 
     @ApiModelProperty(value = "商家ID")
     private Integer shopId;
@@ -47,14 +51,23 @@ public class OmsOrderComment implements Serializable {
     @ApiModelProperty(value = "评论图片")
     private String img;
 
-    @ApiModelProperty(value = "评价星级")
-    private Integer goodsStarNum;
+    @ApiModelProperty(value = "1好评>>2中评>>3差评")
+    private Integer goodsComment;
 
-    @ApiModelProperty(value = "物流评价等级")
-    private Integer deliveryStarNum;
+    @ApiModelProperty(value = "综合评分")
+    private BigDecimal avgStarNum;
 
-    @ApiModelProperty(value = "店铺评价等级")
-    private Integer shopStarNum;
+    @ApiModelProperty(value = "描述相符")
+    private BigDecimal goodsStarNum;
+
+    @ApiModelProperty(value = "发货速度")
+    private BigDecimal deliveryStarNum;
+
+    @ApiModelProperty(value = "服务态度")
+    private BigDecimal shopStarNum;
+
+    @ApiModelProperty(value = "物流服务")
+    private BigDecimal logisticStarNum;
 
     @ApiModelProperty(value = "添加时间")
     private Date addTime;
@@ -108,6 +121,14 @@ public class OmsOrderComment implements Serializable {
 
     public void setGoodsMainImg(String goodsMainImg) {
         this.goodsMainImg = goodsMainImg;
+    }
+
+    public String getGoodsParamName() {
+        return goodsParamName;
+    }
+
+    public void setGoodsParamName(String goodsParamName) {
+        this.goodsParamName = goodsParamName;
     }
 
     public Integer getShopId() {
@@ -182,28 +203,52 @@ public class OmsOrderComment implements Serializable {
         this.img = img;
     }
 
-    public Integer getGoodsStarNum() {
+    public Integer getGoodsComment() {
+        return goodsComment;
+    }
+
+    public void setGoodsComment(Integer goodsComment) {
+        this.goodsComment = goodsComment;
+    }
+
+    public BigDecimal getAvgStarNum() {
+        return avgStarNum;
+    }
+
+    public void setAvgStarNum(BigDecimal avgStarNum) {
+        this.avgStarNum = avgStarNum;
+    }
+
+    public BigDecimal getGoodsStarNum() {
         return goodsStarNum;
     }
 
-    public void setGoodsStarNum(Integer goodsStarNum) {
+    public void setGoodsStarNum(BigDecimal goodsStarNum) {
         this.goodsStarNum = goodsStarNum;
     }
 
-    public Integer getDeliveryStarNum() {
+    public BigDecimal getDeliveryStarNum() {
         return deliveryStarNum;
     }
 
-    public void setDeliveryStarNum(Integer deliveryStarNum) {
+    public void setDeliveryStarNum(BigDecimal deliveryStarNum) {
         this.deliveryStarNum = deliveryStarNum;
     }
 
-    public Integer getShopStarNum() {
+    public BigDecimal getShopStarNum() {
         return shopStarNum;
     }
 
-    public void setShopStarNum(Integer shopStarNum) {
+    public void setShopStarNum(BigDecimal shopStarNum) {
         this.shopStarNum = shopStarNum;
+    }
+
+    public BigDecimal getLogisticStarNum() {
+        return logisticStarNum;
+    }
+
+    public void setLogisticStarNum(BigDecimal logisticStarNum) {
+        this.logisticStarNum = logisticStarNum;
     }
 
     public Date getAddTime() {
@@ -249,6 +294,7 @@ public class OmsOrderComment implements Serializable {
         sb.append(", goodsId=").append(goodsId);
         sb.append(", goodsName=").append(goodsName);
         sb.append(", goodsMainImg=").append(goodsMainImg);
+        sb.append(", goodsParamName=").append(goodsParamName);
         sb.append(", shopId=").append(shopId);
         sb.append(", shopName=").append(shopName);
         sb.append(", memberId=").append(memberId);
@@ -258,9 +304,12 @@ public class OmsOrderComment implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", content=").append(content);
         sb.append(", img=").append(img);
+        sb.append(", goodsComment=").append(goodsComment);
+        sb.append(", avgStarNum=").append(avgStarNum);
         sb.append(", goodsStarNum=").append(goodsStarNum);
         sb.append(", deliveryStarNum=").append(deliveryStarNum);
         sb.append(", shopStarNum=").append(shopStarNum);
+        sb.append(", logisticStarNum=").append(logisticStarNum);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);
