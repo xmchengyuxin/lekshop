@@ -15,6 +15,7 @@
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
     <result column="goods_main_img" jdbcType="VARCHAR" property="goodsMainImg" />
     <result column="goods_param_name" jdbcType="VARCHAR" property="goodsParamName" />
+    <result column="stock_type" jdbcType="INTEGER" property="stockType" />
     <result column="buy_price" jdbcType="DECIMAL" property="buyPrice" />
     <result column="buy_num" jdbcType="INTEGER" property="buyNum" />
     <result column="refund_num" jdbcType="INTEGER" property="refundNum" />
@@ -89,8 +90,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, order_id, order_no, member_id, member_name, member_head_img, shop_id, shop_name, 
-    goods_id, goods_sku_id, goods_name, goods_main_img, goods_param_name, buy_price, 
-    buy_num, refund_num, buy_total_price, status, refund_status, remark, comment_status, 
+    goods_id, goods_sku_id, goods_name, goods_main_img, goods_param_name, stock_type, 
+    buy_price, buy_num, refund_num, buy_total_price, status, refund_status, remark, comment_status, 
     comment_expired_time, add_time, add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.OmsOrderDetailExample" resultMap="BaseResultMap">
@@ -131,20 +132,20 @@
       member_name, member_head_img, shop_id, 
       shop_name, goods_id, goods_sku_id, 
       goods_name, goods_main_img, goods_param_name, 
-      buy_price, buy_num, refund_num, 
-      buy_total_price, status, refund_status, 
-      remark, comment_status, comment_expired_time, 
-      add_time, add_by, upd_time, 
-      upd_by)
+      stock_type, buy_price, buy_num, 
+      refund_num, buy_total_price, status, 
+      refund_status, remark, comment_status, 
+      comment_expired_time, add_time, add_by, 
+      upd_time, upd_by)
     values (#{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
       #{memberName,jdbcType=VARCHAR}, #{memberHeadImg,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, 
       #{shopName,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{goodsSkuId,jdbcType=INTEGER}, 
       #{goodsName,jdbcType=VARCHAR}, #{goodsMainImg,jdbcType=VARCHAR}, #{goodsParamName,jdbcType=VARCHAR}, 
-      #{buyPrice,jdbcType=DECIMAL}, #{buyNum,jdbcType=INTEGER}, #{refundNum,jdbcType=INTEGER}, 
-      #{buyTotalPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{refundStatus,jdbcType=INTEGER}, 
-      #{remark,jdbcType=VARCHAR}, #{commentStatus,jdbcType=INTEGER}, #{commentExpiredTime,jdbcType=TIMESTAMP}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
-      #{updBy,jdbcType=VARCHAR})
+      #{stockType,jdbcType=INTEGER}, #{buyPrice,jdbcType=DECIMAL}, #{buyNum,jdbcType=INTEGER}, 
+      #{refundNum,jdbcType=INTEGER}, #{buyTotalPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{refundStatus,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{commentStatus,jdbcType=INTEGER}, 
+      #{commentExpiredTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.OmsOrderDetail">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -187,6 +188,9 @@
       </if>
       <if test="goodsParamName != null">
         goods_param_name,
+      </if>
+      <if test="stockType != null">
+        stock_type,
       </if>
       <if test="buyPrice != null">
         buy_price,
@@ -264,6 +268,9 @@
       </if>
       <if test="goodsParamName != null">
         #{goodsParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="stockType != null">
+        #{stockType,jdbcType=INTEGER},
       </if>
       <if test="buyPrice != null">
         #{buyPrice,jdbcType=DECIMAL},
@@ -354,6 +361,9 @@
       <if test="record.goodsParamName != null">
         goods_param_name = #{record.goodsParamName,jdbcType=VARCHAR},
       </if>
+      <if test="record.stockType != null">
+        stock_type = #{record.stockType,jdbcType=INTEGER},
+      </if>
       <if test="record.buyPrice != null">
         buy_price = #{record.buyPrice,jdbcType=DECIMAL},
       </if>
@@ -413,6 +423,7 @@
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       goods_main_img = #{record.goodsMainImg,jdbcType=VARCHAR},
       goods_param_name = #{record.goodsParamName,jdbcType=VARCHAR},
+      stock_type = #{record.stockType,jdbcType=INTEGER},
       buy_price = #{record.buyPrice,jdbcType=DECIMAL},
       buy_num = #{record.buyNum,jdbcType=INTEGER},
       refund_num = #{record.refundNum,jdbcType=INTEGER},
@@ -468,6 +479,9 @@
       </if>
       <if test="goodsParamName != null">
         goods_param_name = #{goodsParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="stockType != null">
+        stock_type = #{stockType,jdbcType=INTEGER},
       </if>
       <if test="buyPrice != null">
         buy_price = #{buyPrice,jdbcType=DECIMAL},
@@ -525,6 +539,7 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_main_img = #{goodsMainImg,jdbcType=VARCHAR},
       goods_param_name = #{goodsParamName,jdbcType=VARCHAR},
+      stock_type = #{stockType,jdbcType=INTEGER},
       buy_price = #{buyPrice,jdbcType=DECIMAL},
       buy_num = #{buyNum,jdbcType=INTEGER},
       refund_num = #{refundNum,jdbcType=INTEGER},

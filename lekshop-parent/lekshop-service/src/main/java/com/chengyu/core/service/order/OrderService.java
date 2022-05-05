@@ -11,7 +11,6 @@ import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberAddress;
 import com.chengyu.core.model.UmsShop;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -59,7 +58,7 @@ public interface OrderService {
      * @date   2022/4/29
      * @param  payOrderNo
      */
-    void paySus(String payOrderNo);
+    void paySus(String payOrderNo) throws ServiceException;
 
     /**
      * 批量发货
@@ -111,4 +110,20 @@ public interface OrderService {
      * @throws ServiceException 业务异常
      */
     void deleteOrder(UmsMember member, Integer orderId) throws ServiceException;
+
+    /**
+     * 订单超时未支付自动取消
+     * @author LeGreen
+     * @date   2022/5/5
+     * @param  payOrderNo
+     */
+    void autoCancelOrder(String payOrderNo);
+
+    /**
+     * 订单自动确认收货
+     * @author LeGreen
+     * @date   2022/5/5
+     * @param  orderNo
+     */
+    void autoFinishOrder(String orderNo) throws ServiceException;
 }

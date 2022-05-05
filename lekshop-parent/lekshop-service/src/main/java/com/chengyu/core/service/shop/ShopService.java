@@ -2,6 +2,7 @@ package com.chengyu.core.service.shop;
 
 import com.chengyu.core.domain.form.ShopSearchForm;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsShop;
 
 import java.util.List;
@@ -58,4 +59,13 @@ public interface ShopService {
 	 * @return UmsShop
 	 */
 	UmsShop getShopByMemberId(Integer memberId);
+
+	/**
+	 * 获取店铺的用户
+	 * @author LeGreen
+	 * @date   2022/5/5
+	 * @param  shopId
+	 * @return UmsMember
+	 */
+	UmsMember getMemberByShopId(Integer shopId);
 }

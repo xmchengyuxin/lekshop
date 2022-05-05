@@ -68,4 +68,22 @@ public interface GoodsService {
 	 * @return PmsGoods
 	 */
 	PmsGoods getGoods(Integer goodsId);
+
+	/**
+	 * 减库存
+	 * @author LeGreen
+	 * @date   2022/5/5
+	 * @param  skuId
+	 * @param  num
+	 */
+	void reduceStock(Integer skuId, Integer num);
+
+	/**
+	 * 加库存
+	 * @author LeGreen
+	 * @date   2022/5/5
+	 * @param  skuId
+	 * @param  num
+	 */
+	void addStock(Integer skuId, Integer num);
 }

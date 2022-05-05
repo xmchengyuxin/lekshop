@@ -956,6 +956,66 @@ public class OmsOrderDetailExample {
             return (Criteria) this;
         }
 
+        public Criteria andStockTypeIsNull() {
+            addCriterion("stock_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeIsNotNull() {
+            addCriterion("stock_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeEqualTo(Integer value) {
+            addCriterion("stock_type =", value, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeNotEqualTo(Integer value) {
+            addCriterion("stock_type <>", value, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeGreaterThan(Integer value) {
+            addCriterion("stock_type >", value, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("stock_type >=", value, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeLessThan(Integer value) {
+            addCriterion("stock_type <", value, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("stock_type <=", value, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeIn(List<Integer> values) {
+            addCriterion("stock_type in", values, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeNotIn(List<Integer> values) {
+            addCriterion("stock_type not in", values, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeBetween(Integer value1, Integer value2) {
+            addCriterion("stock_type between", value1, value2, "stockType");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("stock_type not between", value1, value2, "stockType");
+            return (Criteria) this;
+        }
+
         public Criteria andBuyPriceIsNull() {
             addCriterion("buy_price is null");
             return (Criteria) this;

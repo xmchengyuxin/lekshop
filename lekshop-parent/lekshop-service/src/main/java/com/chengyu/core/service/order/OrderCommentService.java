@@ -60,4 +60,12 @@ public interface OrderCommentService {
 	 * @param  commentId
 	 */
 	void deleteComment(Integer commentId);
+
+	/**
+	 * 到期自动好评
+	 * @author LeGreen
+	 * @date   2022/5/5
+	 * @param  orderNo
+	 */
+	void autoComment(String orderNo);
 }

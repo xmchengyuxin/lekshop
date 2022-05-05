@@ -28,4 +28,16 @@ public class GoodsEnums {
 		}
 	}
 
+	@Getter
+	public enum StockType{
+		/**库存计算方式>>1下单减库存>>2付款减库存**/
+		ORDER_REDUCE(1),
+		PAY_REDUCE(2);
+
+		private final int value;
+
+		StockType(int value){
+			this.value = value;
+		}
+	}
 }

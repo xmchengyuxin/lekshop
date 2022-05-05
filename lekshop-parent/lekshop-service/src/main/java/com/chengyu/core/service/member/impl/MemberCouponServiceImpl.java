@@ -51,7 +51,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public BigDecimal useCoupon(UmsMember member, Integer couponId, BigDecimal totalAmount, List<Integer> goodsIdList, List<Integer> goodsCateIdList) throws ServiceException {
+	public BigDecimal validateCoupon(UmsMember member, Integer couponId, BigDecimal totalAmount, List<Integer> goodsIdList, List<Integer> goodsCateIdList) throws ServiceException {
 		UmsMemberCouponExample example = new UmsMemberCouponExample();
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andIdEqualTo(couponId);
 		List<UmsMemberCoupon> list = memberCouponMapper.selectByExample(example);
@@ -84,13 +84,23 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 				}
 			}
 		}
+		return coupon.getType() == ShopEnums.CouponType.FULL_REDUCE_COUPON.getValue() ? coupon.getAmount() : NumberUtil.mul(totalAmount, NumberUtil.div(coupon.getAmount(), 10));
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void useCoupon(Integer couponId) throws ServiceException {
+		UmsMemberCoupon coupon = memberCouponMapper.selectByPrimaryKey(couponId);
+		if(coupon == null || coupon.getStatus() != CommonConstant.WAIT_INT){
+			throw new ServiceException("该张优惠券无法使用");
+		}
+
 		//优惠券已使用
 		UmsMemberCoupon updateCoupon = new UmsMemberCoupon();
 		updateCoupon.setId(couponId);
 		updateCoupon.setStatus(CommonConstant.YES_INT);
-		updateCoupon.setUpdTime(now);
+		updateCoupon.setUpdTime(DateUtil.date());
 		memberCouponMapper.updateByPrimaryKeySelective(updateCoupon);
-		return coupon.getType() == ShopEnums.CouponType.FULL_REDUCE_COUPON.getValue() ? coupon.getAmount() : NumberUtil.mul(totalAmount, NumberUtil.div(coupon.getAmount(), 10));
 	}
 
 	@Override

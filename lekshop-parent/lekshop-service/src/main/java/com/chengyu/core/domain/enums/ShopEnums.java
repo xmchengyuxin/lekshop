@@ -145,4 +145,21 @@ public class ShopEnums {
 			this.value = value;
 		}
 	}
+
+	/**
+	 * 运费组合策略
+	 */
+	@Getter
+	public enum DeliveryFeeType{
+		/**1运费叠加>>2以最低结算>>3以最高结算**/
+		ADD(1),
+		LOWEST(2),
+		HIGHEST(3);
+
+		private final int value;
+
+		DeliveryFeeType(int value){
+			this.value = value;
+		}
+	}
 }

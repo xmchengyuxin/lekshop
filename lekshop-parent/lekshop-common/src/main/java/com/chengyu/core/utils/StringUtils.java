@@ -3,6 +3,7 @@ package com.chengyu.core.utils;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -185,8 +186,32 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 	public static String genOrderNo(Integer memberId) {
 		return (System.currentTimeMillis() + (memberId==null?0L:memberId)) + StringUtils.leftPad("" + RandomUtils.nextInt(1000), 3, "0");
 	}
+
+	public static String genTradeNo(Integer memberId) {
+		String number = String.format("%04d", memberId % 10000);
+		String randomCode = generateOrderNo();
+		return randomCode.concat(number);
+	}
+
+	private static final int MIN_NUMBER = 1000;
+	private static final int MAX_NUMBER = 9999;
+	private static final AtomicInteger SEQUENCE = new AtomicInteger(MIN_NUMBER);
+
+	/**
+	 * 每台机器从 1000 开始自增到 9999，保证单独一台机器在高并发下生成的单号唯一
+	 *
+	 * @return
+	 */
+	private static String generateOrderNo() {
+		if (SEQUENCE.intValue() > MAX_NUMBER) {
+			SEQUENCE.getAndSet(MIN_NUMBER);
+		}
+
+		String time = String.valueOf(System.currentTimeMillis());
+		return time + SEQUENCE.getAndIncrement();
+	}
 	
 	public static void main(String[] args) {
-		System.out.println(generateShortUuid(20));
+		System.out.println(genTradeNo(20));
 	}
 }

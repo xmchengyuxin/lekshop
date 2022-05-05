@@ -6,6 +6,7 @@ import com.chengyu.core.domain.form.ShopSearchForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.*;
 import com.chengyu.core.model.*;
+import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -42,6 +43,8 @@ public class ShopServiceImpl implements ShopService {
 	private UmsShopSourceCateMapper shopSourceCateMapper;
 	@Autowired
 	private PmsGoodsMapper goodsMapper;
+	@Autowired
+	private MemberService memberService;
 
 	@Override
 	public List<UmsShop> getShopList(ShopSearchForm form, Integer page, Integer pageSize) {
@@ -126,5 +129,11 @@ public class ShopServiceImpl implements ShopService {
 		example.createCriteria().andMemberIdEqualTo(memberId);
 		List<UmsShop> list = shopMapper.selectByExample(example);
 		return CollectionUtil.isNotEmpty(list) ? list.get(0) : null;
+	}
+
+	@Override
+	public UmsMember getMemberByShopId(Integer shopId) {
+		UmsShop shop = this.getShopById(shopId);
+		return memberService.getMemberById(shop.getMemberId());
 	}
 }

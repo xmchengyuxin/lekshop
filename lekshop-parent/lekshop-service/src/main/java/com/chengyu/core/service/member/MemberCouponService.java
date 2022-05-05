@@ -38,7 +38,16 @@ public interface MemberCouponService {
      * @return BigDecimal 优惠金额
      * @throws ServiceException 业务异常
      */
-    BigDecimal useCoupon(UmsMember member, Integer couponId, BigDecimal totalAmount, List<Integer> goodsIdList, List<Integer> goodsCateIdList) throws ServiceException;
+    BigDecimal validateCoupon(UmsMember member, Integer couponId, BigDecimal totalAmount, List<Integer> goodsIdList, List<Integer> goodsCateIdList) throws ServiceException;
+
+    /**
+     * 使用优惠券
+     * @author LeGreen
+     * @date   2022/5/5
+     * @param  couponId
+     * @throws ServiceException 业务异常
+     */
+    void useCoupon(Integer couponId) throws ServiceException;
 
     /**
      * 返回优惠券

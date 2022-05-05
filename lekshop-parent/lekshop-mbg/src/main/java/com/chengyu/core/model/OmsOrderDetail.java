@@ -44,6 +44,9 @@ public class OmsOrderDetail implements Serializable {
     @ApiModelProperty(value = "商品规格名称")
     private String goodsParamName;
 
+    @ApiModelProperty(value = "库存计算方式>>1下单减库存>>2付款减库存")
+    private Integer stockType;
+
     @ApiModelProperty(value = "购买单价")
     private BigDecimal buyPrice;
 
@@ -189,6 +192,14 @@ public class OmsOrderDetail implements Serializable {
         this.goodsParamName = goodsParamName;
     }
 
+    public Integer getStockType() {
+        return stockType;
+    }
+
+    public void setStockType(Integer stockType) {
+        this.stockType = stockType;
+    }
+
     public BigDecimal getBuyPrice() {
         return buyPrice;
     }
@@ -312,6 +323,7 @@ public class OmsOrderDetail implements Serializable {
         sb.append(", goodsName=").append(goodsName);
         sb.append(", goodsMainImg=").append(goodsMainImg);
         sb.append(", goodsParamName=").append(goodsParamName);
+        sb.append(", stockType=").append(stockType);
         sb.append(", buyPrice=").append(buyPrice);
         sb.append(", buyNum=").append(buyNum);
         sb.append(", refundNum=").append(refundNum);

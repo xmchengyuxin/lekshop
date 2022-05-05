@@ -1,17 +1,17 @@
 package com.chengyu.core.service.order.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.OrderCommentForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.OmsOrderCommentMapper;
-import com.chengyu.core.model.OmsOrderComment;
-import com.chengyu.core.model.OmsOrderCommentExample;
-import com.chengyu.core.model.OmsOrderDetail;
-import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.mapper.OmsOrderDetailMapper;
+import com.chengyu.core.model.*;
 import com.chengyu.core.service.order.OrderCommentService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderCommentServiceImpl implements OrderCommentService {
@@ -29,6 +31,8 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	private OmsOrderCommentMapper orderCommentMapper;
 	@Autowired
 	private BaseMapper baseMapper;
+	@Autowired
+	private OmsOrderDetailMapper orderDetailMapper;
 
 
 	@Override
@@ -86,8 +90,12 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 		if(comment == null || comment.getStatus() != OrderEnums.CommentStatus.WAIT_COMMENT.getValue()){
 			throw new ServiceException("非待评价状态");
 		}
+		this.comment(comment, form);
+	}
+
+	private void comment(OmsOrderComment comment, OrderCommentForm form){
 		OmsOrderComment updateComment = new OmsOrderComment();
-		updateComment.setId(form.getId());
+		updateComment.setId(comment.getId());
 		updateComment.setAnonymousStatus(form.getAnonymousStatus());
 		updateComment.setContent(form.getContent());
 		updateComment.setImg(form.getImg());
@@ -126,5 +134,35 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void deleteComment(Integer commentId) {
 		orderCommentMapper.deleteByPrimaryKey(commentId);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void autoComment(String orderNo) {
+		OmsOrderDetailExample example = new OmsOrderDetailExample();
+		example.createCriteria().andOrderNoEqualTo(orderNo);
+		List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(example);
+
+		if(CollectionUtil.isNotEmpty(detailList)){
+			OmsOrderCommentExample commentExample = new OmsOrderCommentExample();
+			commentExample.createCriteria().andDetailIdIn(detailList.stream().map(OmsOrderDetail::getId).collect(Collectors.toList()))
+					.andStatusEqualTo(OrderEnums.CommentStatus.WAIT_COMMENT.getValue());
+			List<OmsOrderComment> commentList = orderCommentMapper.selectByExample(commentExample);
+			if(CollectionUtil.isNotEmpty(commentList)){
+				//自动评价
+				for(OmsOrderComment comment : commentList){
+					OrderCommentForm form = new OrderCommentForm();
+					form.setAnonymousStatus(CommonConstant.YES_INT);
+					form.setContent("评价方未及时做出评价,系统默认好评!");
+					form.setGoodsComment(OrderEnums.CommentType.GOOD.getValue());
+					BigDecimal good = new BigDecimal(5);
+					form.setGoodsStarNum(good);
+					form.setDeliveryStarNum(good);
+					form.setShopStarNum(good);
+					form.setLogisticStarNum(good);
+					this.comment(comment, form);
+				}
+			}
+		}
 	}
 }

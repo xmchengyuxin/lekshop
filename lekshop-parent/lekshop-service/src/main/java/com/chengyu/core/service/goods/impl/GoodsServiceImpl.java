@@ -5,10 +5,10 @@ import com.chengyu.core.domain.enums.GoodsEnums;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.PmsGoodsMapper;
-import com.chengyu.core.model.PmsGoods;
-import com.chengyu.core.model.PmsGoodsExample;
-import com.chengyu.core.model.UmsShop;
+import com.chengyu.core.mapper.PmsGoodsSkuMapper;
+import com.chengyu.core.model.*;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -29,6 +29,10 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private PmsGoodsMapper goodsMapper;
+	@Autowired
+	private PmsGoodsSkuMapper goodsSkuMapper;
+	@Autowired
+	private BaseMapper baseMapper;
 
 	@Override
 	public List<PmsGoods> getGoodsList(GoodsSearchForm form, Integer page, Integer pageSize) {
@@ -114,5 +118,23 @@ public class GoodsServiceImpl implements GoodsService {
 		example.createCriteria().andIdEqualTo(goodsId).andStatusNotEqualTo(GoodsEnums.GoodsStatus.DEL.getValue());
 		List<PmsGoods> goodsList = goodsMapper.selectByExample(example);
 		return CollectionUtil.isNotEmpty(goodsList) ? goodsList.get(0) : null;
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void reduceStock(Integer skuId, Integer num) {
+		baseMapper.update("update pms_goods_sku set stock = stock-"+ num +" where id = "+skuId);
+		//如果库存小于0， 则更新为0
+		PmsGoodsSkuExample example = new PmsGoodsSkuExample();
+		example.createCriteria().andIdEqualTo(skuId).andStockLessThan(0);
+		PmsGoodsSku updateSku = new PmsGoodsSku();
+		updateSku.setStock(0);
+		goodsSkuMapper.updateByExampleSelective(updateSku, example);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void addStock(Integer skuId, Integer num) {
+		baseMapper.update("update pms_goods_sku set stock = stock+"+ num +" where id = "+skuId);
 	}
 }
