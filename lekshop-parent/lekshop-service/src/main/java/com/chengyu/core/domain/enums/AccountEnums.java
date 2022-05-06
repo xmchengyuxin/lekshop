@@ -80,7 +80,11 @@ public class AccountEnums {
 		ACCOUNT_WITHDRAW_UNFREEZE("提现解冻", 7),
 		ACCOUNT_WITHDRAW_REDUCE("提现成功扣除", 8),
 		ACCOUNT_ADMIN_IN("管理员手动增加", 9),
-		ACCOUNT_ADMIN_OUT("管理员手动减少", 10);
+		ACCOUNT_ADMIN_OUT("管理员手动减少", 10),
+		ACCOUNT_TRANSFER_OUT("本金转出", 11),
+		ACCOUNT_TRANSFER_IN("本金转入", 12),
+		ACCOUNT_RECHARGE("充值", 13);
+
 
 		private final String name;
 		private final Integer value;

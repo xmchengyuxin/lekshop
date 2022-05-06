@@ -26,7 +26,11 @@ public class ParamsManager {
         /** 提现设置 **/
         CONFIG_WITHDRAW("config_withdraw"),
         /** 公众号设置 **/
-        CONFIG_GZH("config_gzh");
+        CONFIG_GZH("config_gzh"),
+        /** 订单设置 **/
+        CONFIG_ORDER("config_order"),
+        /** 搜索设置 **/
+        CONFIG_SEARCH("config_search");
 
         private final String key;
 
@@ -56,6 +60,8 @@ public class ParamsManager {
     private ConfigRealnameService configRealnameService;
     @Autowired
     private ConfigGzhService configGzhService;
+    @Autowired
+    private ConfigOrderService configOrderService;
 
     public Object getParamsByKey(ParamsSearchForm form){
         ParamsType type = ParamsType.get(form.getKey());
@@ -73,6 +79,8 @@ public class ParamsManager {
                 return configRealnameService.getConfigRealnameByGroupId(form.getGroupId());
             case CONFIG_GZH:
                 return configGzhService.getGzhNoCache();
+            case CONFIG_ORDER:
+                return configOrderService.getConfigOrderNoCache();
             default: return null;
         }
     }

@@ -195,7 +195,7 @@ public class OrderServiceImpl implements OrderService {
 				detail.setBuyPrice(sku.getPrice());
 				detail.setBuyNum(buyDetailForm.getNum());
 				detail.setStockType(goods.getStockType());
-				detail.setRefundNum(0);
+				detail.setRefundAmount(BigDecimal.ZERO);
 				detail.setBuyTotalPrice(NumberUtil.mul(sku.getPrice(), buyDetailForm.getNum()));
 				detail.setStatus(OrderEnums.OrderStatus.WAIT_PAY.getValue());
 				detail.setRefundStatus(OrderEnums.RefundStatus.UN_REFUND.getValue());
