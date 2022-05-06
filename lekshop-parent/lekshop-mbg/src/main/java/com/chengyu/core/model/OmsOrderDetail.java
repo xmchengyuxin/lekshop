@@ -53,8 +53,8 @@ public class OmsOrderDetail implements Serializable {
     @ApiModelProperty(value = "购买数量")
     private Integer buyNum;
 
-    @ApiModelProperty(value = "退款数量")
-    private Integer refundNum;
+    @ApiModelProperty(value = "退款金额")
+    private BigDecimal refundAmount;
 
     @ApiModelProperty(value = "购买总价")
     private BigDecimal buyTotalPrice;
@@ -216,12 +216,12 @@ public class OmsOrderDetail implements Serializable {
         this.buyNum = buyNum;
     }
 
-    public Integer getRefundNum() {
-        return refundNum;
+    public BigDecimal getRefundAmount() {
+        return refundAmount;
     }
 
-    public void setRefundNum(Integer refundNum) {
-        this.refundNum = refundNum;
+    public void setRefundAmount(BigDecimal refundAmount) {
+        this.refundAmount = refundAmount;
     }
 
     public BigDecimal getBuyTotalPrice() {
@@ -326,7 +326,7 @@ public class OmsOrderDetail implements Serializable {
         sb.append(", stockType=").append(stockType);
         sb.append(", buyPrice=").append(buyPrice);
         sb.append(", buyNum=").append(buyNum);
-        sb.append(", refundNum=").append(refundNum);
+        sb.append(", refundAmount=").append(refundAmount);
         sb.append(", buyTotalPrice=").append(buyTotalPrice);
         sb.append(", status=").append(status);
         sb.append(", refundStatus=").append(refundStatus);

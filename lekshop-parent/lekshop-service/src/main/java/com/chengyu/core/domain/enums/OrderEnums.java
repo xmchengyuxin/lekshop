@@ -48,6 +48,43 @@ public class OrderEnums {
 	}
 
 	/**
+	 * 退款详情状态枚举
+	 */
+	@Getter
+	public enum RefundDetailStatus{
+		/**0申请退款>>1等待买家退货>>2买家已退货>>3商家已拒绝>>4平台介入>>5退款完成>>6退款关闭**/
+		APPLY(0),
+		WAIT_BUYER_RETURN(1),
+		BUYER_RETURNED(2),
+		SALES_REFUSE(3),
+		SERVICE_IN(4),
+		REFUND_SUS(5),
+		CLOSED(6);
+
+		private final int value;
+
+		RefundDetailStatus(int value){
+			this.value = value;
+		}
+	}
+
+	/**
+	 * 退款类型枚举
+	 */
+	@Getter
+	public enum RefundInd{
+		/**1仅退款 2退货退款**/
+		ONLY_REFUND(1),
+		REFUND_AND_SALES_RETURN(2);
+
+		private final int value;
+
+		RefundInd(int value){
+			this.value = value;
+		}
+	}
+
+	/**
 	 * 评价状态枚举
 	 */
 	@Getter

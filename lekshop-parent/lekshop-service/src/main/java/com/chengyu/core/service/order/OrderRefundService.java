@@ -121,4 +121,28 @@ public interface OrderRefundService {
      * @throws ServiceException 业务异常
      */
     void confirmReceiveByShop(UmsShop shop, Integer refundId) throws ServiceException;
+
+    /**
+     * 卖家超时未处理售后,自动同意
+     * @author LeGreen
+     * @date   2022/5/6
+     * @param  refundNo
+     */
+    void autoAgreeRefund(String refundNo) throws ServiceException;
+
+    /**
+     * 买家超时未寄货，自动取消
+     * @author LeGreen
+     * @date   2022/5/6
+     * @param  refundNo
+     */
+    void autoCancelRefund(String refundNo);
+
+    /**
+     * 卖家超时未确认收货,自动确认
+     * @author LeGreen
+     * @date   2022/5/6
+     * @param  refundNo
+     */
+    void autoConfirmRefund(String refundNo);
 }

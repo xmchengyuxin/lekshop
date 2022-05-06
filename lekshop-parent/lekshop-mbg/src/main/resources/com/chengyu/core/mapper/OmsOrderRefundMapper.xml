@@ -29,6 +29,9 @@
     <result column="return_address" jdbcType="VARCHAR" property="returnAddress" />
     <result column="delivery_type" jdbcType="VARCHAR" property="deliveryType" />
     <result column="delivery_no" jdbcType="VARCHAR" property="deliveryNo" />
+    <result column="auto_agree_time" jdbcType="TIMESTAMP" property="autoAgreeTime" />
+    <result column="buyer_send_goods_time" jdbcType="TIMESTAMP" property="buyerSendGoodsTime" />
+    <result column="seller_confirm_time" jdbcType="TIMESTAMP" property="sellerConfirmTime" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_by" jdbcType="VARCHAR" property="addBy" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
@@ -96,8 +99,8 @@
     id, refund_no, order_id, detail_id, member_id, member_name, head_img, refund_ind, 
     buy_time, original_amount, shop_id, shop_name, refund_amount, reason, img, status, 
     pay_method, refund_time, goods_id, goods_name, goods_main_img, goods_param_name, 
-    return_name, return_phone, return_address, delivery_type, delivery_no, add_time, 
-    add_by, upd_time, upd_by
+    return_name, return_phone, return_address, delivery_type, delivery_no, auto_agree_time, 
+    buyer_send_goods_time, seller_confirm_time, add_time, add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.OmsOrderRefundExample" resultMap="BaseResultMap">
     select
@@ -141,9 +144,10 @@
       pay_method, refund_time, goods_id, 
       goods_name, goods_main_img, goods_param_name, 
       return_name, return_phone, return_address, 
-      delivery_type, delivery_no, add_time, 
-      add_by, upd_time, upd_by
-      )
+      delivery_type, delivery_no, auto_agree_time, 
+      buyer_send_goods_time, seller_confirm_time, 
+      add_time, add_by, upd_time, 
+      upd_by)
     values (#{refundNo,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, #{detailId,jdbcType=INTEGER}, 
       #{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{headImg,jdbcType=VARCHAR}, 
       #{refundInd,jdbcType=INTEGER}, #{buyTime,jdbcType=TIMESTAMP}, #{originalAmount,jdbcType=DECIMAL}, 
@@ -152,9 +156,10 @@
       #{payMethod,jdbcType=VARCHAR}, #{refundTime,jdbcType=TIMESTAMP}, #{goodsId,jdbcType=INTEGER}, 
       #{goodsName,jdbcType=VARCHAR}, #{goodsMainImg,jdbcType=VARCHAR}, #{goodsParamName,jdbcType=VARCHAR}, 
       #{returnName,jdbcType=VARCHAR}, #{returnPhone,jdbcType=VARCHAR}, #{returnAddress,jdbcType=VARCHAR}, 
-      #{deliveryType,jdbcType=VARCHAR}, #{deliveryNo,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
-      )
+      #{deliveryType,jdbcType=VARCHAR}, #{deliveryNo,jdbcType=VARCHAR}, #{autoAgreeTime,jdbcType=TIMESTAMP}, 
+      #{buyerSendGoodsTime,jdbcType=TIMESTAMP}, #{sellerConfirmTime,jdbcType=TIMESTAMP}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
+      #{updBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.OmsOrderRefund">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -239,6 +244,15 @@
       </if>
       <if test="deliveryNo != null">
         delivery_no,
+      </if>
+      <if test="autoAgreeTime != null">
+        auto_agree_time,
+      </if>
+      <if test="buyerSendGoodsTime != null">
+        buyer_send_goods_time,
+      </if>
+      <if test="sellerConfirmTime != null">
+        seller_confirm_time,
       </if>
       <if test="addTime != null">
         add_time,
@@ -331,6 +345,15 @@
       </if>
       <if test="deliveryNo != null">
         #{deliveryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="autoAgreeTime != null">
+        #{autoAgreeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyerSendGoodsTime != null">
+        #{buyerSendGoodsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerConfirmTime != null">
+        #{sellerConfirmTime,jdbcType=TIMESTAMP},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -436,6 +459,15 @@
       <if test="record.deliveryNo != null">
         delivery_no = #{record.deliveryNo,jdbcType=VARCHAR},
       </if>
+      <if test="record.autoAgreeTime != null">
+        auto_agree_time = #{record.autoAgreeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.buyerSendGoodsTime != null">
+        buyer_send_goods_time = #{record.buyerSendGoodsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sellerConfirmTime != null">
+        seller_confirm_time = #{record.sellerConfirmTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
       </if>
@@ -482,6 +514,9 @@
       return_address = #{record.returnAddress,jdbcType=VARCHAR},
       delivery_type = #{record.deliveryType,jdbcType=VARCHAR},
       delivery_no = #{record.deliveryNo,jdbcType=VARCHAR},
+      auto_agree_time = #{record.autoAgreeTime,jdbcType=TIMESTAMP},
+      buyer_send_goods_time = #{record.buyerSendGoodsTime,jdbcType=TIMESTAMP},
+      seller_confirm_time = #{record.sellerConfirmTime,jdbcType=TIMESTAMP},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
@@ -571,6 +606,15 @@
       <if test="deliveryNo != null">
         delivery_no = #{deliveryNo,jdbcType=VARCHAR},
       </if>
+      <if test="autoAgreeTime != null">
+        auto_agree_time = #{autoAgreeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyerSendGoodsTime != null">
+        buyer_send_goods_time = #{buyerSendGoodsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerConfirmTime != null">
+        seller_confirm_time = #{sellerConfirmTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
@@ -614,6 +658,9 @@
       return_address = #{returnAddress,jdbcType=VARCHAR},
       delivery_type = #{deliveryType,jdbcType=VARCHAR},
       delivery_no = #{deliveryNo,jdbcType=VARCHAR},
+      auto_agree_time = #{autoAgreeTime,jdbcType=TIMESTAMP},
+      buyer_send_goods_time = #{buyerSendGoodsTime,jdbcType=TIMESTAMP},
+      seller_confirm_time = #{sellerConfirmTime,jdbcType=TIMESTAMP},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},

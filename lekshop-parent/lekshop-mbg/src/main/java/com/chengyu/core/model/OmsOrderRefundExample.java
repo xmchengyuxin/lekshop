@@ -1876,6 +1876,186 @@ public class OmsOrderRefundExample {
             return (Criteria) this;
         }
 
+        public Criteria andAutoAgreeTimeIsNull() {
+            addCriterion("auto_agree_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeIsNotNull() {
+            addCriterion("auto_agree_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeEqualTo(Date value) {
+            addCriterion("auto_agree_time =", value, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeNotEqualTo(Date value) {
+            addCriterion("auto_agree_time <>", value, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeGreaterThan(Date value) {
+            addCriterion("auto_agree_time >", value, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("auto_agree_time >=", value, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeLessThan(Date value) {
+            addCriterion("auto_agree_time <", value, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeLessThanOrEqualTo(Date value) {
+            addCriterion("auto_agree_time <=", value, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeIn(List<Date> values) {
+            addCriterion("auto_agree_time in", values, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeNotIn(List<Date> values) {
+            addCriterion("auto_agree_time not in", values, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeBetween(Date value1, Date value2) {
+            addCriterion("auto_agree_time between", value1, value2, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAutoAgreeTimeNotBetween(Date value1, Date value2) {
+            addCriterion("auto_agree_time not between", value1, value2, "autoAgreeTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeIsNull() {
+            addCriterion("buyer_send_goods_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeIsNotNull() {
+            addCriterion("buyer_send_goods_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeEqualTo(Date value) {
+            addCriterion("buyer_send_goods_time =", value, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeNotEqualTo(Date value) {
+            addCriterion("buyer_send_goods_time <>", value, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeGreaterThan(Date value) {
+            addCriterion("buyer_send_goods_time >", value, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("buyer_send_goods_time >=", value, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeLessThan(Date value) {
+            addCriterion("buyer_send_goods_time <", value, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeLessThanOrEqualTo(Date value) {
+            addCriterion("buyer_send_goods_time <=", value, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeIn(List<Date> values) {
+            addCriterion("buyer_send_goods_time in", values, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeNotIn(List<Date> values) {
+            addCriterion("buyer_send_goods_time not in", values, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeBetween(Date value1, Date value2) {
+            addCriterion("buyer_send_goods_time between", value1, value2, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyerSendGoodsTimeNotBetween(Date value1, Date value2) {
+            addCriterion("buyer_send_goods_time not between", value1, value2, "buyerSendGoodsTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeIsNull() {
+            addCriterion("seller_confirm_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeIsNotNull() {
+            addCriterion("seller_confirm_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeEqualTo(Date value) {
+            addCriterion("seller_confirm_time =", value, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeNotEqualTo(Date value) {
+            addCriterion("seller_confirm_time <>", value, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeGreaterThan(Date value) {
+            addCriterion("seller_confirm_time >", value, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("seller_confirm_time >=", value, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeLessThan(Date value) {
+            addCriterion("seller_confirm_time <", value, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeLessThanOrEqualTo(Date value) {
+            addCriterion("seller_confirm_time <=", value, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeIn(List<Date> values) {
+            addCriterion("seller_confirm_time in", values, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeNotIn(List<Date> values) {
+            addCriterion("seller_confirm_time not in", values, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeBetween(Date value1, Date value2) {
+            addCriterion("seller_confirm_time between", value1, value2, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSellerConfirmTimeNotBetween(Date value1, Date value2) {
+            addCriterion("seller_confirm_time not between", value1, value2, "sellerConfirmTime");
+            return (Criteria) this;
+        }
+
         public Criteria andAddTimeIsNull() {
             addCriterion("add_time is null");
             return (Criteria) this;

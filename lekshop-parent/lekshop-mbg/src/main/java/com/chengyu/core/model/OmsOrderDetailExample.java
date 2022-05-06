@@ -1136,63 +1136,63 @@ public class OmsOrderDetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumIsNull() {
-            addCriterion("refund_num is null");
+        public Criteria andRefundAmountIsNull() {
+            addCriterion("refund_amount is null");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumIsNotNull() {
-            addCriterion("refund_num is not null");
+        public Criteria andRefundAmountIsNotNull() {
+            addCriterion("refund_amount is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumEqualTo(Integer value) {
-            addCriterion("refund_num =", value, "refundNum");
+        public Criteria andRefundAmountEqualTo(BigDecimal value) {
+            addCriterion("refund_amount =", value, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumNotEqualTo(Integer value) {
-            addCriterion("refund_num <>", value, "refundNum");
+        public Criteria andRefundAmountNotEqualTo(BigDecimal value) {
+            addCriterion("refund_amount <>", value, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumGreaterThan(Integer value) {
-            addCriterion("refund_num >", value, "refundNum");
+        public Criteria andRefundAmountGreaterThan(BigDecimal value) {
+            addCriterion("refund_amount >", value, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumGreaterThanOrEqualTo(Integer value) {
-            addCriterion("refund_num >=", value, "refundNum");
+        public Criteria andRefundAmountGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("refund_amount >=", value, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumLessThan(Integer value) {
-            addCriterion("refund_num <", value, "refundNum");
+        public Criteria andRefundAmountLessThan(BigDecimal value) {
+            addCriterion("refund_amount <", value, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumLessThanOrEqualTo(Integer value) {
-            addCriterion("refund_num <=", value, "refundNum");
+        public Criteria andRefundAmountLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("refund_amount <=", value, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumIn(List<Integer> values) {
-            addCriterion("refund_num in", values, "refundNum");
+        public Criteria andRefundAmountIn(List<BigDecimal> values) {
+            addCriterion("refund_amount in", values, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumNotIn(List<Integer> values) {
-            addCriterion("refund_num not in", values, "refundNum");
+        public Criteria andRefundAmountNotIn(List<BigDecimal> values) {
+            addCriterion("refund_amount not in", values, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumBetween(Integer value1, Integer value2) {
-            addCriterion("refund_num between", value1, value2, "refundNum");
+        public Criteria andRefundAmountBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("refund_amount between", value1, value2, "refundAmount");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNumNotBetween(Integer value1, Integer value2) {
-            addCriterion("refund_num not between", value1, value2, "refundNum");
+        public Criteria andRefundAmountNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("refund_amount not between", value1, value2, "refundAmount");
             return (Criteria) this;
         }
 

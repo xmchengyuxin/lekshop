@@ -51,7 +51,7 @@ public class OmsOrderRefund implements Serializable {
     @ApiModelProperty(value = "退款凭证")
     private String img;
 
-    @ApiModelProperty(value = "0申请退款>>1等待卖家退货>>2卖家已退货>>3商家已拒绝>>4平台介入>>5退款完成>>6退款关闭")
+    @ApiModelProperty(value = "0申请退款>>1等待买家退货>>2买家已退货>>3商家已拒绝>>4平台介入>>5退款完成>>6退款关闭")
     private Integer status;
 
     @ApiModelProperty(value = "支付方式")
@@ -85,6 +85,15 @@ public class OmsOrderRefund implements Serializable {
 
     @ApiModelProperty(value = "第三方配送单号")
     private String deliveryNo;
+
+    @ApiModelProperty(value = "自动同意售后时间")
+    private Date autoAgreeTime;
+
+    @ApiModelProperty(value = "买家寄货时间")
+    private Date buyerSendGoodsTime;
+
+    @ApiModelProperty(value = "卖家确认收货时间")
+    private Date sellerConfirmTime;
 
     @ApiModelProperty(value = "添加时间")
     private Date addTime;
@@ -316,6 +325,30 @@ public class OmsOrderRefund implements Serializable {
         this.deliveryNo = deliveryNo;
     }
 
+    public Date getAutoAgreeTime() {
+        return autoAgreeTime;
+    }
+
+    public void setAutoAgreeTime(Date autoAgreeTime) {
+        this.autoAgreeTime = autoAgreeTime;
+    }
+
+    public Date getBuyerSendGoodsTime() {
+        return buyerSendGoodsTime;
+    }
+
+    public void setBuyerSendGoodsTime(Date buyerSendGoodsTime) {
+        this.buyerSendGoodsTime = buyerSendGoodsTime;
+    }
+
+    public Date getSellerConfirmTime() {
+        return sellerConfirmTime;
+    }
+
+    public void setSellerConfirmTime(Date sellerConfirmTime) {
+        this.sellerConfirmTime = sellerConfirmTime;
+    }
+
     public Date getAddTime() {
         return addTime;
     }
@@ -381,6 +414,9 @@ public class OmsOrderRefund implements Serializable {
         sb.append(", returnAddress=").append(returnAddress);
         sb.append(", deliveryType=").append(deliveryType);
         sb.append(", deliveryNo=").append(deliveryNo);
+        sb.append(", autoAgreeTime=").append(autoAgreeTime);
+        sb.append(", buyerSendGoodsTime=").append(buyerSendGoodsTime);
+        sb.append(", sellerConfirmTime=").append(sellerConfirmTime);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);

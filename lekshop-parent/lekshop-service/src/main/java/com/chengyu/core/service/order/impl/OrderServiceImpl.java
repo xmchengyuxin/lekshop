@@ -404,6 +404,7 @@ public class OrderServiceImpl implements OrderService {
 		updateOrder.setFinishTime(DateUtil.date());
 		updateOrder.setStatus(OrderEnums.OrderStatus.FINISHED.getValue());
 		updateOrder.setCommentExpiredTime(DateUtil.offsetDay(updateOrder.getFinishTime(), config.getAutoCommentDay()));
+		updateOrder.setRefundExpiredTime(DateUtil.offsetDay(updateOrder.getFinishTime(), config.getLastRefundDay()));
 		orderMapper.updateByPrimaryKeySelective(updateOrder);
 
 		OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
