@@ -74,7 +74,7 @@ public class HomeController extends AdminBaseController {
 			
 			long currentTime = System.currentTimeMillis();
 			String fileName = currentTime + "" + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-			String imgUrl = thirdManager.getThidFactory(thirdConfigService.getThirdConfigByNid(ThirdEnums.UPLOAD.getKey())).upload(file, fileName, CommonConstant.VIDEO);
+			String imgUrl = thirdManager.getThidFactory(thirdConfigService.getThirdConfigByNid(ThirdEnums.UPLOAD.getKey())).upload(file, fileName, CommonConstant.IMG);
 			result.put("imgUrl", imgUrl);
 			
 			break;

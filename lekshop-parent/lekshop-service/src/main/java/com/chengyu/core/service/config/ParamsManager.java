@@ -106,6 +106,8 @@ public class ParamsManager {
             case CONFIG_GZH:
                 configGzhService.addConfigGzh(JSONUtil.toBean(jsonForm, ConfigGzh.class));
                 break;
+            case CONFIG_ORDER:
+                configOrderService.addConfigOrder(JSONUtil.toBean(jsonForm, ConfigOrder.class));
             default:
         }
     }

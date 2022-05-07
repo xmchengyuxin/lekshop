@@ -50,7 +50,11 @@ public class ConfigSearchController extends AdminBaseController {
 	@ResponseBody
 	@RequestMapping(value="/configSearch/editSubmit", method=RequestMethod.POST)
 	public CommonResult<String> editSubmit(ConfigSearch config) throws ServiceException {
-		configSearchService.addConfigSearch(config);
+		if(config.getId() == null){
+			configSearchService.addConfigSearch(config);
+		}else{
+			configSearchService.updateConfigSearch(config);
+		}
 		return CommonResult.success(null);
 	}
 
