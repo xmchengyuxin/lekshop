@@ -14,6 +14,11 @@ import contentRouter from './modules/content'
 import systemRouter from './modules/system'
 import thirdRouter from './modules/third'
 import logRouter from './modules/log'
+import shopRouter from './modules/shop'
+import goodsRouter from './modules/goods'
+import orderRouter from './modules/order'
+
+
 
 /** note: sub-menu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -76,14 +81,17 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
+        meta: { title: '控制台', icon: 'dashboard', noCache: true, affix: true }
       }
     ]
   },
 ]
 
 export const asyncRoutes = [
+  shopRouter,
 	memberRouter,
+  goodsRouter,
+  orderRouter,
   fundRouter,
   configRouter,
 	contentRouter,

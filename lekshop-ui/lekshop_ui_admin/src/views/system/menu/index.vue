@@ -1,8 +1,8 @@
 <template>
 
-  <div class="createPost-container" style="position:relative;left:-100px;width: 1000px;margin: 20px auto;padding: 30px 30px 50px 30px; border: 1px solid #f4f4f4;">
+  <div class="createPost-container">
 
-		<el-form ref="postForm" :model="menu" :rules="rules" class="form-container">
+		<el-form ref="postForm" :model="menu" :rules="rules" class="form-container" label-position="right">
 				<div class="createPost-main-container">
 					<div class="postInfo-container">
 						<template>
@@ -17,13 +17,15 @@
 
 					</div>
 					<el-row>
-						<el-col :span="12">
-							<div style="border-right: 1px solid #f4f4f4;margin-right: 20px;">
+						<el-col :span="6">
+							<div style="border-right: 1px solid #f4f4f4;margin-right: 20px; ">
 								<el-tree
 									:data="menuList"
 									@node-click="handleNodeClick"
 									node-key="id"
 									:expand-on-click-node="false"
+                  :default-expand-all	="true"
+                  :indent="16"
 									:props="defaultProps">
 
 									<span class="custom-tree-node" slot-scope="{ node, data }">
@@ -44,7 +46,6 @@
 											</span>
 										</span>
 								</el-tree>
-								<el-button style="margin-top:20px;" type="primary" size="mini" @click="handleCreate()">添加顶级菜单</el-button>
 							</div>
 						</el-col>
 						<el-col :span="10">
@@ -60,7 +61,10 @@
 							<el-form-item prop="sort" label="菜单排序:" class="postInfo-container-item">
 								<el-input-number style="width:300px;" v-model="menu.sort" :min="1" label="修改排序"></el-input-number>
 							</el-form-item>
-							<el-button type="primary" size="mini" @click="handleSave()">保存</el-button>
+              <el-form-item>
+                <el-button type="primary" size="mini" @click="handleCreate()">添加顶级菜单</el-button>
+                <el-button type="primary" size="mini" @click="handleSave()">保存</el-button>
+              </el-form-item>
 						</el-col>
 					</el-row>
 				</div>
@@ -74,7 +78,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 13px;
     padding-right: 8px;
   }
 </style>

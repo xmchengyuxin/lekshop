@@ -1,44 +1,50 @@
 <template>
-  <div class="createPost-container" style="position:relative;left:-100px;width: 1000px;margin: 20px auto;padding: 30px 100px 50px 70px; border: 1px solid #f4f4f4;">
-		<code>
-      短信服务使用阿里云短信服务通道,详细细心请查阅<a href="https://www.aliyun.com/product/sms" target="_blank">《阿里云短信服务官方文档》</a>
-		</code>
-<el-form ref="form" :rules="rules" :model="config" v-loading="loading" label-width="120px" label-position="right">
-  <el-form-item label="账号" prop="account">
-    <el-input v-model="config.account"></el-input>
-  </el-form-item>
-  <el-form-item label="密码" prop="password">
-    <el-input v-model="config.password" type="password"></el-input>
-  </el-form-item>
-  <el-form-item label="请求URL" prop="sendUrl">
-    <el-input v-model="config.sendUrl"></el-input>
-  </el-form-item>
-  <el-form-item label="端口号" prop="serverPort">
-    <el-input v-model="config.serverPort"></el-input>
-  </el-form-item>
-  <el-form-item label="短信签名" prop="signName">
-    <el-input v-model="config.signName"></el-input>
-  </el-form-item>
-  <el-form-item label="通用模板ID" prop="commonTemplateId">
-    <el-input v-model="config.commonTemplateId"></el-input>
-  </el-form-item>
-  <el-form-item label="注册模板ID" prop="registerTemplateId">
-    <el-input v-model="config.registerTemplateId"></el-input>
-  </el-form-item>
-  <el-form-item label="绑定模板ID" prop="bindTemplateId">
-    <el-input v-model="config.bindTemplateId"></el-input>
-  </el-form-item>
-  <el-form-item label="忘记密码模板ID" prop="forgetTemplateId">
-    <el-input v-model="config.forgetTemplateId"></el-input>
-  </el-form-item>
-  <el-form-item label="密码通知模板ID" prop="passwordTemplateId">
-    <el-input v-model="config.passwordTemplateId" />
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="updateConfig">更新配置</el-button>
-  </el-form-item>
-</el-form>
-</div>
+  <el-card shadow="hover" style="margin: 10px;">
+      <el-alert
+          class="warn-content"
+          title="温馨提示"
+          type="success"
+          show-icon
+          :closable="false">
+             短信服务使用阿里云短信服务通道,详细细心请查阅<a href="https://www.aliyun.com/product/sms" target="_blank">《阿里云短信服务官方文档》</a>
+        </el-alert>
+        <br/>
+    <el-form ref="form" :rules="rules" :model="config" v-loading="loading" label-width="120px" label-position="right" style="width: 60%;">
+      <el-form-item label="账号" prop="account">
+        <el-input v-model="config.account"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" prop="password">
+        <el-input v-model="config.password" type="password"></el-input>
+      </el-form-item>
+      <el-form-item label="请求URL" prop="sendUrl">
+        <el-input v-model="config.sendUrl"></el-input>
+      </el-form-item>
+      <el-form-item label="端口号" prop="serverPort">
+        <el-input v-model="config.serverPort"></el-input>
+      </el-form-item>
+      <el-form-item label="短信签名" prop="signName">
+        <el-input v-model="config.signName"></el-input>
+      </el-form-item>
+      <el-form-item label="通用模板ID" prop="commonTemplateId">
+        <el-input v-model="config.commonTemplateId"></el-input>
+      </el-form-item>
+      <el-form-item label="注册模板ID" prop="registerTemplateId">
+        <el-input v-model="config.registerTemplateId"></el-input>
+      </el-form-item>
+      <el-form-item label="绑定模板ID" prop="bindTemplateId">
+        <el-input v-model="config.bindTemplateId"></el-input>
+      </el-form-item>
+      <el-form-item label="忘记密码模板ID" prop="forgetTemplateId">
+        <el-input v-model="config.forgetTemplateId"></el-input>
+      </el-form-item>
+      <el-form-item label="密码通知模板ID" prop="passwordTemplateId">
+        <el-input v-model="config.passwordTemplateId" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="updateConfig">更新配置</el-button>
+      </el-form-item>
+    </el-form>
+</el-card>
 </template>
 
 <style scoped="scoped">

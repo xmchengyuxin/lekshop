@@ -371,8 +371,8 @@ $light_gray:#eee;
   }
   ::v-deep .el-button {
     height: 50px;
-    background: #FEC41B;
-    border-color: #FEC41B;
+    background: #1890ff;
+    border-color: #1890ff;
     font-size: 14px;
   }
 }

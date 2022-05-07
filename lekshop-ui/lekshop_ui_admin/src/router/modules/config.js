@@ -43,6 +43,18 @@ const configRouter = {
       name: 'configAccount',
       meta: { title: '系统收款账户', icon: 'list', role: ['admin'] }
     },
+    {
+      path: 'order',
+      component: () => import('@/views/config/order/index'),
+      name: 'configOrder',
+      meta: { title: '订单配置', icon: 'list', role: ['admin'] }
+    },
+    {
+      path: 'search',
+      component: () => import('@/views/config/search/index'),
+      name: 'configSearch',
+      meta: { title: '搜索管理', icon: 'list', role: ['admin'] }
+    },
   ]
 }
 export default configRouter

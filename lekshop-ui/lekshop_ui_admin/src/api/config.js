@@ -313,3 +313,27 @@ export function deleteConfigPoint(data) {
     params: {ids:data}
   })
 }
+
+export function getConfigSearchList(query) {
+  return request({
+    url: '/system/configSearch/getList',
+    method: 'get',
+    params: query
+  })
+}
+
+export function updateConfigSearch(data) {
+  return request({
+    url: '/system/configSearch/editSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteConfigSearch(data) {
+  return request({
+    url: '/system/configSearch/delete',
+    method: 'post',
+    params: {ids:data}
+  })
+}

@@ -14,8 +14,8 @@ body {
   overflow-y: scroll!important;//el-image点击此标签会出发预览导致滚动条消失
 }
 
-label {
-  font-weight: 550;
+.el-form-item__label {
+    font-size: 13px;
 }
 
 html {
