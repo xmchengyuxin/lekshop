@@ -86,4 +86,12 @@ public interface GoodsService {
 	 * @param  num
 	 */
 	void addStock(Integer skuId, Integer num);
+
+	/**
+	 * 更新商品
+	 * @author LeGreen
+	 * @date   2022/5/7
+	 * @param  goods
+	 */
+	void updateGoods(PmsGoods goods);
 }

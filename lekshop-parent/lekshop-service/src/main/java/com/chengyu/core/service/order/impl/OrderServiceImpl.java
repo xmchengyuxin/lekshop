@@ -537,6 +537,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void deleteOrderByAdmin(List<Integer> idList) {
+		OmsOrderExample example = new OmsOrderExample();
+		example.createCriteria().andIdIn(idList);
+		OmsOrder updateOrder = new OmsOrder();
+		updateOrder.setDelInd(CommonConstant.YES_INT);
+		orderMapper.updateByExampleSelective(updateOrder, example);
+	}
+
 	/**
 	 * 根据用户获取订单
 	 * @author LeGreen

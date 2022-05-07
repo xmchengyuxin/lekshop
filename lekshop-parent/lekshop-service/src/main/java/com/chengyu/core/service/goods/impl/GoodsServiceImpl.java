@@ -1,6 +1,7 @@
 package com.chengyu.core.service.goods.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
 import com.chengyu.core.domain.enums.GoodsEnums;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
@@ -136,5 +137,12 @@ public class GoodsServiceImpl implements GoodsService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void addStock(Integer skuId, Integer num) {
 		baseMapper.update("update pms_goods_sku set stock = stock+"+ num +" where id = "+skuId);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void updateGoods(PmsGoods goods) {
+		goods.setUpdTime(DateUtil.date());
+		goodsMapper.updateByPrimaryKeyWithBLOBs(goods);
 	}
 }

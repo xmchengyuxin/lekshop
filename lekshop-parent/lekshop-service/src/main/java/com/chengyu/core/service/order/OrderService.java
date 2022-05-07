@@ -126,4 +126,12 @@ public interface OrderService {
      * @param  orderNo
      */
     void autoFinishOrder(String orderNo) throws ServiceException;
+
+    /**
+     * 总后台删除订单
+     * @author LeGreen
+     * @date   2022/5/7
+     * @param  idList
+     */
+    void deleteOrderByAdmin(List<Integer> idList);
 }
