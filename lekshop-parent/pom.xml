@@ -16,6 +16,7 @@
 		<module>lekshop-service</module>
         <module>lekshop-admin</module>
         <module>lekshop-portal</module>
+        <module>lekshop-shop</module>
         <module>lekshop-netty</module>
     </modules>
 

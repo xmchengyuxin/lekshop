@@ -45,12 +45,24 @@ public class ShopServiceController extends AdminBaseController {
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 
+	@ApiOperation(value = "服务选择器")
+	@ResponseBody
+	@RequestMapping(value="/shopService/getSelector", method=RequestMethod.GET)
+	public CommonResult<List<UmsShopService>> getSelector() {
+		List<UmsShopService> list = shopServiceService.getAllShopServices();
+		return CommonResult.success(list);
+	}
+
 	@OperationLog
 	@ApiOperation(value = "编辑服务管理")
 	@ResponseBody
 	@RequestMapping(value="/shopService/editSubmit", method=RequestMethod.POST)
 	public CommonResult<String> editSubmit(UmsShopService shopService) throws ServiceException {
-		shopServiceService.updateShopService(shopService);
+		if(shopService.getId() == null){
+			shopServiceService.addShopService(shopService);
+		}else{
+			shopServiceService.updateShopService(shopService);
+		}
 		return CommonResult.success(null);
 	}
 

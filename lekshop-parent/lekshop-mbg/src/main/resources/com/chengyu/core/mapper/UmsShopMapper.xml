@@ -21,9 +21,9 @@
     <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
-    <result column="goods_star" jdbcType="INTEGER" property="goodsStar" />
-    <result column="seller_star" jdbcType="INTEGER" property="sellerStar" />
-    <result column="logistic_star" jdbcType="INTEGER" property="logisticStar" />
+    <result column="goods_star" jdbcType="DECIMAL" property="goodsStar" />
+    <result column="seller_star" jdbcType="DECIMAL" property="sellerStar" />
+    <result column="logistic_star" jdbcType="DECIMAL" property="logisticStar" />
     <result column="weight" jdbcType="INTEGER" property="weight" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -150,7 +150,7 @@
       #{logo,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
       #{areaCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER}, 
-      #{goodsStar,jdbcType=INTEGER}, #{sellerStar,jdbcType=INTEGER}, #{logisticStar,jdbcType=INTEGER}, 
+      #{goodsStar,jdbcType=DECIMAL}, #{sellerStar,jdbcType=DECIMAL}, #{logisticStar,jdbcType=DECIMAL}, 
       #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR}, #{selfStatus,jdbcType=INTEGER}, #{liveStatus,jdbcType=INTEGER}, 
       #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
@@ -312,13 +312,13 @@
         #{likeNum,jdbcType=INTEGER},
       </if>
       <if test="goodsStar != null">
-        #{goodsStar,jdbcType=INTEGER},
+        #{goodsStar,jdbcType=DECIMAL},
       </if>
       <if test="sellerStar != null">
-        #{sellerStar,jdbcType=INTEGER},
+        #{sellerStar,jdbcType=DECIMAL},
       </if>
       <if test="logisticStar != null">
-        #{logisticStar,jdbcType=INTEGER},
+        #{logisticStar,jdbcType=DECIMAL},
       </if>
       <if test="weight != null">
         #{weight,jdbcType=INTEGER},
@@ -419,13 +419,13 @@
         like_num = #{record.likeNum,jdbcType=INTEGER},
       </if>
       <if test="record.goodsStar != null">
-        goods_star = #{record.goodsStar,jdbcType=INTEGER},
+        goods_star = #{record.goodsStar,jdbcType=DECIMAL},
       </if>
       <if test="record.sellerStar != null">
-        seller_star = #{record.sellerStar,jdbcType=INTEGER},
+        seller_star = #{record.sellerStar,jdbcType=DECIMAL},
       </if>
       <if test="record.logisticStar != null">
-        logistic_star = #{record.logisticStar,jdbcType=INTEGER},
+        logistic_star = #{record.logisticStar,jdbcType=DECIMAL},
       </if>
       <if test="record.weight != null">
         weight = #{record.weight,jdbcType=INTEGER},
@@ -483,9 +483,9 @@
       area_code = #{record.areaCode,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       like_num = #{record.likeNum,jdbcType=INTEGER},
-      goods_star = #{record.goodsStar,jdbcType=INTEGER},
-      seller_star = #{record.sellerStar,jdbcType=INTEGER},
-      logistic_star = #{record.logisticStar,jdbcType=INTEGER},
+      goods_star = #{record.goodsStar,jdbcType=DECIMAL},
+      seller_star = #{record.sellerStar,jdbcType=DECIMAL},
+      logistic_star = #{record.logisticStar,jdbcType=DECIMAL},
       weight = #{record.weight,jdbcType=INTEGER},
       sort = #{record.sort,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
@@ -558,13 +558,13 @@
         like_num = #{likeNum,jdbcType=INTEGER},
       </if>
       <if test="goodsStar != null">
-        goods_star = #{goodsStar,jdbcType=INTEGER},
+        goods_star = #{goodsStar,jdbcType=DECIMAL},
       </if>
       <if test="sellerStar != null">
-        seller_star = #{sellerStar,jdbcType=INTEGER},
+        seller_star = #{sellerStar,jdbcType=DECIMAL},
       </if>
       <if test="logisticStar != null">
-        logistic_star = #{logisticStar,jdbcType=INTEGER},
+        logistic_star = #{logisticStar,jdbcType=DECIMAL},
       </if>
       <if test="weight != null">
         weight = #{weight,jdbcType=INTEGER},
@@ -619,9 +619,9 @@
       area_code = #{areaCode,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       like_num = #{likeNum,jdbcType=INTEGER},
-      goods_star = #{goodsStar,jdbcType=INTEGER},
-      seller_star = #{sellerStar,jdbcType=INTEGER},
-      logistic_star = #{logisticStar,jdbcType=INTEGER},
+      goods_star = #{goodsStar,jdbcType=DECIMAL},
+      seller_star = #{sellerStar,jdbcType=DECIMAL},
+      logistic_star = #{logisticStar,jdbcType=DECIMAL},
       weight = #{weight,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},

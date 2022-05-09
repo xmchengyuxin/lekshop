@@ -2,6 +2,7 @@ package com.chengyu.core.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class UmsShop implements Serializable {
@@ -60,13 +61,13 @@ public class UmsShop implements Serializable {
     private Integer likeNum;
 
     @ApiModelProperty(value = "宝贝描述评分")
-    private Integer goodsStar;
+    private BigDecimal goodsStar;
 
     @ApiModelProperty(value = "卖家服务评分")
-    private Integer sellerStar;
+    private BigDecimal sellerStar;
 
     @ApiModelProperty(value = "物流评分")
-    private Integer logisticStar;
+    private BigDecimal logisticStar;
 
     @ApiModelProperty(value = "权重")
     private Integer weight;
@@ -252,27 +253,27 @@ public class UmsShop implements Serializable {
         this.likeNum = likeNum;
     }
 
-    public Integer getGoodsStar() {
+    public BigDecimal getGoodsStar() {
         return goodsStar;
     }
 
-    public void setGoodsStar(Integer goodsStar) {
+    public void setGoodsStar(BigDecimal goodsStar) {
         this.goodsStar = goodsStar;
     }
 
-    public Integer getSellerStar() {
+    public BigDecimal getSellerStar() {
         return sellerStar;
     }
 
-    public void setSellerStar(Integer sellerStar) {
+    public void setSellerStar(BigDecimal sellerStar) {
         this.sellerStar = sellerStar;
     }
 
-    public Integer getLogisticStar() {
+    public BigDecimal getLogisticStar() {
         return logisticStar;
     }
 
-    public void setLogisticStar(Integer logisticStar) {
+    public void setLogisticStar(BigDecimal logisticStar) {
         this.logisticStar = logisticStar;
     }
 

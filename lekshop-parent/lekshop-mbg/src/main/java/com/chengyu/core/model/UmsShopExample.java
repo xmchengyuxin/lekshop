@@ -1,5 +1,6 @@
 package com.chengyu.core.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1395,52 +1396,52 @@ public class UmsShopExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarEqualTo(Integer value) {
+        public Criteria andGoodsStarEqualTo(BigDecimal value) {
             addCriterion("goods_star =", value, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarNotEqualTo(Integer value) {
+        public Criteria andGoodsStarNotEqualTo(BigDecimal value) {
             addCriterion("goods_star <>", value, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarGreaterThan(Integer value) {
+        public Criteria andGoodsStarGreaterThan(BigDecimal value) {
             addCriterion("goods_star >", value, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarGreaterThanOrEqualTo(Integer value) {
+        public Criteria andGoodsStarGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("goods_star >=", value, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarLessThan(Integer value) {
+        public Criteria andGoodsStarLessThan(BigDecimal value) {
             addCriterion("goods_star <", value, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarLessThanOrEqualTo(Integer value) {
+        public Criteria andGoodsStarLessThanOrEqualTo(BigDecimal value) {
             addCriterion("goods_star <=", value, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarIn(List<Integer> values) {
+        public Criteria andGoodsStarIn(List<BigDecimal> values) {
             addCriterion("goods_star in", values, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarNotIn(List<Integer> values) {
+        public Criteria andGoodsStarNotIn(List<BigDecimal> values) {
             addCriterion("goods_star not in", values, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarBetween(Integer value1, Integer value2) {
+        public Criteria andGoodsStarBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("goods_star between", value1, value2, "goodsStar");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsStarNotBetween(Integer value1, Integer value2) {
+        public Criteria andGoodsStarNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("goods_star not between", value1, value2, "goodsStar");
             return (Criteria) this;
         }
@@ -1455,52 +1456,52 @@ public class UmsShopExample {
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarEqualTo(Integer value) {
+        public Criteria andSellerStarEqualTo(BigDecimal value) {
             addCriterion("seller_star =", value, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarNotEqualTo(Integer value) {
+        public Criteria andSellerStarNotEqualTo(BigDecimal value) {
             addCriterion("seller_star <>", value, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarGreaterThan(Integer value) {
+        public Criteria andSellerStarGreaterThan(BigDecimal value) {
             addCriterion("seller_star >", value, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSellerStarGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("seller_star >=", value, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarLessThan(Integer value) {
+        public Criteria andSellerStarLessThan(BigDecimal value) {
             addCriterion("seller_star <", value, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarLessThanOrEqualTo(Integer value) {
+        public Criteria andSellerStarLessThanOrEqualTo(BigDecimal value) {
             addCriterion("seller_star <=", value, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarIn(List<Integer> values) {
+        public Criteria andSellerStarIn(List<BigDecimal> values) {
             addCriterion("seller_star in", values, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarNotIn(List<Integer> values) {
+        public Criteria andSellerStarNotIn(List<BigDecimal> values) {
             addCriterion("seller_star not in", values, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarBetween(Integer value1, Integer value2) {
+        public Criteria andSellerStarBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("seller_star between", value1, value2, "sellerStar");
             return (Criteria) this;
         }
 
-        public Criteria andSellerStarNotBetween(Integer value1, Integer value2) {
+        public Criteria andSellerStarNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("seller_star not between", value1, value2, "sellerStar");
             return (Criteria) this;
         }
@@ -1515,52 +1516,52 @@ public class UmsShopExample {
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarEqualTo(Integer value) {
+        public Criteria andLogisticStarEqualTo(BigDecimal value) {
             addCriterion("logistic_star =", value, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarNotEqualTo(Integer value) {
+        public Criteria andLogisticStarNotEqualTo(BigDecimal value) {
             addCriterion("logistic_star <>", value, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarGreaterThan(Integer value) {
+        public Criteria andLogisticStarGreaterThan(BigDecimal value) {
             addCriterion("logistic_star >", value, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarGreaterThanOrEqualTo(Integer value) {
+        public Criteria andLogisticStarGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("logistic_star >=", value, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarLessThan(Integer value) {
+        public Criteria andLogisticStarLessThan(BigDecimal value) {
             addCriterion("logistic_star <", value, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarLessThanOrEqualTo(Integer value) {
+        public Criteria andLogisticStarLessThanOrEqualTo(BigDecimal value) {
             addCriterion("logistic_star <=", value, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarIn(List<Integer> values) {
+        public Criteria andLogisticStarIn(List<BigDecimal> values) {
             addCriterion("logistic_star in", values, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarNotIn(List<Integer> values) {
+        public Criteria andLogisticStarNotIn(List<BigDecimal> values) {
             addCriterion("logistic_star not in", values, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarBetween(Integer value1, Integer value2) {
+        public Criteria andLogisticStarBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("logistic_star between", value1, value2, "logisticStar");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticStarNotBetween(Integer value1, Integer value2) {
+        public Criteria andLogisticStarNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("logistic_star not between", value1, value2, "logisticStar");
             return (Criteria) this;
         }
