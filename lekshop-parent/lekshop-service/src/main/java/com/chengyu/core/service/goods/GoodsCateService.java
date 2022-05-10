@@ -1,6 +1,7 @@
 package com.chengyu.core.service.goods;
 
 import com.chengyu.core.domain.result.GoodsCateResult;
+import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoodsCate;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public interface GoodsCateService {
 	 * @date   2022/4/25
 	 * @param  id
 	 */
-	void deleteGoodsCate(Integer id);
+	void deleteGoodsCate(Integer id) throws ServiceException;
 
 	/**
 	 * 获取商品分类

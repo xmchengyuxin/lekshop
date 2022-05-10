@@ -60,7 +60,7 @@ public class LoginController extends UserBaseController {
     @ResponseBody
     public CommonResult<Map<String, Object>> login(String username, String password, String imeId, String phoneType, Integer type, String registrationId, String cToken, String captcha) throws ServiceException{
 		//校验图形验证码
-		super.validateCaptcha(cToken, captcha);
+//		super.validateCaptcha(cToken, captcha);
 
 		//进行登录
 		String token = memberService.login(username, password, this.getRequestIp());
@@ -138,33 +138,4 @@ public class LoginController extends UserBaseController {
 		return CommonResult.success(tokenMap);
 	}
 
-	@ApiOperation(value = "工作室使用密码登录刷手")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "username", value = "账号"),
-			@ApiImplicitParam(name = "password", value = "密码"),
-			@ApiImplicitParam(name = "safeCode", value = "安全码"),
-	})
-	@RequestMapping(value={"/loginByStudio"}, method=RequestMethod.POST)
-	@ResponseBody
-	public CommonResult<Map<String, Object>> loginByStudio(String username, String password, String safeCode) throws ServiceException{
-		//进行登录
-		String token = memberService.login(username, password, this.getRequestIp());
-		if (token == null) {
-			return CommonResult.validateFailed("用户名或密码错误");
-		}
-
-		Map<String, Object> tokenMap = new HashMap<>(16);
-		tokenMap.put("token", token);
-		tokenMap.put("tokenHead", tokenHead);
-		UmsMember member = memberService.getCurrentMember();
-		if(member.getType() != CommonConstant.BUYER){
-			return CommonResult.validateFailed("请使用买手账号登录");
-		}
-		if(!safeCode.equals(member.getImeId())){
-			return CommonResult.validateFailed("请输入正确的安全码");
-		}
-		tokenMap.put("member", member);
-		return CommonResult.success(tokenMap);
-
-	}
 }

@@ -54,7 +54,11 @@ public class GoodsCateController extends AdminBaseController {
 	@ResponseBody
 	@RequestMapping(value="/goodsCate/editSubmit", method=RequestMethod.POST)
 	public CommonResult<String> editSubmit(PmsGoodsCate cate) throws ServiceException {
-		goodsCateService.updateGoodsCate(cate);
+		if(cate.getId() == null){
+			goodsCateService.addGoodsCate(cate.getPid(), cate.getName(), cate.getSort(), cate.getImg(), cate.getTarget());
+		}else {
+			goodsCateService.updateGoodsCate(cate);
+		}
 		return CommonResult.success(null);
 	}
 

@@ -11,5 +11,8 @@ import java.util.List;
 @Setter
 public class GoodsCateResult extends PmsGoodsCate implements Serializable{
 
+//	private boolean hasChildren;
+
+	private Integer topId;
 	private List<GoodsCateResult> children;
 }

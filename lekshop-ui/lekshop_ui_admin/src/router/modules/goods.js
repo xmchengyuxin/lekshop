@@ -14,9 +14,9 @@ const goodsRouter = {
   children: [
     {
       path: 'goodsCate',
-      component: () => import('@/views/member/index/index'),
+      component: () => import('@/views/goods/cate/index'),
       name: 'goodsCate',
-      meta: { title: '电商分类', icon:'list', role: ['admin'] }
+      meta: { title: '电商类目', icon:'list', role: ['admin'] }
     },
     {
       path: 'list',

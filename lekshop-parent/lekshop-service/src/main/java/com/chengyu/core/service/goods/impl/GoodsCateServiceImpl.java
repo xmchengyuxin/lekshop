@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.result.GoodsCateResult;
+import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.PmsGoodsCateMapper;
 import com.chengyu.core.model.PmsGoodsCate;
 import com.chengyu.core.model.PmsGoodsCateExample;
@@ -53,18 +54,17 @@ public class GoodsCateServiceImpl implements GoodsCateService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void updateGoodsCate(PmsGoodsCate cate) {
 		cate.setUpdTime(DateUtil.date());
-		goodsCateMapper.updateByPrimaryKey(cate);
+		goodsCateMapper.updateByPrimaryKeySelective(cate);
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void deleteGoodsCate(Integer id) {
+	public void deleteGoodsCate(Integer id) throws ServiceException {
 		PmsGoodsCate cate = goodsCateMapper.selectByPrimaryKey(id);
-		Integer pid = cate.getPid();
-		while (pid != null && pid != 0){
-			PmsGoodsCate parent = goodsCateMapper.selectByPrimaryKey(pid);
-			goodsCateMapper.deleteByPrimaryKey(pid);
-			pid = parent.getPid();
+		PmsGoodsCateExample example = new PmsGoodsCateExample();
+		example.createCriteria().andPidEqualTo(cate.getId());
+		if(goodsCateMapper.countByExample(example) > 0){
+			throw new ServiceException("请先删除下级分类");
 		}
 		goodsCateMapper.deleteByPrimaryKey(id);
 	}
@@ -94,6 +94,7 @@ public class GoodsCateServiceImpl implements GoodsCateService {
 			criteria.andPidEqualTo(topCate.getId());
 			example.setOrderByClause("sort asc");
 			List<PmsGoodsCate> childCateList = goodsCateMapper.selectByExample(example);
+//			result.setHasChildren(CollectionUtil.isNotEmpty(childCateList));
 
 			List<GoodsCateResult> twoCateList = new ArrayList<>();
 			for(PmsGoodsCate twoCate : childCateList){
@@ -109,12 +110,15 @@ public class GoodsCateServiceImpl implements GoodsCateService {
 				}
 				example.setOrderByClause("sort asc");
 				List<PmsGoodsCate> threeChildCateList = goodsCateMapper.selectByExample(example);
+				result1.setTopId(topCate.getId());
+//				result1.setHasChildren(CollectionUtil.isNotEmpty(threeChildCateList));
 
 				if(CollectionUtil.isNotEmpty(threeChildCateList)){
 					List<GoodsCateResult> threeCateList = new ArrayList<>();
 					for(PmsGoodsCate threeCate : threeChildCateList){
 						GoodsCateResult result2 = new GoodsCateResult();
 						BeanUtil.copyProperties(threeCate, result2);
+						result2.setTopId(topCate.getId());
 						threeCateList.add(result2);
 					}
 					result1.setChildren(threeCateList);

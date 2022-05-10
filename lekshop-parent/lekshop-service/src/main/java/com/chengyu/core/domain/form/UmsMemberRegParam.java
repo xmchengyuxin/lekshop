@@ -19,7 +19,7 @@ public class UmsMemberRegParam {
     @NotNull(message = "用户名不能为空")
     private String username;
 
-    @ApiModelProperty(value = "用户类型>>1刷客>>2商家", required = true)
+    @ApiModelProperty(value = "用户类型>>1用户>>2商家", required = true)
     @NotNull(message = "用户类型不能为空")
     private Integer type;
 
@@ -44,7 +44,4 @@ public class UmsMemberRegParam {
 
     @ApiModelProperty(value = "邀请码")
     private String inviteCode;
-
-    @ApiModelProperty(value = "代理")
-    private Integer agentId;
 }
