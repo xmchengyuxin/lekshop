@@ -1,7 +1,7 @@
 package com.chengyu.core.controller.member;
 
 import com.chengyu.core.component.OperationLog;
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(tags = "银行卡认证")
 @Controller
 @RequestMapping("/member")
-public class MemberBankController extends UserBaseController {
+public class MemberBankController extends ShopBaseController {
 	
 	@Autowired
 	private MemberBankService memberBankService;

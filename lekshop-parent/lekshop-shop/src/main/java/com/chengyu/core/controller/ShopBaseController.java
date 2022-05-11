@@ -3,8 +3,10 @@ package com.chengyu.core.controller;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.security.util.JwtTokenUtil;
 import com.chengyu.core.service.member.MemberService;
+import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.service.system.ThirdConfigService;
 import com.chengyu.core.util.RedisUtil;
 import com.chengyu.core.util.third.manager.ThirdManager;
@@ -30,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @date   2021/1/8
  */
 @Controller
-public class UserBaseController {
+public class ShopBaseController {
 	
 	@Autowired
 	protected MemberService memberService;
@@ -46,6 +48,8 @@ public class UserBaseController {
 	protected ThirdManager thirdManager;
 	@Autowired
 	private ThirdConfigService thirdConfigService;
+	@Autowired
+	private ShopService shopService;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {
@@ -72,7 +76,16 @@ public class UserBaseController {
 	public Integer getCurrentMemberId() throws ServiceException {
 		return getCurrentMember().getId();
 	}
-	
+	public UmsShop getCurrentShop() throws ServiceException {
+		Integer memberId = getCurrentMemberId();
+		UmsShop shop = (UmsShop) redisUtil.getRedisValue("SHOP-"+memberId);
+		if(shop != null){
+			return shop;
+		}
+		shop = shopService.getShopByMemberId(memberId);
+		return shop;
+	}
+
 	public HttpServletRequest getRequest() {
 		return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 	}

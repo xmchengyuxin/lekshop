@@ -1,6 +1,6 @@
 package com.chengyu.core.controller.common;
 
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.MemberTypes;
 import com.chengyu.core.domain.enums.SecretEnum;
@@ -13,7 +13,6 @@ import com.chengyu.core.service.system.BankConfigService;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.service.system.QiniuService;
 import com.chengyu.core.service.system.VerifyCodeService;
-import com.chengyu.core.util.third.manager.ThirdManager;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,7 +39,7 @@ import java.util.Map;
 @Api(tags = "配置管理")
 @Controller
 @RequestMapping("/common")
-public class ConfigController extends UserBaseController {
+public class ConfigController extends ShopBaseController {
 	
 	@Autowired
 	private ConfigService configService;

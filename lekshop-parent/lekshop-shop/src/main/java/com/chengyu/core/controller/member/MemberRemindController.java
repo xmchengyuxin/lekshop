@@ -1,6 +1,6 @@
 package com.chengyu.core.controller.member;
 
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.model.UmsMemberRemind;
@@ -25,7 +25,7 @@ import java.util.Map;
 @Api(tags = "消息提醒")
 @Controller
 @RequestMapping("/member")
-public class MemberRemindController extends UserBaseController {
+public class MemberRemindController extends ShopBaseController {
 	
 	@Autowired
 	private MemberRemindService memberRemindService;

@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.result.ShopCateResult;
+import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.UmsShopCateMapper;
 import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.model.UmsShopCate;
@@ -61,13 +62,12 @@ public class ShopCateServiceImpl implements ShopCateService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void deleteShopCate(Integer id) {
+	public void deleteShopCate(Integer id) throws ServiceException {
 		UmsShopCate cate = shopCateMapper.selectByPrimaryKey(id);
-		Integer pid = cate.getPid();
-		while (pid != null && pid != 0){
-			UmsShopCate parent = shopCateMapper.selectByPrimaryKey(pid);
-			shopCateMapper.deleteByPrimaryKey(pid);
-			pid = parent.getPid();
+		UmsShopCateExample example = new UmsShopCateExample();
+		example.createCriteria().andPidEqualTo(cate.getId());
+		if(shopCateMapper.countByExample(example) > 0){
+			throw new ServiceException("请先删除下级分类");
 		}
 		shopCateMapper.deleteByPrimaryKey(id);
 	}
@@ -112,12 +112,14 @@ public class ShopCateServiceImpl implements ShopCateService {
 				}
 				example.setOrderByClause("sort asc");
 				List<UmsShopCate> threeChildCateList = shopCateMapper.selectByExample(example);
+				result1.setTopId(topCate.getId());
 
 				if(CollectionUtil.isNotEmpty(threeChildCateList)){
 					List<ShopCateResult> threeCateList = new ArrayList<>();
 					for(UmsShopCate threeCate : threeChildCateList){
 						ShopCateResult result2 = new ShopCateResult();
 						BeanUtil.copyProperties(threeCate, result2);
+						result2.setTopId(topCate.getId());
 						threeCateList.add(result2);
 					}
 					result1.setChildren(threeCateList);

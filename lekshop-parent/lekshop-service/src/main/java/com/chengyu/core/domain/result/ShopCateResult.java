@@ -11,5 +11,6 @@ import java.util.List;
 @Setter
 public class ShopCateResult extends UmsShopCate implements Serializable{
 
+	private Integer topId;
 	private List<ShopCateResult> children;
 }

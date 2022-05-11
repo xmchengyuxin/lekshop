@@ -1,7 +1,7 @@
 package com.chengyu.core.controller.shop;
 
 import com.chengyu.core.component.OperationLog;
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(tags = "店铺信息")
 @Controller
 @RequestMapping("/member")
-public class ShopInfoController extends UserBaseController {
+public class ShopInfoController extends ShopBaseController {
 	
 	@Autowired
 	private ShopInfoService shopInfoService;
@@ -58,7 +58,7 @@ public class ShopInfoController extends UserBaseController {
 	}
 
 	@OperationLog
-	@ApiOperation(value = "申请入驻-完善店铺")
+	@ApiOperation(value = "申请入驻-提交审核")
 	@ResponseBody
 	@RequestMapping(value={"/shopInfo/submitShopInfo"}, method=RequestMethod.POST)
 	public CommonResult<String> submitShopInfo(UmsShopInfo shopInfo) throws Exception {

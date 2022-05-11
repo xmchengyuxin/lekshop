@@ -59,9 +59,17 @@ public class ShopFreightServiceImpl implements ShopFreightService {
 
 		template.setShopId(shop.getId());
 		template.setShopName(shop.getName());
-		shopFreightTemplateMapper.insert(template);
+		if(template.getId() == null){
+			shopFreightTemplateMapper.insert(template);
+		}else{
+			shopFreightTemplateMapper.updateByPrimaryKeySelective(template);
+		}
 
 		if(CollectionUtil.isNotEmpty(areaList)){
+			UmsShopFreightTemplateAreaExample example = new UmsShopFreightTemplateAreaExample();
+			example.createCriteria().andTemplateIdEqualTo(template.getId());
+			shopFreightTemplateAreaMapper.deleteByExample(example);
+
 			for(UmsShopFreightTemplateArea area : areaList){
 				area.setTemplateId(template.getId());
 				shopFreightTemplateAreaMapper.insert(area);

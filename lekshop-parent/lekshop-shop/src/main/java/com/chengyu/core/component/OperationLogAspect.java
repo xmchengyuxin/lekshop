@@ -1,7 +1,7 @@
 package com.chengyu.core.component;
 
 import cn.hutool.core.map.MapUtil;
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.service.member.MemberOperationLogService;
@@ -35,7 +35,7 @@ import java.util.Map;
 @Aspect
 @Component
 @Order(3)
-public class OperationLogAspect extends UserBaseController {
+public class OperationLogAspect extends ShopBaseController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OperationLogAspect.class);
     @Autowired
 	private MemberOperationLogService operationLogService;

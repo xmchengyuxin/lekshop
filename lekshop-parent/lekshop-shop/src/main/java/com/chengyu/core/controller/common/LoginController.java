@@ -1,7 +1,6 @@
 package com.chengyu.core.controller.common;
 
-import com.chengyu.core.controller.UserBaseController;
-import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
@@ -32,7 +31,7 @@ import java.util.Map;
 @Api(tags = "登录")
 @Controller
 @RequestMapping("/common")
-public class LoginController extends UserBaseController {
+public class LoginController extends ShopBaseController {
 	
 	@Value("${jwt.tokenHeader}")
     private String tokenHeader;
@@ -137,5 +136,17 @@ public class LoginController extends UserBaseController {
 		tokenMap.put("tokenHead", tokenHead);
 		return CommonResult.success(tokenMap);
 	}
+
+	@ApiOperation(value = "登出功能")
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@ResponseBody
+	public CommonResult logout() {
+		String token = this.getRequest().getHeader(tokenHeader);
+		if(StringUtils.isNotBlank(token)) {
+			redisUtil.delete(token);
+		}
+		return CommonResult.success(null);
+	}
+
 
 }

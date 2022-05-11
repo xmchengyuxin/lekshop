@@ -1,5 +1,6 @@
 package com.chengyu.core.service.order;
 
+import com.chengyu.core.domain.result.OrderFreightResult;
 import com.chengyu.core.model.OmsOrder;
 
 public interface OrderFreightService {
@@ -11,4 +12,13 @@ public interface OrderFreightService {
 	 * @param  order
 	 */
 	void initOrderFreight(OmsOrder order);
+
+	/**
+	 * 获取物流详情
+	 * @author LeGreen
+	 * @date   2022/5/11
+	 * @param  orderId
+	 * @return OrderFreightResult
+	 */
+	OrderFreightResult getOrderFreight(Integer orderId);
 }

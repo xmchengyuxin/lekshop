@@ -2,7 +2,7 @@ package com.chengyu.core.controller.member;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.crypto.SecureUtil;
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.BankForm;
 import com.chengyu.core.domain.form.WithdrawSearchForm;
@@ -38,7 +38,7 @@ import java.util.List;
 @Api(tags = "提现管理")
 @Controller
 @RequestMapping("/member")
-public class MemberWithdrawController extends UserBaseController {
+public class MemberWithdrawController extends ShopBaseController {
 	
 	@Autowired
 	private MemberWithdrawService withdrawService;

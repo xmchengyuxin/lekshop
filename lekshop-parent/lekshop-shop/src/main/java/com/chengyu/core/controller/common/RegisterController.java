@@ -1,6 +1,6 @@
 package com.chengyu.core.controller.common;
 
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.UmsMemberRegParam;
 import com.chengyu.core.entity.CommonResult;
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 @Api(tags = "注册管理")
 @Controller
-public class RegisterController extends UserBaseController {
+public class RegisterController extends ShopBaseController {
 	
 	@Value("${jwt.tokenHead}")
     private String tokenHead;

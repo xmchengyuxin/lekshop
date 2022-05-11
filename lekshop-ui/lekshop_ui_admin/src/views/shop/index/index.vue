@@ -99,7 +99,7 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
 		<!--添加编辑框-->
-		<el-dialog :title="dialogType==='edit'?'编辑':'新增'" :visible.sync="dialogFormVisible">
+		<el-dialog title="编辑" :visible.sync="dialogFormVisible">
 		    <el-form ref="dataForm" :model="shop" label-width="100px" label-position="right" style="width: 100%; margin-left: 50px;">
           <el-form-item label="所属会员" prop="memberName" :rules="[{ required: true, message: '请填写所属会员', trigger: 'blur' }]">
               <el-input disabled v-model="shop.memberName" style="width: 60%"></el-input>

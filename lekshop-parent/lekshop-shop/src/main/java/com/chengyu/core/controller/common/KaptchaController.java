@@ -1,6 +1,6 @@
 package com.chengyu.core.controller.common;
 
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.service.kaptcha.CaptchaService;
 import com.chengyu.core.utils.Base64Utils;
@@ -26,7 +26,7 @@ import java.util.Map;
 @Api(tags = "图形验证码")
 @Controller
 @RequestMapping("/common")
-public class KaptchaController extends UserBaseController {
+public class KaptchaController extends ShopBaseController {
 	
    @Autowired
    private DefaultKaptcha producer;

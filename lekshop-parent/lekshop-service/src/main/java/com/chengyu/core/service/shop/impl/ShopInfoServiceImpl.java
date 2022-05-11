@@ -151,12 +151,13 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 			//审核通过，创建店铺
 			UmsShop shop = new UmsShop();
 			BeanUtil.copyProperties(shopInfo, shop);
+			shop.setKeyword(shop.getName());
 			shop.setLevel(0);
 			shop.setSort(9999);
 			shop.setStatus(CommonConstant.SUS_INT);
 			shop.setAddTime(DateUtil.date());
 			shop.setUpdTime(shop.getAddTime());
-			shopMapper.insert(shop);
+			shopMapper.insertSelective(shop);
 
 			UmsMember updateMember = new UmsMember();
 			updateMember.setId(shopInfo.getMemberId());

@@ -2,7 +2,7 @@ package com.chengyu.core.controller.member;
 
 import cn.hutool.crypto.SecureUtil;
 import com.chengyu.core.component.OperationLog;
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
@@ -36,7 +36,7 @@ import java.util.Map;
 @Api(tags = "个人中心")
 @Controller
 @RequestMapping("/member")
-public class MemberController extends UserBaseController {
+public class MemberController extends ShopBaseController {
 	
 	@Autowired
 	private QiniuService qiniuService;

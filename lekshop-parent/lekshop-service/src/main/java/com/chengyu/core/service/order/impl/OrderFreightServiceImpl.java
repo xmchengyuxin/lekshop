@@ -1,17 +1,19 @@
 package com.chengyu.core.service.order.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.result.OrderFreightResult;
 import com.chengyu.core.mapper.OmsOrderFreightDetailMapper;
 import com.chengyu.core.mapper.OmsOrderFreightMapper;
-import com.chengyu.core.model.OmsOrder;
-import com.chengyu.core.model.OmsOrderFreight;
-import com.chengyu.core.model.OmsOrderFreightDetail;
+import com.chengyu.core.model.*;
 import com.chengyu.core.service.order.OrderFreightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class OrderFreightServiceImpl implements OrderFreightService {
@@ -45,6 +47,24 @@ public class OrderFreightServiceImpl implements OrderFreightService {
 		detail.setAddTime(DateUtil.date());
 		detail.setUpdTime(detail.getAddTime());
 		orderFreightDetailMapper.insert(detail);
+	}
+
+	@Override
+	public OrderFreightResult getOrderFreight(Integer orderId) {
+		OmsOrderFreightExample example = new OmsOrderFreightExample();
+		example.createCriteria().andOrderIdEqualTo(orderId);
+		List<OmsOrderFreight> list = orderFreightMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(list)){
+			return null;
+		}
+		OrderFreightResult result = new OrderFreightResult();
+		result.setOrderFreight(list.get(0));
+
+		OmsOrderFreightDetailExample detailExample = new OmsOrderFreightDetailExample();
+		detailExample.setOrderByClause("add_time desc");
+		detailExample.createCriteria().andOrderFreightIdEqualTo(result.getOrderFreight().getId());
+		result.setFreightDetailList(orderFreightDetailMapper.selectByExample(detailExample));
+		return result;
 	}
 
 }

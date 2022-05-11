@@ -1,6 +1,6 @@
 package com.chengyu.core.controller.member;
 
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.form.AccountSearchForm;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
@@ -28,7 +28,7 @@ import java.util.List;
 @Api(tags = "资金明细")
 @Controller
 @RequestMapping("/member")
-public class MemberAccountController extends UserBaseController {
+public class MemberAccountController extends ShopBaseController {
 	
 	@Autowired
 	private MemberAccountLogService memberAccountLogService;

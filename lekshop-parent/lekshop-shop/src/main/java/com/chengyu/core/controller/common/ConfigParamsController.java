@@ -1,6 +1,6 @@
 package com.chengyu.core.controller.common;
 
-import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.form.ParamsSearchForm;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.model.UmsMember;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(tags = "多元化配置")
 @Controller
 @RequestMapping("/common")
-public class ConfigParamsController extends UserBaseController {
+public class ConfigParamsController extends ShopBaseController {
 
     @Autowired
     private ParamsManager paramsManager;

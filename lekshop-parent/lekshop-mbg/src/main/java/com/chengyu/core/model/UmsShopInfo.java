@@ -68,6 +68,9 @@ public class UmsShopInfo implements Serializable {
     @ApiModelProperty(value = "原因")
     private String reason;
 
+    @ApiModelProperty(value = "描述")
+    private String remark;
+
     @ApiModelProperty(value = "添加时间")
     private Date addTime;
 
@@ -258,6 +261,14 @@ public class UmsShopInfo implements Serializable {
         this.reason = reason;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public Date getAddTime() {
         return addTime;
     }
@@ -318,6 +329,7 @@ public class UmsShopInfo implements Serializable {
         sb.append(", address=").append(address);
         sb.append(", status=").append(status);
         sb.append(", reason=").append(reason);
+        sb.append(", remark=").append(remark);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);

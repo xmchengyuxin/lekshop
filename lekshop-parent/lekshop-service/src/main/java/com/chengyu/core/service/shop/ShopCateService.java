@@ -1,6 +1,7 @@
 package com.chengyu.core.service.shop;
 
 import com.chengyu.core.domain.result.ShopCateResult;
+import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.model.UmsShopCate;
 import io.swagger.models.auth.In;
@@ -40,7 +41,7 @@ public interface ShopCateService {
 	 * @date   2022/4/25
 	 * @param  id
 	 */
-	void deleteShopCate(Integer id);
+	void deleteShopCate(Integer id) throws ServiceException;
 
 	/**
 	 * 获取店铺分类
