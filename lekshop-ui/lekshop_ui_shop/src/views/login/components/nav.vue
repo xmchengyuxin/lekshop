@@ -6,11 +6,12 @@
         <div class="flex">
           <div @click="$router.push('/show')" class="flex f-a-c padding-lr15 cursor t-color-w">首页</div>
           <div @click="$router.push('/join')" class="flex f-a-c padding-lr15 cursor t-color-w">商家入驻</div>
-          <el-dropdown  >
+          <div  v-if="$store.state.user.name == ''" @click="$router.push('/login')" class="flex f-a-c padding-lr15 cursor t-color-w">登录</div>
+          <el-dropdown  v-if="$store.state.user.name != ''">
             <div  class="flex f-a-c cursor">
-              <el-image :src="$store.state.user.avatar" class="w-34 h-34 flex f-a-c f-j-c margin-r4 b-radius">
+              <el-image :src="$store.state.user.avatar" class="w-34 h-34 bg-color-9 flex f-a-c f-j-c margin-r4 b-radius">
                 <div slot="error" class="image-slot">
-                  <i class="el-icon-picture-outline"></i>
+                  <div class="w-34 h-34 b-radius" style="background-color: #F7f7f7"></div>
                 </div>
               </el-image>
               <span class="t-color-w flex f-a-c">{{$store.state.user.name}}</span>

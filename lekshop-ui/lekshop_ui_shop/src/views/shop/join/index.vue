@@ -88,7 +88,7 @@
           </el-form-item>
         </el-form>
       </el-card>
-      <el-card v-if="active == 3" class="margin-t20">
+      <el-card v-if="active == 3||active==4" class="margin-t20">
         <div slot="header" class="flex f-a-c f-j-c f18-size">
           <span>资料已提交</span>
         </div>
@@ -132,7 +132,7 @@
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12" style="color: #409EFF;" v-if="form.status == 2">正在审核中..</div>
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12" style="color: #67C23A;" v-if="form.status == 3">
               审核通过
-              <el-button style="margin-left: 10px;" type="primary" @click="active = 2" >前往后台</el-button>
+              <el-button style="margin-left: 10px;" type="primary" @click="$router.push('/dashboard')" >前往后台</el-button>
             </div>
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12" style="color: #F56C6C;" v-if="form.status == 4">
             {{form.reason}}
@@ -278,6 +278,9 @@
             this.form = res.data;
             this.form.addressArr = [this.form.provinceCode,this.form.cityCode,this.form.areaCode];
             this.active = res.data.status == 0 ? 2 : 3;
+            if(res.data.status == 3) {
+              this.active= 4;
+            }
           }
         })
       },

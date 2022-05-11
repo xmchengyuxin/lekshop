@@ -1,4 +1,4 @@
-import { loginByUsername, logout, getUserInfo } from '@/api/login'
+import { loginByUsername, logout, getUserInfo,phoneLogin } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -54,6 +54,20 @@ const mutations = {
         })
       })
     },
+    //忘记密码手机登录
+    phoneLogin({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        phoneLogin(data).then(response => {
+          const data = response.data
+          const token = data.token;
+          commit('SET_TOKEN', token)
+          setToken(token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
 
     // 获取用户信息
     getUserInfo({ commit, state }) {
@@ -90,6 +104,7 @@ const mutations = {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
+          commit('SET_NAME', '')
           commit('SET_ROLES', [])
 					commit('SET_MENUS', [])
           removeToken()

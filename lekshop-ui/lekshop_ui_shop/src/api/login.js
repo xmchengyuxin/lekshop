@@ -55,3 +55,17 @@ export function getCodePhone(data) {
     data
   })
 }
+export function phoneLogin(data) {
+  return request({
+    url: '/common/forgetPassword',
+    method: 'POST',
+    data
+  })
+}
+export function setPassword(data) {
+  return request({
+    url: '/member/setPassword',
+    method: 'POST',
+    data
+  })
+}

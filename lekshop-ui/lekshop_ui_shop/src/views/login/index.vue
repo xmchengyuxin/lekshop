@@ -3,7 +3,7 @@
     <Nav></Nav>
     <el-card :body-style="{padding:0}">
       <div class="flex f16-size">
-        <div @click="active=1;" class="flex f-a-c flex-1 f-j-c h-60 w-230 cursor" :class="active == 1 ? '' : 'bg-color'">登 录</div>
+        <div @click="active=1;" class="flex f-a-c flex-1 f-j-c h-60 w-230 cursor" :class="active == 1 || active==3 ? '' : 'bg-color'">登 录</div>
         <div @click="active=2;getCode();" class="flex f-a-c flex-1 f-j-c h-60  w-230 cursor" :class="active == 2 ? '' : 'bg-color'">注 册</div>
       </div>
       <div class="padding-15">
@@ -40,6 +40,10 @@
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
+          <div class="padding-10"></div>
+          <div class="flex f-a-c f-j-e">
+            <el-link @click="active=3;getCode()">修改密码</el-link>
+          </div>
           <div class="padding-10"></div>
           <el-button :loading="loading" type="primary" style="width:100%;" size="medium" @click.native.prevent="handleLogin">
             登录
@@ -123,6 +127,75 @@
             登录
           </el-button>
         </el-form>
+
+        <el-form ref="changeForm" v-if="active == 3"  size="medium" label-position="top" label-width="80px" class="" :model="registerForm" :rules="registerRules"  auto-complete="on">
+          <el-form-item prop="phone" label="手机号">
+            <div class="flex f-a-c">
+              <el-input
+                ref="phone"
+                v-model="registerForm.phone"
+                placeholder="手机号"
+                name="phone"
+                type="phone"
+              />
+            </div>
+          </el-form-item>
+          <el-form-item prop="password"  label="密码">
+            <el-input
+              ref="password1"
+              v-model="registerForm.password"
+              :type="passwordType"
+              :placeholder="$t('login.password')"
+              name="password"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            </span>
+          </el-form-item>
+          <el-form-item prop="confirmPassword"  label="确认密码">
+            <el-input
+              ref="confirmPassword"
+              v-model="registerForm.confirmPassword"
+              :type="passwordType"
+              placeholder="确认密码"
+              name="confirmPassword"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            </span>
+          </el-form-item>
+
+          <el-form-item prop="imgCode" label="图形验证码">
+            <div class="flex">
+            <el-input
+              ref="imgCode"
+              v-model="registerForm.imgCode"
+              placeholder="图形验证码"
+              name="imgCode"
+              type="text"
+            />
+              <img @click="getCode()" v-if="code != ''" class="h-36" :src="'data:image/png;base64,'+code.img" alt="">
+            </div>
+          </el-form-item>
+          <el-form-item prop="code" label="验证码">
+            <div class="flex">
+            <el-input
+              ref="code"
+              v-model="registerForm.code"
+              placeholder="验证码"
+              name="code"
+              type="text"
+              class="margin-r12"
+            />
+              <el-button @click="getPhoneCode()">{{smsTxt}}</el-button>
+            </div>
+          </el-form-item>
+
+          <div class="padding-10"></div>
+          <el-button :loading="loading" type="primary" style="width:100%;" size="medium" @click.native.prevent="changePassword">
+            修改密码
+          </el-button>
+        </el-form>
       </div>
       </div>
     </el-card>
@@ -133,7 +206,7 @@
 </template>
 
 <script>
-import {register,getCodeImg,getCodePhone} from '@/api/login'
+import {register,getCodeImg,getCodePhone,getUserInfo,phoneLogin,setPassword} from '@/api/login'
 import { validUsername,validPhone } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
@@ -239,7 +312,7 @@ export default {
       }
       let postData = {
       	phone: this.registerForm.phone,
-      	sendType: 1,
+      	sendType: this.active == 2 ? 1 : 3,
         cToken: this.code.cToken,
         captcha: this.registerForm.imgCode
       };
@@ -272,13 +345,43 @@ export default {
         this.passwordType = 'password'
       }
     },
+    changePassword() {
+      this.$refs.changeForm.validate(valid => {
+        if(valid) {
+          let phoneData = {
+            phone: this.registerForm.phone,
+            code: this.registerForm.code
+          }
+         this.$store.dispatch('user/phoneLogin', phoneData).then((res) => {
+           let setData = {
+             password: this.registerForm.password,
+             comfirmPassword: this.registerForm.confirmPassword
+           }
+           setPassword(setData).then((res) => {
+             let member = res.data.member ? res.data.member : '';
+             if(member !='' && member.type== 2) {
+               this.$router.push('/dashboard')
+             }else{
+               this.$router.push('/join')
+             }
+           })
+         })
+        }
+      })
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then((res) => {
             this.loading = false
-            this.$router.push('/join')
+            getUserInfo().then((res) => {
+              if(res.data.type== 2) {
+                this.$router.push('/dashboard')
+              }else{
+                this.$router.push('/join')
+              }
+            })
           }).catch(() => {
             this.loading = false
           })
