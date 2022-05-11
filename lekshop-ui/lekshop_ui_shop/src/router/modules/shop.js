@@ -13,28 +13,16 @@ const shopRouter = {
   },
   children: [
     {
-      path: 'list',
-      component: () => import('@/views/shop/index/index'),
-      name: 'shopList',
-      meta: { title: '店铺列表', icon:'list', role: ['admin'] }
-    },
-    {
-      path: 'verify',
+      path: 'info',
       component: () => import('@/views/shop/verify/index'),
-      name: 'verifyShop',
-      meta: { title: '新店铺审核', icon:'list', role: ['admin'] }
+      name: 'shopInfo',
+      meta: { title: '店铺资料', icon:'list', role: ['admin'] }
     },
     {
-      path: 'shopService',
+      path: 'source',
       component: () => import('@/views/shop/service/index'),
-      name: 'shopService',
-      meta: { title: '服务管理', icon:'list', role: ['admin'] }
-    },
-    {
-      path: 'freight',
-      component: () => import('@/views/shop/freight/index'),
-      name: 'freightTemplate',
-      meta: { title: '运费模板', icon:'list', role: ['admin'] }
+      name: 'source',
+      meta: { title: '店铺素材', icon:'list', role: ['admin'] }
     },
   ]
 }

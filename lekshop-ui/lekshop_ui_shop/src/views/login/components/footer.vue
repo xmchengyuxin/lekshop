@@ -1,6 +1,6 @@
 <template>
 	<div class="wrap-footer f13-size">
-    Copyright © 2017-2020 WANLSHOP All Rights Reserved 粤ICP备18055096号-4
+    Copyright © 2017-2022 LEKSHOP All Rights Reserved <a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备18026233号</a> 
 	</div>
 </template>
 <style scoped="scoped" type="text/css">

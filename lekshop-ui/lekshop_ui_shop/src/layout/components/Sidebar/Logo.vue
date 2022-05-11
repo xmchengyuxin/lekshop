@@ -2,13 +2,11 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <el-image
-              class="sidebar-logo" v-if="logo" :src="logo"></el-image>
+        <el-avatar class="sidebar-logo" v-if="logo" :src="logo"></el-avatar>
         <h1 v-else class="sidebar-title">{{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <el-image
-              class="sidebar-logo" v-if="logo" :src="logo"></el-image>
+        <el-avatar class="sidebar-logo" v-if="logo" :src="logo"></el-avatar>
         <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
     </transition>
@@ -27,8 +25,8 @@ export default {
   },
   data() {
     return {
-      title: this.$store.state.system.webName,
-      logo: this.$store.state.system.logo
+      title: this.$store.state.user.name,
+      logo: this.$store.state.user.avatar
     }
   }
 }
@@ -49,7 +47,7 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #1890ff;//#fff;//#2b2f3a;
+  background: #e74c3c;//#fff;//#2b2f3a;
   text-align: center;
   overflow: hidden;
 
@@ -58,8 +56,8 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 32px;
-      height: 32px;
+      width: 35px;
+      height: 35px;
       vertical-align: middle;
       margin-right: 12px;
     }
@@ -70,7 +68,7 @@ export default {
       color: #fff;
       font-weight: 550;
       line-height: 50px;
-      font-size: 20px;
+      font-size: 16px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }

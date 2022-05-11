@@ -8,21 +8,27 @@ const goodsRouter = {
   name: 'goods',
 	alwaysShow: true,
   meta: {
-    title: '商品管理',
+    title: '宝贝管理',
     icon: 'food-list'
   },
   children: [
     {
-      path: 'goodsCate',
+      path: 'publish',
       component: () => import('@/views/member/index/index'),
-      name: 'goodsCate',
-      meta: { title: '电商分类', icon:'list', role: ['admin'] }
+      name: 'publishGoods',
+      meta: { title: '发布宝贝', icon:'list', role: ['admin'] }
     },
     {
       path: 'list',
       component: () => import('@/views/member/group/index'),
       name: 'goodsList',
-      meta: { title: '商品列表', icon:'list', role: ['admin'] }
+      meta: { title: '出售中的宝贝', icon:'list', role: ['admin'] }
+    },
+    {
+      path: 'outlist',
+      component: () => import('@/views/member/group/index'),
+      name: 'goodsOutList',
+      meta: { title: '仓库中的宝贝', icon:'list', role: ['admin'] }
     },
   ]
 }

@@ -8,7 +8,7 @@ const orderRouter = {
   name: 'order',
 	alwaysShow: true,
   meta: {
-    title: '订单监管',
+    title: '交易管理',
     icon: 'order-refund'
   },
   children: [

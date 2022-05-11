@@ -1,4 +1,4 @@
-package com.chengyu.core.controller.goods;
+package com.chengyu.core.controller.shop;
 
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.ShopBaseController;

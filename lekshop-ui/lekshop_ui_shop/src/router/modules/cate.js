@@ -1,0 +1,23 @@
+/** When your routing table is too long, you can split it into small modules**/
+
+import Layout from '@/layout'
+
+const cateRouter = {
+  path: '/cate',
+  component: Layout,
+  redirect: 'noredirect',
+  name: 'cate',
+  meta: {
+    title: '类目管理',
+    icon: 'table'
+  },
+  children: [
+		{
+		  path: 'cateList',
+		  component: () => import('@/views/shop/index/index'),
+		  name: 'cateList',
+		  meta: { title: '类目管理', icon:'table', role: ['admin'] }
+		},
+  ]
+}
+export default cateRouter

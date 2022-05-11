@@ -7,16 +7,18 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import memberRouter from './modules/member'
 import fundRouter from './modules/fund'
-import configRouter from './modules/config'
-import contentRouter from './modules/content'
-import systemRouter from './modules/system'
-import thirdRouter from './modules/third'
+import promotionRouter from './modules/promotion'
 import logRouter from './modules/log'
 import shopRouter from './modules/shop'
 import goodsRouter from './modules/goods'
 import orderRouter from './modules/order'
+import configRouter from './modules/config'
+import cateRouter from './modules/cate'
+import freightRouter from './modules/freight'
+
+
+
 
 
 
@@ -98,16 +100,15 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-  shopRouter,
-	memberRouter,
-  goodsRouter,
   orderRouter,
+  goodsRouter,
+  cateRouter,
+  shopRouter,
+	promotionRouter,
+  freightRouter,
   fundRouter,
-  configRouter,
-	contentRouter,
-	systemRouter,
   logRouter,
-	thirdRouter,
+  configRouter,
 	 { path: '*', redirect: '/404', hidden: true }
 
 ]

@@ -33,7 +33,7 @@
 				tempFile:[],
 				times: 0,
 				tempUrl: '',
-				uploadUrl: process.env.VUE_APP_BASE_API + "/system/upload",
+				uploadUrl: process.env.VUE_APP_BASE_API + "system/upload",
 				dialogImageUrl: '',
 				dialogVisible: false,
 				dataObj: {
