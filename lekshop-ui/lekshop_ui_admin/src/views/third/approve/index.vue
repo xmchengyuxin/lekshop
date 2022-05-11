@@ -1,20 +1,26 @@
 <template>
-  <div class="createPost-container" style="position:relative;left:-100px;width: 1000px;margin: 20px auto;padding: 30px 100px 50px 70px; border: 1px solid #f4f4f4;">
-		<code>
-      本接口使用万维易源, 详情请查阅<a href="https://www.showapi.com" target="_blank">《万维易源相关文档》</a>
-		</code>
-<el-form ref="form" :rules="rules" :model="config" v-loading="loading" label-width="140px" label-position="right">
-  <el-form-item label="appId" prop="appId">
-    <el-input v-model="config.appId"></el-input>
-  </el-form-item>
-  <el-form-item label="密钥" prop="secret">
-    <el-input type="password" v-model="config.secret"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="updateConfig">更新配置</el-button>
-  </el-form-item>
-</el-form>
-</div>
+  <el-card shadow="hover" style="margin: 10px;">
+        <el-alert
+            class="warn-content"
+            title="温馨提示"
+            type="success"
+            show-icon
+            :closable="false">
+               本接口使用万维易源, 详情请查阅<a href="https://www.showapi.com" target="_blank">《万维易源相关文档》</a>
+          </el-alert>
+          <br/>
+      <el-form ref="form" :rules="rules" :model="config" v-loading="loading" label-width="120px" label-position="right" style="width: 60%;">
+        <el-form-item label="appId" prop="appId">
+          <el-input v-model="config.appId"></el-input>
+        </el-form-item>
+        <el-form-item label="密钥" prop="secret">
+          <el-input type="password" v-model="config.secret"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="updateConfig">更新配置</el-button>
+        </el-form-item>
+      </el-form>
+  </el-card>
 </template>
 
 <style scoped="scoped">

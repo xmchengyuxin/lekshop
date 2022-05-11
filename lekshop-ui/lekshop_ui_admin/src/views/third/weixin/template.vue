@@ -29,14 +29,14 @@
 
 		<!--添加编辑框-->
 		<el-dialog title="编辑" :visible.sync="dialogFormVisible">
-		    <el-form ref="dataForm" :rules="rules" :model="template" label-width="80px" label-position="right" style="width: 400px; margin-left:50px;">
+		    <el-form ref="dataForm" :rules="rules" :model="template" label-width="80px" label-position="right" style="width: 100%; margin-left: 50px;">
           <el-form-item label="提醒类型" prop="cate">
-            <el-select disabled v-model="template.cate" class="filter-item" placeholder="请选择">
+            <el-select disabled v-model="template.cate" class="filter-item" placeholder="请选择" style="width: 60%;">
               <el-option v-for="item in typeOptions" :key="item.key" :label="item.text" :value="item.key" />
             </el-select>
           </el-form-item>
 					<el-form-item label="模板ID" prop="templateId">
-						<el-input type="textarea" v-model="template.templateId"></el-input>
+						<el-input type="textarea" v-model="template.templateId" style="width: 60%;"></el-input>
 		      </el-form-item>
 
           <!-- 派单成功 -->

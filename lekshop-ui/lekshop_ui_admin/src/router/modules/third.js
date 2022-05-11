@@ -17,7 +17,7 @@ const thirdRouter = {
       path: 'qiniu',
       component: () => import('@/views/third/qiniu/index'),
       name: 'qiniu',
-      meta: { title: '七牛配置', icon:'list', role: ['admin'] }
+      meta: { title: '七牛云配置', icon:'list', role: ['admin'] }
     },
     {
       path: 'sms',
