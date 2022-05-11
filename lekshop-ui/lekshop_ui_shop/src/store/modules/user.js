@@ -65,17 +65,18 @@ const mutations = {
           }
           const data = response.data
 
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
+          data.roles = ['admin']
+          commit('SET_ROLES', data.roles)
+          /* if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
           } else {
             reject('getInfo: roles must be a non-null array!')
-          }
+          } */
 
-          commit('SET_NAME', data.admin.name)
-          commit('SET_AVATAR', data.admin.headImg )
-          commit('SET_MENUS', data.menus )
+          commit('SET_NAME', data.nickname)
+          commit('SET_AVATAR', data.headImg )
+          /* commit('SET_MENUS', data.menus )
           commit('SET_BRAND_NAME', data.brandName )
-          commit('SET_BRAND_LOGO', data.brandLogo )
+          commit('SET_BRAND_LOGO', data.brandLogo ) */
           //commit('SET_INTRODUCTION', data.introduction)
           resolve(data)
         }).catch(error => {

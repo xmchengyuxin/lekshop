@@ -48,3 +48,7 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+export function validPhone(str) {
+  	return !/^1\d{10}$/.test(str)
+}

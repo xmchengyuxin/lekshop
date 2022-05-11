@@ -34,3 +34,24 @@ export function refreshToken() {
     method: 'post'
   })
 }
+export function register(data) {
+  return request({
+    url: '/common/register',
+    method: 'POST',
+    data
+  })
+}
+export function getCodeImg() {
+  return request({
+    url: '/common/captcha',
+    method: 'get',
+  })
+}
+
+export function getCodePhone(data) {
+  return request({
+    url: '/common/sendCode',
+    method: 'POST',
+    data
+  })
+}
