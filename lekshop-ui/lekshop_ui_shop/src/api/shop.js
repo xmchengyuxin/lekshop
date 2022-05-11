@@ -95,3 +95,39 @@ export function deleteShopInfo(data) {
     params: {ids:data}
   })
 }
+
+export function getShopInfo() {
+  return request({
+    url: '/member/shopInfo/get',
+    method: 'get',
+  })
+}
+export function submitShopCert(data) {
+  return request({
+    url: '/member/shopInfo/applyShopCert',
+    method: 'post',
+    data
+  })
+}
+export function submitShopDetail(data) {
+  if(data.addTime) {
+    data.addTime = '';
+    data.updTime = '';
+  }
+  return request({
+    url: '/member/shopInfo/applyShopDetail',
+    method: 'post',
+    data
+  })
+}
+export function submitShop(data) {
+  if(data.addTime) {
+    data.addTime = '';
+    data.updTime = '';
+  }
+  return request({
+    url: '/member/shopInfo/submitShopInfo',
+    method: 'post',
+    data
+  })
+}

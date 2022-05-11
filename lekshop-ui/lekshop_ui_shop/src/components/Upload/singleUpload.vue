@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-			uploadUrl:process.env.VUE_APP_BASE_API+"system/upload"
+			uploadUrl:process.env.VUE_APP_BASE_API+"common/upload"
     }
   },
 	computed: {

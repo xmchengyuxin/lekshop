@@ -168,7 +168,7 @@ export default {
       }
     }
     return {
-      active: 2,
+      active: 1,
       loginForm: {
         username: '',
         password: '',
