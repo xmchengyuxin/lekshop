@@ -8,7 +8,6 @@
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
-    "build:jidixiongmao": "vue-cli-service build --mode jidixiongmao",
     "preview": "node build/index.js --preview",
     "lint": "eslint --ext .js,.vue src",
     "test:unit": "vue-cli-service test:unit",

@@ -51,7 +51,7 @@
 
 		<!--添加编辑框-->
 		<el-dialog :title="dialogType==='edit'?'编辑':'新增'" :visible.sync="dialogFormVisible">
-		    <el-form ref="dataForm":model="config" label-width="150px" label-position="right" style="width: 100%; ">
+		    <el-form ref="dataForm":model="config" label-width="150px" label-position="right" style="width: 100%; margin-left: 50px;">
           <el-form-item label="开启关闭" prop="status" :rules="[{ required: true, message: '请选择是否开启', trigger: 'change' }]">
             <el-switch v-model="config.status"
               :active-value="1"
@@ -60,13 +60,13 @@
           </el-form-item>
 
              <el-form-item label="关键字" prop="name" :rules="[{ required: true, message: '请填写关键字', trigger: 'blur' }]">
-                 <el-input v-model="config.name" style="width: 200px;"></el-input>
+                 <el-input v-model="config.name" style="width: 60%;"></el-input>
              </el-form-item>
              <el-form-item label="搜索次数" prop="num" :rules="[{ required: true, message: '请填写搜索次数', trigger: 'blur' }]">
-                 <el-input v-model="config.num" style="width: 200px;"></el-input>
+                 <el-input v-model="config.num" style="width: 60%;"></el-input>
              </el-form-item>
              <el-form-item label="标签" prop="target">
-                 <el-input v-model="config.target" style="width: 200px;"></el-input>
+                 <el-input v-model="config.target" style="width: 60%;"></el-input>
              </el-form-item>
 
 		    </el-form>

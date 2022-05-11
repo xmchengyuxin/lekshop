@@ -99,10 +99,6 @@
         </div>
       </el-col>
     </el-row> -->
-
-    <audio src="https://qiniuvideo.wurun.net/appoint_order.wav" id="audio-tip"></audio>
-    <audio src="https://qiniuvideo.wurun.net/order_sound_exception.ogg" id="audio-exception"></audio>
-
   </div>
 </template>
 

@@ -72,9 +72,9 @@ public class LoginController extends UserBaseController {
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
         UmsMember member = memberService.getCurrentMember();
-        if(type != null && !member.getType().equals(type)){
+        /*if(type != null && !member.getType().equals(type)){
 			return CommonResult.validateFailed(member.getType() == CommonConstant.SELLER ? "请登录商家端" : "请登录用户端");
-		}
+		}*/
 		memberImeIdService.loginByImeId(member, imeId, phoneType);
         tokenMap.put("member", member);
 

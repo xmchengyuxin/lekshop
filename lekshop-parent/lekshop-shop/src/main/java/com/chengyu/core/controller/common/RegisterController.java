@@ -51,7 +51,7 @@ public class RegisterController extends UserBaseController {
 		verifyCodeService.validateCode(regParam.getPhone(), regParam.getCode());
 
 		UmsMember member = new UmsMember();
-		member.setType(regParam.getType());
+		member.setType(CommonConstant.BUYER);
 		member.setCode(regParam.getUsername().trim());
 		member.setNickname(regParam.getUsername().trim());
 		member.setPhone(regParam.getPhone());

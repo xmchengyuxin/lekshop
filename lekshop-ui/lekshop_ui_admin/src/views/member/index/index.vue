@@ -158,15 +158,9 @@
           				<span class="link-type">{{ scope.row.realname }}</span>
           		  </template>
           		</el-table-column>
-          		<el-table-column label="QQ/手机号" width="150px">
+          		<el-table-column label="手机号" width="150px">
           		  <template slot-scope="scope">
-          		   <a class="link-type":href="'https://wpa.qq.com/msgrd?v=3&site=qq&menu=yes&uin='+scope.row.qq" target="_blank">Q Q: {{scope.row.qq}}
-          	     <el-image
-          	  style="width: 20px;"
-          	  src="http://pub.idqqimg.com/qconn/wpa/button/button_old_171.gif"
-          	  fit="fill"></el-image></a>
-          	     <br>
-          	     <span>手机: {{scope.row.phone}}</span>
+          	     <span>{{scope.row.phone}}</span>
           		  </template>
           		</el-table-column>
           		<el-table-column label="会员组" width="100px" align="center">
@@ -179,7 +173,6 @@
           	       <el-tag :type="scope.row.status == '-1' ? 'danger' : 'success' " >{{ scope.row.status | statusFilter}} </el-tag>
           	    </template>
           	  </el-table-column>
-          	  <el-table-column label="认证" width="100px" align="center">
           	    <el-table-column label="实名认证" width="80px" align="center">
           	      <template slot-scope="scope">
           	        <p><el-tag :type="scope.row.realnameStatus == '0' ? 'danger' : 'success' " >{{ scope.row.realnameStatus == 0 ? '未认证' : '已认证'}} </el-tag></p>
@@ -195,23 +188,7 @@
           	        <p><el-tag :type="scope.row.bankStatus == '0' ? 'danger' : 'success'" >{{ scope.row.bankStatus == 0 ? '未认证' : '已认证'}} </el-tag></p>
           	      </template>
           	    </el-table-column>
-          	    <el-table-column label="视频认证" width="80px" align="center">
-          	      <template slot-scope="scope">
-          	        <p> <el-tag :type="scope.row.videoStatus == '0' ? 'danger' : 'success'" >{{ scope.row.videoStatus == 0 ? '未认证' : '已认证'}} </el-tag></p>
-          	      </template>
-          	    </el-table-column>
-          	    <el-table-column label="加入商保" width="80px" align="center">
-          	      <template slot-scope="scope">
-          	        <p><el-tag :type="scope.row.shangbaoStatus == '0' ? 'danger' : 'success'" >{{ scope.row.shangbaoStatus == 0 ? '未加入' : '已加入'}} </el-tag></p>
-          	      </template>
-          	    </el-table-column>
-          	    <el-table-column label="关注公众号" width="90px" align="center">
-          	      <template slot-scope="scope">
-          	        <p><el-tag :type="scope.row.gzhFocusStatus == '0' ? 'danger' : 'success'" >{{ scope.row.gzhFocusStatus == 0 ? '未关注' : '已关注'}} </el-tag></p>
-          	      </template>
-          	    </el-table-column>
-          	   </el-table-column>
-          	  <el-table-column label="注册时间" width="170px" align="center" prop="addTime" >
+          	  <el-table-column label="注册时间" align="center" prop="addTime" >
           	    <template slot-scope="scope">
           	      <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
           	    </template>
@@ -247,17 +224,6 @@
         				<span class="link-type">{{ scope.row.realname }}</span>
         		  </template>
         		</el-table-column>
-        		<el-table-column label="QQ/手机号" width="150px">
-        		  <template slot-scope="scope">
-        		   <a class="link-type":href="'https://wpa.qq.com/msgrd?v=3&site=qq&menu=yes&uin='+scope.row.qq" target="_blank">Q Q: {{scope.row.qq}}
-        	     <el-image
-        	  style="width: 20px;"
-        	  src="http://pub.idqqimg.com/qconn/wpa/button/button_old_171.gif"
-        	  fit="fill"></el-image></a>
-        	     <br>
-        	     <span>手机: {{scope.row.phone}}</span>
-        		  </template>
-        		</el-table-column>
         		<el-table-column label="会员组" width="100px" align="center">
         		  <template slot-scope="scope">
         		    <span>{{scope.row.groupName}}</span>
@@ -268,7 +234,6 @@
         	       <el-tag :type="scope.row.status == '-1' ? 'danger' : 'success' " >{{ scope.row.status | statusFilter}} </el-tag>
         	    </template>
         	  </el-table-column>
-        	  <el-table-column label="认证" width="100px" align="center">
         	    <el-table-column label="实名认证" width="80px" align="center">
         	      <template slot-scope="scope">
         	        <p><el-tag :type="scope.row.realnameStatus == '0' ? 'danger' : 'success' " >{{ scope.row.realnameStatus == 0 ? '未认证' : '已认证'}} </el-tag></p>
@@ -284,23 +249,7 @@
         	        <p><el-tag :type="scope.row.bankStatus == '0' ? 'danger' : 'success'" >{{ scope.row.bankStatus == 0 ? '未认证' : '已认证'}} </el-tag></p>
         	      </template>
         	    </el-table-column>
-        	    <el-table-column label="视频认证" width="80px" align="center">
-        	      <template slot-scope="scope">
-        	        <p> <el-tag :type="scope.row.videoStatus == '0' ? 'danger' : 'success'" >{{ scope.row.videoStatus == 0 ? '未认证' : '已认证'}} </el-tag></p>
-        	      </template>
-        	    </el-table-column>
-        	    <el-table-column label="加入商保" width="80px" align="center">
-        	      <template slot-scope="scope">
-        	        <p><el-tag :type="scope.row.shangbaoStatus == '0' ? 'danger' : 'success'" >{{ scope.row.shangbaoStatus == 0 ? '未加入' : '已加入'}} </el-tag></p>
-        	      </template>
-        	    </el-table-column>
-        	    <el-table-column label="关注公众号" width="90px" align="center">
-        	      <template slot-scope="scope">
-        	        <p><el-tag :type="scope.row.gzhFocusStatus == '0' ? 'danger' : 'success'" >{{ scope.row.gzhFocusStatus == 0 ? '未关注' : '已关注'}} </el-tag></p>
-        	      </template>
-        	    </el-table-column>
-        	   </el-table-column>
-        	  <el-table-column label="注册时间" width="170px" align="center" prop="addTime" >
+        	  <el-table-column label="注册时间" align="center" prop="addTime" >
         	    <template slot-scope="scope">
         	      <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         	    </template>

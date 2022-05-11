@@ -13,6 +13,7 @@ import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.model.UmsShopInfo;
 import com.chengyu.core.model.UmsShopInfoExample;
+import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.shop.ShopConfigService;
 import com.chengyu.core.service.shop.ShopInfoService;
 import com.chengyu.core.utils.StringUtils;
@@ -38,6 +39,8 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 	private UmsShopMapper shopMapper;
 	@Autowired
 	private ShopConfigService shopConfigService;
+	@Autowired
+	private MemberService memberService;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -154,6 +157,11 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 			shop.setAddTime(DateUtil.date());
 			shop.setUpdTime(shop.getAddTime());
 			shopMapper.insert(shop);
+
+			UmsMember updateMember = new UmsMember();
+			updateMember.setId(shopInfo.getMemberId());
+			updateMember.setType(CommonConstant.SELLER);
+			memberService.updateMember(updateMember);
 
 			shopConfigService.initShopConfig(shop);
 		}

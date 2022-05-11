@@ -11,13 +11,14 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
+        <message />
     </div>
   </div>
 </template>
 
 <script>
 import RightPanel from '@/components/RightPanel'
-import { Navbar, Sidebar, AppMain, TagsView, Settings } from './components'
+import { Navbar, Sidebar, AppMain, TagsView, Settings, Message } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
@@ -29,7 +30,8 @@ export default {
     Sidebar,
     AppMain,
     TagsView,
-    Settings
+    Settings,
+    Message
   },
   mixins: [ResizeMixin],
   computed: {
