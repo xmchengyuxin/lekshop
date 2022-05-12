@@ -4,6 +4,7 @@ import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.service.shop.ShopService;
 import io.swagger.annotations.Api;

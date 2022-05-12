@@ -14,6 +14,7 @@ import com.chengyu.core.domain.enums.MemberRemindEnums.MemberRemindTypes;
 import com.chengyu.core.domain.form.BankForm;
 import com.chengyu.core.domain.form.WithdrawSearchForm;
 import com.chengyu.core.domain.result.WithdrawCountResult;
+import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.CustomMemberWithdrawMapper;
 import com.chengyu.core.mapper.UmsMemberWithdrawMapper;
@@ -175,6 +176,9 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public Integer withdraw(UmsMember member, Integer type, Integer method, BigDecimal amount, BankForm bankForm) throws ServiceException {
+		if(amount.compareTo(BigDecimal.ZERO) <= 0){
+			throw new ServiceException("请填写正确的金额");
+		}
 		//网站维护校验
 		configService.validateWeihuOnlyLogin();
 		if(member.getWithdrawLimit() != null && member.getWithdrawLimit() == CommonConstant.YES_INT){
@@ -259,13 +263,13 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 			throw  new ServiceException("当前会员组暂不支持余额提现");
 		}
 		//是否实名认证
-		if(config.getNeedRealname() == CommonConstant.YES_INT && member.getRealnameStatus() != CommonConstant.YES_INT){
+		/*if(config.getNeedRealname() == CommonConstant.YES_INT && member.getRealnameStatus() != CommonConstant.YES_INT){
 			throw  new ServiceException("您需实名认证后才允许提现");
 		}
 		//是否银行认证
 		if(config.getNeedBank() == CommonConstant.YES_INT && member.getBankStatus() != CommonConstant.YES_INT){
 			throw  new ServiceException("您需银行认证后才允许提现");
-		}
+		}*/
 		//判断提现最低金额
 		if(method.equals(AccountEnums.AccountMethod.BALANCE.getValue())){
 			if(config.getMinBalanceWithdrawAmount().compareTo(amount) > 0){
@@ -292,12 +296,12 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 			throw new ServiceException("您当前正在处罚当中, 请等待处罚期后再进行提现");
 		}
 		//判断是否有正在审核的提现
-		UmsMemberWithdrawExample example = new UmsMemberWithdrawExample();
+		/*UmsMemberWithdrawExample example = new UmsMemberWithdrawExample();
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andStatusEqualTo(CommonConstant.WAIT);
 		long count = withdrawMapper.countByExample(example);
 		if(count > 0){
 			throw new ServiceException("您当前有未到账的提现, 请等待到账后再进行提现");
-		}
+		}*/
 	}
 
 	@Override

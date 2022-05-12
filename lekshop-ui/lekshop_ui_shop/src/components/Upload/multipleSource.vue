@@ -49,7 +49,7 @@ export default {
       dialogVisible: false,
       listObj: {},
       fileList: [],
-			uploadUrl:process.env.VUE_APP_BASE_API+"/common/upload",
+			uploadUrl:process.env.VUE_APP_BASE_API+"common/upload",
     }
   },
   methods: {

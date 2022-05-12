@@ -2,12 +2,12 @@
   <div class="wrap-page">
     <div class="app-container">
       <Nav></Nav>
-      <el-card>
-        <div slot="header" class="flex f-a-c f-j-c f18-size">
+      <el-card shadow="hover">
+        <div slot="header" class="flex f-a-c f-j-c f16-size">
           <span>商城申请入驻</span>
         </div>
         <div class="padding-lr15">
-          <el-steps :active="active">
+          <el-steps :active="active" simple finish-status="success">
             <el-step title="注册账号"></el-step>
             <el-step title="主体资质"></el-step>
             <el-step title="店铺信息"></el-step>
@@ -16,7 +16,7 @@
         </div>
 
       </el-card>
-      <el-card v-if="active == 1" class="margin-t20">
+      <el-card v-if="active == 1" class="margin-t6" shadow="hover">
         <div slot="header" class="flex f-a-c  f18-size">
           <span>主体资质认证</span>
         </div>
@@ -37,7 +37,7 @@
             <el-input v-model="form.idcard"></el-input>
           </el-form-item>
           <el-form-item prop="cardImg" :label="form.type == 1? '手持身份证' : '营业执照'"
-            :rules="[{ required: true, message: '请上传'+form.type == 1? '手持身份证' : '营业执照', trigger: 'blur' }]">
+            :rules="[{ required: true, message: '请上传资料', trigger: 'blur' }]">
             <Upload v-model="form.cardImg" />
           </el-form-item>
           <el-form-item prop="brandImg" v-if="form.type == 3" label="商标证书"
@@ -52,11 +52,11 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button @click="submitZizhi" type="primary">下一步</el-button>
+            <el-button @click="submitZizhi" type="primary" round>下一步</el-button>
           </el-form-item>
         </el-form>
       </el-card>
-      <el-card v-if="active == 2" class="margin-t20">
+      <el-card v-if="active == 2" class="margin-t6" shadow="hover">
         <div slot="header" class="flex f-a-c  f18-size">
           <span>填写店铺信息</span>
         </div>
@@ -83,16 +83,16 @@
             <!-- <Tinymce ref="editor" v-model="form.produce" :height="400" /> -->
           </el-form-item>
           <el-form-item>
-            <el-button @click="active=1">上一步</el-button>
-            <el-button @click="submitShopInfo" type="primary">提交审核</el-button>
+            <el-button @click="active=1" round>上一步</el-button>
+            <el-button @click="submitShopInfo" type="primary" round>提交</el-button>
           </el-form-item>
         </el-form>
       </el-card>
-      <el-card v-if="active == 3||active==4" class="margin-t20">
+      <el-card v-if="active == 3||active==4" class="margin-t6" shadow="hover">
         <div slot="header" class="flex f-a-c f-j-c f18-size">
           <span>资料已提交</span>
         </div>
-        <div class="f15-size" style="border: 1px solid #f4f4f4;">
+        <div class="f13-size" style="border: 1px solid #f4f4f4;">
           <div class="flex  " style="border-bottom: 1px solid #f4f4f4;">
             <div class="flex f-a-c flex-1 f-w-b padding-12" style="border-right: 1px solid #f4f4f4;">{{form.type==1?'姓名': '主体名称（企业）'}}</div>
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12">{{form.realname}}</div>
@@ -126,17 +126,18 @@
           <div class="flex  ">
             <div class="flex f-a-c flex-1 f-w-b padding-12" style="border-right: 1px solid #f4f4f4;">审核状态</div>
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12"  v-if="form.status == 1">
-              <el-button @click="active = 2" >上一步</el-button>
-              <el-button @click="submit" type="primary">提交审核</el-button>
+              <el-button @click="active = 2" round>上一步</el-button>
+              <el-button @click="submit" type="primary" round>提交审核</el-button>
             </div>
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12" style="color: #409EFF;" v-if="form.status == 2">正在审核中..</div>
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12" style="color: #67C23A;" v-if="form.status == 3">
               审核通过
-              <el-button style="margin-left: 10px;" type="primary" @click="$router.push('/dashboard')" >前往后台</el-button>
+              <el-button style="margin-left: 10px;" type="primary" @click="$router.push('/dashboard')" round>前往后台</el-button>
             </div>
             <div class="flex f-a-c flex-1 f-w-b f-j-c padding-12" style="color: #F56C6C;" v-if="form.status == 4">
+              驳回
             {{form.reason}}
-            <el-button style="margin-left: 10px;" @click="active = 2" >重新编辑</el-button>
+            <el-button style="margin-left: 10px;" @click="active = 2" round>重新编辑</el-button>
             </div>
           </div>
         </div>
@@ -165,6 +166,9 @@
     submitShopDetail,
     submitShop
   } from '@/api/shop'
+  import {
+    getUser
+  } from '@/api/login'
   import Nav from '@/views/login/components/nav.vue'
   import Footer from '@/views/login/components/footer.vue'
   import Tinymce from '@/components/Tinymce'
@@ -218,6 +222,8 @@
     },
     methods: {
       submit() {
+        this.form.addTime = null;
+        this.form.updTime = null;
         submitShop(this.form).then((res) => {
           if (res.code == 200) {
             this.form.status = 2;
@@ -234,6 +240,8 @@
             this.form.provinceCode = this.form.addressArr[0];
             this.form.cityCode = this.form.addressArr[1];
             this.form.areaCode = this.form.addressArr[2];
+            this.form.addTime = null;
+            this.form.updTime = null;
             submitShopDetail(this.form).then((res) => {
               if (res.code == 200) {
                 this.active = 3;
@@ -254,6 +262,8 @@
         }
         this.$refs.form.validate(valid => {
           if (valid) {
+            this.form.addTime = null;
+            this.form.updTime = null;
             submitShopCert(this.form).then(res => {
               if (res.code == 200) {
                 this.form.id = res.data;
@@ -269,9 +279,11 @@
 
       },
       init() {
-        this.$store.dispatch('user/getUserInfo').then((res) => {
-          this.form.phone = res.code
-        }).catch(() => {})
+
+        getUser().then((res) => {
+           this.form.phone = res.code
+        })
+
         getShopInfo().then((res) => {
           if (res.code == 200 && res.data) {
             res.data.type = String(res.data.type);

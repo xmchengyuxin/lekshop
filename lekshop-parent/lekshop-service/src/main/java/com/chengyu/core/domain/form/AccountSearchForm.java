@@ -18,15 +18,6 @@ import java.util.List;
 @Setter
 public class AccountSearchForm {
 
-    @ApiModelProperty(value = "代理")
-    private Integer agentId;
-
-    @ApiModelProperty(value = "分站")
-    private Integer subId;
-
-    @ApiModelProperty(value = "代理")
-    private String agentName;
-
     @ApiModelProperty(value = "订单号")
     private String orderNo;
 

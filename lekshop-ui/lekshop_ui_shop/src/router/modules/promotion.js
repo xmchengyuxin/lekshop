@@ -14,7 +14,7 @@ const promotionRouter = {
   children: [
     {
       path: 'coupon',
-      component: () => import('@/views/third/qiniu/index'),
+      component: () => import('@/views/promotion/coupon/index'),
       name: 'coupon',
       meta: { title: '优惠券', icon:'lock', role: ['admin'] }
     },

@@ -87,7 +87,7 @@
           <el-tag v-if="scope.row.status == 4" type="danger">{{ scope.row.status | statusFilter}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" min-width="120">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" min-width="130">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-view" size="mini" @click="handleView(scope.row)">查看</el-button>
           <el-button v-if="scope.row.status == 2" type="primary" icon="el-icon-circle-check" size="mini" @click="handleVerify(scope.row)">审核</el-button>

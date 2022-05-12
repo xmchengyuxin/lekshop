@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.result.ShopFreightResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -45,6 +46,15 @@ public class ShopFreightController extends ShopBaseController {
 		
 		List<UmsShopFreightTemplate> list = shopFreightService.getFreightTemplateList(getCurrentShop().getId(), name, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
+	}
+
+	@ApiOperation(value = "店铺运费模板详情")
+	@ResponseBody
+	@RequestMapping(value="/shopFreight/get", method=RequestMethod.GET)
+	public CommonResult<ShopFreightResult> get(
+			Integer id) throws ServiceException {
+		ShopFreightResult result = shopFreightService.getFreightTemplate(id);
+		return CommonResult.success(result);
 	}
 
 	@OperationLog

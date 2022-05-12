@@ -13,10 +13,16 @@ const fundRouter = {
   },
   children: [
     {
+      path: 'bank',
+      component: () => import('@/views/member/bank/index'),
+      name: 'bank',
+      meta: { title: '提现账户', icon:'list', role: ['admin'] }
+    },
+    {
       path: 'withdraw',
       component: () => import('@/views/fund/withdraw/index'),
       name: 'withdraw',
-      meta: { title: '提现记录', icon:'list', role: ['admin'] }
+      meta: { title: '商家提现', icon:'list', role: ['admin'] }
     },
 		/* {
 		  path: 'recharge',
@@ -28,7 +34,7 @@ const fundRouter = {
       path: 'account',
       component: () => import('@/views/fund/account/index'),
       name: 'account',
-      meta: { title: '资金明细', icon:'list', role: ['admin'] }
+      meta: { title: '商家对账单', icon:'list', role: ['admin'] }
     },
   ]
 }

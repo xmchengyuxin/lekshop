@@ -1,7 +1,10 @@
 package com.chengyu.core.controller.member;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.controller.ShopBaseController;
+import com.chengyu.core.domain.enums.AccountEnums;
 import com.chengyu.core.domain.form.AccountSearchForm;
+import com.chengyu.core.domain.result.KeyValueResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -34,22 +37,48 @@ public class MemberAccountController extends ShopBaseController {
 	private MemberAccountLogService memberAccountLogService;
 
 	@ApiOperation(value = "资金明细")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "orderNo", value = "流水号"),
-		@ApiImplicitParam(name = "dateFrom", value = "开始时间"),
-		@ApiImplicitParam(name = "dateTo", value = "结束时间"),
-		@ApiImplicitParam(name = "inOut", value = "1收入>>-1支出")
-	})
 	@ResponseBody
 	@RequestMapping(value="/account/getList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<UmsMemberAccountLog>> getList(String orderNo, Date dateFrom , Date dateTo, Integer inOut, Integer page, Integer pageSize) throws ServiceException {
-		AccountSearchForm form = new AccountSearchForm();
+	public CommonResult<CommonPage<UmsMemberAccountLog>> getList(AccountSearchForm form, Integer page, Integer pageSize) throws ServiceException {
 		form.setMemberId(getCurrentMemberId());
-		form.setOrderNo(orderNo);
-		form.setDateFrom(dateFrom);
-		form.setDateTo(dateTo);
-		form.setInOut(inOut);
 		List<UmsMemberAccountLog> list = memberAccountLogService.getAccountLog(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
+	}
+
+	@ApiOperation(value = "资金类型选择器")
+	@ResponseBody
+	@RequestMapping(value="/accountType/getSelector", method=RequestMethod.GET)
+	public CommonResult getSelector(Integer type) {
+		return CommonResult.success(this.getKeyValueList(type));
+	}
+
+	private List<KeyValueResult> getKeyValueList(Integer type){
+		List<KeyValueResult> list = CollectionUtil.newArrayList();
+		if(type == 1){
+			//钱包余额资金类型
+			AccountEnums.MemberAccountTypes[] types = AccountEnums.MemberAccountTypes.values();
+			for(AccountEnums.MemberAccountTypes mtype : types){
+				list.add(new KeyValueResult(mtype.getName(), mtype.getValue()));
+			}
+		}else if(type == 2){
+			//信用分资金类型
+			AccountEnums.MemberPointTypes[] types = AccountEnums.MemberPointTypes.values();
+			for(AccountEnums.MemberPointTypes mtype : types){
+				list.add(new KeyValueResult(mtype.getName(), mtype.getValue()));
+			}
+		}else if(type == 3){
+			//推广佣金资金类型
+			AccountEnums.MemberSpmissionTypes[] types = AccountEnums.MemberSpmissionTypes.values();
+			for(AccountEnums.MemberSpmissionTypes mtype : types){
+				list.add(new KeyValueResult(mtype.getName(), mtype.getValue()));
+			}
+		}else if(type == 4){
+			//佣金资金类型
+			AccountEnums.MemberMissionTypes[] types = AccountEnums.MemberMissionTypes.values();
+			for(AccountEnums.MemberMissionTypes mtype : types){
+				list.add(new KeyValueResult(mtype.getName(), mtype.getValue()));
+			}
+		}
+		return list;
 	}
 }

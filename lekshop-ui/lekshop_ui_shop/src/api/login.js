@@ -28,6 +28,14 @@ export function getUserInfo(token) {
   })
 }
 
+export function getUser(token) {
+  return request({
+    url: '/member/getUser',
+    method: 'get',
+    params: { token }
+  })
+}
+
 export function refreshToken() {
   return request({
     url: '/common/refreshToken',

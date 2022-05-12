@@ -1,24 +1,16 @@
 import request from '@/utils/request'
 
-export function getAdminLoginLog(data) {
+export function getLoginLoginLog(data) {
   return request({
-    url: '/system/adminLogin/getList',
+    url: 'member/login/getList',
     method: 'get',
 		params: data
   })
 }
 
-export function getAdminOperationLog(data) {
+export function getMemberOperationLog(data) {
   return request({
-    url: '/system/adminOperation/getList',
-    method: 'get',
-		params: data
-  })
-}
-
-export function getverifyCodeLog(data) {
-  return request({
-    url: '/system/verifyCode/getList',
+    url: 'member/memberOperation/getList',
     method: 'get',
 		params: data
   })

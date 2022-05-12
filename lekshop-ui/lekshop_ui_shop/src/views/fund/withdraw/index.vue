@@ -2,14 +2,13 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="handleClickTab">
         <el-tab-pane label="全部" name="first"></el-tab-pane>
-    	  <el-tab-pane label="待处理" name="second"></el-tab-pane>
-        <el-tab-pane label="处理中" name="five"></el-tab-pane>
-    		<el-tab-pane label="已审核" name="third"></el-tab-pane>
-    		<el-tab-pane label="已驳回" name="four"></el-tab-pane>
+    	  <el-tab-pane label="申请中" name="second"></el-tab-pane>
+        <el-tab-pane label="待打款" name="five"></el-tab-pane>
+    		<el-tab-pane label="成功" name="third"></el-tab-pane>
+    		<el-tab-pane label="已拒绝" name="four"></el-tab-pane>
     </el-tabs>
     <div class="filter-container">
 			<el-input v-model="listQuery.orderNo" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
-			<el-input v-model="listQuery.memberName" clearable placeholder="用户名" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
 			<el-date-picker class="filter-item" v-model="listQuery.startTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择开始时间" />
 			-
 			<el-date-picker  class="filter-item"  v-model="listQuery.endTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择结束时间" />
@@ -17,8 +16,8 @@
 			<el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
       <br>
       <el-button-group>
-        <el-button v-if="activeName == 'first' || activeName == 'second'" class="filter-item" type="primary" size="mini" icon="el-icon-circle-check" @click="setDoingWithdraw">批量设处理中</el-button>
-        <el-button v-if="activeName == 'first' || activeName == 'five'" class="filter-item" type="primary" size="mini" icon="el-icon-circle-check" @click="handleVerify">批量审核</el-button>
+        <el-button class="filter-item" type="danger" size="mini">余额 ￥{{balance}}</el-button>
+        <el-button class="filter-item" type="primary" size="mini" icon="el-icon-circle-check" @click="handleWithdraw">立即提现</el-button>
       	<el-button class="filter-item" type="info" :loading="downloadLoading" size="mini" icon="el-icon-download" @click="handleDownload(2)">导出支付宝</el-button>
         <el-button class="filter-item" type="info" :loading="downloadLoading" size="mini" icon="el-icon-download" @click="handleDownload(1)">导出银行</el-button>
         <el-button class="filter-item" type="info" :loading="downloadLoading" size="mini" icon="el-icon-download" @click="handleDownload(3)">导出微信</el-button>
@@ -48,13 +47,6 @@
           <span>{{ scope.row.orderNo }}</span>
         </template>
       </el-table-column>
-			<el-table-column label="用户名" width="100"  align="center" prop="memberName">
-			  <template slot-scope="scope">
-			    <router-link :to="'/member/detail?memberId='+scope.row.memberId">
-			      <p class="link-type">{{ scope.row.memberName }}</p>
-			    </router-link>
-			  </template>
-			</el-table-column>
       <el-table-column label="出款类型" width="100" align="center" prop="method">
         <template slot-scope="scope">
           <p>{{ scope.row.method == 1 ? '账户余额' : '佣金余额'}}</p>
@@ -72,7 +64,7 @@
       </el-table-column>
 			<el-table-column label="开户银行" width="150" align="center" prop="bank">
 			  <template slot-scope="scope">
-			    <p v-if="scope.row.type == 1">{{ scope.row.bank}}</p>
+			    <p>{{ scope.row.bank}}</p>
 			  </template>
 			</el-table-column>
       <el-table-column label="开户账号" width="180" align="center" prop="bankAccount">
@@ -89,7 +81,7 @@
         <template slot-scope="scope">
           <el-image
              v-if="scope.row.type == 3 && scope.row.bankAccount"
-             style="width: 100px; "
+             style="width: 30px; "
              :src="scope.row.bankAccount"
              :preview-src-list="[scope.row.bankAccount]"
             >
@@ -123,41 +115,69 @@
 			    <span>{{ scope.row.remark}}</span>
 			  </template>
 			</el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" min-width="120">
+      <!-- <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button v-if="scope.row.status == '3'" type="primary" icon="el-icon-circle-check" size="mini" @click="handleVerify(scope.row)">审核</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 		</el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
-    <!--审核框-->
-    <el-dialog title="审核提现" :visible.sync="dialogFormVisible">
-        <el-form ref="dataForm" :rules="rules" :model="withdraw" label-width="80px" label-position="right">
-    			<el-form-item label="审核结果" prop="status">
-    				 <el-radio-group v-model="withdraw.status">
-    				  <el-radio label="1" border>通过</el-radio>
-    				  <el-radio label="2" border>不通过</el-radio>
-    				</el-radio-group>
+    <el-dialog title="提现" :visible.sync="dialogFormVisible">
+        <el-form ref="dataForm" :rules="rules" :model="withdraw" label-width="120px" label-position="right" style="width: 100%;">
+          <el-form-item label="" prop="amount">
+            <MDinput v-model="withdraw.amount" :maxlength="100" name="amount" required style="width: 60%;">
+              提现金额
+            </MDinput>
+            <p class="tips">可用余额  ￥{{balance}}</p>
+          </el-form-item>
+
+    			<el-form-item label="选择银行" prop="bankId">
+    				 <el-select v-model="withdraw.bankId" placeholder="请选择" style="width: 60%;" @change="changeBank">
+    				     <el-option
+    				       v-for="(item,index) in bankOptions"
+    				       :key="item.id"
+    				       :label="item.bank"
+    				       :value="index">
+                   <span style="float: left; margin-right: 50px; font-weight: 550;">{{item.accountName}}</span>
+    				       <span style="float: left; color: #8492a6; font-size: 13px">{{ item.bank }}</span>
+    				       <span style="float: right; color: #8492a6; font-size: 13px">
+                      <span v-if="item.bank == '支付宝'">{{ item.zfbAccount }}</span>
+                      <span v-else-if="item.bank == '微信'">
+                        <el-image
+                          style="height: 30px"
+                          :src="item.wxErweima"
+                          :preview-src-list="[item.wxErweima]">
+                        </el-image>
+                      </span>
+                      <span v-else>{{ item.bankAccount }}</span>
+                  </span>
+    				     </el-option>
+    				   </el-select>
     			</el-form-item>
-    			<el-divider>拒绝原因</el-divider>
-    			<el-form-item label="拒绝原因" prop="reasonCheck">
-    			  <el-select v-model="withdraw.reasonCheck" placeholder="请选择" style="width: 100%;" @change="$set(withdraw,'remark',withdraw.reasonCheck);" clearable >
-    			      <el-option
-    			        key="0"
-    			        value="银行卡填写错误"
-    			        label="银行卡填写错误">
-    			      </el-option>
-    			      <el-option
-    			        key="10"
-    			        value="其他"
-    			        label="其他">
-    			      </el-option>
-    			    </el-select>
-    			</el-form-item>
-    			<el-form-item label="填写原因" prop="remark">
-    			  <el-input type="textarea" v-model="withdraw.remark" placeholder="请输入拒绝理由" :rows="6"/>
-    			</el-form-item>
+          <el-form-item label="真实姓名" prop="accountName">
+            <el-input disabled v-model="withdraw.accountName" placeholder="请输入真实姓名" style="width: 60%;"/>
+          </el-form-item>
+          <el-form-item label="开户银行" prop="bank">
+            <el-input disabled v-model="withdraw.bank" placeholder="请输入开户银行" style="width: 60%;"/>
+          </el-form-item>
+          <el-form-item v-if="withdraw.bank == '支付宝'" label="支付宝账号" prop="zfbAccount">
+            <el-input disabled v-model="withdraw.zfbAccount" placeholder="请输入支付宝账号" style="width: 60%;"></el-input>
+          </el-form-item>
+          <el-form-item v-else-if="withdraw.bank == '微信'" label="微信收款码" prop="qrCode">
+            <el-image
+              style="height: 50px"
+              :src="withdraw.qrCode"
+              :preview-src-list="[withdraw.qrCode]">
+            </el-image>
+          </el-form-item>
+          <el-form-item v-else label="银行卡号" prop="bankAccount">
+            <el-input disabled v-model="withdraw.bankAccount" placeholder="请输入银行卡号" style="width: 60%;"></el-input>
+          </el-form-item>
+          <!-- <el-form-item label="提现金额" prop="amount">
+            <el-input v-model="withdraw.amount" placeholder="请输入提现金额" style="width: 60%;"/>
+            <p class="tips">可用余额  ￥{{balance}}</p>
+          </el-form-item> -->
         </el-form>
         <div style="text-align:right;">
           <el-button type="danger" @click="dialogFormVisible=false">取消</el-button>
@@ -193,16 +213,18 @@
 </style>
 
 <script>
-import {getWithdrawList, countWithdraw, verifyWithdraw, setDoingWithdraw} from '@/api/fund'
+import {getWithdrawList, countWithdraw, applyWithdraw} from '@/api/fund'
+import {getMemberAccount, getMemberBankList} from '@/api/member'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import MDinput from '@/components/MDinput'
 
 const statusOptions = [
-  { key: '0', text: '待审核' },
-  { key: '1', text: '通过' },
-  { key: '2', text: '不通过' },
-  { key: '3', text: '处理中' }
+  { key: '0', text: '申请中' },
+  { key: '1', text: '成功' },
+  { key: '2', text: '已拒绝' },
+  { key: '3', text: '待打款' }
 ]
 
 const typeOptions = [
@@ -223,7 +245,7 @@ const typeKeyValue = typeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'withdraw',
-  components: { Pagination },
+  components: { Pagination, MDinput },
   directives: { waves },
 	filters: {
 	  statusFilter(status) {
@@ -254,19 +276,24 @@ export default {
       dialogFormVisible: false,
       withdraw:{},
       rules: {
-      	status: [{ required: true, message: '状态不能为空', trigger: 'change' }]
+      	bankId: [{ required: true, message: '请选择提现银行', trigger: 'change' }],
+        amount: [{ required: true, message: '请填写提现金额', trigger: 'change' }]
       },
       activeName:'first',
+      balance : 0,
+      bankOptions: []
     }
   },
   created() {
-    const memberName = this.$route.query && this.$route.query.memberName
-    if(memberName){
-      this.listQuery.memberName = memberName;
-    }
     this.getList()
+    this.getBalance();
   },
   methods: {
+    getBalance() {
+      getMemberAccount().then(response => {
+        this.balance = response.data.amount
+      })
+    },
     getList() {
       this.listLoading = true
 			this.listQuery.dateFrom = renderTime(this.listQuery.startTime)
@@ -290,27 +317,11 @@ export default {
     handleSelectionChange(val) {
     	this.multipleSelection = val;
     },
-    handleVerify(row) {
-    	let id = ''
-    	if(row && row.id){
-    		id = row.id
-    	}else{
-    		const verVals = this.multipleSelection;
-    		if(!verVals || verVals.length <= 0){
-    			this.$message({
-    			  message: '请至少选择一条数据',
-    			  type: 'error',
-    				duration: 2000
-    			})
-    			return;
-    		}
-    		let values = [];
-    		verVals.forEach(val =>{
-    			values.push(val.id);
-    		})
-    		id = values.join(",")
-    	}
-      this.withdraw = {status:'1', ids: id}// copy obj
+    handleWithdraw() {
+      this.withdraw = {}
+      getMemberBankList({status : 1, page : 1, pageSize : 9999}).then(response => {
+        this.bankOptions = response.data.list
+      })
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
@@ -319,27 +330,21 @@ export default {
     confirm() {
     	this.$refs['dataForm'].validate((valid) => {
     	  if (valid) {
-    	    let formData ={
-    				ids: this.withdraw.ids,
-    				status: this.withdraw.status,
-    				remark: this.withdraw.remark
-    			}
-    	    verifyWithdraw(formData).then((response) => {
+          this.withdraw.method = 1
+          if(this.withdraw.bank == '支付宝'){
+            this.withdraw.type = 2
+          }else if(this.withdraw.bank == '微信'){
+            this.withdraw.type = 3
+          }else{
+            this.withdraw.type = 1
+          }
+    	    applyWithdraw(this.withdraw).then((response) => {
     				this.getList()
+            this.getBalance();
     	      this.dialogFormVisible = false
-    				if(response.description && response.description != ''){
-              let message = response.description.replaceAll('|', '\n')
-    					this.$notify({
-    					  title: '失败',
-    					  message: message,
-    					  type: 'error',
-    					  duration: 2000
-    					})
-              return ;
-    				}
     	      this.$notify({
     	        title: '成功',
-    	        message: '审核提现成功',
+    	        message: '申请提现成功,等待处理',
     	        type: 'success',
     	        duration: 2000
     	      })
@@ -347,38 +352,16 @@ export default {
     	  }
     	})
     },
-    setDoingWithdraw(row) {
-    	let id = ''
-    	if(row && row.id){
-    		id = row.id
-    	}else{
-    		const verVals = this.multipleSelection;
-    		if(!verVals || verVals.length <= 0){
-    			this.$message({
-    			  message: '请至少选择一条数据',
-    			  type: 'error',
-    				duration: 2000
-    			})
-    			return;
-    		}
-    		let values = [];
-    		verVals.forEach(val =>{
-    			values.push(val.id);
-    		})
-    		id = values.join(",")
-    	}
-      let formData ={
-      	ids: id,
+    changeBank(index){
+      let item = this.bankOptions[index]
+      this.withdraw.accountName = item.accountName;
+      this.withdraw.bank = item.bank;
+      this.withdraw.bankAccount = item.bankAccount;
+      if(this.withdraw.bank == '支付宝'){
+        this.withdraw.bankAccount = item.zfbAccount;
+        this.withdraw.zfbAccount = item.zfbAccount;
       }
-      setDoingWithdraw(formData).then((response) => {
-      	this.getList()
-        this.$notify({
-          title: '成功',
-          message: response.data,
-          type: 'success',
-          duration: 2000
-        })
-      })
+      this.withdraw.qrCode = item.wxErweima;
     },
     handleClickTab(tab, event) {
     	this.listQuery.page = 1

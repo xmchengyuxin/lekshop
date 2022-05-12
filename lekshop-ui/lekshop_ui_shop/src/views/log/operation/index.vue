@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-			 <el-input v-model="listQuery.adminName" clearable placeholder="操作人" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
+       <el-input v-model="listQuery.keyword" clearable placeholder="操作内容" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
 			 <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
 		</div>
 		<el-table
@@ -12,14 +12,17 @@
       fit
       highlight-current-row
       style="width: 100%;"
-			@selection-change="handleSelectionChange"
     >
-			<el-table-column type="selection" width="55" align="center" ></el-table-column>
-			<el-table-column label="操作人" prop="operationName" align="center" width="150">
+			<el-table-column label="操作用户" prop="memberName" align="center" width="150">
 			  <template slot-scope="scope">
-			    <span>{{ scope.row.operateName }}</span>
+			      <p class="link-type">{{ scope.row.memberName }}</p>
 			  </template>
 			</el-table-column>
+      <el-table-column label="操作IP" prop="ip" align="center" width="150">
+        <template slot-scope="scope">
+          <span>{{ scope.row.ip }}</span>
+        </template>
+      </el-table-column>
 			<el-table-column label="操作时间" align="center" width="200">
 			  <template slot-scope="scope">
 					<span style="color:red">{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -63,13 +66,13 @@
 
 
 <script>
-import {getAdminOperationLog} from '@/api/log'
+import {getOperationLogList, deleteOperationLog} from '@/api/member'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime, moneyFormat} from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'operationLogTable',
+  name: 'memberLog',
   components: { Pagination },
   directives: { waves },
   data() {
@@ -92,7 +95,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getAdminOperationLog(this.listQuery).then(response => {
+      getOperationLogList(this.listQuery).then(response => {
         this.list = response.data.list
         this.total = response.data.total
 				this.listLoading = false
@@ -100,6 +103,24 @@ export default {
     },
 		handleSelectionChange(val) {
 			this.multipleSelection = val;
+     },
+     handleDelete(days){
+     	this.$confirm('您确定要删除'+days+'天前的日志?', '提醒', {
+     	  confirmButtonText: '确定',
+     	  cancelButtonText: '取消',
+     	  type: 'warning'
+     	}).then(async() => {
+     	    deleteOperationLog({days: days}).then(() => {
+     	    	this.getList()
+     	      this.$notify({
+     	        title: '成功',
+     	        message: '删除成功',
+     	        type: 'success',
+     	        duration: 2000
+     	      })
+     	    })
+     	  })
+     	  .catch(err => { console.error(err) })
      },
 
   }

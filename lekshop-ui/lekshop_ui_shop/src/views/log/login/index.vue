@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+    <!-- <div class="filter-container">
 			 <el-input v-model="listQuery.adminName" clearable placeholder="操作人" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
 			 <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
-		</div>
+		</div> -->
 		<el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -17,7 +17,7 @@
 			<el-table-column type="selection" width="55" align="center" ></el-table-column>
 			<el-table-column label="登录用户" prop="adminName" align="center">
 			  <template slot-scope="scope">
-			    <span>{{ scope.row.adminName }}</span>
+			    <span>{{ scope.row.memberName }}</span>
 			  </template>
 			</el-table-column>
 			<el-table-column label="登录IP" prop="ip" align="center">
@@ -59,7 +59,7 @@
 </style>
 
 <script>
-import {getAdminLoginLog} from '@/api/log'
+import {getLoginLoginLog} from '@/api/log'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime, moneyFormat} from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -88,7 +88,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getAdminLoginLog(this.listQuery).then(response => {
+      getLoginLoginLog(this.listQuery).then(response => {
         this.list = response.data.list
         this.total = response.data.total
 				this.listLoading = false

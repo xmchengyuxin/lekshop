@@ -14,7 +14,7 @@ const configRouter = {
   children: [
 		{
 		  path: 'config',
-		  component: () => import('@/views/shop/freight/index'),
+		  component: () => import('@/views/config/shop/index'),
 		  name: 'shopConfig',
 		  meta: { title: '店铺配置', icon:'order-setting', role: ['admin'] }
 		},

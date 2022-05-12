@@ -16,7 +16,21 @@ const freightRouter = {
       path: 'list',
       component: () => import('@/views/shop/freight/index'),
       name: 'freightTemplate',
-      meta: { title: '运费模板', icon:'promotion-freedelivery', role: ['admin'] }
+      meta: { title: '运费模板', icon:'promotion-freedelivery', noCache: true, role: ['admin'] }
+    },
+    {
+    	path: 'add',
+    	component: () => import('@/views/shop/freight/add'),
+    	name: 'addFreight',
+    	meta: { title: '添加运费模板', noCache: true , role: ['admin']},
+    	hidden: true
+    },
+    {
+    	path: 'edit/:id(\\d+)',
+    	component: () => import('@/views/shop/freight/edit'),
+    	name: 'editFreight',
+    	meta: { title: '编辑运费模板', noCache: true, role: ['admin'] },
+    	hidden: true
     },
   ]
 }

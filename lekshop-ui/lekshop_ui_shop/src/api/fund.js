@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getAccountLog(data) {
   return request({
-    url: '/system/account/getList',
+    url: 'member/account/getList',
     method: 'get',
 	params: data
   })
@@ -10,7 +10,7 @@ export function getAccountLog(data) {
 
 export function getRechargeLog(data) {
   return request({
-    url: '/system/recharge/getList',
+    url: 'member/recharge/getList',
     method: 'get',
 		params: data
   })
@@ -18,7 +18,7 @@ export function getRechargeLog(data) {
 
 export function verifyRecharge(data) {
   return request({
-    url: 'system/recharge/verifyEditSubmit',
+    url: 'member/recharge/verifyEditSubmit',
     method: 'post',
     data
   })
@@ -26,7 +26,7 @@ export function verifyRecharge(data) {
 
 export function getWithdrawList(data) {
   return request({
-    url: '/system/withdraw/getList',
+    url: 'member/withdraw/getList',
     method: 'get',
 		params: data
   })
@@ -34,31 +34,7 @@ export function getWithdrawList(data) {
 
 export function countWithdraw(data) {
   return request({
-    url: '/system/withdraw/count',
-    method: 'get',
-		params: data
-  })
-}
-
-export function verifyWithdraw(data) {
-  return request({
-    url: 'system/withdraw/verifyEditSubmit',
-    method: 'post',
-    data
-  })
-}
-
-export function setDoingWithdraw(data) {
-  return request({
-    url: 'system/withdraw/setDoing',
-    method: 'post',
-    data
-  })
-}
-
-export function getLastWithdraw(data) {
-  return request({
-    url: '/system/withdraw/getLast',
+    url: 'member/withdraw/count',
     method: 'get',
 		params: data
   })
@@ -66,17 +42,24 @@ export function getLastWithdraw(data) {
 
 export function applyWithdraw(data) {
   return request({
-    url: 'system/withdraw/apply',
+    url: 'member/withdraw/apply',
     method: 'post',
     data
   })
 }
 
+export function getLastWithdraw(data) {
+  return request({
+    url: 'member/withdraw/getLast',
+    method: 'get',
+		params: data
+  })
+}
 
 
 export function getPublishPointList(data) {
   return request({
-    url: '/system/publishPoint/getList',
+    url: 'member/publishPoint/getList',
     method: 'get',
 		params: data
   })
@@ -85,7 +68,7 @@ export function getPublishPointList(data) {
 
 export function getSpmissionLogList(data) {
   return request({
-    url: '/system/spmissionLog/getList',
+    url: 'member/spmissionLog/getList',
     method: 'get',
 		params: data
   })
@@ -93,7 +76,7 @@ export function getSpmissionLogList(data) {
 
 export function getAccountTypeSelector(data) {
   return request({
-    url: '/system/accountType/getSelector',
+    url: 'member/accountType/getSelector',
     method: 'get',
 		params: data
   })
@@ -101,7 +84,7 @@ export function getAccountTypeSelector(data) {
 
 export function getPointLogList(data) {
   return request({
-    url: '/system/point/getList',
+    url: 'member/point/getList',
     method: 'get',
 		params: data
   })

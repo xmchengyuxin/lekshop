@@ -74,10 +74,13 @@ const mutations = {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(response => {
           // 由于mockjs 不支持自定义状态码只能这样hack
-          if (!response.data) {
+          /* if (!response.data) {
             reject('Verification failed, please login again.')
+          } */
+          let data = response.data
+          if(!data){
+            data = {};
           }
-          const data = response.data
 
           data.roles = ['admin']
           commit('SET_ROLES', data.roles)

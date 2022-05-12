@@ -2,7 +2,6 @@
   <div class="app-container">
     <div class="filter-container">
 			<el-input v-model="listQuery.orderNo" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="search" />
-			<el-input v-model="listQuery.memberName" clearable placeholder="用户名" style="width: 200px;" class="filter-item" @keyup.enter.native="search" />
 			<el-date-picker class="filter-item" v-model="listQuery.startTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择开始时间" />
 			-
 			<el-date-picker  class="filter-item"  v-model="listQuery.endTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择结束时间" />
@@ -10,7 +9,7 @@
 			<el-select v-model="listQuery.inOut" placeholder="收入/支出" clearable class="filter-item" style="width: 130px">
 			  <el-option v-for="item in inOutOptions" :key="item.key" :label="item.text" :value="item.key" />
 			</el-select>
-			<el-select v-model="checkedStatus" multiple clearable collapse-tags placeholder="请选择" class="filter-item">
+			<el-select v-model="checkedStatus" multiple clearable collapse-tags placeholder="请选择" class="filter-item" style="width: 250px">
 			    <el-option
 			      v-for="item in statusOptions"
 			      :key="item.value"
@@ -37,13 +36,6 @@
           <span>{{ scope.row.orderNo }}</span>
         </template>
       </el-table-column>
-			<el-table-column label="用户名" width="100"  align="center" prop="memberName">
-			  <template slot-scope="scope">
-			    <router-link :to="'/member/detail?memberId='+scope.row.memberId">
-			      <p class="link-type">{{ scope.row.memberName }}</p>
-			    </router-link>
-			  </template>
-			</el-table-column>
 			<el-table-column label="收入/支出" width="100"  align="center" prop="inOut">
 			  <template slot-scope="scope">
 			    <el-tag :type="scope.row.inOut == '-1' ? 'danger' : 'success' ">{{ scope.row.inOut | inOutFilter }}</el-tag>

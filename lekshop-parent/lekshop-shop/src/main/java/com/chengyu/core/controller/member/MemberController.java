@@ -46,8 +46,6 @@ public class MemberController extends ShopBaseController {
 	private MemberAccountService accountService;
 	@Autowired
 	private VerifyCodeService verifyCodeService;
-	@Autowired
-	private ConfigGzhService configGzhService;
 
 	@ApiOperation(value = "获取当前登录用户")
 	@ResponseBody
@@ -131,7 +129,7 @@ public class MemberController extends ShopBaseController {
 	}
 
 	@OperationLog
-	@ApiOperation(value = "修改二级密码")
+	@ApiOperation(value = "修改支付密码")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "password", value = "密码"),
 			@ApiImplicitParam(name = "comfirmPassword", value = "确认密码"),

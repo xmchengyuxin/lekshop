@@ -65,7 +65,7 @@ public class ShopCateController extends ShopBaseController {
 	@OperationLog
 	@ApiOperation(value = "删除店铺类目")
 	@ResponseBody
-	@RequestMapping(value="/goodsCate/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/shopCate/delete", method=RequestMethod.POST)
 	public CommonResult<String> delete(String ids) throws ServiceException {
 		if(StringUtils.isEmpty(ids)) {
 			return CommonResult.failed("请至少选择一条数据");

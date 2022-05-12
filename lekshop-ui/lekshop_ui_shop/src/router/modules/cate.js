@@ -14,7 +14,7 @@ const cateRouter = {
   children: [
 		{
 		  path: 'cateList',
-		  component: () => import('@/views/shop/index/index'),
+		  component: () => import('@/views/goods/cate/index'),
 		  name: 'cateList',
 		  meta: { title: '类目管理', icon:'table', role: ['admin'] }
 		},

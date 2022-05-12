@@ -376,7 +376,7 @@ export default {
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
             this.loading = false
             getUserInfo().then((res) => {
-              if(res.data.type== 2) {
+              if(res.data) {
                 this.$router.push('/dashboard')
               }else{
                 this.$router.push('/join')

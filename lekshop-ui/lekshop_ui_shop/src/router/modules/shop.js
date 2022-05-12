@@ -14,13 +14,13 @@ const shopRouter = {
   children: [
     {
       path: 'info',
-      component: () => import('@/views/shop/verify/index'),
+      component: () => import('@/views/shop/info/index'),
       name: 'shopInfo',
       meta: { title: '店铺资料', icon:'list', role: ['admin'] }
     },
     {
       path: 'source',
-      component: () => import('@/views/shop/service/index'),
+      component: () => import('@/views/shop/source/index'),
       name: 'source',
       meta: { title: '店铺素材', icon:'list', role: ['admin'] }
     },

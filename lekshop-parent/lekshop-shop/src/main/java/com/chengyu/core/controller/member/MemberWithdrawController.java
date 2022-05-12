@@ -111,7 +111,6 @@ public class MemberWithdrawController extends ShopBaseController {
 		@ApiImplicitParam(name = "method", value = "出款方式>>1账户资金>>2佣金资金", required=true),
 		@ApiImplicitParam(name = "type", value = "提现方式>>1银行>>2支付宝>>3微信", required=true),
 		@ApiImplicitParam(name = "amount", value = "提现金额", required=true),
-		@ApiImplicitParam(name = "payPassword", value = "交易密码", required=true)
 	})
 	@ResponseBody
 	@RequestMapping(value="/withdraw/apply", method=RequestMethod.POST)
@@ -119,15 +118,15 @@ public class MemberWithdrawController extends ShopBaseController {
 		UmsMember member = memberService.getMemberById(getCurrentMemberId());
 		super.validateRepeat("do-withdraw-time-between-" + member.getId(), 5000L, "请勿重复提现,5秒后再试!");
 
-		if(StringUtils.isNotBlank(code)){
+		/*if(StringUtils.isNotBlank(code)){
 			//校验短信验证码
 			verifyCodeService.validateCode(member.getPhone(), code);
 		}
 
 		//校验支付密码
 		if(!SecureUtil.md5(payPassword).equals(member.getPayPassword())){
-			return CommonResult.failed("二级密码不正确");
-		}
+			return CommonResult.failed("交易密码不正确");
+		}*/
 
 		withdrawService.withdraw(member, type, method, amount, bankForm);
 		return CommonResult.success(null);

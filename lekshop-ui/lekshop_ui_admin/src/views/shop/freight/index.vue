@@ -43,12 +43,12 @@
       </el-table-column>
       <el-table-column label="计价方式"  align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.valuteType | valuteTypeFilter}}</span>
+          <span v-if="scope.row.type == 1">{{ scope.row.valuteType | valuteTypeFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column label="默认规则(不包括指定地区)"  align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.defaultFirstNum}}件内{{scope.row.defaultFirstPrice}}元,每超过{{ scope.row.defaultSecondNum}}件增加{{scope.row.defaultSecondPrice}}元</span>
+          <span v-if="scope.row.type == 1">{{ scope.row.defaultFirstNum}}件内{{scope.row.defaultFirstPrice}}元,每超过{{ scope.row.defaultSecondNum}}件增加{{scope.row.defaultSecondPrice}}元</span>
         </template>
       </el-table-column>
     </el-table>

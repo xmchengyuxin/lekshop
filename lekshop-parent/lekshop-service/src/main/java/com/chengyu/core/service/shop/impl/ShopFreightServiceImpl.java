@@ -60,7 +60,7 @@ public class ShopFreightServiceImpl implements ShopFreightService {
 		template.setShopId(shop.getId());
 		template.setShopName(shop.getName());
 		if(template.getId() == null){
-			shopFreightTemplateMapper.insert(template);
+			shopFreightTemplateMapper.insertSelective(template);
 		}else{
 			shopFreightTemplateMapper.updateByPrimaryKeySelective(template);
 		}
@@ -72,7 +72,7 @@ public class ShopFreightServiceImpl implements ShopFreightService {
 
 			for(UmsShopFreightTemplateArea area : areaList){
 				area.setTemplateId(template.getId());
-				shopFreightTemplateAreaMapper.insert(area);
+				shopFreightTemplateAreaMapper.insertSelective(area);
 			}
 		}
 		return template.getId();

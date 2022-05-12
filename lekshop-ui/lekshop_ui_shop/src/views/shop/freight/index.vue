@@ -1,9 +1,15 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-			<el-button-group>
+      <el-input v-model="listQuery.name" clearable placeholder="模板名称" style="width: 200px;" class="filter-item"/>
+       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
+      <br>
+      <el-button-group>
+      	<el-button @click="$router.push('/freight/add')" class="filter-item" type="primary" size="mini" icon="el-icon-edit">
+      		添加运费模板
+      	</el-button>
 			<el-button class="filter-item" size="mini" type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-			</el-button-group>
+      </el-button-group>
 		</div>
 		<el-table
       :key="tableKey"
@@ -21,11 +27,11 @@
          <span>{{ scope.row.name }}</span>
 			  </template>
 			</el-table-column>
-			<el-table-column label="店铺ID"  align="center">
+			<!-- <el-table-column label="店铺ID"  align="center">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.shopId }}</span>
 			  </template>
-			</el-table-column>
+			</el-table-column> -->
       <el-table-column label="所属店铺"  align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.shopName }}</span>
@@ -43,12 +49,21 @@
       </el-table-column>
       <el-table-column label="计价方式"  align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.valuteType | valuteTypeFilter}}</span>
+          <span v-if="scope.row.type == 1">{{ scope.row.valuteType | valuteTypeFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column label="默认规则(不包括指定地区)"  align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.defaultFirstNum}}件内{{scope.row.defaultFirstPrice}}元,每超过{{ scope.row.defaultSecondNum}}件增加{{scope.row.defaultSecondPrice}}元</span>
+          <span v-if="scope.row.type == 1">{{ scope.row.defaultFirstNum}}件内{{scope.row.defaultFirstPrice}}元,每超过{{ scope.row.defaultSecondNum}}件增加{{scope.row.defaultSecondPrice}}元</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right">
+        <template slot-scope="scope">
+      		<router-link :to="'/freight/edit/'+scope.row.id">
+      		  <el-button type="primary" icon="el-icon-edit" size="mini">
+      		    编辑
+      		  </el-button>
+      		</router-link>
         </template>
       </el-table-column>
     </el-table>

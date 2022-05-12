@@ -284,7 +284,13 @@ public class MemberBankServiceImpl implements MemberBankService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void update(UmsMemberBank memberBank) throws ServiceException {
 		memberBank.setUpdTime(DateUtil.date());
-		memberBankMapper.updateByPrimaryKeySelective(memberBank);
+		memberBank.setStatus(CommonConstant.SUS_INT);
+		if(memberBank.getId() == null){
+			memberBank.setAddTime(memberBank.getUpdTime());
+			memberBankMapper.insertSelective(memberBank);
+		}else{
+			memberBankMapper.updateByPrimaryKeySelective(memberBank);
+		}
 
 		if(memberBank.getStatus() != null && memberBank.getStatus() == CommonConstant.SUS_INT){
 			UmsMember updateMember = new UmsMember();

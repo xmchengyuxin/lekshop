@@ -57,7 +57,7 @@ public class ShopCateServiceImpl implements ShopCateService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void updateShopCate(UmsShopCate cate) {
 		cate.setUpdTime(DateUtil.date());
-		shopCateMapper.updateByPrimaryKey(cate);
+		shopCateMapper.updateByPrimaryKeySelective(cate);
 	}
 
 	@Override

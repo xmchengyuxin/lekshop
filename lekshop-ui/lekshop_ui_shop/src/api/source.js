@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getSourceCateList(data) {
   return request({
-    url: '/system/sourceCate/getList',
+    url: 'member/sourceCate/getList',
     method: 'get',
 		params: data
   })
@@ -10,7 +10,7 @@ export function getSourceCateList(data) {
 
 export function updateSourceCate(data) {
   return request({
-    url: 'system/sourceCate/editSubmit',
+    url: 'member/sourceCate/editSubmit',
     method: 'post',
     data
   })
@@ -18,7 +18,7 @@ export function updateSourceCate(data) {
 
 export function deleteSourceCate(data) {
   return request({
-    url: 'system/sourceCate/delete',
+    url: 'member/sourceCate/delete',
     method: 'post',
     params: {ids:data}
   })
@@ -26,7 +26,7 @@ export function deleteSourceCate(data) {
 
 export function getSourceList(data) {
   return request({
-    url: '/system/source/getList',
+    url: 'member/source/getList',
     method: 'get',
 		params: data
   })
@@ -34,7 +34,7 @@ export function getSourceList(data) {
 
 export function updateSource(data) {
   return request({
-    url: 'system/source/editSubmit',
+    url: 'member/source/editSubmit',
     method: 'post',
     data
   })
@@ -42,7 +42,7 @@ export function updateSource(data) {
 
 export function moveCate(data) {
   return request({
-    url: 'system/source/moveCate',
+    url: 'member/source/moveCate',
     method: 'post',
     data
   })
@@ -51,7 +51,7 @@ export function moveCate(data) {
 
 export function deleteSource(data) {
   return request({
-    url: 'system/source/delete',
+    url: 'member/source/delete',
     method: 'post',
     params: {ids:data}
   })

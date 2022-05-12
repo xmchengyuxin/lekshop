@@ -1,8 +1,56 @@
 import request from '@/utils/request'
 
-export function getShopList(data) {
+export function getShopConfig(data) {
   return request({
-    url: '/system/shop/getList',
+    url: 'member/shopConfig/get',
+    method: 'get',
+		params: data
+  })
+}
+
+export function updateShopConfig(data) {
+  return request({
+    url: 'member/shopConfig/editSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function getShopCateList(data) {
+  return request({
+    url: 'member/shopCate/getList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function addShopCate(data) {
+  return request({
+    url: 'member/shopCate/add',
+    method: 'post',
+    data
+  })
+}
+
+export function updateShopCate(data) {
+  return request({
+    url: 'member/shopCate/editSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteShopCate(data) {
+  return request({
+    url: 'member/shopCate/delete',
+    method: 'post',
+    params: {ids:data}
+  })
+}
+
+export function getShop(data) {
+  return request({
+    url: 'member/shop/get',
     method: 'get',
 		params: data
   })
@@ -10,87 +58,47 @@ export function getShopList(data) {
 
 export function updateShop(data) {
   return request({
-    url: 'system/shop/editSubmit',
+    url: 'member/shop/update',
     method: 'post',
     data
-  })
-}
-
-export function deleteShop(data) {
-  return request({
-    url: 'system/shop/delete',
-    method: 'post',
-    params: {ids:data}
   })
 }
 
 export function getShopServiceSelector(data) {
   return request({
-    url: '/system/shopService/getSelector',
+    url: 'member/shopService/getSelector',
     method: 'get',
 		params: data
-  })
-}
-
-export function getShopServiceList(data) {
-  return request({
-    url: '/system/shopService/getList',
-    method: 'get',
-		params: data
-  })
-}
-
-export function updateShopService(data) {
-  return request({
-    url: 'system/shopService/editSubmit',
-    method: 'post',
-    data
-  })
-}
-
-export function deleteShopService(data) {
-  return request({
-    url: 'system/shopService/delete',
-    method: 'post',
-    params: {ids:data}
   })
 }
 
 export function getShopFreightList(data) {
   return request({
-    url: '/system/shopFreight/getList',
+    url: 'member/shopFreight/getList',
     method: 'get',
 		params: data
   })
 }
 
-export function deleteShopFreight(data) {
+export function getFreight(data) {
   return request({
-    url: 'system/shopFreight/delete',
-    method: 'post',
-    params: {ids:data}
-  })
-}
-
-export function getShopInfoList(data) {
-  return request({
-    url: '/system/shopInfo/getList',
+    url: 'member/shopFreight/get',
     method: 'get',
 		params: data
   })
 }
 
-export function verifyShopInfo(data) {
+export function updateFreight(data) {
   return request({
-    url: 'system/shopInfo/verify',
+    url: 'member/shopFreight/editSubmit',
     method: 'post',
     data
   })
 }
 
-export function deleteShopInfo(data) {
+export function deleteShopFreight(data) {
   return request({
-    url: 'system/shopInfo/delete',
+    url: 'member/shopFreight/delete',
     method: 'post',
     params: {ids:data}
   })
@@ -98,36 +106,60 @@ export function deleteShopInfo(data) {
 
 export function getShopInfo() {
   return request({
-    url: '/member/shopInfo/get',
+    url: 'member/shopInfo/get',
     method: 'get',
   })
 }
 export function submitShopCert(data) {
   return request({
-    url: '/member/shopInfo/applyShopCert',
+    url: 'member/shopInfo/applyShopCert',
     method: 'post',
     data
   })
 }
 export function submitShopDetail(data) {
   if(data.addTime) {
-    data.addTime = '';
-    data.updTime = '';
+    data.addTime = null;
+    data.updTime = null;
   }
   return request({
-    url: '/member/shopInfo/applyShopDetail',
+    url: 'member/shopInfo/applyShopDetail',
     method: 'post',
     data
   })
 }
 export function submitShop(data) {
   if(data.addTime) {
-    data.addTime = '';
-    data.updTime = '';
+    data.addTime = null;
+    data.updTime = null;
   }
   return request({
     url: '/member/shopInfo/submitShopInfo',
     method: 'post',
     data
+  })
+}
+
+export function getShopCouponList(data) {
+  return request({
+    url: 'member/coupon/getList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function updateCoupon(data) {
+  return request({
+    url: 'member/coupon/editSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteShopCoupon(data) {
+  return request({
+    url: 'member/coupon/delete',
+    method: 'post',
+    params: {ids:data}
   })
 }
