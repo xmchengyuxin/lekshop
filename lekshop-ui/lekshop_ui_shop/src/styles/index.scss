@@ -358,6 +358,9 @@ code {
   .b-radius {
     border-radius: 50%;
   }
+  .b-radius-2 {
+    border-radius: 2px;
+  }
   .margin-12 {
   	margin: 12px!important;
   }
@@ -433,6 +436,9 @@ code {
   .padding-lr2 {
   	padding: 0 2px!important;
   }
+  .padding-lr6 {
+  	padding: 0 6px!important;
+  }
   .padding-lr10 {
   	padding: 0 10px!important;
   }
@@ -457,6 +463,9 @@ code {
   .padding-tb25 {
   	padding:  25px 0!important;
   }
+  .bg-color-5 {
+    background-color: #f5f5f5;
+  }
   .t-color-w {
     color: #fff!important;
   }
@@ -480,6 +489,9 @@ code {
   }
   .t-color-9 {
     color: #999!important;
+  }
+  .b-color-d {
+    border: 1px solid #ddd;
   }
   .cursor {
     cursor: pointer;

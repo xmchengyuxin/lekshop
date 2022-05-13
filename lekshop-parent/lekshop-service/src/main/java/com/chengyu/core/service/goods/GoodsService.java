@@ -2,6 +2,7 @@ package com.chengyu.core.service.goods;
 
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
+import com.chengyu.core.domain.result.GoodsResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoods;
 import com.chengyu.core.model.UmsShop;
@@ -94,4 +95,13 @@ public interface GoodsService {
 	 * @param  goods
 	 */
 	void updateGoods(PmsGoods goods);
+
+	/**
+	 * 获取商品详情
+	 * @author LeGreen
+	 * @date   2022/5/13
+	 * @param  goodsId
+	 * @return GoodsResult
+	 */
+	GoodsResult getGoodsResult(Integer goodsId);
 }

@@ -24,8 +24,14 @@ public class PmsGoods implements Serializable {
     @ApiModelProperty(value = "分类ID")
     private Integer cateId;
 
+    @ApiModelProperty(value = "类目名称")
+    private String cateName;
+
     @ApiModelProperty(value = "店铺自建分类ID")
     private Integer shopCateId;
+
+    @ApiModelProperty(value = "店铺内类目")
+    private String shopCateName;
 
     @ApiModelProperty(value = "1普通商品>>2秒杀商品>>3拼团商品")
     private Integer type;
@@ -173,12 +179,28 @@ public class PmsGoods implements Serializable {
         this.cateId = cateId;
     }
 
+    public String getCateName() {
+        return cateName;
+    }
+
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
+    }
+
     public Integer getShopCateId() {
         return shopCateId;
     }
 
     public void setShopCateId(Integer shopCateId) {
         this.shopCateId = shopCateId;
+    }
+
+    public String getShopCateName() {
+        return shopCateName;
+    }
+
+    public void setShopCateName(String shopCateName) {
+        this.shopCateName = shopCateName;
     }
 
     public Integer getType() {
@@ -449,7 +471,9 @@ public class PmsGoods implements Serializable {
         sb.append(", catePid=").append(catePid);
         sb.append(", cateTid=").append(cateTid);
         sb.append(", cateId=").append(cateId);
+        sb.append(", cateName=").append(cateName);
         sb.append(", shopCateId=").append(shopCateId);
+        sb.append(", shopCateName=").append(shopCateName);
         sb.append(", type=").append(type);
         sb.append(", title=").append(title);
         sb.append(", description=").append(description);

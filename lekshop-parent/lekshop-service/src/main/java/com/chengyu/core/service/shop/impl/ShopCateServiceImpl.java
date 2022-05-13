@@ -131,4 +131,35 @@ public class ShopCateServiceImpl implements ShopCateService {
 		}
 		return cateResultList;
 	}
+
+	@Override
+	public List<UmsShopCate> getAllShopCateByLevel(Integer shopId) {
+		List<UmsShopCate> newList = new ArrayList<>();
+		List<UmsShopCate> topCateList = getCateListByLevel(shopId, 1, null);
+		for(UmsShopCate cate : topCateList){
+			newList.add(cate);
+			List<UmsShopCate> twoCateList = getCateListByLevel(shopId, 2, cate.getId());
+			for(UmsShopCate twoCate : twoCateList){
+				twoCate.setName("    ┗ "+twoCate.getName());
+				newList.add(twoCate);
+				List<UmsShopCate> threeCateList = getCateListByLevel(shopId, 3, twoCate.getId());
+				for(UmsShopCate threeCate : threeCateList){
+					threeCate.setName("       ┝ "+threeCate.getName());
+					newList.add(threeCate);
+				}
+			}
+		}
+		return newList;
+	}
+
+	List<UmsShopCate> getCateListByLevel(Integer shopId, Integer level, Integer pid){
+		UmsShopCateExample example = new UmsShopCateExample();
+		UmsShopCateExample.Criteria criteria = example.createCriteria();
+		example.setOrderByClause("sort asc");
+		criteria.andLevelEqualTo(level).andShopIdEqualTo(shopId).andStatusEqualTo(CommonConstant.YES_INT);
+		if(pid != null){
+			criteria.andPidEqualTo(pid);
+		}
+		return shopCateMapper.selectByExample(example);
+	}
 }

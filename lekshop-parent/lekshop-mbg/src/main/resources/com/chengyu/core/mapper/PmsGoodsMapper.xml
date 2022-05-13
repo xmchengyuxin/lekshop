@@ -8,7 +8,9 @@
     <result column="cate_pid" jdbcType="INTEGER" property="catePid" />
     <result column="cate_tid" jdbcType="INTEGER" property="cateTid" />
     <result column="cate_id" jdbcType="INTEGER" property="cateId" />
+    <result column="cate_name" jdbcType="VARCHAR" property="cateName" />
     <result column="shop_cate_id" jdbcType="INTEGER" property="shopCateId" />
+    <result column="shop_cate_name" jdbcType="VARCHAR" property="shopCateName" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -103,11 +105,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, shop_id, shop_name, cate_pid, cate_tid, cate_id, shop_cate_id, type, title, description, 
-    main_img, main_video, goods_img, price, sort, weight, status, stock_type, freight_template_id, 
-    point_num, sell_num, pay_num, comment_num, good_comment_num, bad_comment_num, collection_num, 
-    group_type, group_num, group_limit_hours, group_limit_buy, group_single_buy, seckill_begin_time, 
-    seckill_end_time, seckill_limit_num, add_time, add_by, upd_time, upd_by
+    id, shop_id, shop_name, cate_pid, cate_tid, cate_id, cate_name, shop_cate_id, shop_cate_name, 
+    type, title, description, main_img, main_video, goods_img, price, sort, weight, status, 
+    stock_type, freight_template_id, point_num, sell_num, pay_num, comment_num, good_comment_num, 
+    bad_comment_num, collection_num, group_type, group_num, group_limit_hours, group_limit_buy, 
+    group_single_buy, seckill_begin_time, seckill_end_time, seckill_limit_num, add_time, 
+    add_by, upd_time, upd_by
   </sql>
   <sql id="Blob_Column_List">
     detail
@@ -165,31 +168,33 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into pms_goods (shop_id, shop_name, cate_pid, 
-      cate_tid, cate_id, shop_cate_id, 
-      type, title, description, 
-      main_img, main_video, goods_img, 
-      price, sort, weight, 
-      status, stock_type, freight_template_id, 
-      point_num, sell_num, pay_num, 
-      comment_num, good_comment_num, bad_comment_num, 
-      collection_num, group_type, group_num, 
-      group_limit_hours, group_limit_buy, group_single_buy, 
-      seckill_begin_time, seckill_end_time, seckill_limit_num, 
-      add_time, add_by, upd_time, 
-      upd_by, detail)
+      cate_tid, cate_id, cate_name, 
+      shop_cate_id, shop_cate_name, type, 
+      title, description, main_img, 
+      main_video, goods_img, price, 
+      sort, weight, status, 
+      stock_type, freight_template_id, point_num, 
+      sell_num, pay_num, comment_num, 
+      good_comment_num, bad_comment_num, collection_num, 
+      group_type, group_num, group_limit_hours, 
+      group_limit_buy, group_single_buy, seckill_begin_time, 
+      seckill_end_time, seckill_limit_num, add_time, 
+      add_by, upd_time, upd_by, 
+      detail)
     values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{catePid,jdbcType=INTEGER}, 
-      #{cateTid,jdbcType=INTEGER}, #{cateId,jdbcType=INTEGER}, #{shopCateId,jdbcType=INTEGER}, 
-      #{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{mainImg,jdbcType=VARCHAR}, #{mainVideo,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{sort,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{stockType,jdbcType=INTEGER}, #{freightTemplateId,jdbcType=INTEGER}, 
-      #{pointNum,jdbcType=INTEGER}, #{sellNum,jdbcType=INTEGER}, #{payNum,jdbcType=INTEGER}, 
-      #{commentNum,jdbcType=INTEGER}, #{goodCommentNum,jdbcType=INTEGER}, #{badCommentNum,jdbcType=INTEGER}, 
-      #{collectionNum,jdbcType=INTEGER}, #{groupType,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, 
-      #{groupLimitHours,jdbcType=INTEGER}, #{groupLimitBuy,jdbcType=INTEGER}, #{groupSingleBuy,jdbcType=INTEGER}, 
-      #{seckillBeginTime,jdbcType=TIMESTAMP}, #{seckillEndTime,jdbcType=TIMESTAMP}, #{seckillLimitNum,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
-      #{updBy,jdbcType=VARCHAR}, #{detail,jdbcType=LONGVARCHAR})
+      #{cateTid,jdbcType=INTEGER}, #{cateId,jdbcType=INTEGER}, #{cateName,jdbcType=VARCHAR}, 
+      #{shopCateId,jdbcType=INTEGER}, #{shopCateName,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{mainImg,jdbcType=VARCHAR}, 
+      #{mainVideo,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{sort,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{stockType,jdbcType=INTEGER}, #{freightTemplateId,jdbcType=INTEGER}, #{pointNum,jdbcType=INTEGER}, 
+      #{sellNum,jdbcType=INTEGER}, #{payNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
+      #{goodCommentNum,jdbcType=INTEGER}, #{badCommentNum,jdbcType=INTEGER}, #{collectionNum,jdbcType=INTEGER}, 
+      #{groupType,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, #{groupLimitHours,jdbcType=INTEGER}, 
+      #{groupLimitBuy,jdbcType=INTEGER}, #{groupSingleBuy,jdbcType=INTEGER}, #{seckillBeginTime,jdbcType=TIMESTAMP}, 
+      #{seckillEndTime,jdbcType=TIMESTAMP}, #{seckillLimitNum,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.PmsGoods">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -212,8 +217,14 @@
       <if test="cateId != null">
         cate_id,
       </if>
+      <if test="cateName != null">
+        cate_name,
+      </if>
       <if test="shopCateId != null">
         shop_cate_id,
+      </if>
+      <if test="shopCateName != null">
+        shop_cate_name,
       </if>
       <if test="type != null">
         type,
@@ -328,8 +339,14 @@
       <if test="cateId != null">
         #{cateId,jdbcType=INTEGER},
       </if>
+      <if test="cateName != null">
+        #{cateName,jdbcType=VARCHAR},
+      </if>
       <if test="shopCateId != null">
         #{shopCateId,jdbcType=INTEGER},
+      </if>
+      <if test="shopCateName != null">
+        #{shopCateName,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
@@ -456,8 +473,14 @@
       <if test="record.cateId != null">
         cate_id = #{record.cateId,jdbcType=INTEGER},
       </if>
+      <if test="record.cateName != null">
+        cate_name = #{record.cateName,jdbcType=VARCHAR},
+      </if>
       <if test="record.shopCateId != null">
         shop_cate_id = #{record.shopCateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopCateName != null">
+        shop_cate_name = #{record.shopCateName,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null">
         type = #{record.type,jdbcType=INTEGER},
@@ -568,7 +591,9 @@
       cate_pid = #{record.catePid,jdbcType=INTEGER},
       cate_tid = #{record.cateTid,jdbcType=INTEGER},
       cate_id = #{record.cateId,jdbcType=INTEGER},
+      cate_name = #{record.cateName,jdbcType=VARCHAR},
       shop_cate_id = #{record.shopCateId,jdbcType=INTEGER},
+      shop_cate_name = #{record.shopCateName,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
@@ -613,7 +638,9 @@
       cate_pid = #{record.catePid,jdbcType=INTEGER},
       cate_tid = #{record.cateTid,jdbcType=INTEGER},
       cate_id = #{record.cateId,jdbcType=INTEGER},
+      cate_name = #{record.cateName,jdbcType=VARCHAR},
       shop_cate_id = #{record.shopCateId,jdbcType=INTEGER},
+      shop_cate_name = #{record.shopCateName,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
@@ -667,8 +694,14 @@
       <if test="cateId != null">
         cate_id = #{cateId,jdbcType=INTEGER},
       </if>
+      <if test="cateName != null">
+        cate_name = #{cateName,jdbcType=VARCHAR},
+      </if>
       <if test="shopCateId != null">
         shop_cate_id = #{shopCateId,jdbcType=INTEGER},
+      </if>
+      <if test="shopCateName != null">
+        shop_cate_name = #{shopCateName,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
@@ -776,7 +809,9 @@
       cate_pid = #{catePid,jdbcType=INTEGER},
       cate_tid = #{cateTid,jdbcType=INTEGER},
       cate_id = #{cateId,jdbcType=INTEGER},
+      cate_name = #{cateName,jdbcType=VARCHAR},
       shop_cate_id = #{shopCateId,jdbcType=INTEGER},
+      shop_cate_name = #{shopCateName,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
@@ -818,7 +853,9 @@
       cate_pid = #{catePid,jdbcType=INTEGER},
       cate_tid = #{cateTid,jdbcType=INTEGER},
       cate_id = #{cateId,jdbcType=INTEGER},
+      cate_name = #{cateName,jdbcType=VARCHAR},
       shop_cate_id = #{shopCateId,jdbcType=INTEGER},
+      shop_cate_name = #{shopCateName,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},

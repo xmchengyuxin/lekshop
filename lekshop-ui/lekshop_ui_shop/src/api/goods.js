@@ -1,8 +1,24 @@
 import request from '@/utils/request'
 
+export function getGoodsCateList(data) {
+  return request({
+    url: 'member/goodsCate/getList',
+    method: 'get',
+		params: data
+  })
+}
+
 export function getGoodsList(data) {
   return request({
     url: 'member/goods/getList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getGoods(data) {
+  return request({
+    url: 'member/goods/get',
     method: 'get',
 		params: data
   })

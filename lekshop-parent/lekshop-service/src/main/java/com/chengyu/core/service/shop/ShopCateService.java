@@ -51,4 +51,13 @@ public interface ShopCateService {
 	 * @return List<ShopCateResult>
 	 */
 	List<ShopCateResult> getShopCateResults(Integer shopId, Integer status);
+
+	/**
+	 * 按分级查询店铺分类
+	 * @author LeGreen
+	 * @date   2022/5/13
+	 * @param  shopId
+	 * @return List<UmsShopCate>
+	 */
+    List<UmsShopCate> getAllShopCateByLevel(Integer shopId);
 }

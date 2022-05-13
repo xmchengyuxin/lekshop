@@ -2,21 +2,24 @@ package com.chengyu.core.controller.goods;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.TypeReference;
+import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
+import com.chengyu.core.domain.result.GoodsResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoods;
+import com.chengyu.core.model.PmsGoodsGroup;
 import com.chengyu.core.service.goods.GoodsService;
+import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,11 +52,22 @@ public class GoodsController extends ShopBaseController {
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 
+	@ApiOperation(value = "商品详情")
+	@ResponseBody
+	@RequestMapping(value="/goods/get", method=RequestMethod.GET)
+	public CommonResult<GoodsResult> get(Integer goodsId) {
+		GoodsResult goods = goodsService.getGoodsResult(goodsId);
+		return CommonResult.success(goods);
+	}
+
 	@OperationLog
 	@ApiOperation(value = "添加编辑商品")
 	@ResponseBody
 	@RequestMapping(value="/goods/editSubmit", method=RequestMethod.POST)
-	public CommonResult<String> editSubmit(GoodsPublishForm publishForm) throws ServiceException {
+	public CommonResult<String> editSubmit(GoodsPublishForm publishForm, String groupJson) throws ServiceException {
+		if(StringUtils.isNotBlank(groupJson)){
+			publishForm.setGroupList(JSONArray.parseArray(groupJson, PmsGoodsGroup.class));
+		}
 		goodsService.publishGoods(getCurrentShop(), publishForm);
 		return CommonResult.success(null);
 	}

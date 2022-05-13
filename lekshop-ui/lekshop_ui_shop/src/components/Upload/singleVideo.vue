@@ -13,8 +13,8 @@
       <i class="el-icon-upload" />
       <div class="el-upload__text">将视频拖到此处，或<em>点击上传</em></div>
     </el-upload>
-    <div class="image-preview">
-      <div v-show="imageUrl && imageUrl !='NVL' && imageUrl.length>1" class="image-preview-wrapper">
+    <div class="image-preview"  v-show="imageUrl && imageUrl !='NVL' && imageUrl.length>1">
+      <div class="image-preview-wrapper">
 					<video id="video" height="200" controls="controls" :src="imageUrl">
 					</video>
         <!-- <div class="image-preview-action">

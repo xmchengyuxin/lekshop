@@ -24,6 +24,14 @@ export function getShopCateList(data) {
   })
 }
 
+export function getAllShopCate(data) {
+  return request({
+    url: 'member/shopCate/getAll',
+    method: 'get',
+		params: data
+  })
+}
+
 export function addShopCate(data) {
   return request({
     url: 'member/shopCate/add',

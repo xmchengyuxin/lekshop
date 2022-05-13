@@ -5,8 +5,10 @@ import cn.hutool.core.date.DateUtil;
 import com.chengyu.core.domain.enums.GoodsEnums;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
+import com.chengyu.core.domain.result.GoodsResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.BaseMapper;
+import com.chengyu.core.mapper.PmsGoodsGroupMapper;
 import com.chengyu.core.mapper.PmsGoodsMapper;
 import com.chengyu.core.mapper.PmsGoodsSkuMapper;
 import com.chengyu.core.model.*;
@@ -34,6 +36,8 @@ public class GoodsServiceImpl implements GoodsService {
 	private PmsGoodsSkuMapper goodsSkuMapper;
 	@Autowired
 	private BaseMapper baseMapper;
+	@Autowired
+	private PmsGoodsGroupMapper goodsGroupMapper;
 
 	@Override
 	public List<PmsGoods> getGoodsList(GoodsSearchForm form, Integer page, Integer pageSize) {
@@ -144,5 +148,18 @@ public class GoodsServiceImpl implements GoodsService {
 	public void updateGoods(PmsGoods goods) {
 		goods.setUpdTime(DateUtil.date());
 		goodsMapper.updateByPrimaryKeyWithBLOBs(goods);
+	}
+
+	@Override
+	public GoodsResult getGoodsResult(Integer goodsId) {
+		GoodsResult result = new GoodsResult();
+		result.setGoods(this.getGoods(goodsId));
+
+		//拼团规则
+		PmsGoodsGroupExample groupExample = new PmsGoodsGroupExample();
+		groupExample.setOrderByClause("num asc");
+		groupExample.createCriteria().andGoodsIdEqualTo(goodsId);
+		result.setGoodsGroupList(goodsGroupMapper.selectByExample(groupExample));
+		return result;
 	}
 }

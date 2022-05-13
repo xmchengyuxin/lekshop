@@ -27,6 +27,12 @@ public class GoodsPublishForm {
 	@ApiModelProperty(value = "店铺自建分类ID")
 	private Integer shopCateId;
 
+	@ApiModelProperty(value = "商品ID集合")
+	private String goodsCateIds;
+
+	@ApiModelProperty(value = "店铺自建分类ID集合")
+	private String shopCateIds;
+
 	@ApiModelProperty(value = "1普通商品>>2秒杀商品>>3拼团商品")
 	private Integer type;
 

@@ -13,7 +13,7 @@
 			<i class="el-icon-plus" />
 		</el-upload>
 		<el-dialog :visible.sync="dialogVisible">
-			<img width="100%" :src="dialogImageUrl" alt="">
+			<img width="100%" :src="dialogImageUrl" alt="" >
 		</el-dialog>
 	</div>
 </template>
@@ -33,7 +33,7 @@
 				tempFile:[],
 				times: 0,
 				tempUrl: '',
-				uploadUrl: process.env.VUE_APP_BASE_API + "/common/upload",
+				uploadUrl: process.env.VUE_APP_BASE_API + "common/upload",
 				dialogImageUrl: '',
 				dialogVisible: false,
 				dataObj: {
@@ -107,3 +107,31 @@
 		}
 	}
 </script>
+
+<style scoped="scoped">
+
+::v-deep .image-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .image-uploader ::v-deep .el-upload:hover {
+    border-color: #409EFF;
+  }
+  ::v-deep .el-upload--picture-card {
+    font-size: 28px;
+    background-color: #fff;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+  }
+   ::v-deep .el-upload-list--picture-card .el-upload-list__item {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+</style>

@@ -476,6 +476,76 @@ public class PmsGoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andCateNameIsNull() {
+            addCriterion("cate_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameIsNotNull() {
+            addCriterion("cate_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameEqualTo(String value) {
+            addCriterion("cate_name =", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameNotEqualTo(String value) {
+            addCriterion("cate_name <>", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameGreaterThan(String value) {
+            addCriterion("cate_name >", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameGreaterThanOrEqualTo(String value) {
+            addCriterion("cate_name >=", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameLessThan(String value) {
+            addCriterion("cate_name <", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameLessThanOrEqualTo(String value) {
+            addCriterion("cate_name <=", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameLike(String value) {
+            addCriterion("cate_name like", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameNotLike(String value) {
+            addCriterion("cate_name not like", value, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameIn(List<String> values) {
+            addCriterion("cate_name in", values, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameNotIn(List<String> values) {
+            addCriterion("cate_name not in", values, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameBetween(String value1, String value2) {
+            addCriterion("cate_name between", value1, value2, "cateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateNameNotBetween(String value1, String value2) {
+            addCriterion("cate_name not between", value1, value2, "cateName");
+            return (Criteria) this;
+        }
+
         public Criteria andShopCateIdIsNull() {
             addCriterion("shop_cate_id is null");
             return (Criteria) this;
@@ -533,6 +603,76 @@ public class PmsGoodsExample {
 
         public Criteria andShopCateIdNotBetween(Integer value1, Integer value2) {
             addCriterion("shop_cate_id not between", value1, value2, "shopCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameIsNull() {
+            addCriterion("shop_cate_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameIsNotNull() {
+            addCriterion("shop_cate_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameEqualTo(String value) {
+            addCriterion("shop_cate_name =", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameNotEqualTo(String value) {
+            addCriterion("shop_cate_name <>", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameGreaterThan(String value) {
+            addCriterion("shop_cate_name >", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameGreaterThanOrEqualTo(String value) {
+            addCriterion("shop_cate_name >=", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameLessThan(String value) {
+            addCriterion("shop_cate_name <", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameLessThanOrEqualTo(String value) {
+            addCriterion("shop_cate_name <=", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameLike(String value) {
+            addCriterion("shop_cate_name like", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameNotLike(String value) {
+            addCriterion("shop_cate_name not like", value, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameIn(List<String> values) {
+            addCriterion("shop_cate_name in", values, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameNotIn(List<String> values) {
+            addCriterion("shop_cate_name not in", values, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameBetween(String value1, String value2) {
+            addCriterion("shop_cate_name between", value1, value2, "shopCateName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateNameNotBetween(String value1, String value2) {
+            addCriterion("shop_cate_name not between", value1, value2, "shopCateName");
             return (Criteria) this;
         }
 

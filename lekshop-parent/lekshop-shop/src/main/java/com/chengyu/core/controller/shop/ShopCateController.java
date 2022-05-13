@@ -40,6 +40,14 @@ public class ShopCateController extends ShopBaseController {
 		return CommonResult.success(list);
 	}
 
+	@ApiOperation(value = "店铺类目列表(按分级)")
+	@ResponseBody
+	@RequestMapping(value="/shopCate/getAll", method=RequestMethod.GET)
+	public CommonResult<List<UmsShopCate>> getAll() throws ServiceException {
+		List<UmsShopCate> list = shopCateService.getAllShopCateByLevel(getCurrentShop().getId());
+		return CommonResult.success(list);
+	}
+
 	@OperationLog
 	@ApiOperation(value = "添加店铺类目")
 	@ResponseBody
