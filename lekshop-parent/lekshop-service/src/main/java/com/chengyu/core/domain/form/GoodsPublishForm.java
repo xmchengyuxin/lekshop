@@ -89,4 +89,10 @@ public class GoodsPublishForm {
 
 	@ApiModelProperty(value = "1上架>>2仓库")
 	private Integer status;
+
+	@ApiModelProperty(value = "SKU参数")
+	private String attrKeyList;
+
+	@ApiModelProperty(value = "SKU值")
+	private String skuList;
 }

@@ -39,6 +39,10 @@ public class CommonConstant {
      */
     public static final String JING_REGEX = "#";
     /**
+     * 斜杠
+     */
+    public static final String SLASH_REGEX = "/";
+    /**
      * :分隔符分隔符
      */
     public static final String MAOHAO_REGEX = ":";

@@ -524,6 +524,20 @@ code {
     color:#999;
     margin-left: 5px;
   }
+  .line1 {
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 1;
+   overflow: hidden;
+   word-break: break-all;
+  }
+  .line2 {
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 2;
+   overflow: hidden;
+   word-break: break-all;
+  }
 p{
   margin: 0;
 }

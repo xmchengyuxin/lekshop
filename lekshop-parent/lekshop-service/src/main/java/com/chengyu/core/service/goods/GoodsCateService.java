@@ -4,6 +4,7 @@ import com.chengyu.core.domain.result.GoodsCateResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoodsCate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,4 +49,13 @@ public interface GoodsCateService {
 	 * @return List<GoodsCateResult>
 	 */
 	List<GoodsCateResult> getGoodsCateResults(Integer status);
+
+	/**
+	 * 获取商品分类名称
+	 * @author LeGreen
+	 * @date   2022/5/14
+	 * @param  cateIdList
+	 * @return String
+	 */
+	String getGoodsCateName(List<Integer> cateIdList);
 }

@@ -29,11 +29,11 @@ const goodsRouter = {
       path: 'list',
       component: () => import('@/views/goods/index/index'),
       name: 'goodsList',
-      meta: { title: '出售中的宝贝', icon:'list', role: ['admin'] }
+      meta: { title: '出售中的宝贝', noCache: true, icon:'list', role: ['admin'] }
     },
     {
       path: 'outlist',
-      component: () => import('@/views/member/group/index'),
+      component: () => import('@/views/goods/index/index'),
       name: 'goodsOutList',
       meta: { title: '仓库中的宝贝', icon:'list', role: ['admin'] }
     },

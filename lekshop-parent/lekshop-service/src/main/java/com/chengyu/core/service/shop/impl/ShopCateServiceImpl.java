@@ -152,6 +152,11 @@ public class ShopCateServiceImpl implements ShopCateService {
 		return newList;
 	}
 
+	@Override
+	public UmsShopCate getShopCateById(Integer shopCateId) {
+		return shopCateMapper.selectByPrimaryKey(shopCateId);
+	}
+
 	List<UmsShopCate> getCateListByLevel(Integer shopId, Integer level, Integer pid){
 		UmsShopCateExample example = new UmsShopCateExample();
 		UmsShopCateExample.Criteria criteria = example.createCriteria();

@@ -59,11 +59,11 @@
         </el-form-item>
         <!--秒杀商品-->
         <div v-if="postForm.type == 2 ">
-          <el-form-item  prop="seckillDateRange" label="秒杀时间" :rules="[{ required: true, message: '请选择', trigger: 'blur' }]">
+          <el-form-item  prop="seckillDateRange" label="秒杀时间" :rules="[{ required: true, message: '请选择', trigger: 'blur' }]" >
             <el-date-picker
               style="width: 60%;"
               v-model="postForm.seckillDateRange"
-              type="daterange"
+              type="datetimerange"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期">
@@ -204,29 +204,29 @@
                   <a v-else class="link-type" @click="batchSet = false">取消批量设置?</a>
                   <br>
                     <div v-if="batchSet">
-                      <el-input placeholder="批量设置原价" v-model="input1" style="width: 30%;">
+                      <el-input placeholder="批量设置原价" v-model="temp.oriPrice" style="width: 30%;">
                           <template slot="prepend">原价</template>
-                         <el-button slot="append">批量设置</el-button>
+                         <el-button slot="append" @click="batchSetParams(temp.oriPrice, attrLength)">批量设置</el-button>
                       </el-input>
                       <br>
-                      <el-input placeholder="批量设置现价" v-model="input1" style="width: 30%;margin-top: 10px;">
+                      <el-input placeholder="批量设置现价" v-model="temp.price" style="width: 30%;margin-top: 10px;">
                           <template slot="prepend">现价</template>
-                         <el-button slot="append">批量设置</el-button>
+                         <el-button slot="append" @click="batchSetParams(temp.price, attrLength+1)">批量设置</el-button>
                       </el-input>
                       <br>
-                      <el-input placeholder="批量设置库存" v-model="input1" style="width: 30%;margin-top: 10px;">
+                      <el-input placeholder="批量设置库存" v-model="temp.stock" style="width: 30%;margin-top: 10px;">
                           <template slot="prepend">库存</template>
-                         <el-button slot="append">批量设置</el-button>
+                         <el-button slot="append" @click="batchSetParams(temp.stock, attrLength+2)">批量设置</el-button>
                       </el-input>
                       <br>
-                      <el-input placeholder="批量设置重量" v-model="input1" style="width: 30%;margin-top: 10px;">
+                      <el-input placeholder="批量设置重量" v-model="temp.weight" style="width: 30%;margin-top: 10px;">
                           <template slot="prepend">重量</template>
-                         <el-button slot="append">批量设置</el-button>
+                         <el-button slot="append" @click="batchSetParams(temp.weight, attrLength+3)">批量设置</el-button>
                       </el-input>
                       <br>
-                      <el-input placeholder="批量设置编码" v-model="input1" style="width: 30%;margin-top: 10px;">
+                      <el-input placeholder="批量设置编码" v-model="temp.skuNo" style="width: 30%;margin-top: 10px;">
                           <template slot="prepend">编码</template>
-                         <el-button slot="append">批量设置</el-button>
+                         <el-button slot="append" @click="batchSetParams(temp.skuNo, attrLength+4)">批量设置</el-button>
                       </el-input>
                     </div>
                 </div>
@@ -367,7 +367,9 @@
         attrKey: '',
         attrKeyList: [],
         skuList:[],
-        batchSet: false
+        batchSet: false,
+        temp: {},
+        attrLength: 0
       }
     },
     created() {
@@ -407,17 +409,34 @@
         }).catch(err => {
           console.log(err)
         })
-        this.groupList.push(this.singleGroup)
+        this.groupList.push({num: null, discounts: null})
       },
       getGoods(id) {
         getGoods({
           goodsId: id
         }).then(response => {
-          this.postForm = response.data.goods
-          this.groupList = response.data.groupList
-          if(this.postForm.type == 2){
-            this.postForm.seckillDateRange = [this.postForm.seckillBeginDate, this.postForm.seckillEndDate]
+          let goods = response.data.goods
+          this.groupList = response.data.goodsGroupList
+          if(goods.type == 2){
+            goods.seckillDateRange = [goods.seckillBeginTime, goods.seckillEndTime]
           }
+          goods.goodsCateId = []
+          if(goods.catePid){
+            goods.goodsCateId.push(goods.catePid)
+          }
+          if(goods.cateTid){
+            goods.goodsCateId.push(goods.cateTid)
+          }
+          if(goods.cateId){
+            goods.goodsCateId.push(goods.cateId)
+          }
+          this.postForm = goods;
+          this.attrKeyList = JSON.parse(response.data.attrKeyList);
+          this.attrKeyList.forEach(item =>{
+            item.attrValueList = JSON.parse(item.attrValueList);
+          })
+          this.skuList = JSON.parse(response.data.skuList);
+          this.attrLength = this.attrKeyList.length
         }).catch(err => {
           console.log(err)
         })
@@ -433,17 +452,21 @@
               formData.groupJson = JSON.stringify(this.groupList);
             }
             if(formData.seckillDateRange){
-            	formData.seckillBeginDate = renderTime(formData.seckillDateRange[0])
-            	formData.seckillEndDate = renderTime(formData.seckillDateRange[1])
+            	formData.seckillBeginTime = renderTime(formData.seckillDateRange[0])
+            	formData.seckillEndTime = renderTime(formData.seckillDateRange[1])
             }
             if(formData.goodsCateId){
               formData.goodsCateIds = formData.goodsCateId.join(",")
+              formData.goodsCateId = null
             }
-            if(formData.shopCateId){
+            formData.shopCateIds = formData.shopCateId
+            if(formData.shopCateId && formData.shopCateId.length > 0){
               formData.shopCateIds = formData.shopCateId.join(",")
+              formData.shopCateId = null
             }
             //添加SKU
-            console.log(this.skuList);
+            //['黑', '大', '22', '33', '111', '1', '12', __ob__: Observer]
+            /* console.log(this.skuList);
             let attrLength = this.attrLength;
             let tempList = Object.assign([], this.skuIdList);
             this.skuList.forEach(function(item, index){
@@ -456,9 +479,10 @@
               Vue.set(tempList, index, temp);
             })
             let skuId = tempList;
-            console.log(this.skuIdList);
+            console.log(this.skuIdList); */
             this.loading = true
-            formData.skuList = JSON.stringify(skuId)
+            formData.attrKeyList = JSON.stringify(this.attrKeyList)
+            formData.skuList = JSON.stringify(this.skuList)
             updateGoods(formData).then((response) => {
               this.postForm.id = response.data
               this.$notify({
@@ -472,6 +496,9 @@
               this.$store.dispatch('tagsView/delView', this.$route)
               // 返回上一步路由
               this.$router.push('/goods/list')
+            }).catch(err => {
+              this.loading = false
+              console.log(err)
             })
           } else {
             console.log('error submit!!')
@@ -480,7 +507,7 @@
         })
       },
       addGroup(){
-        this.groupList.push(this.singleGroup)
+        this.groupList.push({num: null, discounts: null})
       },
       deleteGroup(index){
         this.groupList.splice(index,1)
@@ -537,6 +564,7 @@
       			list.push(attrVal)
       		}
       	})
+        console.log("list", list);
       	if(list.length > 1 || list.length == this.attrKeyList.length){
       		this.skuList = this.descartes(list);
       		let tempList = this.skuList;
@@ -545,11 +573,18 @@
       				item = [].concat(item);
       				Vue.set(tempList, index, item)
       			}
+            item.push('')
+            item.push('')
+            item.push('')
+            item.push('')
+            item.push('')
+            item.push('')
       		})
       		this.skuList = tempList;
-      		this.attrLength = this.skuList.length
+      		this.attrLength = this.attrKeyList.length
+          console.log("attrLength", this.attrLength);
       	}
-      	console.log(this.skuList)
+      	console.log("skuList", this.skuList)
       },
       descartes(array){
       	if( array.length < 2 )
@@ -566,6 +601,15 @@
       		return res;
       		});
       	},
+      batchSetParams(val, index){
+        this.skuList.forEach(item=>{
+          Vue.set(item, index, val);
+        })
+        // this.$set(this.skuList, index, val);
+      },
+      selectChange(val){
+        this.$forceUpdate();
+      }
 
     }
   }

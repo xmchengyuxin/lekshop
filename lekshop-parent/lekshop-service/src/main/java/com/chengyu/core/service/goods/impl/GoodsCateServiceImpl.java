@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @title  商品分类
@@ -129,5 +130,17 @@ public class GoodsCateServiceImpl implements GoodsCateService {
 			cateResultList.add(result);
 		}
 		return cateResultList;
+	}
+
+	@Override
+	public String getGoodsCateName(List<Integer> cateIdList) {
+		PmsGoodsCateExample example = new PmsGoodsCateExample();
+		example.setOrderByClause("level asc");
+		example.createCriteria().andIdIn(cateIdList);
+		List<PmsGoodsCate> list = goodsCateMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(list)){
+			return null;
+		}
+		return list.stream().map(PmsGoodsCate::getName).collect(Collectors.joining("/"));
 	}
 }
