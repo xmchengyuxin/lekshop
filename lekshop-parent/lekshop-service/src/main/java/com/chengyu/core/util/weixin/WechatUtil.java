@@ -42,7 +42,7 @@ public class WechatUtil {
 	@Autowired
 	private WeixinConfigService weixinService;
 
-	private static SysWeixinConfig config;
+	public static SysWeixinConfig config;
 
 	@PostConstruct
 	public void init() {

@@ -58,4 +58,13 @@ public interface GoodsCateService {
 	 * @return String
 	 */
 	String getGoodsCateName(List<Integer> cateIdList);
+
+	/**
+	 * 根据上级分类查询下级分类
+	 * @author LeGreen
+	 * @date   2022/5/14
+	 * @param  pid
+	 * @return List<PmsGoodsCate>
+	 */
+	List<PmsGoodsCate> getListByPid(Integer pid);
 }

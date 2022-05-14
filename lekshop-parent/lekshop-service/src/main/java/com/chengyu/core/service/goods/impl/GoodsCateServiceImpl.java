@@ -143,4 +143,16 @@ public class GoodsCateServiceImpl implements GoodsCateService {
 		}
 		return list.stream().map(PmsGoodsCate::getName).collect(Collectors.joining("/"));
 	}
+
+	@Override
+	public List<PmsGoodsCate> getListByPid(Integer pid) {
+		PmsGoodsCateExample example = new PmsGoodsCateExample();
+		example.setOrderByClause("sort asc");
+		PmsGoodsCateExample.Criteria criteria = example.createCriteria();
+		criteria.andStatusEqualTo(CommonConstant.YES_INT);
+		if(pid != null){
+			criteria.andPidEqualTo(pid);
+		}
+		return goodsCateMapper.selectByExample(example);
+	}
 }

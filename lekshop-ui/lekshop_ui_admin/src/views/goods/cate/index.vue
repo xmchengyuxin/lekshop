@@ -32,12 +32,25 @@
 			</el-table-column>
 			<el-table-column label="图片" width="200px"  align="center" prop="img">
 			  <template slot-scope="scope">
-          <el-image
+          <div class="flex f-a-c f-j-c">
+            <el-image
               v-if="scope.row.img"
-              style="height: 30px"
+              style="height: 30px;margin-right: 12px;"
               :src="scope.row.img"
               :preview-src-list="[scope.row.img]">
             </el-image>
+            <!-- <el-upload
+              class="avatar-uploader"
+              :show-file-list="false"
+              :action="uploadMainFileUrl"
+              :headers="headers"
+              :data="{id:scope.row.id, index: scope.$index}"
+              :on-success="handleUploadMainFile"
+              :auto-upload="true">
+              <i class="el-icon-plus avatar-uploader-icon"></i>
+             </el-upload> -->
+          </div>
+
 			  </template>
 			</el-table-column>
 			<el-table-column label="创建时间" width="200px"  align="center" prop="addTime">
@@ -103,6 +116,7 @@ import { parseTime, renderTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import Upload from '@/components/Upload/singleImage'
 import ImageSource from '@/components/Upload/imageSource'
+import { getToken } from '@/utils/auth'
 
 export default {
   name: 'goodsCate',
@@ -126,7 +140,9 @@ export default {
 			  name: [{ required: true, message: '分类名称不能为空', trigger: 'blur' }],
 				sort: [{ required: true, message: '显示顺序不能为空', trigger: 'blur' }]
 			},
-			goodsCateOptions:[]
+			goodsCateOptions:[],
+      uploadMainFileUrl: process.env.VUE_APP_BASE_API + 'system/goodsCate/updateImg',
+      headers:{Authorization: 'Bearer ' + getToken()}
     }
   },
   created() {
@@ -240,6 +256,26 @@ export default {
     },
     handleSelectionChange(val) {
     	this.multipleSelection = val;
+     },
+     handleUploadMainFile(response) {
+
+     	 if (response.code == 200) {
+         let result = response.data
+         this.list[result.index].img  = result.imgUrl
+         this.$notify({
+     		   title: '成功',
+     		   message: '修改成功',
+     		   type: 'success',
+     		   duration: 2000
+     		 })
+     	 } else {
+         this.$notify({
+     		   title: '失败',
+     		   message: response.description,
+     		   type: 'error',
+     		   duration: 2000
+     		 })
+     	 }
      },
      /* load(tree, treeNode, resolve) {
         const queryParams = {

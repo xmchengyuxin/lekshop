@@ -46,8 +46,6 @@ public class MemberController extends UserBaseController {
 	private MemberAccountService accountService;
 	@Autowired
 	private VerifyCodeService verifyCodeService;
-	@Autowired
-	private ConfigGzhService configGzhService;
 
 	@ApiOperation(value = "获取当前登录用户")
 	@ResponseBody

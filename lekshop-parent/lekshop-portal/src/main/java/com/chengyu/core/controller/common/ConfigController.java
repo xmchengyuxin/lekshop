@@ -8,12 +8,11 @@ import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.*;
+import com.chengyu.core.service.config.ConfigSearchService;
 import com.chengyu.core.service.content.*;
 import com.chengyu.core.service.system.BankConfigService;
 import com.chengyu.core.service.system.ConfigService;
-import com.chengyu.core.service.system.QiniuService;
 import com.chengyu.core.service.system.VerifyCodeService;
-import com.chengyu.core.util.third.manager.ThirdManager;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -49,8 +48,6 @@ public class ConfigController extends UserBaseController {
 	@Autowired
 	private BannerService bannerService;
 	@Autowired
-	private QiniuService qiniuService;
-	@Autowired
 	private AgreementService agreementService;
 	@Autowired
 	private VerifyCodeService verifyCodeService;
@@ -62,6 +59,9 @@ public class ConfigController extends UserBaseController {
 	private BankConfigService bankConfigService;
 	@Autowired
 	private NoticeService noticeService;
+	@Autowired
+	private ConfigSearchService configSearchService;
+
 
 	@ApiOperation(value = "系统参数列表")
 	@ResponseBody
@@ -69,6 +69,14 @@ public class ConfigController extends UserBaseController {
 	public CommonResult<Map<String,String>> getConfig() {
 		Map<String, String> map = configService.getAllConfigValueMap();
 		return CommonResult.success(map);
+	}
+
+	@ApiOperation(value = "系统参数列表")
+	@ResponseBody
+	@RequestMapping(value="/search/getList", method=RequestMethod.GET)
+	public CommonResult<List<ConfigSearch>> getSearch() {
+		List<ConfigSearch> list = configSearchService.getTenSearchList();
+		return CommonResult.success(list);
 	}
 
 	@ApiOperation(value = "轮播图列表")

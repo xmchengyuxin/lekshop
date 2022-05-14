@@ -2,6 +2,8 @@ package com.chengyu.core.controller.member;
 
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.domain.form.BaseSearchForm;
+import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @title  银行卡认证
@@ -36,19 +40,14 @@ public class MemberBankController extends UserBaseController {
 	
 	@ApiOperation(value = "获取银行卡认证")
 	@ResponseBody
-	@RequestMapping(value={"/getBank"}, method=RequestMethod.GET)
-	public CommonResult<UmsMemberBank> getBank() throws ServiceException {
-		UmsMemberBank bank = memberBankService.getMemberBankByMemberId(getCurrentMemberId());
-		return CommonResult.success(bank);
+	@RequestMapping(value={"/bank/getList"}, method=RequestMethod.GET)
+	public CommonResult<CommonPage<UmsMemberBank>> getList(Integer page, Integer pageSize) throws ServiceException {
+		BaseSearchForm form = new BaseSearchForm();
+		form.setMemberId(getCurrentMemberId());
+		List<UmsMemberBank> bankList = memberBankService.getMemberBankList(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(bankList));
 	}
 
-	@ApiOperation(value = "获取他人银行卡信息")
-	@ResponseBody
-	@RequestMapping(value={"/getBankByMemberId"}, method=RequestMethod.GET)
-	public CommonResult<UmsMemberBank> getBankByMemberId(Integer memberId) {
-		UmsMemberBank bank = memberBankService.getMemberBankByMemberId(memberId);
-		return CommonResult.success(bank);
-	}
 
 	@OperationLog
 	@ApiOperation(value = "银行卡认证")
@@ -102,6 +101,18 @@ public class MemberBankController extends UserBaseController {
 		memberBank.setAreaCode(areaCode);
 		UmsMemberBank mbank = memberBankService.applyBank(member, memberBank);
 		return CommonResult.success(mbank);
+	}
+
+	@OperationLog
+	@ApiOperation(value = "删除银行卡")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "ID"),
+	})
+	@ResponseBody
+	@RequestMapping(value={"/bank/delete"}, method=RequestMethod.POST)
+	public CommonResult<String> delete(Integer id) {
+		memberBankService.deleteMemberBank(id);
+		return CommonResult.success(null);
 	}
 
 }
