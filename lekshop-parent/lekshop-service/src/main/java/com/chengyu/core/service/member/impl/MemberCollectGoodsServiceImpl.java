@@ -69,6 +69,9 @@ public class MemberCollectGoodsServiceImpl implements MemberCollectGoodsService 
 
 	@Override
 	public boolean isCollectGoods(UmsMember member, Integer goodsId) {
+		if(member == null){
+			return false;
+		}
 		UmsMemberCollectionGoodsExample example = new UmsMemberCollectionGoodsExample();
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andGoodsIdEqualTo(goodsId);
 		return memberCollectionGoodsMapper.countByExample(example) > 0;

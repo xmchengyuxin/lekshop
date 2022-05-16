@@ -1,13 +1,17 @@
 package com.chengyu.core.service.shop.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.TypeReference;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.ShopSearchForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.*;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.shop.ShopService;
+import com.chengyu.core.service.shop.ShopServiceService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +49,8 @@ public class ShopServiceImpl implements ShopService {
 	private PmsGoodsMapper goodsMapper;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ShopServiceService shopServiceService;
 
 	@Override
 	public List<UmsShop> getShopList(ShopSearchForm form, Integer page, Integer pageSize) {
@@ -73,6 +79,10 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void updateShop(UmsShop shop) {
+		if(StringUtils.isNotBlank(shop.getService())){
+			List<Integer> serviceIds = Convert.convert(new TypeReference<List<Integer>>() {}, shop.getService().split(CommonConstant.DH_REGEX));
+			shop.setServiceName(shopServiceService.getShopServiceName(serviceIds));
+		}
 		shop.setUpdTime(DateUtil.date());
 		shopMapper.updateByPrimaryKeySelective(shop);
 	}

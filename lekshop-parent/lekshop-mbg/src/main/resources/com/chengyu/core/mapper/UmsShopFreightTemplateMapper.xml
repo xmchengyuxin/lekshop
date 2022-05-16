@@ -13,6 +13,12 @@
     <result column="default_second_num" jdbcType="DECIMAL" property="defaultSecondNum" />
     <result column="default_second_price" jdbcType="DECIMAL" property="defaultSecondPrice" />
     <result column="delivery_time" jdbcType="VARCHAR" property="deliveryTime" />
+    <result column="province_code" jdbcType="VARCHAR" property="provinceCode" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +80,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, shop_id, shop_name, name, type, valute_type, default_first_num, default_first_price, 
-    default_second_num, default_second_price, delivery_time
+    default_second_num, default_second_price, delivery_time, province_code, city_code, 
+    area_code, province, city, area
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.UmsShopFreightTemplateExample" resultMap="BaseResultMap">
     select
@@ -113,11 +120,15 @@
     insert into ums_shop_freight_template (shop_id, shop_name, name, 
       type, valute_type, default_first_num, 
       default_first_price, default_second_num, default_second_price, 
-      delivery_time)
+      delivery_time, province_code, city_code, 
+      area_code, province, city, 
+      area)
     values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{valuteType,jdbcType=INTEGER}, #{defaultFirstNum,jdbcType=DECIMAL}, 
       #{defaultFirstPrice,jdbcType=DECIMAL}, #{defaultSecondNum,jdbcType=DECIMAL}, #{defaultSecondPrice,jdbcType=DECIMAL}, 
-      #{deliveryTime,jdbcType=VARCHAR})
+      #{deliveryTime,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsShopFreightTemplate">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -155,6 +166,24 @@
       <if test="deliveryTime != null">
         delivery_time,
       </if>
+      <if test="provinceCode != null">
+        province_code,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="shopId != null">
@@ -186,6 +215,24 @@
       </if>
       <if test="deliveryTime != null">
         #{deliveryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -231,6 +278,24 @@
       <if test="record.deliveryTime != null">
         delivery_time = #{record.deliveryTime,jdbcType=VARCHAR},
       </if>
+      <if test="record.provinceCode != null">
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null">
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +313,13 @@
       default_first_price = #{record.defaultFirstPrice,jdbcType=DECIMAL},
       default_second_num = #{record.defaultSecondNum,jdbcType=DECIMAL},
       default_second_price = #{record.defaultSecondPrice,jdbcType=DECIMAL},
-      delivery_time = #{record.deliveryTime,jdbcType=VARCHAR}
+      delivery_time = #{record.deliveryTime,jdbcType=VARCHAR},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +357,24 @@
       <if test="deliveryTime != null">
         delivery_time = #{deliveryTime,jdbcType=VARCHAR},
       </if>
+      <if test="provinceCode != null">
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -300,7 +389,13 @@
       default_first_price = #{defaultFirstPrice,jdbcType=DECIMAL},
       default_second_num = #{defaultSecondNum,jdbcType=DECIMAL},
       default_second_price = #{defaultSecondPrice,jdbcType=DECIMAL},
-      delivery_time = #{deliveryTime,jdbcType=VARCHAR}
+      delivery_time = #{deliveryTime,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

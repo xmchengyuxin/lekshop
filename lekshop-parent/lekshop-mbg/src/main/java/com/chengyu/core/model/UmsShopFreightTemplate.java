@@ -38,6 +38,24 @@ public class UmsShopFreightTemplate implements Serializable {
     @ApiModelProperty(value = "发货时间")
     private String deliveryTime;
 
+    @ApiModelProperty(value = "省代码")
+    private String provinceCode;
+
+    @ApiModelProperty(value = "市代码")
+    private String cityCode;
+
+    @ApiModelProperty(value = "区代码")
+    private String areaCode;
+
+    @ApiModelProperty(value = "省")
+    private String province;
+
+    @ApiModelProperty(value = "市")
+    private String city;
+
+    @ApiModelProperty(value = "区")
+    private String area;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -128,6 +146,54 @@ public class UmsShopFreightTemplate implements Serializable {
         this.deliveryTime = deliveryTime;
     }
 
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -145,6 +211,12 @@ public class UmsShopFreightTemplate implements Serializable {
         sb.append(", defaultSecondNum=").append(defaultSecondNum);
         sb.append(", defaultSecondPrice=").append(defaultSecondPrice);
         sb.append(", deliveryTime=").append(deliveryTime);
+        sb.append(", provinceCode=").append(provinceCode);
+        sb.append(", cityCode=").append(cityCode);
+        sb.append(", areaCode=").append(areaCode);
+        sb.append(", province=").append(province);
+        sb.append(", city=").append(city);
+        sb.append(", area=").append(area);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

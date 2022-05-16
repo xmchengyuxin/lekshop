@@ -57,6 +57,14 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());
 		}
+		if(form.getGoodsComment() != null){
+			if(form.getGoodsComment() == 4){
+				//有图
+				criteria.andImgIsNotNull();
+			}else{
+				criteria.andGoodsCommentEqualTo(form.getGoodsComment());
+			}
+		}
 		return orderCommentMapper.selectByExample(example);
 	}
 

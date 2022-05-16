@@ -14,7 +14,6 @@ import com.chengyu.core.domain.enums.MemberRemindEnums.MemberRemindTypes;
 import com.chengyu.core.domain.form.BankForm;
 import com.chengyu.core.domain.form.WithdrawSearchForm;
 import com.chengyu.core.domain.result.WithdrawCountResult;
-import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.CustomMemberWithdrawMapper;
 import com.chengyu.core.mapper.UmsMemberWithdrawMapper;

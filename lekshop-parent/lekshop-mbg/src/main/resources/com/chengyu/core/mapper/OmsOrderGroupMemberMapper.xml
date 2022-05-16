@@ -13,7 +13,7 @@
     <result column="group_price" jdbcType="DECIMAL" property="groupPrice" />
     <result column="buy_num" jdbcType="INTEGER" property="buyNum" />
     <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
-    <result column="pay_status" jdbcType="VARCHAR" property="payStatus" />
+    <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_by" jdbcType="VARCHAR" property="addBy" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
@@ -125,7 +125,7 @@
     values (#{orderGroupId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, 
       #{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{memberHeadImg,jdbcType=VARCHAR}, 
       #{originalPrice,jdbcType=DECIMAL}, #{groupPrice,jdbcType=DECIMAL}, #{buyNum,jdbcType=INTEGER}, 
-      #{payPrice,jdbcType=DECIMAL}, #{payStatus,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{payPrice,jdbcType=DECIMAL}, #{payStatus,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
       #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
       )
   </insert>
@@ -213,7 +213,7 @@
         #{payPrice,jdbcType=DECIMAL},
       </if>
       <if test="payStatus != null">
-        #{payStatus,jdbcType=VARCHAR},
+        #{payStatus,jdbcType=INTEGER},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -272,7 +272,7 @@
         pay_price = #{record.payPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.payStatus != null">
-        pay_status = #{record.payStatus,jdbcType=VARCHAR},
+        pay_status = #{record.payStatus,jdbcType=INTEGER},
       </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -304,7 +304,7 @@
       group_price = #{record.groupPrice,jdbcType=DECIMAL},
       buy_num = #{record.buyNum,jdbcType=INTEGER},
       pay_price = #{record.payPrice,jdbcType=DECIMAL},
-      pay_status = #{record.payStatus,jdbcType=VARCHAR},
+      pay_status = #{record.payStatus,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
@@ -347,7 +347,7 @@
         pay_price = #{payPrice,jdbcType=DECIMAL},
       </if>
       <if test="payStatus != null">
-        pay_status = #{payStatus,jdbcType=VARCHAR},
+        pay_status = #{payStatus,jdbcType=INTEGER},
       </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -376,7 +376,7 @@
       group_price = #{groupPrice,jdbcType=DECIMAL},
       buy_num = #{buyNum,jdbcType=INTEGER},
       pay_price = #{payPrice,jdbcType=DECIMAL},
-      pay_status = #{payStatus,jdbcType=VARCHAR},
+      pay_status = #{payStatus,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},

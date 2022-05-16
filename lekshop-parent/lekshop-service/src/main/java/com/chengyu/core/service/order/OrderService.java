@@ -1,5 +1,6 @@
 package com.chengyu.core.service.order;
 
+import com.chengyu.core.domain.form.CaculateFreightFeeForm;
 import com.chengyu.core.domain.form.OrderAddForm;
 import com.chengyu.core.domain.form.OrderDeliveryForm;
 import com.chengyu.core.domain.form.OrderSearchForm;
@@ -11,6 +12,7 @@ import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberAddress;
 import com.chengyu.core.model.UmsShop;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -51,6 +53,17 @@ public interface OrderService {
      * @throws ServiceException 业务异常
      */
     OrderPayResult addOrder(UmsMember member, UmsMemberAddress address, List<OrderAddForm> addFormList) throws ServiceException;
+
+    /**
+     * 计算运费
+     * @author LeGreen
+     * @date   2022/5/16
+     * @param  shopId
+     * @param  address
+     * @param  freightFeeFormList
+     * @return BigDecimal
+     */
+    BigDecimal caculateFreightFee(Integer shopId, UmsMemberAddress address, List<CaculateFreightFeeForm> freightFeeFormList);
 
     /**
      * 支付成功

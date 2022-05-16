@@ -9,8 +9,6 @@ import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberBank;
 import com.chengyu.core.service.member.MemberBankService;
-import com.chengyu.core.service.system.VerifyCodeService;
-import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -35,10 +33,8 @@ public class MemberBankController extends UserBaseController {
 	
 	@Autowired
 	private MemberBankService memberBankService;
-	@Autowired
-	private VerifyCodeService verifyCodeService;
-	
-	@ApiOperation(value = "获取银行卡认证")
+
+	@ApiOperation(value = "获取银行卡列表")
 	@ResponseBody
 	@RequestMapping(value={"/bank/getList"}, method=RequestMethod.GET)
 	public CommonResult<CommonPage<UmsMemberBank>> getList(Integer page, Integer pageSize) throws ServiceException {
@@ -50,57 +46,35 @@ public class MemberBankController extends UserBaseController {
 
 
 	@OperationLog
-	@ApiOperation(value = "银行卡认证")
+	@ApiOperation(value = "绑定银行卡")
 	@ApiImplicitParams({
+		@ApiImplicitParam(name = "id", value = "ID(修改时必传)"),
 		@ApiImplicitParam(name = "realname", value = "真实姓名"),
-		@ApiImplicitParam(name = "idCard", value = "身份证"),
 		@ApiImplicitParam(name = "bank", value = "银行"),
-		@ApiImplicitParam(name = "bankSub", value = "支行"),
 		@ApiImplicitParam(name = "bankAccount", value = "银行账号"),
 		@ApiImplicitParam(name = "zfbAccount", value = "支付宝收款账号"),
-		@ApiImplicitParam(name = "zfbErweima", value = "支付宝收款二维码"),
-		@ApiImplicitParam(name = "wxAccount", value = "微信收款账号"),
 		@ApiImplicitParam(name = "wxErweima", value = "微信收款二维码"),
-		@ApiImplicitParam(name = "province", value = "省份"),
-		@ApiImplicitParam(name = "city", value = "市"),
-		@ApiImplicitParam(name = "area", value = "区县"),
-		@ApiImplicitParam(name = "provinceCode", value = "省份代码"),
-		@ApiImplicitParam(name = "cityCode", value = "市代码"),
-		@ApiImplicitParam(name = "areaCode", value = "区县代码"),
-		@ApiImplicitParam(name = "code", value = "手机验证码"),
 	})
 	@ResponseBody
-	@RequestMapping(value={"/applyBank"}, method=RequestMethod.POST)
-	public CommonResult<UmsMemberBank> applyBank(
-			String realname, String idCard,
-			String bank, String bankSub, String bankAccount,
-			String zfbAccount, String wxAccount, String zfbErweima, String wxErweima,
-			String province, String city, String area, String provinceCode, String cityCode, String areaCode,
-			String code) throws Exception {
+	@RequestMapping(value={"/bank/bind"}, method=RequestMethod.POST)
+	public CommonResult<String> applyBank(
+			Integer id,
+			String accountName,
+			String bank, String bankAccount,
+			String zfbAccount, String wxErweima) throws Exception {
 		//校验短信验证码
 		UmsMember member = getCurrentMember();
-		if(StringUtils.isNotBlank(code)){
-			verifyCodeService.validateCode(member.getPhone(), code);
-		}
-
 		UmsMemberBank memberBank = new UmsMemberBank();
-		memberBank.setAccountName(realname);
-		memberBank.setIdCard(idCard);
+		memberBank.setMemberId(member.getId());
+		memberBank.setMemberName(member.getCode());
+		memberBank.setId(id);
+		memberBank.setAccountName(accountName);
 		memberBank.setBank(bank);
-		memberBank.setBankSub(bankSub);
 		memberBank.setBankAccount(bankAccount);
 		memberBank.setZfbAccount(zfbAccount);
-		memberBank.setZfbErweima(zfbErweima);
-		memberBank.setWxAccount(wxAccount);
 		memberBank.setWxErweima(wxErweima);
-		memberBank.setProvince(province);
-		memberBank.setProvinceCode(provinceCode);
-		memberBank.setCity(city);
-		memberBank.setCityCode(cityCode);
-		memberBank.setArea(area);
-		memberBank.setAreaCode(areaCode);
-		UmsMemberBank mbank = memberBankService.applyBank(member, memberBank);
-		return CommonResult.success(mbank);
+		memberBankService.update(memberBank);
+		return CommonResult.success(null);
 	}
 
 	@OperationLog

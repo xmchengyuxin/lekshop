@@ -51,7 +51,7 @@
           <span>秒杀拼团</span>
         </div>
         <el-form-item label="商品类型" prop="type" :rules="[{ required: true, message: '请选择', trigger: 'change' }]">
-            <el-radio-group v-model="postForm.type" size="small">
+            <el-radio-group v-model="postForm.type" size="small" :disabled="postForm.id != null">
               <el-radio :label="1" border>普通商品</el-radio>
               <el-radio :label="2" border>秒杀商品</el-radio>
               <el-radio :label="3" border>拼团商品</el-radio>

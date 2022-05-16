@@ -1016,6 +1016,66 @@ public class OmsOrderDetailExample {
             return (Criteria) this;
         }
 
+        public Criteria andBuyOriPriceIsNull() {
+            addCriterion("buy_ori_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceIsNotNull() {
+            addCriterion("buy_ori_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceEqualTo(BigDecimal value) {
+            addCriterion("buy_ori_price =", value, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceNotEqualTo(BigDecimal value) {
+            addCriterion("buy_ori_price <>", value, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceGreaterThan(BigDecimal value) {
+            addCriterion("buy_ori_price >", value, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("buy_ori_price >=", value, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceLessThan(BigDecimal value) {
+            addCriterion("buy_ori_price <", value, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("buy_ori_price <=", value, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceIn(List<BigDecimal> values) {
+            addCriterion("buy_ori_price in", values, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceNotIn(List<BigDecimal> values) {
+            addCriterion("buy_ori_price not in", values, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("buy_ori_price between", value1, value2, "buyOriPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyOriPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("buy_ori_price not between", value1, value2, "buyOriPrice");
+            return (Criteria) this;
+        }
+
         public Criteria andBuyPriceIsNull() {
             addCriterion("buy_price is null");
             return (Criteria) this;
@@ -1253,6 +1313,186 @@ public class OmsOrderDetailExample {
 
         public Criteria andBuyTotalPriceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("buy_total_price not between", value1, value2, "buyTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdIsNull() {
+            addCriterion("group_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdIsNotNull() {
+            addCriterion("group_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdEqualTo(Integer value) {
+            addCriterion("group_id =", value, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdNotEqualTo(Integer value) {
+            addCriterion("group_id <>", value, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdGreaterThan(Integer value) {
+            addCriterion("group_id >", value, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("group_id >=", value, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdLessThan(Integer value) {
+            addCriterion("group_id <", value, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdLessThanOrEqualTo(Integer value) {
+            addCriterion("group_id <=", value, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdIn(List<Integer> values) {
+            addCriterion("group_id in", values, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdNotIn(List<Integer> values) {
+            addCriterion("group_id not in", values, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdBetween(Integer value1, Integer value2) {
+            addCriterion("group_id between", value1, value2, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("group_id not between", value1, value2, "groupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumIsNull() {
+            addCriterion("group_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumIsNotNull() {
+            addCriterion("group_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumEqualTo(Integer value) {
+            addCriterion("group_num =", value, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumNotEqualTo(Integer value) {
+            addCriterion("group_num <>", value, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumGreaterThan(Integer value) {
+            addCriterion("group_num >", value, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("group_num >=", value, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumLessThan(Integer value) {
+            addCriterion("group_num <", value, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumLessThanOrEqualTo(Integer value) {
+            addCriterion("group_num <=", value, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumIn(List<Integer> values) {
+            addCriterion("group_num in", values, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumNotIn(List<Integer> values) {
+            addCriterion("group_num not in", values, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumBetween(Integer value1, Integer value2) {
+            addCriterion("group_num between", value1, value2, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("group_num not between", value1, value2, "groupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursIsNull() {
+            addCriterion("group_limit_hours is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursIsNotNull() {
+            addCriterion("group_limit_hours is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursEqualTo(Integer value) {
+            addCriterion("group_limit_hours =", value, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursNotEqualTo(Integer value) {
+            addCriterion("group_limit_hours <>", value, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursGreaterThan(Integer value) {
+            addCriterion("group_limit_hours >", value, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursGreaterThanOrEqualTo(Integer value) {
+            addCriterion("group_limit_hours >=", value, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursLessThan(Integer value) {
+            addCriterion("group_limit_hours <", value, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursLessThanOrEqualTo(Integer value) {
+            addCriterion("group_limit_hours <=", value, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursIn(List<Integer> values) {
+            addCriterion("group_limit_hours in", values, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursNotIn(List<Integer> values) {
+            addCriterion("group_limit_hours not in", values, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursBetween(Integer value1, Integer value2) {
+            addCriterion("group_limit_hours between", value1, value2, "groupLimitHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andGroupLimitHoursNotBetween(Integer value1, Integer value2) {
+            addCriterion("group_limit_hours not between", value1, value2, "groupLimitHours");
             return (Criteria) this;
         }
 

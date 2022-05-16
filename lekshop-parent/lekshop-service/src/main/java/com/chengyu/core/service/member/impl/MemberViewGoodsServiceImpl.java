@@ -49,6 +49,9 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 
 	@Override
 	public void viewGoods(UmsMember member, Integer goodsId) {
+		if(member == null){
+			return ;
+		}
 		UmsMemberViewGoodsExample example = new UmsMemberViewGoodsExample();
 		example.setOrderByClause("upd_time desc");
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andGoodsIdEqualTo(goodsId).andDateEqualTo(DateUtil.date());

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomOrderGroupMapper">
+	
+	<resultMap id="assembleMap" type="com.chengyu.core.model.OmsOrderGroup">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="order_id" jdbcType="INTEGER" property="orderId" />
+		<result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="member_name" jdbcType="VARCHAR" property="memberName" />
+		<result column="shop_id" jdbcType="INTEGER" property="shopId" />
+		<result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+		<result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+		<result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+		<result column="goods_main_img" jdbcType="VARCHAR" property="goodsMainImg" />
+		<result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+		<result column="group_price" jdbcType="DECIMAL" property="groupPrice" />
+		<result column="group_num" jdbcType="INTEGER" property="groupNum" />
+		<result column="have_group_num" jdbcType="INTEGER" property="haveGroupNum" />
+		<result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="add_by" jdbcType="VARCHAR" property="addBy" />
+		<result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+		<result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+	</resultMap>
+	
+	<select id="getOrderGroupCount" resultType="java.lang.Integer">
+		select count(1) from oms_order_group_member m
+		join oms_order_group oa on m.order_group_id = oa.id
+		<include refid="assemble_where" />
+	</select>
+	
+	<select id="getOrderGroupList" resultMap="assembleMap">
+		select
+		m.add_time, 
+		m.upd_time,
+		m.member_id,
+		m.member_name,
+		oa.id,
+		oa.shop_id,
+		oa.shop_name,
+		oa.goods_id,
+		oa.goods_name,
+		oa.goods_main_img,
+		oa.original_price,
+		oa.group_price,
+		oa.group_num,
+		oa.have_group_num,
+		oa.end_time,
+		oa.status
+		from oms_order_group_member m
+		join oms_order_group oa on m.order_group_id = oa.id
+		<include refid="assemble_where" />
+		order by m.add_time desc
+	</select>
+	
+	<sql id="assemble_where">
+		where 1 = 1
+		<if test="memberId != null and !''.equals(memberId)">
+		    and m.member_id = #{memberId}
+		</if>
+		<if test="status != null and !''.equals(status)">
+		    and oa.status = #{status}
+		</if>
+	</sql>
+	
+	<select id="countGroupNum" resultType="java.lang.Long">
+		select count(*) num from oms_order_group_member oam
+					join oms_order_group oa on oa.id = oam.order_group_id
+					where oa.goods_id = #{goodsId}
+	</select>
+	
+</mapper>

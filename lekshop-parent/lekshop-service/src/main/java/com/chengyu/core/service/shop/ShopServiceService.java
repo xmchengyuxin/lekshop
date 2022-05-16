@@ -63,4 +63,13 @@ public interface ShopServiceService {
 	 * @throws ServiceException 业务异常
 	 */
 	List<UmsShopService> getShopServiceList(Integer status, Integer page, Integer pageSize);
+
+	/**
+	 * 获取服务名称集合
+	 * @author LeGreen
+	 * @date   2022/5/16
+	 * @param  serviceIds
+	 * @return String
+	 */
+    String getShopServiceName(List<Integer> serviceIds);
 }

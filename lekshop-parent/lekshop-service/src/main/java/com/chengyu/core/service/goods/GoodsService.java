@@ -3,8 +3,11 @@ package com.chengyu.core.service.goods;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.GoodsResult;
+import com.chengyu.core.domain.result.GoodsSkuResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoods;
+import com.chengyu.core.model.PmsGoodsGroup;
+import com.chengyu.core.model.PmsGoodsSku;
 import com.chengyu.core.model.UmsShop;
 
 import java.util.List;
@@ -104,4 +107,40 @@ public interface GoodsService {
 	 * @return GoodsResult
 	 */
 	GoodsResult getGoodsResult(Integer goodsId);
+
+	/**
+	 * 获取商品的SKU组合
+	 * @author LeGreen
+	 * @date   2022/5/16
+	 * @param  goodsId
+	 * @return GoodsSkuResult
+	 */
+	GoodsSkuResult getGoodsSkuList(Integer goodsId);
+
+	/**
+	 * 获取商品SKU
+	 * @author LeGreen
+	 * @date   2022/5/16
+	 * @param  skuId
+	 * @return PmsGoodsSku
+	 */
+	PmsGoodsSku getGoodsSku(Integer skuId);
+
+	/**
+	 * 阶梯拼团规则
+	 * @author LeGreen
+	 * @date   2022/5/16
+	 * @param  goodsId
+	 * @return List<PmsGoodsGroup>
+	 */
+	List<PmsGoodsGroup> getGoodsGroupList(Integer goodsId);
+
+	/**
+	 * 获取阶梯拼团
+	 * @author LeGreen
+	 * @date   2022/5/16
+	 * @param  groupId
+	 * @return PmsGoodsGroup
+	 */
+	PmsGoodsGroup getGoodsGroup(Integer groupId);
 }

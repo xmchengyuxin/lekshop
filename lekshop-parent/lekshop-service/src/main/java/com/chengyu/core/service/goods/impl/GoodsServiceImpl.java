@@ -10,6 +10,7 @@ import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.GoodsAttrKeyResult;
 import com.chengyu.core.domain.result.GoodsResult;
+import com.chengyu.core.domain.result.GoodsSkuResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.*;
 import com.chengyu.core.model.*;
@@ -25,10 +26,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -365,17 +363,11 @@ public class GoodsServiceImpl implements GoodsService {
 		//Sku组合
 		//attrKeyList: [{"attrKey":"颜色","attrValue":"","attrValueList":["黑","白"]},{"attrKey":"尺寸","attrValue":"","attrValueList":["大","小"]}]
 		//skuList: [["黑","大","","222","999","888","",""],["黑","小","","222","999","888","",""],["白","大","","222","999","888","",""],["白","小","","222","999","888","",""]]
-		PmsGoodsAttrKeyExample keyExample = new PmsGoodsAttrKeyExample();
-		keyExample.setOrderByClause("id asc");
-		keyExample.createCriteria().andGoodsIdEqualTo(goodsId);
-		List<PmsGoodsAttrKey> keyList = goodsAttrKeyMapper.selectByExample(keyExample);
+		List<PmsGoodsAttrKey> keyList = this.getGoodsAttrKeyList(goodsId);
 
 		List<GoodsAttrKeyResult> keyResultList = new ArrayList<>();
 		for(PmsGoodsAttrKey attrKey : keyList){
-			PmsGoodsAttrValExample valExample = new PmsGoodsAttrValExample();
-			valExample.setOrderByClause("id asc");
-			valExample.createCriteria().andAttrKeyIdEqualTo(attrKey.getId());
-			List<PmsGoodsAttrVal> valList = goodsAttrValMapper.selectByExample(valExample);
+			List<PmsGoodsAttrVal> valList = this.getGoodsAttrValueList(attrKey.getId());
 
 			GoodsAttrKeyResult keyResult = new GoodsAttrKeyResult();
 			keyResult.setAttrKey(attrKey.getName());
@@ -384,16 +376,10 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		result.setAttrKeyList(JSONArray.toJSONString(keyResultList));
 
-		PmsGoodsSkuExample skuExample = new PmsGoodsSkuExample();
-		skuExample.setOrderByClause("id asc");
-		skuExample.createCriteria().andGoodsIdEqualTo(goodsId);
-		List<PmsGoodsSku> skuList = goodsSkuMapper.selectByExample(skuExample);
+		List<PmsGoodsSku> skuList = this.getPmsGoodsSkuList(goodsId);
 		List<List<String>> skuListArray = new ArrayList<>();
 		for(PmsGoodsSku sku : skuList){
-			List<String> skuArray = new ArrayList<>();
-			for(String val : sku.getAttrSymbolName().split(CommonConstant.SLASH_REGEX)){
-				skuArray.add(val);
-			}
+			List<String> skuArray = new ArrayList<>(Arrays.asList(sku.getAttrSymbolName().split(CommonConstant.SLASH_REGEX)));
 			skuArray.add(sku.getOriPrice().toString());
 			skuArray.add(sku.getPrice().toString());
 			skuArray.add(sku.getStock().toString());
@@ -404,5 +390,65 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		result.setSkuList(JSONArray.toJSONString(skuListArray));
 		return result;
+	}
+
+	@Override
+	public GoodsSkuResult getGoodsSkuList(Integer goodsId) {
+		GoodsSkuResult result = new GoodsSkuResult();
+		List<PmsGoodsAttrKey> keyList = this.getGoodsAttrKeyList(goodsId);
+
+		List<GoodsAttrKeyResult> keyResultList = new ArrayList<>();
+		for(PmsGoodsAttrKey attrKey : keyList){
+			List<PmsGoodsAttrVal> valList = this.getGoodsAttrValueList(attrKey.getId());
+
+			GoodsAttrKeyResult keyResult = new GoodsAttrKeyResult();
+			keyResult.setAttrKey(attrKey.getName());
+			keyResult.setValList(valList);
+			keyResultList.add(keyResult);
+		}
+		result.setAttrKeyResultList(keyResultList);
+
+		List<PmsGoodsSku> skuList = this.getPmsGoodsSkuList(goodsId);
+		result.setSkuList(skuList);
+		return result;
+	}
+
+	@Override
+	public PmsGoodsSku getGoodsSku(Integer skuId) {
+		return goodsSkuMapper.selectByPrimaryKey(skuId);
+	}
+
+	@Override
+	public List<PmsGoodsGroup> getGoodsGroupList(Integer goodsId) {
+		PmsGoodsGroupExample groupExample = new PmsGoodsGroupExample();
+		groupExample.setOrderByClause("num asc");
+		groupExample.createCriteria().andGoodsIdEqualTo(goodsId);
+		return goodsGroupMapper.selectByExample(groupExample);
+	}
+
+	@Override
+	public PmsGoodsGroup getGoodsGroup(Integer groupId) {
+		return goodsGroupMapper.selectByPrimaryKey(groupId);
+	}
+
+	private List<PmsGoodsAttrKey> getGoodsAttrKeyList(Integer goodsId){
+		PmsGoodsAttrKeyExample keyExample = new PmsGoodsAttrKeyExample();
+		keyExample.setOrderByClause("id asc");
+		keyExample.createCriteria().andGoodsIdEqualTo(goodsId);
+		return goodsAttrKeyMapper.selectByExample(keyExample);
+	}
+
+	private List<PmsGoodsAttrVal> getGoodsAttrValueList(Integer attrKeyId){
+		PmsGoodsAttrValExample valExample = new PmsGoodsAttrValExample();
+		valExample.setOrderByClause("id asc");
+		valExample.createCriteria().andAttrKeyIdEqualTo(attrKeyId);
+		return goodsAttrValMapper.selectByExample(valExample);
+	}
+
+	private List<PmsGoodsSku> getPmsGoodsSkuList(Integer goodsId){
+		PmsGoodsSkuExample skuExample = new PmsGoodsSkuExample();
+		skuExample.setOrderByClause("id asc");
+		skuExample.createCriteria().andGoodsIdEqualTo(goodsId);
+		return goodsSkuMapper.selectByExample(skuExample);
 	}
 }

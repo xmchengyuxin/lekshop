@@ -55,3 +55,28 @@ export function deleteGoods(data) {
     params: {ids:data}
   })
 }
+
+
+export function getGoodsQualityList(data) {
+  return request({
+    url: 'member/goodsQuality/query',
+    method: 'get',
+		params: {goodsId : data}
+  })
+}
+
+export function addGoodsQuality(data) {
+  return request({
+    url: 'member/goodsQuality/add',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteGoodsQuality(data) {
+  return request({
+    url: 'member/goodsQuality/delete',
+    method: 'post',
+    params: {ids:data}
+  })
+}

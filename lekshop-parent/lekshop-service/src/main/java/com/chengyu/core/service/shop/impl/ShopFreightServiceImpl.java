@@ -157,4 +157,9 @@ public class ShopFreightServiceImpl implements ShopFreightService {
 		BigDecimal times = NumberUtil.div(xuNum, secondNum);
 		return NumberUtil.add(firstPrice, NumberUtil.mul(secondPrice, times));
 	}
+
+	@Override
+	public UmsShopFreightTemplate getShopFreightById(Integer freightId) {
+		return shopFreightTemplateMapper.selectByPrimaryKey(freightId);
+	}
 }

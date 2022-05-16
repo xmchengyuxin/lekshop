@@ -38,33 +38,33 @@
   </sql>
 
   <select id="getAllShopCoupons" resultMap="BaseResultMap">
-    select
+    (select
     <include refid="Base_Column_List" />
     from ums_shop_coupon
     where shop_id = #{shopId} and use_type = 1
-    order by amount desc
+    order by amount desc)
 
     union  all
 
-    select
+    (select
     <include refid="Base_Column_List" />
     from ums_shop_coupon
     where shop_id = #{shopId} and use_type = 2
     <if test="goodsId != null">
       and use_goods_ids like concat('%',#{goodsId},'%')
     </if>
-    order by amount desc
+    order by amount desc)
 
     union  all
 
-    select
+    (select
     <include refid="Base_Column_List" />
     from ums_shop_coupon
     where shop_id = #{shopId} and use_type = 3
     <if test="goodsCateId != null">
       and use_goods_cate_ids like concat('%',#{goodsCateId},'%')
     </if>
-    order by amount desc
+    order by amount desc)
 
   </select>
 </mapper>

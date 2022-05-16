@@ -1,15 +1,9 @@
 package com.chengyu.core.controller.shop;
 
-import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
-import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
-import com.chengyu.core.exception.ServiceException;
-import com.chengyu.core.model.PmsGoods;
-import com.chengyu.core.model.UmsMemberBank;
 import com.chengyu.core.model.UmsShopCoupon;
-import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.shop.ShopCouponService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,13 +19,13 @@ import java.util.List;
 
 @Api(tags = "店铺优惠券")
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/common")
 public class ShopCouponController extends UserBaseController {
 	
 	@Autowired
 	private ShopCouponService shopCouponService;
 
-	@ApiOperation(value = "搜索商品(查询商品列表大部分用此接口)")
+	@ApiOperation(value = "店铺优惠券列表")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "type", value = "1满减券>>2折扣券"),
 		@ApiImplicitParam(name = "shopId", value = "店铺ID"),
@@ -43,15 +37,4 @@ public class ShopCouponController extends UserBaseController {
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 
-	@OperationLog
-	@ApiOperation(value = "领取优惠券")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "shopCouponId", value = "优惠券ID"),
-	})
-	@ResponseBody
-	@RequestMapping(value={"/coupon/draw"}, method=RequestMethod.POST)
-	public CommonResult<UmsMemberBank> drawCoupon(Integer shopCouponId) throws ServiceException {
-		shopCouponService.drawCoupon(getCurrentMember(), shopCouponId);
-		return CommonResult.success(null);
-	}
 }

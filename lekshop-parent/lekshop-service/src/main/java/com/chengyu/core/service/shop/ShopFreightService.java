@@ -79,4 +79,13 @@ public interface ShopFreightService {
 	 * @return BigDecimal
 	 */
 	BigDecimal caculateFreightFee(Integer freightId, String provinceCode, String cityCode, Integer num, BigDecimal weight);
+
+	/**
+	 * 获取运费详情
+	 * @author LeGreen
+	 * @date   2022/5/16
+	 * @param  freightId
+	 * @return UmsShopFreightTemplate
+	 */
+	UmsShopFreightTemplate getShopFreightById(Integer freightId);
 }

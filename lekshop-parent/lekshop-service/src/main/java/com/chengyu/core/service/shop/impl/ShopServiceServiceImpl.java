@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.RedisEnums;
 import com.chengyu.core.mapper.UmsShopServiceMapper;
+import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.model.UmsShopService;
 import com.chengyu.core.model.UmsShopServiceExample;
 import com.chengyu.core.service.shop.ShopServiceService;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @title  店铺服务
@@ -86,5 +88,16 @@ public class ShopServiceServiceImpl implements ShopServiceService {
 			example.createCriteria().andStatusEqualTo(status);
 		}
 		return shopServiceMapper.selectByExample(example);
+	}
+
+	@Override
+	public String getShopServiceName(List<Integer> serviceIds) {
+		UmsShopServiceExample example = new UmsShopServiceExample();
+		example.createCriteria().andIdIn(serviceIds).andStatusEqualTo(CommonConstant.YES_INT);
+		List<UmsShopService> shopServiceList = shopServiceMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(shopServiceList)){
+			return null;
+		}
+		return shopServiceList.stream().map(UmsShopService::getName).collect(Collectors.joining("·"));
 	}
 }

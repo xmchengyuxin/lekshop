@@ -806,62 +806,52 @@ public class OmsOrderGroupMemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusEqualTo(String value) {
+        public Criteria andPayStatusEqualTo(Integer value) {
             addCriterion("pay_status =", value, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusNotEqualTo(String value) {
+        public Criteria andPayStatusNotEqualTo(Integer value) {
             addCriterion("pay_status <>", value, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusGreaterThan(String value) {
+        public Criteria andPayStatusGreaterThan(Integer value) {
             addCriterion("pay_status >", value, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusGreaterThanOrEqualTo(String value) {
+        public Criteria andPayStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("pay_status >=", value, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusLessThan(String value) {
+        public Criteria andPayStatusLessThan(Integer value) {
             addCriterion("pay_status <", value, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusLessThanOrEqualTo(String value) {
+        public Criteria andPayStatusLessThanOrEqualTo(Integer value) {
             addCriterion("pay_status <=", value, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusLike(String value) {
-            addCriterion("pay_status like", value, "payStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andPayStatusNotLike(String value) {
-            addCriterion("pay_status not like", value, "payStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andPayStatusIn(List<String> values) {
+        public Criteria andPayStatusIn(List<Integer> values) {
             addCriterion("pay_status in", values, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusNotIn(List<String> values) {
+        public Criteria andPayStatusNotIn(List<Integer> values) {
             addCriterion("pay_status not in", values, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusBetween(String value1, String value2) {
+        public Criteria andPayStatusBetween(Integer value1, Integer value2) {
             addCriterion("pay_status between", value1, value2, "payStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPayStatusNotBetween(String value1, String value2) {
+        public Criteria andPayStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("pay_status not between", value1, value2, "payStatus");
             return (Criteria) this;
         }

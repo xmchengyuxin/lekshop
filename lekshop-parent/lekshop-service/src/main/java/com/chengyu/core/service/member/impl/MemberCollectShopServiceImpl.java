@@ -67,6 +67,9 @@ public class MemberCollectShopServiceImpl implements MemberCollectShopService {
 
 	@Override
 	public boolean isCollectShop(UmsMember member, Integer shopId) {
+		if(member == null){
+			return false;
+		}
 		UmsMemberCollectionShopExample example = new UmsMemberCollectionShopExample();
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andShopIdEqualTo(shopId);
 		return memberCollectionShopMapper.countByExample(example) > 0;

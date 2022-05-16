@@ -122,17 +122,54 @@
               编辑
             </el-button>
           </router-link>
+            <el-button  type="primary" icon="el-icon-date" size="mini" @click="handleViewGoodsQuality(scope.row)">参数</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
+<!--商品属性框-->
+		<el-dialog title="商品参数" :visible.sync="dialogFormVisible">
+
+			<el-form ref="dataForm" :model="goodsQuality" label-position="left">
+			  <el-form-item label="添加商品参数" prop="name">
+					<el-input style="width:20%" v-model="goodsQuality.name" placeholder="请输入商品参数"/>
+					<el-input style="width:30%" v-model="goodsQuality.value" placeholder="请输入参数值"/>
+					<el-input-number style="width:20%;" v-model="goodsQuality.sort" :min="1" label="修改排序"></el-input-number>
+					<el-button style="margin-left: 10px;" type="primary" size="mini" @click="addGoodsQuality()">添加</el-button>
+			  </el-form-item>
+			</el-form>
+
+		    <el-table :data="goodsQualityList" border fit highlight-current-row style="width: 100%;">
+					<el-table-column label="排序" align="center">
+						<template slot-scope="scope">
+							<span>{{scope.row.sort}}</span>
+						</template>
+					</el-table-column>
+		    	<el-table-column label="参数名称" align="center">
+		    		<template slot-scope="scope">
+		    			<span>{{scope.row.name}}</span>
+		    		</template>
+		    	</el-table-column>
+		    	<el-table-column label="参数值"  align="center">
+		    		<template slot-scope="scope">
+		    			<span>{{scope.row.value}}</span>
+		    		</template>
+		    	</el-table-column>
+		    	<el-table-column label="操作" width="200px" >
+		    		<template slot-scope="scope">
+		    			<el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDeleteGoodsQuality(scope.row.id)">删除</el-button>
+		    		</template>
+		    	</el-table-column>
+		    </el-table>
+		</el-dialog>
+
   </div>
 </template>
 
 <script>
-import {getGoodsList, updateGoods, shangjiaGoods, xiajiaGoods, deleteGoods} from '@/api/goods'
+import {getGoodsList, updateGoods, shangjiaGoods, xiajiaGoods, deleteGoods, getGoodsQualityList, addGoodsQuality, deleteGoodsQuality } from '@/api/goods'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -191,7 +228,9 @@ export default {
 			typeOptions,
 			activeName: 'second',
       goodsOptions:[],
-      shopCateOptions:[]
+      shopCateOptions:[],
+      goodsQuality:{},
+      goodsQualityList:[],
     }
   },
   created() {
@@ -210,68 +249,6 @@ export default {
 				this.listLoading = false
       })
     },
-		handleCreate() {
-		  this.dialogStatus = 'add'
-		  this.dialogFormVisible = true
-			this.couponConfig = {validityType:1}
-      this.getShopCateSelector()
-      this.getGoodsSelector()
-			this.$nextTick(() => {
-			  this.$refs['dataForm'].clearValidate()
-			})
-		},
-		handleUpdate(row) {
-		  this.couponConfig = Object.assign({}, row) // copy obj
-			this.couponConfig.validityDateRange = [this.couponConfig.fixedBeginDate, this.couponConfig.fixedEndDate]
-      this.couponConfig.activityDateRange = [this.couponConfig.beginDate, this.couponConfig.endDate]
-      if(this.couponConfig.useGoodsIds){
-        this.$set(this.couponConfig, 'goodsId', this.couponConfig.useGoodsIds.split(","))
-      }
-      if(this.couponConfig.useGoodsCateIds){
-        this.$set(this.couponConfig, 'ptid', this.couponConfig.useGoodsCateIds.split(","))
-      }
-		  this.dialogStatus = 'edit'
-		  this.dialogFormVisible = true
-      this.getShopCateSelector()
-      this.getGoodsSelector()
-		  this.$nextTick(() => {
-		    this.$refs['dataForm'].clearValidate()
-		  })
-		},
-		confirm() {
-			this.$refs['dataForm'].validate((valid) => {
-			  if (valid) {
-			    let formData =Object.assign({}, this.couponConfig)
-					formData.addTime = null
-					formData.updTime = null
-					if(formData.validityDateRange){
-						formData.fixedBeginDate = renderTime(formData.validityDateRange[0])
-						formData.fixedEndDate = renderTime(formData.validityDateRange[1])
-					}
-          if(formData.activityDateRange){
-          	formData.beginDate = renderTime(formData.activityDateRange[0])
-          	formData.endDate = renderTime(formData.activityDateRange[1])
-          }
-          if(formData.goodsId){
-            formData.useGoodsIds = formData.goodsId.join(",")
-          }
-          if(formData.ptid){
-            console.log(formData.ptid)
-            formData.useGoodsCateIds = formData.ptid.join(",")
-          }
-			    updateCoupon(formData).then(() => {
-						this.getList()
-			      this.dialogFormVisible = false
-			      this.$notify({
-			        title: '成功',
-			        message: '优惠券配置保存成功',
-			        type: 'success',
-			        duration: 2000
-			      })
-			    })
-			  }
-			})
-		},
 		handleSelectionChange(val) {
 			this.multipleSelection = val;
      },
@@ -381,6 +358,54 @@ export default {
     	    })
     	  })
     	  .catch(err => { console.error(err) })
+    },
+    getGoodsQualityList(goodsId){
+    	getGoodsQualityList(goodsId).then((result) => {
+    		this.goodsQualityList = result.data;
+    	})
+    },
+    handleViewGoodsQuality(row) {
+      this.dialogFormVisible = true
+    	this.tempGoodsId = row.id
+    	this.goodsQuality = {}
+    	this.getGoodsQualityList(this.tempGoodsId)
+    },
+    handleDeleteGoodsQuality(id){
+    	this.$confirm('您确定要删除这条记录?', '提醒', {
+    	  confirmButtonText: '确定',
+    	  cancelButtonText: '取消',
+    	  type: 'warning'
+    	}).then(async() => {
+    	    deleteGoodsQuality(id).then(() => {
+    				this.getGoodsQualityList(this.tempGoodsId)
+    	      this.$notify({
+    	        title: '成功',
+    	        message: '删除成功',
+    	        type: 'success',
+    	        duration: 2000
+    	      })
+    	    })
+    	  })
+    	  .catch(err => { console.error(err) })
+    },
+    addGoodsQuality() {
+      let formData = {
+    		goodsId: this.tempGoodsId,
+    		name: this.goodsQuality.name,
+    		value: this.goodsQuality.value,
+    		sort: this.goodsQuality.sort
+    	}
+
+    	addGoodsQuality(formData).then(() => {
+    		this.goodsQuality = {}
+    		this.getGoodsQualityList(this.tempGoodsId)
+    	  this.$notify({
+    	    title: '成功',
+    	    message: '商品参数添加成功',
+    	    type: 'success',
+    	    duration: 2000
+    	  })
+    	})
     },
 
   }

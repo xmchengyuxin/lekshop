@@ -16,6 +16,15 @@
       		模板名称
       	</MDinput>
       </el-form-item>
+      <el-form-item label="发货地址" prop="pca" >
+        <el-cascader
+          v-model="postForm.pca"
+          size="small"
+          style="width:60%;"
+          :options="addressOptions"
+          clearable
+        />
+      </el-form-item>
       <el-form-item prop="deliveryTime" label="发货时间">
       	<el-select v-model="postForm.deliveryTime" placeholder="发货时间" clearable style="width: 40%;">
       		<el-option label="8小时内" value="8小时内"></el-option>
@@ -117,7 +126,7 @@
 	import MDinput from '@/components/MDinput'
 	import Sticky from '@/components/Sticky' // 粘性header组件
 	import {
-		provinceAndCityDataPlus, regionData
+		provinceAndCityDataPlus, regionData, CodeToText
 	} from 'element-china-area-data'
 	import {
 		getFreight,
@@ -164,6 +173,7 @@
 						message: '请输入模板名称',
 						trigger: 'blur'
 					}],
+          pca: [{ required: true, message: '请选择发货地', trigger: 'blur' }],
 					deliveryTime: [{
 						required: true,
 						message: '请选择发货时间',
@@ -242,10 +252,10 @@
 			getFreight(id) {
 				getFreight({id:id}).then(response => {
 					this.postForm = response.data.template
-					this.postForm.address = [this.postForm.province, this.postForm.city, this.postForm.area]
+					this.postForm.pca = [this.postForm.provinceCode, this.postForm.cityCode, this.postForm.areaCode]
 					this.templateAreaList = response.data.areaList
 					this.templateAreaList.forEach(function(item){
-						item.address = [item.province, item.city]
+						item.address = [item.provinceCode, item.cityCode]
 					})
 				}).catch(err => {
 					console.log(err)
@@ -256,18 +266,23 @@
 					if (valid) {
 						this.loading = true
 						let formData = Object.assign({}, this.postForm)
-						if(this.postForm.address && this.postForm.address.length > 0){
-							formData.province = this.postForm.address[0];
-							formData.city = this.postForm.address[1];
-							formData.area = this.postForm.address[2];
+						if (this.postForm.pca && this.postForm.pca.length > 0) {
+						  formData.provinceCode = this.postForm.pca[0]
+						  formData.cityCode = this.postForm.pca[1]
+						  formData.areaCode = this.postForm.pca[2]
+						  formData.province = CodeToText[formData.provinceCode]
+						  formData.city = CodeToText[formData.cityCode]
+						  formData.area = CodeToText[formData.areaCode]
 						}
 						formData.addTime = null
 						formData.updTime = null
 						if(this.templateAreaList && this.templateAreaList.length > 0){
 							this.templateAreaList.forEach(function(item){
 								item.country = 'china';
-								item.province = item.address[0];
-								item.city = item.address[1];
+								item.provinceCode = item.address[0];
+								item.cityCode = item.address[1];
+                item.province = CodeToText[item.provinceCode]
+                item.city = CodeToText[item.cityCode]
 							})
 							formData.areaJson = JSON.stringify(this.templateAreaList);
 						}

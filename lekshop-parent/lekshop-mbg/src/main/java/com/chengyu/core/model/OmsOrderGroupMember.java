@@ -40,7 +40,7 @@ public class OmsOrderGroupMember implements Serializable {
     private BigDecimal payPrice;
 
     @ApiModelProperty(value = "1已支付 2退款中 3已退款")
-    private String payStatus;
+    private Integer payStatus;
 
     @ApiModelProperty(value = "添加时间")
     private Date addTime;
@@ -144,11 +144,11 @@ public class OmsOrderGroupMember implements Serializable {
         this.payPrice = payPrice;
     }
 
-    public String getPayStatus() {
+    public Integer getPayStatus() {
         return payStatus;
     }
 
-    public void setPayStatus(String payStatus) {
+    public void setPayStatus(Integer payStatus) {
         this.payStatus = payStatus;
     }
 

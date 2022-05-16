@@ -40,4 +40,18 @@ public class GoodsEnums {
 			this.value = value;
 		}
 	}
+
+	@Getter
+	public enum GoodsType{
+		/**1普通商品>>2秒杀商品>>3拼团商品**/
+		NORMAL_GOODS(1),
+		SECKILL_GOODS(2),
+		GROUP_GOODS(2);
+
+		private final int value;
+
+		GoodsType(int value){
+			this.value = value;
+		}
+	}
 }

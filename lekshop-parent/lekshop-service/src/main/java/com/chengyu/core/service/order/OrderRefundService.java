@@ -145,4 +145,13 @@ public interface OrderRefundService {
      * @param  refundNo
      */
     void autoConfirmRefund(String refundNo);
+
+    /**
+     * 取消售后申请
+     * @author LeGreen
+     * @date   2022/5/16
+     * @param  member
+     * @param  refundId
+     */
+    void cancelRefund(UmsMember member, Integer refundId) throws ServiceException;
 }

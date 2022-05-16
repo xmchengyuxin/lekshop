@@ -533,6 +533,45 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		}
 	}
 
+	@Override
+	public void cancelRefund(UmsMember member, Integer refundId) throws ServiceException {
+		OmsOrderRefund refund = this.getRefundByMember(member, refundId);
+		if(!CollectionUtil.newArrayList(
+				OrderEnums.RefundDetailStatus.APPLY.getValue(),
+				OrderEnums.RefundDetailStatus.WAIT_BUYER_RETURN.getValue(),
+				OrderEnums.RefundDetailStatus.BUYER_RETURNED.getValue(),
+				OrderEnums.RefundDetailStatus.SERVICE_IN.getValue()
+		).contains(refund.getStatus())){
+			throw new ServiceException("状态不正确");
+		}
+		OmsOrderRefund updateRefund = new OmsOrderRefund();
+		updateRefund.setId(refund.getId());
+		updateRefund.setStatus(OrderEnums.RefundDetailStatus.CLOSED.getValue());
+		orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
+
+		OmsOrderDetail updateDetail = new OmsOrderDetail();
+		updateDetail.setId(refund.getDetailId());
+		updateDetail.setRefundStatus(OrderEnums.RefundStatus.REFUND_FAILED.getValue());
+		orderDetailMapper.updateByPrimaryKeySelective(updateDetail);
+
+		OmsOrder updateOrder = new OmsOrder();
+		updateOrder.setId(refund.getOrderId());
+		updateOrder.setRefundStatus(OrderEnums.RefundStatus.REFUND_FAILED.getValue());
+		orderMapper.updateByPrimaryKeySelective(updateOrder);
+
+		//记录
+		OmsOrderRefundLog log = new OmsOrderRefundLog();
+		log.setRefundId(refund.getId());
+		log.setRefundNo(refund.getRefundNo());
+		log.setOperatorId(refund.getMemberId());
+		log.setOperatorName(refund.getMemberName());
+		log.setHeadImg(refund.getHeadImg());
+		log.setContent("买家取消售后申请");
+		log.setAddTime(DateUtil.date());
+		log.setUpdTime(log.getAddTime());
+		orderRefundLogMapper.insert(log);
+	}
+
 	private OmsOrderRefund getRefundByShop(UmsShop shop, Integer refundId) throws ServiceException {
 		OmsOrderRefundExample example = new OmsOrderRefundExample();
 		example.createCriteria().andShopIdEqualTo(shop.getId()).andIdEqualTo(refundId);

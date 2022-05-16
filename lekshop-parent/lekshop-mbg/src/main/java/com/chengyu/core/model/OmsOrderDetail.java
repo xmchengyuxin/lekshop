@@ -47,6 +47,9 @@ public class OmsOrderDetail implements Serializable {
     @ApiModelProperty(value = "库存计算方式>>1下单减库存>>2付款减库存")
     private Integer stockType;
 
+    @ApiModelProperty(value = "原价")
+    private BigDecimal buyOriPrice;
+
     @ApiModelProperty(value = "购买单价")
     private BigDecimal buyPrice;
 
@@ -58,6 +61,15 @@ public class OmsOrderDetail implements Serializable {
 
     @ApiModelProperty(value = "购买总价")
     private BigDecimal buyTotalPrice;
+
+    @ApiModelProperty(value = "拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID")
+    private Integer groupId;
+
+    @ApiModelProperty(value = "成团人数")
+    private Integer groupNum;
+
+    @ApiModelProperty(value = "成团限时")
+    private Integer groupLimitHours;
 
     @ApiModelProperty(value = "0待支付>>1待发货>>2待收货>>3已完成>>4已取消>>5退款")
     private Integer status;
@@ -200,6 +212,14 @@ public class OmsOrderDetail implements Serializable {
         this.stockType = stockType;
     }
 
+    public BigDecimal getBuyOriPrice() {
+        return buyOriPrice;
+    }
+
+    public void setBuyOriPrice(BigDecimal buyOriPrice) {
+        this.buyOriPrice = buyOriPrice;
+    }
+
     public BigDecimal getBuyPrice() {
         return buyPrice;
     }
@@ -230,6 +250,30 @@ public class OmsOrderDetail implements Serializable {
 
     public void setBuyTotalPrice(BigDecimal buyTotalPrice) {
         this.buyTotalPrice = buyTotalPrice;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public Integer getGroupNum() {
+        return groupNum;
+    }
+
+    public void setGroupNum(Integer groupNum) {
+        this.groupNum = groupNum;
+    }
+
+    public Integer getGroupLimitHours() {
+        return groupLimitHours;
+    }
+
+    public void setGroupLimitHours(Integer groupLimitHours) {
+        this.groupLimitHours = groupLimitHours;
     }
 
     public Integer getStatus() {
@@ -324,10 +368,14 @@ public class OmsOrderDetail implements Serializable {
         sb.append(", goodsMainImg=").append(goodsMainImg);
         sb.append(", goodsParamName=").append(goodsParamName);
         sb.append(", stockType=").append(stockType);
+        sb.append(", buyOriPrice=").append(buyOriPrice);
         sb.append(", buyPrice=").append(buyPrice);
         sb.append(", buyNum=").append(buyNum);
         sb.append(", refundAmount=").append(refundAmount);
         sb.append(", buyTotalPrice=").append(buyTotalPrice);
+        sb.append(", groupId=").append(groupId);
+        sb.append(", groupNum=").append(groupNum);
+        sb.append(", groupLimitHours=").append(groupLimitHours);
         sb.append(", status=").append(status);
         sb.append(", refundStatus=").append(refundStatus);
         sb.append(", remark=").append(remark);

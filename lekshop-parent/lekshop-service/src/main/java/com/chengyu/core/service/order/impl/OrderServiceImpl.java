@@ -83,6 +83,8 @@ public class OrderServiceImpl implements OrderService {
 	private MemberAccountLogService memberAccountLogService;
 	@Autowired
 	private OrderFreightService orderFreightService;
+	@Autowired
+	private PmsGoodsGroupMapper goodsGroupMapper;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -174,9 +176,11 @@ public class OrderServiceImpl implements OrderService {
 			List<Integer> goodsIdList = new ArrayList<>();
 			List<Integer> goodsCateIdList = new ArrayList<>();
 			List<CaculateFreightFeeForm> freightFeeFormList = new ArrayList<>();
+			Integer type = null;
 			for(OrderBuyDetailForm buyDetailForm : buyDetailFormList){
 				PmsGoodsSku sku = goodsSkuMapper.selectByPrimaryKey(buyDetailForm.getSkuId());
 				PmsGoods goods = goodsMapper.selectByPrimaryKey(sku.getGoodsId());
+				type = goods.getType();
 				//校验库存
 				if(sku.getStock() < buyDetailForm.getNum()){
 					throw new ServiceException("「"+goods.getTitle()+"」库存不足");
@@ -192,7 +196,27 @@ public class OrderServiceImpl implements OrderService {
 				detail.setGoodsName(goods.getTitle());
 				detail.setGoodsMainImg(goods.getMainImg());
 				detail.setGoodsParamName(sku.getAttrSymbolName());
-				detail.setBuyPrice(sku.getPrice());
+				detail.setBuyOriPrice(sku.getOriPrice());
+				//如果是拼团模式
+				if(goods.getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue()){
+					detail.setGroupId(form.getGroupId());
+					if(form.getGroupId() == -1){
+						//单独购买
+						detail.setBuyPrice(sku.getOriPrice());
+					}else if(form.getGroupId() == 0){
+						//普通拼团
+						detail.setGroupNum(goods.getGroupNum());
+						detail.setBuyPrice(sku.getPrice());
+					}else{
+						//阶梯拼团
+						PmsGoodsGroup group = goodsGroupMapper.selectByPrimaryKey(form.getGroupId());
+						detail.setGroupNum(group.getNum());
+						detail.setBuyPrice(NumberUtil.mul(sku.getPrice(), NumberUtil.div(group.getDiscounts(), 100)));
+					}
+					detail.setGroupLimitHours(goods.getGroupLimitHours());
+				}else{
+					detail.setBuyPrice(sku.getPrice());
+				}
 				detail.setBuyNum(buyDetailForm.getNum());
 				detail.setStockType(goods.getStockType());
 				detail.setRefundAmount(BigDecimal.ZERO);
@@ -214,7 +238,8 @@ public class OrderServiceImpl implements OrderService {
 			OmsOrder order = new OmsOrder();
 			order.setPayOrderNo(payOrder.getPayOrderNo());
 			order.setOrderNo(StringUtils.genOrderNo(member.getId()));
-			order.setType(form.getType());
+			order.setType(type);
+			order.setGroupId(form.getGroupId());
 			order.setMemberId(member.getId());
 			order.setMemberName(member.getCode());
 			order.setMemberNickname(member.getNickname());
@@ -282,7 +307,8 @@ public class OrderServiceImpl implements OrderService {
 	 * @param  freightFeeFormList
 	 * @return BigDecimal
 	 */
-	private BigDecimal caculateFreightFee(Integer shopId, UmsMemberAddress address, List<CaculateFreightFeeForm> freightFeeFormList) {
+	@Override
+	public BigDecimal caculateFreightFee(Integer shopId, UmsMemberAddress address, List<CaculateFreightFeeForm> freightFeeFormList) {
 		//运费组合策略
 		UmsShopConfig config = shopConfigService.getShopConfig(shopId);
 		BigDecimal fee = BigDecimal.ZERO;
