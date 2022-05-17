@@ -37,8 +37,8 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	private MemberService memberService;
 	@Autowired
 	private MemberNewsService newsService;
-	@Autowired
-	private PayService payService;
+//	@Autowired
+//	private PayService payService;
 	@Autowired
 	private OrderService orderService;
 	

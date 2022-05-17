@@ -109,12 +109,19 @@ public class GoodsServiceImpl implements GoodsService {
 		if(cateIdList.length >=3){
 			goods.setCateId(Integer.parseInt(cateIdList[2]));
 		}
+		goods.setCateIds(publishForm.getGoodsCateIds());
 		goods.setCateName(goodsCateService.getGoodsCateName(CollectionUtil.newArrayList(goods.getCatePid(), goods.getCateTid(), goods.getCateId())));
 
 		String[] shopCateIdList = publishForm.getShopCateIds().split(CommonConstant.DH_REGEX);
-		goods.setShopCateId(Integer.parseInt(shopCateIdList[shopCateIdList.length -1]));
-		UmsShopCate shopCate = shopCateService.getShopCateById(goods.getShopCateId());
-		goods.setShopCateName(shopCate.getName());
+		goods.setShopCatePid(Integer.parseInt(shopCateIdList[0]));
+		if(shopCateIdList.length >=2 ){
+			goods.setShopCateTid(Integer.parseInt(shopCateIdList[1]));
+		}
+		if(shopCateIdList.length >=3){
+			goods.setShopCateId(Integer.parseInt(shopCateIdList[2]));
+		}
+		goods.setShopCateIds(publishForm.getShopCateIds());
+		goods.setShopCateName(shopCateService.getGoodsCateName(CollectionUtil.newArrayList(goods.getShopCatePid(), goods.getShopCateTid(), goods.getShopCateId())));
 		goods.setSort(9999);
 		goods.setWeight(0);
 		goods.setUpdTime(DateUtil.date());

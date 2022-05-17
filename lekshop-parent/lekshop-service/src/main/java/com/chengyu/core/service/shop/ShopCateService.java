@@ -6,6 +6,7 @@ import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.model.UmsShopCate;
 import io.swagger.models.auth.In;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,4 +70,13 @@ public interface ShopCateService {
 	 * @return UmsShopCate
 	 */
 	UmsShopCate getShopCateById(Integer shopCateId);
+
+	/**
+	 * 获取商品分类名称
+	 * @author LeGreen
+	 * @date   2022/5/14
+	 * @param  cateIdList
+	 * @return String
+	 */
+	String getGoodsCateName(List<Integer> cateIdList);
 }

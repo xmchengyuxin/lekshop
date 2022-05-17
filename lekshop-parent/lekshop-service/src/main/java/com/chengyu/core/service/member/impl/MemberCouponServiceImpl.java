@@ -52,6 +52,9 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public BigDecimal validateCoupon(UmsMember member, Integer couponId, BigDecimal totalAmount, List<Integer> goodsIdList, List<Integer> goodsCateIdList) throws ServiceException {
+		if(couponId == null){
+			return BigDecimal.ZERO;
+		}
 		UmsMemberCouponExample example = new UmsMemberCouponExample();
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andIdEqualTo(couponId);
 		List<UmsMemberCoupon> list = memberCouponMapper.selectByExample(example);

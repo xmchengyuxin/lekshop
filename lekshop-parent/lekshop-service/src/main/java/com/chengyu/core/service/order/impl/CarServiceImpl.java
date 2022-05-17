@@ -2,6 +2,7 @@ package com.chengyu.core.service.order.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import com.chengyu.core.domain.enums.GoodsEnums;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.OmsCarMapper;
@@ -38,6 +39,11 @@ public class CarServiceImpl implements CarService {
 	@Override
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void addCar(UmsMember member, Integer goodsId, String attrSymbolPath, Integer num) throws ServiceException {
+		//拼团秒杀商品不能加入购物车
+		PmsGoods goods = goodsService.getGoods(goodsId);
+		if(goods.getType() != GoodsEnums.GoodsType.NORMAL_GOODS.getValue()){
+			throw new ServiceException("拼团秒杀商品不支持加入购物车");
+		}
 		//查询SKU是否存在
 		PmsGoodsSkuExample example = new PmsGoodsSkuExample();
 		example.createCriteria().andGoodsIdEqualTo(goodsId).andAttrSymbolPathEqualTo(attrSymbolPath);
@@ -58,7 +64,6 @@ public class CarServiceImpl implements CarService {
 			OmsCar newCar = new OmsCar();
 			newCar.setMemberId(member.getId());
 			newCar.setMemberName(member.getCode());
-			PmsGoods goods = goodsService.getGoods(goodsId);
 			newCar.setShopId(goods.getShopId());
 			newCar.setShopName(goods.getShopName());
 			newCar.setGoodsId(goods.getId());

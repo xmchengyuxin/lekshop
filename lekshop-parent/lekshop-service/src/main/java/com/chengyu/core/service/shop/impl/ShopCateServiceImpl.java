@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @title  店铺分类
@@ -155,6 +156,18 @@ public class ShopCateServiceImpl implements ShopCateService {
 	@Override
 	public UmsShopCate getShopCateById(Integer shopCateId) {
 		return shopCateMapper.selectByPrimaryKey(shopCateId);
+	}
+
+	@Override
+	public String getGoodsCateName(List<Integer> cateIdList) {
+		UmsShopCateExample example = new UmsShopCateExample();
+		example.setOrderByClause("level asc");
+		example.createCriteria().andIdIn(cateIdList);
+		List<UmsShopCate> list = shopCateMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(list)){
+			return null;
+		}
+		return list.stream().map(UmsShopCate::getName).collect(Collectors.joining("/"));
 	}
 
 	List<UmsShopCate> getCateListByLevel(Integer shopId, Integer level, Integer pid){

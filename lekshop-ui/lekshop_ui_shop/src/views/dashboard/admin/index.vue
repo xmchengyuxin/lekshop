@@ -29,33 +29,6 @@
       </el-col>
     </el-row>
 
-    <!-- <el-row :gutter="12" >
-      <h3>平台利润
-        <el-tooltip class="item" effect="dark" content="利润=商家佣金-买手佣金-推广佣金-分站抽成" placement="top-start">
-          <i class="el-icon-question"></i>
-        </el-tooltip>
-      </h3>
-      <el-col style="margin-bottom:5px;">
-            <el-date-picker
-                  v-model="queryTime"
-                  type="daterange"
-                  align="right"
-                  unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  :picker-options="pickerOptions">
-                </el-date-picker>
-                <el-button class="filter-item" type="primary" icon="el-icon-search" circle @click="countPlatformIncome"></el-button>
-                <br>
-          <el-card shadow="hover" >
-              <div class="card-panel-text" >
-                <span style="color: red;font-size: 20px; font-weight: 600;">￥ {{platformIncome | moneyFormat}}</span>
-              </div>
-          </el-card>
-      </el-col>
-    </el-row> -->
-
     <el-row :gutter="12" >
       <h3>统计数据</h3>
       <el-col :span="6" v-for="item in amountData" style="margin-bottom:5px;">

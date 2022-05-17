@@ -27,4 +27,6 @@ public class OrderSearchForm {
 	private String sort;
 	
 	private Integer shopId;
+
+	private Integer type;
 }

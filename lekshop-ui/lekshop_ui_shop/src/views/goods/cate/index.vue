@@ -55,10 +55,18 @@
 			  <el-input-number size="mini" style="width:100px;" v-model="scope.row.sort" @change="sortChange(scope.row)" :min="1" label="修改排序"></el-input-number>
 			  </template>
 			</el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="200px">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="100px">
         <template slot-scope="scope">
-						<el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">编辑</el-button>
-						<el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button-group>
+              <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                 <el-button  type="danger" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row)">
+                 </el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+                 <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)"></el-button>
+              </el-tooltip>
+            </el-button-group>
+						<!-- <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row)">删除</el-button> -->
           </template>
       </el-table-column>
     </el-table>

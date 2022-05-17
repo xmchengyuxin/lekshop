@@ -62,7 +62,7 @@ public class OrderController extends UserBaseController {
 			return CommonResult.failed("请选择商品");
 		}
 		List<OrderBuyDetailForm> buyDetailFormList = JSONArray.parseArray(goodsParams, OrderBuyDetailForm.class);
-		List<Integer> shopIdList = buyDetailFormList.stream().map(OrderBuyDetailForm::getShopId).collect(Collectors.toList());
+		List<Integer> shopIdList = buyDetailFormList.stream().map(OrderBuyDetailForm::getShopId).distinct().collect(Collectors.toList());
 
 		List<ShopGoodsOrder> list = new ArrayList<>();
 		for(Integer shopId : shopIdList){
@@ -77,6 +77,7 @@ public class OrderController extends UserBaseController {
 				ShopGoods shopGoods = new ShopGoods();
 				shopGoods.setGoods(goods);
 				shopGoods.setGoodsSku(sku);
+				shopGoods.setBuyNum(buyDetailForm.getNum());
 				shopGoods.setGroupId(groupId);
 				if(shopGoods.getGroupId() != null){
 					if(shopGoods.getGroupId() == -1){
@@ -123,6 +124,7 @@ public class OrderController extends UserBaseController {
 		private PmsGoodsSku goodsSku;
 		private Integer groupId;
 		private String groupName;
+		private Integer buyNum;
 	}
 
 	@ApiOperation(value = "添加订单")

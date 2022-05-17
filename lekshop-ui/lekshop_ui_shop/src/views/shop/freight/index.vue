@@ -57,11 +57,10 @@
           <span v-if="scope.row.type == 1">{{ scope.row.defaultFirstNum}}件内{{scope.row.defaultFirstPrice}}元,每超过{{ scope.row.defaultSecondNum}}件增加{{scope.row.defaultSecondPrice}}元</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="60">
         <template slot-scope="scope">
       		<router-link :to="'/freight/edit/'+scope.row.id">
       		  <el-button type="primary" icon="el-icon-edit" size="mini">
-      		    编辑
       		  </el-button>
       		</router-link>
         </template>

@@ -77,7 +77,7 @@ public class CarController extends UserBaseController {
 	@OperationLog
 	@ApiOperation(value = "删除购物车")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "id", value = "ID"),
+			@ApiImplicitParam(name = "ids", value = "ID集合"),
 	})
 	@ResponseBody
 	@RequestMapping(value={"/car/delete"}, method=RequestMethod.POST)

@@ -37,22 +37,22 @@
       :summary-method="getSummaries"
     >
       <el-table-column type="selection" width="55" align="center" ></el-table-column>
-      <el-table-column label="状态" width="150"  align="center" prop="status" >
+      <el-table-column label="状态" width="80"  align="center" prop="status" >
         <template slot-scope="scope">
           <el-tag :type="scope.row.status == 1 ? 'success' : '' ">{{ scope.row.status | statusFilter}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="订单号" prop="orderNo" align="center" width="150">
+      <el-table-column label="订单号" prop="orderNo" align="center" width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.orderNo }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="出款类型" width="100" align="center" prop="method">
+      <el-table-column label="出款类型" width="80" align="center" prop="method">
         <template slot-scope="scope">
           <p>{{ scope.row.method == 1 ? '账户余额' : '佣金余额'}}</p>
         </template>
       </el-table-column>
-      <el-table-column label="提现方式" width="100" align="center" prop="type">
+      <el-table-column label="提现方式" width="80" align="center" prop="type">
         <template slot-scope="scope">
           <p>{{ scope.row.type | typeFilter}}</p>
         </template>

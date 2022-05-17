@@ -72,7 +72,7 @@
 			</el-table-column>
 			<el-table-column label="价格" width="70px"  align="center">
 			  <template slot-scope="scope">
-					 <span>{{ scope.row.price}}</span>
+					 <span>{{ scope.row.price | moneyFormat}}</span>
 			  </template>
 			</el-table-column>
       <el-table-column label="点击" width="70px"  align="center">
@@ -115,14 +115,20 @@
       		 <el-tag :type="scope.row.status == 1 ? 'success' : 'danger' ">{{ scope.row.status | statusFilter}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" min-width="100px">
         <template slot-scope="scope">
-          <router-link :to="'/goods/edit/'+scope.row.id">
-            <el-button type="primary" icon="el-icon-edit" size="mini">
-              编辑
-            </el-button>
-          </router-link>
-            <el-button  type="primary" icon="el-icon-date" size="mini" @click="handleViewGoodsQuality(scope.row)">参数</el-button>
+          <el-button-group>
+            <el-tooltip class="item" effect="dark" content="参数" placement="top">
+               <el-button  type="primary" icon="el-icon-date" size="mini" @click="handleViewGoodsQuality(scope.row)"></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+              <router-link :to="'/goods/edit/'+scope.row.id">
+                <el-button type="primary" icon="el-icon-edit" size="mini">
+                </el-button>
+              </router-link>
+            </el-tooltip>
+          </el-button-group>
+
         </template>
       </el-table-column>
     </el-table>

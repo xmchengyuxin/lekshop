@@ -420,15 +420,11 @@
           if(goods.type == 2){
             goods.seckillDateRange = [goods.seckillBeginTime, goods.seckillEndTime]
           }
-          goods.goodsCateId = []
-          if(goods.catePid){
-            goods.goodsCateId.push(goods.catePid)
+          if(goods.cateIds){
+            goods.goodsCateId = goods.cateIds.split(",").map(i => parseInt(i, 0))
           }
-          if(goods.cateTid){
-            goods.goodsCateId.push(goods.cateTid)
-          }
-          if(goods.cateId){
-            goods.goodsCateId.push(goods.cateId)
+          if(goods.shopCateIds){
+            goods.shopCateId = goods.shopCateIds.split(",").map(i => parseInt(i, 0))
           }
           this.postForm = goods;
           this.attrKeyList = JSON.parse(response.data.attrKeyList);

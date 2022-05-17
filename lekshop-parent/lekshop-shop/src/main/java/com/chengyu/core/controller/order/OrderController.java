@@ -79,4 +79,5 @@ public class OrderController extends ShopBaseController {
 		OrderFreightResult result = orderFreightService.getOrderFreight(orderId);
 		return CommonResult.success(result);
 	}
+
 }

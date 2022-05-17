@@ -476,6 +476,76 @@ public class PmsGoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andCateIdsIsNull() {
+            addCriterion("cate_ids is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsIsNotNull() {
+            addCriterion("cate_ids is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsEqualTo(String value) {
+            addCriterion("cate_ids =", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsNotEqualTo(String value) {
+            addCriterion("cate_ids <>", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsGreaterThan(String value) {
+            addCriterion("cate_ids >", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsGreaterThanOrEqualTo(String value) {
+            addCriterion("cate_ids >=", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsLessThan(String value) {
+            addCriterion("cate_ids <", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsLessThanOrEqualTo(String value) {
+            addCriterion("cate_ids <=", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsLike(String value) {
+            addCriterion("cate_ids like", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsNotLike(String value) {
+            addCriterion("cate_ids not like", value, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsIn(List<String> values) {
+            addCriterion("cate_ids in", values, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsNotIn(List<String> values) {
+            addCriterion("cate_ids not in", values, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsBetween(String value1, String value2) {
+            addCriterion("cate_ids between", value1, value2, "cateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andCateIdsNotBetween(String value1, String value2) {
+            addCriterion("cate_ids not between", value1, value2, "cateIds");
+            return (Criteria) this;
+        }
+
         public Criteria andCateNameIsNull() {
             addCriterion("cate_name is null");
             return (Criteria) this;
@@ -546,6 +616,126 @@ public class PmsGoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andShopCatePidIsNull() {
+            addCriterion("shop_cate_pid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidIsNotNull() {
+            addCriterion("shop_cate_pid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidEqualTo(Integer value) {
+            addCriterion("shop_cate_pid =", value, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidNotEqualTo(Integer value) {
+            addCriterion("shop_cate_pid <>", value, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidGreaterThan(Integer value) {
+            addCriterion("shop_cate_pid >", value, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shop_cate_pid >=", value, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidLessThan(Integer value) {
+            addCriterion("shop_cate_pid <", value, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidLessThanOrEqualTo(Integer value) {
+            addCriterion("shop_cate_pid <=", value, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidIn(List<Integer> values) {
+            addCriterion("shop_cate_pid in", values, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidNotIn(List<Integer> values) {
+            addCriterion("shop_cate_pid not in", values, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidBetween(Integer value1, Integer value2) {
+            addCriterion("shop_cate_pid between", value1, value2, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCatePidNotBetween(Integer value1, Integer value2) {
+            addCriterion("shop_cate_pid not between", value1, value2, "shopCatePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidIsNull() {
+            addCriterion("shop_cate_tid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidIsNotNull() {
+            addCriterion("shop_cate_tid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidEqualTo(Integer value) {
+            addCriterion("shop_cate_tid =", value, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidNotEqualTo(Integer value) {
+            addCriterion("shop_cate_tid <>", value, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidGreaterThan(Integer value) {
+            addCriterion("shop_cate_tid >", value, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shop_cate_tid >=", value, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidLessThan(Integer value) {
+            addCriterion("shop_cate_tid <", value, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidLessThanOrEqualTo(Integer value) {
+            addCriterion("shop_cate_tid <=", value, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidIn(List<Integer> values) {
+            addCriterion("shop_cate_tid in", values, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidNotIn(List<Integer> values) {
+            addCriterion("shop_cate_tid not in", values, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidBetween(Integer value1, Integer value2) {
+            addCriterion("shop_cate_tid between", value1, value2, "shopCateTid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateTidNotBetween(Integer value1, Integer value2) {
+            addCriterion("shop_cate_tid not between", value1, value2, "shopCateTid");
+            return (Criteria) this;
+        }
+
         public Criteria andShopCateIdIsNull() {
             addCriterion("shop_cate_id is null");
             return (Criteria) this;
@@ -603,6 +793,76 @@ public class PmsGoodsExample {
 
         public Criteria andShopCateIdNotBetween(Integer value1, Integer value2) {
             addCriterion("shop_cate_id not between", value1, value2, "shopCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsIsNull() {
+            addCriterion("shop_cate_ids is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsIsNotNull() {
+            addCriterion("shop_cate_ids is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsEqualTo(String value) {
+            addCriterion("shop_cate_ids =", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsNotEqualTo(String value) {
+            addCriterion("shop_cate_ids <>", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsGreaterThan(String value) {
+            addCriterion("shop_cate_ids >", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsGreaterThanOrEqualTo(String value) {
+            addCriterion("shop_cate_ids >=", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsLessThan(String value) {
+            addCriterion("shop_cate_ids <", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsLessThanOrEqualTo(String value) {
+            addCriterion("shop_cate_ids <=", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsLike(String value) {
+            addCriterion("shop_cate_ids like", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsNotLike(String value) {
+            addCriterion("shop_cate_ids not like", value, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsIn(List<String> values) {
+            addCriterion("shop_cate_ids in", values, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsNotIn(List<String> values) {
+            addCriterion("shop_cate_ids not in", values, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsBetween(String value1, String value2) {
+            addCriterion("shop_cate_ids between", value1, value2, "shopCateIds");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopCateIdsNotBetween(String value1, String value2) {
+            addCriterion("shop_cate_ids not between", value1, value2, "shopCateIds");
             return (Criteria) this;
         }
 

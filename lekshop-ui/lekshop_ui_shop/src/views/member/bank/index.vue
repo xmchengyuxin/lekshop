@@ -52,10 +52,12 @@
           <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="60">
         <template slot-scope="scope">
           <el-button-group>
-            <el-button type="primary" icon="el-icon-edit" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+               <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)"></el-button>
+            </el-tooltip>
           </el-button-group>
         </template>
       </el-table-column>

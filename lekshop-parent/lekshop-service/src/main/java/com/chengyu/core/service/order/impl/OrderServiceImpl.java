@@ -1,7 +1,9 @@
 package com.chengyu.core.service.order.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.NumberUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.domain.CommonConstant;
@@ -21,6 +23,7 @@ import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.member.MemberAddressService;
 import com.chengyu.core.service.member.MemberCouponService;
+import com.chengyu.core.service.order.CarService;
 import com.chengyu.core.service.order.OrderCommentService;
 import com.chengyu.core.service.order.OrderFreightService;
 import com.chengyu.core.service.order.OrderService;
@@ -85,6 +88,8 @@ public class OrderServiceImpl implements OrderService {
 	private OrderFreightService orderFreightService;
 	@Autowired
 	private PmsGoodsGroupMapper goodsGroupMapper;
+	@Autowired
+	private CarService carService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -117,6 +122,9 @@ public class OrderServiceImpl implements OrderService {
 		}
 		if(form.getDateFrom() != null && form.getDateTo() != null){
 			criteria.andPayTimeBetween(form.getDateFrom(), form.getDateTo());
+		}
+		if(form.getType() != null){
+			criteria.andTypeEqualTo(form.getType());
 		}
 		List<OmsOrder> list = orderMapper.selectByExample(example);
 
@@ -270,14 +278,14 @@ public class OrderServiceImpl implements OrderService {
 			order.setRemark(form.getRemark());
 			order.setAddTime(now);
 			order.setUpdTime(now);
-			orderMapper.insert(order);
+			orderMapper.insertSelective(order);
 			orderNoList.add(order.getOrderNo());
 			payAmount = NumberUtil.add(payAmount, order.getPayPrice());
 
 			for(OmsOrderDetail detail : detailList){
 				detail.setOrderId(order.getId());
 				detail.setOrderNo(order.getOrderNo());
-				orderDetailMapper.insert(detail);
+				orderDetailMapper.insertSelective(detail);
 
 				//如果是下单减库存的话,即可减库存
 				if(detail.getStockType() == GoodsEnums.StockType.ORDER_REDUCE.getValue()){
@@ -285,9 +293,12 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 
+			if(StringUtils.isNotBlank(form.getCarIds())){
+				carService.deleteCar(member, Convert.convert(new TypeReference<List<Integer>>() {}, form.getCarIds().split(CommonConstant.DH_REGEX)));
+			}
 		}
 		payOrder.setAmount(payAmount);
-		payOrderMapper.insert(payOrder);
+		payOrderMapper.insertSelective(payOrder);
 
 		//超时未支付自动取消
 		taskTriggerService.addTrigger(OrderAutoCancelJob.class, payOrder.getPayEndTime(), payOrder.getPayOrderNo());
@@ -339,6 +350,7 @@ public class OrderServiceImpl implements OrderService {
 			updatePayOrder.setId(payOrderList.get(0).getId());
 			updatePayOrder.setStatus(CommonConstant.SUS_INT);
 			updatePayOrder.setUpdTime(DateUtil.date());
+			updatePayOrder.setPayTime(updatePayOrder.getUpdTime());
 			payOrderMapper.updateByPrimaryKeySelective(updatePayOrder);
 
 			//支付成功, 更新状态
@@ -359,6 +371,7 @@ public class OrderServiceImpl implements OrderService {
 			OmsOrder updateOrder = new OmsOrder();
 			updateOrder.setStatus(OrderEnums.OrderStatus.WAIT_DELIVERY.getValue());
 			updateOrder.setUpdTime(DateUtil.date());
+			updateOrder.setPayTime(updateOrder.getUpdTime());
 			orderMapper.updateByExampleSelective(updateOrder, orderExample);
 
 			OmsOrderDetail updateDetail = new OmsOrderDetail();

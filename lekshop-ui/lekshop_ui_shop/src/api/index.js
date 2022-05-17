@@ -41,15 +41,7 @@ export function countAmount(data) {
 
 export function getLoginInfo() {
   return request({
-    url: '/system/getLoginInfo',
+    url: 'member/getLoginInfo',
     method: 'get'
-  })
-}
-
-export function countPlatformIncome(data) {
-  return request({
-    url: '/system/countPlatformIncome',
-    method: 'get',
-		params: data
   })
 }

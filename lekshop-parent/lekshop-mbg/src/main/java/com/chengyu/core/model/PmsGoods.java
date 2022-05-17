@@ -24,11 +24,21 @@ public class PmsGoods implements Serializable {
     @ApiModelProperty(value = "分类ID")
     private Integer cateId;
 
+    private String cateIds;
+
     @ApiModelProperty(value = "类目名称")
     private String cateName;
 
     @ApiModelProperty(value = "店铺自建分类ID")
+    private Integer shopCatePid;
+
+    @ApiModelProperty(value = "店铺自建分类ID")
+    private Integer shopCateTid;
+
+    @ApiModelProperty(value = "店铺自建分类ID")
     private Integer shopCateId;
+
+    private String shopCateIds;
 
     @ApiModelProperty(value = "店铺内类目")
     private String shopCateName;
@@ -179,6 +189,14 @@ public class PmsGoods implements Serializable {
         this.cateId = cateId;
     }
 
+    public String getCateIds() {
+        return cateIds;
+    }
+
+    public void setCateIds(String cateIds) {
+        this.cateIds = cateIds;
+    }
+
     public String getCateName() {
         return cateName;
     }
@@ -187,12 +205,36 @@ public class PmsGoods implements Serializable {
         this.cateName = cateName;
     }
 
+    public Integer getShopCatePid() {
+        return shopCatePid;
+    }
+
+    public void setShopCatePid(Integer shopCatePid) {
+        this.shopCatePid = shopCatePid;
+    }
+
+    public Integer getShopCateTid() {
+        return shopCateTid;
+    }
+
+    public void setShopCateTid(Integer shopCateTid) {
+        this.shopCateTid = shopCateTid;
+    }
+
     public Integer getShopCateId() {
         return shopCateId;
     }
 
     public void setShopCateId(Integer shopCateId) {
         this.shopCateId = shopCateId;
+    }
+
+    public String getShopCateIds() {
+        return shopCateIds;
+    }
+
+    public void setShopCateIds(String shopCateIds) {
+        this.shopCateIds = shopCateIds;
     }
 
     public String getShopCateName() {
@@ -471,8 +513,12 @@ public class PmsGoods implements Serializable {
         sb.append(", catePid=").append(catePid);
         sb.append(", cateTid=").append(cateTid);
         sb.append(", cateId=").append(cateId);
+        sb.append(", cateIds=").append(cateIds);
         sb.append(", cateName=").append(cateName);
+        sb.append(", shopCatePid=").append(shopCatePid);
+        sb.append(", shopCateTid=").append(shopCateTid);
         sb.append(", shopCateId=").append(shopCateId);
+        sb.append(", shopCateIds=").append(shopCateIds);
         sb.append(", shopCateName=").append(shopCateName);
         sb.append(", type=").append(type);
         sb.append(", title=").append(title);
