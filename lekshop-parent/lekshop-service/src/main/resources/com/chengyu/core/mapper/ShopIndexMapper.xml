@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomShopIndexMapper">
+	
+	<!-- 总商品数 -->
+	<select id="countGoods" resultType="java.util.Map">
+	    select
+	      	count(id) goodsNum
+      	from pms_goods
+      	where status in(1,2)
+		<if test="shopId != null">
+			and shop_id = #{shopId}
+		</if>
+	</select>
+
+	<!-- 总下单人数,总订单数,总金额 -->
+	<select id="countOrder" resultType="java.util.Map">
+		select
+			count(id) as orderNum,
+			ifnull(sum(pay_price),0) as orderAmount,
+			count(DISTINCT member_id) as orderMemberNum
+		from oms_order
+		where status in(1,2,3)
+		<if test="shopId != null">
+			and shop_id = #{shopId}
+		</if>
+		<if test="beginDate != null and endDate != null">
+			and add_time &gt;= #{beginDate} and add_time &lt;= #{endDate}
+		</if>
+	</select>
+
+	<!-- 统计最近10天的数据 -->
+	<select id="countOrderNumByLastTenDays" resultType="java.util.Map">
+		select
+			date(add_time) addTime, COUNT(*) num
+		from oms_order
+		where status in(1,2,3)
+		  and DATE_SUB(CURDATE(), INTERVAL 10 DAY) &lt;= date(add_time)
+			<if test="shopId != null">
+				and shop_id = #{shopId}
+			</if>
+		GROUP BY date(add_time) order by date(add_time) asc
+	</select>
+
+	<!-- 未处理订单 -->
+	<select id="countWaitDealOrderNum" resultType="java.util.Map">
+		select
+			count(id) as waitDealOrderNum
+		from oms_order
+		where status = 1
+		<if test="shopId != null">
+			and shop_id = #{shopId}
+		</if>
+	</select>
+
+	<!-- 店铺收藏 -->
+	<select id="countCollectShopNum" resultType="java.util.Map">
+		select
+		count(id) as collectShopNum
+		from ums_member_collection_shop
+		where 1 = 1
+		<if test="shopId != null">
+			and shop_id = #{shopId}
+		</if>
+	</select>
+
+	<!-- 商品收藏 -->
+	<select id="countCollectGoodsNum" resultType="java.util.Map">
+		select
+		count(id) as collectGoodsNum
+		from ums_member_collection_goods
+		where 1 = 1
+		<if test="shopId != null">
+			and shop_id = #{shopId}
+		</if>
+	</select>
+
+	<!-- 加入购物车 -->
+	<select id="countCarNum" resultType="java.util.Map">
+		select
+		count(id) as addCarNum
+		from oms_car
+		where 1 = 1
+		<if test="shopId != null">
+			and shop_id = #{shopId}
+		</if>
+	</select>
+
+	<!-- 本月商品销售排行 -->
+	<select id="getGoodsSellRankList" resultType="java.util.Map">
+		select
+			goods_name as goodsName,
+			goods_main_img as goodsMainImg,
+			sum(buy_total_price) buyTotalPrice,
+			sum(buy_num) num
+		from oms_order_detail
+		where status in (1,2,3) and shop_id = #{shopId} and add_time &gt;= #{beginDate} and add_time &lt;= #{endDate}
+		group by goods_id order by sum(buy_num) desc limit 5
+	</select>
+
+</mapper>

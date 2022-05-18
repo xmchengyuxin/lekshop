@@ -61,12 +61,14 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 			UmsMemberViewGoods updateViewGoods = new UmsMemberViewGoods();
 			updateViewGoods.setId(list.get(0).getId());
 			updateViewGoods.setUpdTime(DateUtil.date());
+			updateViewGoods.setDate(DateUtil.date());
 			memberViewGoodsMapper.updateByPrimaryKeySelective(updateViewGoods);
 		}else{
 			UmsMemberViewGoods viewGoods = new UmsMemberViewGoods();
 			viewGoods.setMemberId(member.getId());
 			viewGoods.setMemberName(member.getNickname());
 			viewGoods.setHeadImg(member.getHeadImg());
+			viewGoods.setDate(DateUtil.date());
 
 			PmsGoods goods = goodsMapper.selectByPrimaryKey(goodsId);
 			viewGoods.setGoodsId(goods.getId());

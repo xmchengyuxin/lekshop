@@ -25,4 +25,7 @@ public class OrderAddForm {
 
 	@ApiModelProperty(value = "拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID")
 	private Integer groupId;
+
+	@ApiModelProperty(value = "参团ID")
+	private Integer joinGroupId;
 }

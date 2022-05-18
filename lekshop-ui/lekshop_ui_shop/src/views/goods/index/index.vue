@@ -37,7 +37,7 @@
       		<span>{{ scope.row.cateName}}</span>
         </template>
       </el-table-column>
-			<el-table-column label="宝贝标题" width="200px"  align="center">
+			<el-table-column label="宝贝标题" min-width="200px"  align="center">
 			  <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top">
             <span class="line1">
@@ -115,7 +115,7 @@
       		 <el-tag :type="scope.row.status == 1 ? 'success' : 'danger' ">{{ scope.row.status | statusFilter}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" min-width="100px">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="100px">
         <template slot-scope="scope">
           <el-button-group>
             <el-tooltip class="item" effect="dark" content="参数" placement="top">

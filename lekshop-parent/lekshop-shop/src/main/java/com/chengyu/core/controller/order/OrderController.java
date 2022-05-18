@@ -10,7 +10,9 @@ import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.model.OmsOrderPriceLog;
 import com.chengyu.core.service.order.OrderFreightService;
+import com.chengyu.core.service.order.OrderPriceLogService;
 import com.chengyu.core.service.order.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -39,6 +42,8 @@ public class OrderController extends ShopBaseController {
 	private OrderService orderService;
 	@Autowired
 	private OrderFreightService orderFreightService;
+	@Autowired
+	private OrderPriceLogService orderPriceLogService;
 	
 	@ApiOperation(value = "订单列表")
 	@ResponseBody
@@ -72,12 +77,29 @@ public class OrderController extends ShopBaseController {
 		return CommonResult.success(massage);
 	}
 
+	@OperationLog
+	@ApiOperation(value = "修改价格")
+	@ResponseBody
+	@RequestMapping(value="/order/editPriceSubmit", method=RequestMethod.POST)
+	public CommonResult<String> editPriceSubmit(Integer id, BigDecimal editPrice) throws ServiceException {
+		orderPriceLogService.updateOrderPrice(getCurrentShop(), id, editPrice);
+		return CommonResult.success(null);
+	}
+
 	@ApiOperation(value = "物流详情")
 	@ResponseBody
 	@RequestMapping(value="/order/getFreightList", method=RequestMethod.GET)
 	public CommonResult<OrderFreightResult> getDeliveryList(Integer orderId) {
 		OrderFreightResult result = orderFreightService.getOrderFreight(orderId);
 		return CommonResult.success(result);
+	}
+
+	@ApiOperation(value = "价格修改记录")
+	@ResponseBody
+	@RequestMapping(value="/order/getPriceLog", method=RequestMethod.GET)
+	public CommonResult<List<OmsOrderPriceLog>> getPriceLog(Integer orderId) {
+		List<OmsOrderPriceLog> list= orderPriceLogService.getOrderPriceLogByOrderId(orderId);
+		return CommonResult.success(list);
 	}
 
 }

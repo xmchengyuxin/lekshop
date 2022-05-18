@@ -1,6 +1,7 @@
 package com.chengyu.core.service.member.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.PmsGoodsMapper;
 import com.chengyu.core.mapper.UmsMemberCollectionGoodsMapper;
 import com.chengyu.core.model.PmsGoods;
@@ -28,6 +29,8 @@ public class MemberCollectGoodsServiceImpl implements MemberCollectGoodsService 
 	private UmsMemberCollectionGoodsMapper memberCollectionGoodsMapper;
 	@Autowired
 	private PmsGoodsMapper goodsMapper;
+	@Autowired
+	private BaseMapper baseMapper;
 
 	@Override
 	public List<UmsMemberCollectionGoods> getMemberCollectionGoodsList(Integer memberId, Integer page, Integer pageSize) {
@@ -49,6 +52,8 @@ public class MemberCollectGoodsServiceImpl implements MemberCollectGoodsService 
 			UmsMemberCollectionGoodsExample example = new UmsMemberCollectionGoodsExample();
 			example.createCriteria().andMemberIdEqualTo(member.getId()).andGoodsIdEqualTo(goodsId);
 			memberCollectionGoodsMapper.deleteByExample(example);
+
+			baseMapper.update("update pms_goods set collection_num = collection_num-1 where id = "+goodsId);
 		}else{
 			//收藏
 			UmsMemberCollectionGoods collectionGoods = new UmsMemberCollectionGoods();
@@ -57,13 +62,17 @@ public class MemberCollectGoodsServiceImpl implements MemberCollectGoodsService 
 			collectionGoods.setHeadImg(member.getHeadImg());
 
 			PmsGoods goods = goodsMapper.selectByPrimaryKey(goodsId);
+			collectionGoods.setShopId(goods.getShopId());
+			collectionGoods.setShopName(goods.getShopName());
 			collectionGoods.setGoodsId(goods.getId());
 			collectionGoods.setGoodsName(goods.getTitle());
 			collectionGoods.setGoodsMainImg(goods.getMainImg());
 			collectionGoods.setPrice(goods.getPrice());
 			collectionGoods.setAddTime(DateUtil.date());
 			collectionGoods.setUpdTime(collectionGoods.getAddTime());
-			memberCollectionGoodsMapper.insert(collectionGoods);
+			memberCollectionGoodsMapper.insertSelective(collectionGoods);
+
+			baseMapper.update("update pms_goods set collection_num = collection_num+1 where id = "+goodsId);
 		}
 	}
 

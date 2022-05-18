@@ -1,6 +1,7 @@
 package com.chengyu.core.service.shop.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.ShopEnums;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.CustomShopCouponMapper;
@@ -151,7 +152,7 @@ public class ShopCouponServiceImpl implements ShopCouponService {
 		memberCoupon.setUseGoodsCateIds(coupon.getUseGoodsCateIds());
 		memberCoupon.setAmount(coupon.getAmount());
 		memberCoupon.setFullAmount(coupon.getFullAmount());
-		memberCoupon.setStatus(coupon.getStatus());
+		memberCoupon.setStatus(CommonConstant.NO_INT);
 		if(coupon.getValidityType() == ShopEnums.CouponValidityType.LIMIT_DAYS.getValue()){
 			memberCoupon.setValidityBeginTime(now);
 			memberCoupon.setValidityEndTime(DateUtil.offsetDay(now, coupon.getValidityDays()));

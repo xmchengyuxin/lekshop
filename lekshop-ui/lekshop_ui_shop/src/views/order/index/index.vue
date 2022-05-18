@@ -19,6 +19,10 @@
 			 <el-date-picker  class="filter-item"  v-model="listQuery.endTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择结束时间" />
 
 			 <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
+       <br>
+       <el-button-group>
+       <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-promotion" @click="handlDelivery">批量发货</el-button>
+       </el-button-group>
 			 <!-- <br>
 			 <el-button-group>
 					<el-button class="filter-item" type="info" :loading="downloadLoading" size="mini" icon="el-icon-download" @click="handleDownload">导出当前</el-button>
@@ -46,7 +50,7 @@
                       </el-button>
                    </el-tooltip> -->
                   <el-tooltip class="item" effect="dark" content="发货" placement="top">
-                    <el-button v-if="scope.row.order.status == 1" type="primary" size="mini">
+                    <el-button v-if="scope.row.order.status == 1" type="primary" size="mini" @click="handlDelivery(scope.row)">
                        <svg-icon icon-class="logistic" />
                     </el-button>
                   </el-tooltip>
@@ -103,8 +107,6 @@
           <el-tag effect="plain" v-if="scope.row.order.status == 4" type="danger">{{ scope.row.order.status | statusFilter }}</el-tag>
           <br/>
           <a  class="link-type" @click="handleOrderDetail(scope.row)">订单详情</a>
-          <br/>
-          <a v-if="[2,3].indexOf(scope.row.order.status) > 0" class="link-type">查看物流</a>
 			  </template>
 			</el-table-column>
     </el-table>
@@ -112,13 +114,33 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
   <!--订单详情-->
-		<el-dialog title="订单详情" :visible.sync="dialogDetailVisible" >
-      <el-steps :active="order.status" align-center>
-        <el-step title="下单" :description="order.buyTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')"></el-step>
-        <el-step title="付款" :description="order.payTime ? (order.payTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')) : ''"></el-step>
-        <el-step title="发货" :description="order.deliveryTime ? (order.deliveryTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')) : ''"></el-step>
-        <el-step title="收货" :description="order.finishTime ? (order.finishTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')) : ''"></el-step>
-        <el-step title="完成" :description="order.finishTime ? (order.finishTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')) : ''"></el-step>
+		<el-dialog title="订单详情" :visible.sync="dialogDetailVisible" width="80%">
+      <el-steps :active="activeNum" align-center>
+        <el-step title="下单">
+          <div slot="description">
+            {{order.buyTime | parseTime}}
+          </div>
+        </el-step>
+        <el-step title="付款">
+          <div slot="description" v-if="order.payTime">
+            {{order.payTime | parseTime}}
+          </div>
+        </el-step>
+        <el-step title="发货">
+          <div slot="description" v-if="order.deliveryTime">
+            {{order.deliveryTime | parseTime}}
+          </div>
+        </el-step>
+        <el-step title="收货">
+          <div slot="description" v-if="order.finishTime">
+            {{order.finishTime | parseTime}}
+          </div>
+        </el-step>
+        <el-step title="完成">
+          <div slot="description" v-if="order.finishTime">
+            {{order.finishTime | parseTime}}
+          </div>
+        </el-step>
       </el-steps>
       <br/>
       <el-card class="box-card-dialog" shadow="hover">
@@ -183,8 +205,8 @@
               <el-tag effect="plain" v-if="order.status == 3" type="success">{{ order.status | statusFilter }}</el-tag>
               <el-tag effect="plain" v-if="order.status == 4" type="danger">{{ order.status | statusFilter }}</el-tag>
             </p>
-            <p style="height: 20px;">支付方式： {{order.payMethod}}</p>
-            <p style="height: 20px;">配送方式： {{order.deliveryType}}</p>
+            <p style="height: 30px;">支付方式： {{order.payMethod}}</p>
+            <p style="height: 40px;">配送方式： {{order.deliveryType}}</p>
           </div>
       </el-card>
       <br>
@@ -252,52 +274,95 @@
           </el-descriptions>
       </el-card>
 
-      <br>
-      <el-card class="box-card-dialog" shadow="hover">
+      <br v-if="order.status == 2 || order.status == 3">
+      <el-card class="box-card-dialog" shadow="hover" v-if="order.status == 2 || order.status == 3">
         <div slot="header" class="clearfix">
-          <span>订单物流</span>
+          <h3 style="height: 20px;">订单物流</h3>
+          <p style="height: 20px;">快递方式： {{order.deliveryType}}</p>
+          <p style="height: 20px;">快递单号： {{order.deliveryNo}}</p>
         </div>
         <el-timeline>
         		<el-timeline-item
-        			v-for="(activity, index) in logisticDetail"
+        			v-for="(activity, index) in freightDetailList"
         			:key="index"
         			:timestamp="activity.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') ">
         			{{activity.detail}}
         		</el-timeline-item>
         	</el-timeline>
       </el-card>
+
+      <br>
+      <el-card class="box-card-dialog" shadow="hover" v-if="orderPriceDetail.length > 0">
+        <div slot="header" class="clearfix">
+          <h3>价格修改记录</h3>
+        </div>
+        <el-timeline :reverse="true">
+        		<el-timeline-item  v-for="(price, index) in orderPriceDetail" :timestamp="price.addTime | parseTime">
+        				修改前:¥{{price.oldPrice | moneyFormat}}
+                修改后:¥{{price.nowPrice | moneyFormat}}
+                修改人:{{price.editName}}
+        		</el-timeline-item>
+        </el-timeline>
+      </el-card>
+
 		</el-dialog>
 
 		<!--发货框-->
 		<el-dialog title="发货" :visible.sync="dialogFahuoVisible">
-		    <el-form ref="dataForm" :rules="rules" :model="order" label-width="80px" label-position="left" style="width: 400px; margin-left:50px;">
-		      <el-form-item label="订单编号" prop="orerNo">
-						<el-input v-model="order.orderNo" disabled />
+		    <el-form ref="deliveryForm" :rules="rules" :model="deliveryForm" label-width="80px" label-position="right" style="width: 100%;">
+		      <el-form-item label="快递公司" prop="deliveryType" :rules="[{ required: true, message: '请选择快递公司', trigger: 'change' }]">
+						<el-select v-model="deliveryForm.deliveryType" class="filter-item" placeholder="请选择" style="width: 60%;" @change="changeDeliveryType">
+						  <el-option v-for="item in deliveryTypeOptions" :key="item.key" :label="item.name" :value="item.name" />
+						</el-select>
 		      </el-form-item>
-					<el-form-item label="订单类型" prop="type">
-							<el-tag>{{order.type | typeFilter }}</el-tag>
+					<el-form-item label="快递单" prop="type">
+							<el-table
+							  :data="deliveryList"
+							  border
+							  style="width: 100%;"
+							>
+								<el-table-column label="ID" align="center" width="55">
+								  <template slot-scope="scope">
+							     <span>{{ scope.row.id }}</span>
+								  </template>
+								</el-table-column>
+								<el-table-column label="订单号"  align="center">
+								  <template slot-scope="scope">
+								    <span>{{ scope.row.orderNo }}</span>
+								  </template>
+								</el-table-column>
+                <el-table-column label="状态"  align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tag effect="plain" v-if="scope.row.status == 0" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
+                    <el-tag effect="plain" v-if="scope.row.status == 1" type="warning">{{ scope.row.status | statusFilter }}</el-tag>
+                    <el-tag effect="plain" v-if="scope.row.status == 2" type="info">{{ scope.row.status | statusFilter }}</el-tag>
+                    <el-tag effect="plain" v-if="scope.row.status == 3" type="success">{{ scope.row.status | statusFilter }}</el-tag>
+                    <el-tag effect="plain" v-if="scope.row.status == 4" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="姓名"  align="center" width="100">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.receiveName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="手机"  align="center" width="100">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.receivePhone }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="地区"  align="center">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.receiveAddress }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="快递单号"  align="center">
+                  <template slot-scope="scope">
+                    <el-input v-model="scope.row.deliveryNo" placeholder="" :disabled="scope.row.status != 1"/>
+                  </template>
+                </el-table-column>
+							</el-table>
+              <span class="tips">*快递单号不填则表示该笔订单不发货，无需物流快递单号请填写0</span>
 					</el-form-item>
-					<el-form-item v-if="order.type == '3'" label="拼团进度" prop="progress">
-							<el-progress :width="100" type="circle" :percentage="assemblePercent"></el-progress>
-							<img v-for="item in assembleMemberList" :src="item.headImg" class="avatar" style="height:100px;width:100px;border-radius: 50%;">
-							<br>
-							<span style="color:red;">*只有拼团进度为100%时才能发货</span>
-					</el-form-item>
-					<el-form-item label="发货方式" prop="logisticType">
-							<el-select v-model="order.logisticType" class="filter-item" placeholder="请选择">
-							  <el-option v-for="item in logisticTypeOptions" :key="item.key" :label="item.text" :value="item.key" />
-							</el-select>
-					</el-form-item>
-					<template v-if="order.logisticType == '2' ">
-						<el-form-item label="选择物流" prop="logisticsId">
-							<el-select v-model="order.logisticsId" class="filter-item" placeholder="请选择">
-								<el-option v-for="item in logisticsOptions" :key="item.id" :label="item.name" :value="item.id" />
-							</el-select>
-						</el-form-item>
-						<el-form-item label="物流单号" prop="logisticsNo">
-							<el-input v-model="order.logisticsNo" placeholder="请输入物流单号" />
-						</el-form-item>
-				</template>
 					</el-form>
 		    <div style="text-align:right;">
 		      <el-button type="danger" @click="dialogFahuoVisible=false">取消</el-button>
@@ -307,15 +372,15 @@
 
 		<!--修改价格框-->
 		<el-dialog title="修改价格" :visible.sync="dialogPriceVisible">
-		    <el-form ref="dataForm" :rules="editPriceRules" :model="order" label-width="80px" label-position="left" style="width: 400px; margin-left:50px;">
+		    <el-form ref="dataForm" :rules="editPriceRules" :model="order" label-width="80px" label-position="left" style="width: 100%; margin-left:50px;">
 		      <el-form-item label="订单编号" prop="orerNo">
-						<el-input v-model="order.orderNo" disabled />
+						<el-input v-model="order.orderNo" disabled style="width: 60%;"/>
 		      </el-form-item>
-					<el-form-item label="订单总价" prop="totalAmount">
-						<el-input v-model="order.totalAmount" disabled />
+					<el-form-item label="订单总价" prop="payPrice">
+						<el-input v-model="order.payPrice" disabled style="width: 60%;"/>
 					</el-form-item>
 					<el-form-item label="修改价格" prop="editPrice">
-						<el-input v-model="order.editPrice" />
+						<el-input v-model="order.editPrice" style="width: 60%;"/>
 					</el-form-item>
 			</el-form>
 		    <div style="text-align:right;">
@@ -323,37 +388,6 @@
 		      <el-button type="primary" @click="editPriceConfirm">确定</el-button>
 		    </div>
 		</el-dialog>
-
-		<!--价格记录框-->
-		<el-dialog title="价格修改记录" :visible.sync="dialogPriceLogVisible">
-							<el-timeline>
-								<el-timeline-item  v-for="(price, index) in orderPriceDetail" placement="top">
-									<el-card>
-										<h4>订单原价:¥{{price.oldPrice | moneyFormat}},修改订单价格为:¥{{price.nowPrice | moneyFormat}}</h4>
-										<p>{{price.editName}} 提交于 {{price.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</p>
-									</el-card>
-								</el-timeline-item>
-						</el-timeline>
-		</el-dialog>
-
-		<!--订单物流框-->
-		<el-dialog title="物流详情" :visible.sync="dialogWuliuVisible">
-					<el-form ref="dataForm" :model="orderLogistic" label-width="100px" label-position="left" style="width: 400px; margin-left:50px;">
-					  <el-form-item label="新增物流信息" prop="logisticContent">
-							<el-input style="width:70%" v-model="orderLogistic.logisticContent" />
-							<el-button style="margin-left: 10px;" type="primary" size="mini" @click="handleAddLogistic()">添加</el-button>
-					  </el-form-item>
-					</el-form>
-		      <el-timeline>
-							<el-timeline-item
-								v-for="(activity, index) in logisticDetail"
-								:key="index"
-								:timestamp="activity.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') ">
-								{{activity.detail}}
-							</el-timeline-item>
-						</el-timeline>
-		</el-dialog>
-
   </div>
 </template>
 
@@ -400,7 +434,8 @@
 </style>
 
 <script>
-import {getOrderList, getFreightList, getOrder, delivery} from '@/api/order'
+import {getOrderList, getFreightList, getOrder, delivery, editPrice, getPriceList} from '@/api/order'
+import {getDeliveryTypeSelector} from '@/api/system'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime, moneyFormat} from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -474,18 +509,16 @@ export default {
 			editPriceRules: {
 			  editPrice: [{ required: true, message: '请填写修改价格', trigger: 'blur' }]
 			},
-			logisticTypeOptions,
-			logisticsOptions:[],
-			logisticDetail:[],
 			orderPriceDetail:[],
-			checkAll: true,
-			checkedStatus: ['1', '2', '3', '4', '5'],
-			isIndeterminate: false,
-			statusList: ['1', '2', '3', '4', '5'],
 			orderTypeOptions,
 			assembleMemberList:[],
 			assemblePercent: 0,
-      downloadLoading: false
+      downloadLoading: false,
+      deliveryTypeOptions: [],
+      deliveryForm: {},
+      deliveryList: [],
+      freightDetailList: [],
+      activeNum: 0
     }
   },
   created() {
@@ -508,42 +541,71 @@ export default {
     handleOrderDetail(row){
        this.order = row.order;
        this.orderDetailList = row.orderDetailList;
-       getFreightList({orderId:this.order.id}).then((result) => {
-       	this.assembleMemberList = result.data.assembleMemberList;
-       	this.assemblePercent = Number(result.data.assemblePercent);
+       this.activeNum = this.order.status;
+       if(this.activeNum == 4){
+         this.activeNum = 0
+       }
+       if(this.order.status == 2 || this.order.status == 3){
+         getFreightList({orderId:this.order.id}).then((result) => {
+           if(result.data){
+              this.freightDetailList = result.data.freightDetailList;
+           }
+         })
+       }
+       getPriceList({orderId:this.order.id}).then((result) => {
+       	this.orderPriceDetail = result.data;
        })
        this.dialogDetailVisible = true;
     },
-		handleFahuo(row){
-			this.order = Object.assign({}, row) // copy obj
+		handlDelivery(row){
+      let valList = [];
+      if(row.order){
+        valList.push(row.order);
+      }else{
+        const delVals = this.multipleSelection;
+        if(!delVals || delVals.length <= 0){
+          this.$message({
+            message: '请至少选择一条数据',
+            type: 'error',
+            duration: 2000
+          })
+          return;
+        }
+        delVals.forEach(val =>{
+          valList.push(val.order);
+        })
+      }
+      if(!this.deliveryTypeOptions || this.deliveryTypeOptions.length == 0){
+        getDeliveryTypeSelector().then((result) => {
+          this.deliveryTypeOptions = result.data;
+         })
+      }
+			this.deliveryList = valList
 			this.dialogFahuoVisible = true
-			if(this.order.type == '3'){
-				getAssembleMemberList({orderNo:this.order.orderNo}).then((result) => {
-					this.logisticDetail = result.data.freightDetailList;
-				})
-			}
-			getLogisticSelector().then((result) => {
-				this.logisticsOptions = result.data;
-			})
 			this.$nextTick(() => {
-			  this.$refs['dataForm'].clearValidate()
+			  this.$refs['deliveryForm'].clearValidate()
 			})
 		},
 		fahuoConfirm() {
-			this.$refs['dataForm'].validate((valid) => {
+			this.$refs['deliveryForm'].validate((valid) => {
 			  if (valid) {
-			    let formData = {
-						id : this.order.id,
-						logisticsId: this.order.logisticsId,
-						logisticsNo: this.order.logisticsNo,
-						logisticType: this.order.logisticType
-					}
-			    fahuo(formData).then(() => {
+          let deliveryFormList = [];
+          this.deliveryList.forEach(item=>{
+            if(item.status == 1 && item.deliveryNo != ''){
+              let form = {
+                deliveryType: this.deliveryForm.deliveryType,
+                orderId: item.id,
+                deliveryNo: item.deliveryNo
+              }
+              deliveryFormList.push(form)
+            }
+          })
+			    delivery({deliveryJson: JSON.stringify(deliveryFormList)}).then((response) => {
 						this.getList()
 			      this.dialogFahuoVisible = false
 			      this.$notify({
 			        title: '成功',
-			        message: '该订单已发货成功,请及时处理物流信息',
+			        message: response.data,
 			        type: 'success',
 			        duration: 2000
 			      })
@@ -578,7 +640,7 @@ export default {
 			  }
 			})
 		},
-		viewOrderPriceLog(row){
+		/* viewOrderPriceLog(row){
 			orderPriceLog(row.id).then((result) => {
 				this.orderPriceDetail = result.data;
 				this.dialogPriceLogVisible = true
@@ -600,7 +662,16 @@ export default {
 					this.logisticDetail = result.data;
 					this.orderLogistic.logisticContent = ''
 			})
-		},
+		}, */
+    changeDeliveryType(){
+      if(this.deliveryForm.deliveryType == 'none'){
+        this.deliveryList.forEach(item=>{
+          if(item.status ==1){
+            this.$set(item, 'deliveryNo', 0);
+          }
+        })
+      }
+    },
 		handleClickTab(tab, event) {
 			this.listQuery = {
 			  page: 1,

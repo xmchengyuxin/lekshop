@@ -61,8 +61,8 @@ public class MemberOrderController extends UserBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value={"/order/cancel"}, method=RequestMethod.POST)
-	public CommonResult<String> cancel(Integer id) throws ServiceException {
-		orderService.cancelOrder(getCurrentMember(), id);
+	public CommonResult<String> cancel(Integer orderId) throws ServiceException {
+		orderService.cancelOrder(getCurrentMember(), orderId);
 		return CommonResult.success(null);
 	}
 

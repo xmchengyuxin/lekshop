@@ -62,6 +62,9 @@ public class OmsOrderDetail implements Serializable {
     @ApiModelProperty(value = "购买总价")
     private BigDecimal buyTotalPrice;
 
+    @ApiModelProperty(value = "要加入的拼团ID")
+    private Integer joinGroupId;
+
     @ApiModelProperty(value = "拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID")
     private Integer groupId;
 
@@ -252,6 +255,14 @@ public class OmsOrderDetail implements Serializable {
         this.buyTotalPrice = buyTotalPrice;
     }
 
+    public Integer getJoinGroupId() {
+        return joinGroupId;
+    }
+
+    public void setJoinGroupId(Integer joinGroupId) {
+        this.joinGroupId = joinGroupId;
+    }
+
     public Integer getGroupId() {
         return groupId;
     }
@@ -373,6 +384,7 @@ public class OmsOrderDetail implements Serializable {
         sb.append(", buyNum=").append(buyNum);
         sb.append(", refundAmount=").append(refundAmount);
         sb.append(", buyTotalPrice=").append(buyTotalPrice);
+        sb.append(", joinGroupId=").append(joinGroupId);
         sb.append(", groupId=").append(groupId);
         sb.append(", groupNum=").append(groupNum);
         sb.append(", groupLimitHours=").append(groupLimitHours);

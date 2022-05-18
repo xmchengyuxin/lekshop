@@ -12,7 +12,6 @@ import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.order.OrderService;
-import com.chengyu.core.service.pay.PayService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -248,5 +247,15 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		return count > 0;
 	}
 
-	
+	@Override
+	public boolean isGroupSus(String orderNo) {
+		OmsOrderGroupMemberExample example = new OmsOrderGroupMemberExample();
+		example.createCriteria().andOrderNoEqualTo(orderNo);
+		List<OmsOrderGroupMember> assembleMember = assembleMemberMapper.selectByExample(example);
+
+		OmsOrderGroup assemble = this.getOrderGroupById(assembleMember.get(0).getOrderGroupId());
+		return assemble.getStatus() == 2;
+	}
+
+
 }

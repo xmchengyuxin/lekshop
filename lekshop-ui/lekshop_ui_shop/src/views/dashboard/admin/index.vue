@@ -29,7 +29,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="12" >
+    <!-- <el-row :gutter="12" >
       <h3>统计数据</h3>
       <el-col :span="6" v-for="item in amountData" style="margin-bottom:5px;">
           <el-card shadow="hover" >
@@ -46,10 +46,61 @@
               <span class="tips" style="font-size: 14px;">{{item.name}}</span>
           </el-card>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:10px;">
       <line-chart :chart-data="lineChartData"/>
+    </el-row>
+
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:5px;">
+      <h4>本月商品销售排行</h4>
+    		<template>
+    			<el-table
+    				ref="foodTable"
+    				:data="goodsSellList"
+    				highlight-current-row
+    				style="width: 100%">
+    				<el-table-column
+    					type="index"
+    					width="50"
+    					label="排行"
+    					align="center">
+    				</el-table-column>
+    				<el-table-column label="商品主图" prop="info" width="100">
+    				  <template slot-scope="scope">
+                <el-image
+                     style="width: 50px; height: 50px; border-radius: 10%;"
+                     fit="cover"
+                     :src="scope.row.goodsMainImg"></el-image>
+    				  </template>
+    				</el-table-column>
+            <el-table-column label="商品名称" prop="info">
+              <template slot-scope="scope">
+                <p>{{ scope.row.goodsName }}</p>
+              </template>
+            </el-table-column>
+    				<el-table-column
+    					property="num"
+    					label="月销"
+    					align="center"
+              width="100"
+    					>
+    					<template slot-scope="scope">
+    						<span style="color:red">{{ scope.row.num}}</span>
+    					</template>
+    				</el-table-column>
+    				<el-table-column
+    					property="totalAmount"
+    					label="月销金额"
+    					 align="center"
+               width="100"
+    					>
+    					<template slot-scope="scope">
+    						<span style="color:red">¥{{ scope.row.buyTotalPrice | moneyFormat}}</span>
+    					</template>
+    				</el-table-column>
+    			</el-table>
+    		</template>
     </el-row>
 
     <!-- <el-row :gutter="12">
@@ -80,7 +131,7 @@
 </template>
 
 <script>
-import {countMember, getOrderAddList, countNumber, countAmount, getLoginInfo, countPlatformIncome} from '@/api/index'
+import {countGoods, getOrderAddList, countNumber, getGoodsSellList, getLoginInfo} from '@/api/index'
 import PanThumb from '@/components/PanThumb'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
@@ -146,7 +197,8 @@ export default {
       barData:{},
       mixData:[],
       loginData:{},
-      platformIncome: 0
+      platformIncome: 0,
+      goodsSellList: []
     }
   },
 	created() {
@@ -162,7 +214,7 @@ export default {
         this.loginData = result
       })
 
-			countMember().then(response => {
+			countGoods().then(response => {
 				const result = response.data
         this.panelData = result
 			})
@@ -177,76 +229,13 @@ export default {
         this.numData = result
     	})
 
-      countAmount().then(response => {
+      getGoodsSellList().then(response => {
       	const result = response.data
-        this.amountData = result
+        this.goodsSellList = result
       })
 
       // this.countPlatformIncome();
 		},
-    countPlatformIncome(){
-      if(!this.queryTime || this.queryTime.length != 2){
-        this.$notify({
-          title: '失败',
-          message: '请先选择查询时间',
-          type: 'error',
-          duration: 2000
-        })
-        return;
-      }
-      let formData = {
-        dateFrom : renderTime(this.queryTime[0]),
-        dateTo : renderTime(this.queryTime[1]),
-      }
-      countPlatformIncome(formData).then(response => {
-      	const result = response.data
-        this.platformIncome = result
-      })
-    }
-    /* audioPlay() {
-        const self = this;
-        let audio = document.getElementById('audio-tip');
-        let num = 0;
-        audio.addEventListener("canplay", function() { //监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
-        clearInterval(interval)
-          interval = setInterval(function() {
-            num++;
-            countOrder().then(response => {
-                self.orderData = Object.assign({}, response.data)
-                if (self.orderData.waitDisNum > 0) {
-                  audio.pause();
-                  audio.play();
-                  document.getElementById('message-icon').classList.add('show-animate');
-                }else{
-                  document.getElementById('message-icon').classList.remove('show-animate');
-                }
-            });
-          }, 30000);
-        });
-
-      },
-  audioExceptionPlay() {
-        const self = this;
-        let audio = document.getElementById('audio-exception');
-        let num = 0;
-        audio.addEventListener("canplay", function() { //监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
-        clearInterval(exceptionInterval)
-          exceptionInterval = setInterval(function() {
-            num++;
-            countException().then(response => {
-                let exceptionData = Object.assign({}, response.data)
-                if (exceptionData.exceptionNum > 0) {
-                  audio.pause();
-                  audio.play();
-                  document.getElementById('exception-icon').classList.add('show-animate');
-                }else{
-                  document.getElementById('exception-icon').classList.remove('show-animate');
-                }
-            });
-          }, 60000);
-        });
-
-      }, */
 
   },
   mounted() {

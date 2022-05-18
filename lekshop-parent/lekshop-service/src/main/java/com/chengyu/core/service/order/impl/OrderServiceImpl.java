@@ -23,10 +23,7 @@ import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.member.MemberAddressService;
 import com.chengyu.core.service.member.MemberCouponService;
-import com.chengyu.core.service.order.CarService;
-import com.chengyu.core.service.order.OrderCommentService;
-import com.chengyu.core.service.order.OrderFreightService;
-import com.chengyu.core.service.order.OrderService;
+import com.chengyu.core.service.order.*;
 import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
 import com.chengyu.core.service.shop.ShopConfigService;
 import com.chengyu.core.service.shop.ShopFreightService;
@@ -90,6 +87,8 @@ public class OrderServiceImpl implements OrderService {
 	private PmsGoodsGroupMapper goodsGroupMapper;
 	@Autowired
 	private CarService carService;
+	@Autowired
+	private OrderGroupService orderGroupService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -208,6 +207,7 @@ public class OrderServiceImpl implements OrderService {
 				//如果是拼团模式
 				if(goods.getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue()){
 					detail.setGroupId(form.getGroupId());
+					detail.setJoinGroupId(form.getJoinGroupId());
 					if(form.getGroupId() == -1){
 						//单独购买
 						detail.setBuyPrice(sku.getOriPrice());
@@ -385,6 +385,18 @@ public class OrderServiceImpl implements OrderService {
 					memberCouponService.useCoupon(order.getCouponId());
 				}
 			}
+
+			//拼团订单
+			if(orderList.get(0).getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue()){
+				OmsOrderDetail detail = detailList.get(0);
+				if(detail.getJoinGroupId() == null){
+					//发团
+					orderGroupService.launchGroup(detail);
+				}else{
+					//参团
+					orderGroupService.joinGroup(detail.getJoinGroupId(), detail);
+				}
+			}
 		}
 	}
 
@@ -395,8 +407,14 @@ public class OrderServiceImpl implements OrderService {
 		Date now = DateUtil.date();
 		ConfigOrder config = configOrderService.getConfigOrder();
 		for(OrderDeliveryForm form : list){
+			if(StringUtils.isBlank(form.getDeliveryType())){
+				throw new ServiceException("请选择快递公司");
+			}
 			OmsOrder order = orderMapper.selectByPrimaryKey(form.getOrderId());
-			if(order.getStatus() != OrderEnums.OrderStatus.WAIT_DELIVERY.getValue()){
+			if(order.getStatus() != OrderEnums.OrderStatus.WAIT_DELIVERY.getValue() || StringUtils.isBlank(form.getDeliveryNo())){
+				errorNum++;
+			}else if(order.getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue() && !orderGroupService.isGroupSus(order.getOrderNo())){
+				//团购订单需要拼团成功才能发货
 				errorNum++;
 			}else{
 				susNum++;
@@ -603,4 +621,5 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return list.get(0);
 	}
+
 }

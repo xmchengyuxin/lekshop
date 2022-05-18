@@ -147,4 +147,5 @@ public interface OrderService {
      * @param  idList
      */
     void deleteOrderByAdmin(List<Integer> idList);
+
 }

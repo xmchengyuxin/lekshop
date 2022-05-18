@@ -1,6 +1,7 @@
 package com.chengyu.core.service.member.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.UmsMemberCollectionShopMapper;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberCollectionShop;
@@ -28,6 +29,8 @@ public class MemberCollectShopServiceImpl implements MemberCollectShopService {
 	private UmsMemberCollectionShopMapper memberCollectionShopMapper;
 	@Autowired
 	private ShopService shopService;
+	@Autowired
+	private BaseMapper baseMapper;
 
 	@Override
 	public List<UmsMemberCollectionShop> getMemberCollectionShopList(Integer memberId, Integer page, Integer pageSize) {
@@ -49,6 +52,8 @@ public class MemberCollectShopServiceImpl implements MemberCollectShopService {
 			UmsMemberCollectionShopExample example = new UmsMemberCollectionShopExample();
 			example.createCriteria().andMemberIdEqualTo(member.getId()).andShopIdEqualTo(shopId);
 			memberCollectionShopMapper.deleteByExample(example);
+
+			baseMapper.update("update ums_shop set like_num = like_num-1 where id = "+shopId);
 		}else{
 			//收藏
 			UmsMemberCollectionShop collectionShop = new UmsMemberCollectionShop();
@@ -61,7 +66,9 @@ public class MemberCollectShopServiceImpl implements MemberCollectShopService {
 			collectionShop.setShopName(shop.getName());
 			collectionShop.setAddTime(DateUtil.date());
 			collectionShop.setUpdTime(collectionShop.getAddTime());
-			memberCollectionShopMapper.insert(collectionShop);
+			memberCollectionShopMapper.insertSelective(collectionShop);
+
+			baseMapper.update("update ums_shop set like_num = like_num+1 where id = "+shopId);
 		}
 	}
 

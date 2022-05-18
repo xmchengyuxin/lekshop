@@ -4,16 +4,13 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import com.chengyu.core.controller.ShopBaseController;
-import com.chengyu.core.domain.form.WithdrawSearchForm;
-import com.chengyu.core.domain.result.AdminIndexCountResult;
-import com.chengyu.core.domain.result.WithdrawCountResult;
+import com.chengyu.core.domain.result.ShopIndexCountResult;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
-import com.chengyu.core.mapper.CustomAdminIndexMapper;
+import com.chengyu.core.mapper.CustomShopIndexMapper;
 import com.chengyu.core.mapper.UmsMemberLoginLogMapper;
 import com.chengyu.core.model.UmsMemberLoginLog;
 import com.chengyu.core.model.UmsMemberLoginLogExample;
-import com.chengyu.core.service.member.MemberWithdrawService;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -37,11 +33,9 @@ import java.util.*;
 public class IndexController extends ShopBaseController {
 
     @Autowired
-    private CustomAdminIndexMapper adminIndexMapper;
+    private CustomShopIndexMapper shopIndexMapper;
     @Autowired
     private UmsMemberLoginLogMapper memberLoginLogMapper;
-    @Autowired
-    private MemberWithdrawService withdrawService;
 
     @ApiOperation(value = "获取登录信息")
     @RequestMapping(value = "/getLoginInfo", method = RequestMethod.GET)
@@ -64,24 +58,27 @@ public class IndexController extends ShopBaseController {
         return CommonResult.success(result);
     }
 
-    @ApiOperation(value = "获取用户统计")
-    @RequestMapping(value = "/countMember", method = RequestMethod.GET)
+    @ApiOperation(value = "获取商品订单统计")
+    @RequestMapping(value = "/countGoods", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<Map<String, Object>> countMember() {
-        //会员数量,今日注册,接手数量,商家数量
-        Map<String,Object> result = adminIndexMapper.countMember();
+    public CommonResult<Map<String, Object>> countMember() throws ServiceException {
+        Integer shopId = getCurrentShop().getId();
+        //总商品数,总下单人数,总订单数,总金额
+        Map<String,Object> result = new HashMap<>();
+        result.putAll(shopIndexMapper.countGoods(shopId));
+        result.putAll(shopIndexMapper.countOrder(shopId, null, null));
         return CommonResult.success(result);
     }
 
-    @ApiOperation(value = "近十天会员数量")
-    @RequestMapping(value = "/getMemberAddList", method = RequestMethod.GET)
+    @ApiOperation(value = "近十天订单数量")
+    @RequestMapping(value = "/getOrderAddList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<Map<String, Object>> getOrderAddList() {
+    public CommonResult<Map<String, Object>> getOrderAddList() throws ServiceException {
         Date now = new Date();
         //近10天用户数量
         List<String> dayList = new ArrayList<String>();
         Date date = com.chengyu.core.utils.DateUtil.addDay(now, -9);
-        List<Map<String, Object>> list = adminIndexMapper.countMemberNumByLastTenDays();
+        List<Map<String, Object>> list = shopIndexMapper.countOrderNumByLastTenDays(getCurrentShop().getId());
 
         Map<String,Long> numMap = new HashMap<>();
         if(CollectionUtil.isNotEmpty(list)){
@@ -114,17 +111,20 @@ public class IndexController extends ShopBaseController {
     @ApiOperation(value = "获取数量统计")
     @RequestMapping(value = "/countNumber", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<AdminIndexCountResult>> countNumber() {
-        List<AdminIndexCountResult> list = new ArrayList<>();
+    public CommonResult<List<ShopIndexCountResult>> countNumber() throws ServiceException {
+        List<ShopIndexCountResult> list = new ArrayList<>();
 
-        /*身份证待审核, 待审核银行, 待审核充值, 待审核提现*/
+        Integer shopId = getCurrentShop().getId();
+        Date now = DateUtil.date();
+        /*未处理订单，店铺收藏，商品收藏，今日订单，加购物车，今日总额*/
         Map<String,Object> map = new HashMap<>();
-        map.putAll(adminIndexMapper.countVerifyIdCardNum());
-        map.putAll(adminIndexMapper.countVerifyBankNum());
-        map.putAll(adminIndexMapper.countVerifyRechargeNum());
-        map.putAll(adminIndexMapper.countVerifyWithdrawNum());
-       for(AdminIndexCountResult.IndexCountEnums enums :AdminIndexCountResult.IndexCountEnums.values()){
-           AdminIndexCountResult result = new AdminIndexCountResult();
+        map.putAll(shopIndexMapper.countWaitDealOrderNum(shopId));
+        map.putAll(shopIndexMapper.countCollectShopNum(shopId));
+        map.putAll(shopIndexMapper.countCollectGoodsNum(shopId));
+        map.putAll(shopIndexMapper.countOrder(shopId, DateUtil.beginOfDay(now), DateUtil.endOfDay(now)));
+        map.putAll(shopIndexMapper.countCarNum(shopId));
+       for(ShopIndexCountResult.IndexCountEnums enums :ShopIndexCountResult.IndexCountEnums.values()){
+           ShopIndexCountResult result = new ShopIndexCountResult();
            result.setName(enums.getName());
            result.setRouter(enums.getRouter());
            result.setNum(MapUtil.getInt(map, enums.getKey()));
@@ -133,54 +133,17 @@ public class IndexController extends ShopBaseController {
         return CommonResult.success(list);
     }
 
-    @ApiOperation(value = "获取金额统计")
-    @RequestMapping(value = "/countAmount", method = RequestMethod.GET)
+    @ApiOperation(value = "获取本月商品销售排行")
+    @RequestMapping(value = "/getGoodsSellList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<AdminIndexCountResult>> countAmount() throws ServiceException {
-        List<AdminIndexCountResult> list = new ArrayList<>();
-
-        /**
-         * 后台首页统计参数
-         * 充值总额, 提现总额, 所有用户账号总余额, 所有用户账号总发布点, 所有用户账号总佣金
-         */
-        Map<String,Object> map = new HashMap<>();
-        map.putAll(adminIndexMapper.countRechargeAmount());
-        map.putAll(adminIndexMapper.countWithdrawAmount());
-        map.putAll(adminIndexMapper.countMemberAccount());
-
-        Date now = DateUtil.date();
-        WithdrawSearchForm form = new WithdrawSearchForm();
-        form.setStatusList(Collections.singletonList("1"));
-        form.setDateFrom(DateUtil.beginOfDay(now));
-        form.setDateTo(DateUtil.endOfDay(now));
-        WithdrawCountResult todayWithdraw = withdrawService.countWithdraw(form);
-        map.put("todayWithdrawAmount", todayWithdraw == null ? BigDecimal.ZERO : todayWithdraw.getTotalAmount());
-
-        form.setDateFrom(DateUtil.beginOfDay(DateUtil.offsetDay(now, -1)));
-        form.setDateTo(DateUtil.endOfDay(DateUtil.offsetDay(now, -1)));
-        WithdrawCountResult yesTodayWithdraw = withdrawService.countWithdraw(form);
-        map.put("yestodayWithdrawAmount", yesTodayWithdraw == null ? BigDecimal.ZERO : yesTodayWithdraw.getTotalAmount());
-
-        for(AdminIndexCountResult.IndexAmountEnums enums :AdminIndexCountResult.IndexAmountEnums.values()){
-            if(StringUtils.isNotBlank(MapUtil.getStr(map, enums.getKey()))){
-                AdminIndexCountResult result = new AdminIndexCountResult();
-                result.setName(enums.getName());
-                result.setTips(enums.getTips());
-                result.setAmount(new BigDecimal(MapUtil.getStr(map, enums.getKey())));
-                list.add(result);
-            }
-        }
+    public CommonResult<List<Map<String,Object>>> getFoodSellList() throws ServiceException {
+        Date now = new Date();
+        Date beginTime = DateUtil.beginOfMonth(now);
+        Date endTime = DateUtil.endOfMonth(now);
+        List<Map<String,Object>> list = shopIndexMapper.getGoodsSellRankList(this.getCurrentShop().getId(), beginTime, endTime);
         return CommonResult.success(list);
     }
 
-    @ApiOperation(value = "待办任务统计")
-    @RequestMapping(value = "/countVerifyNum", method = RequestMethod.GET)
-    @ResponseBody
-    public CommonResult<Map<String,Object>> countNum() throws ServiceException {
-        Map<String,Object> map = new HashMap<>();
-        //身份证审核数量
-        map.putAll(adminIndexMapper.countVerifyIdCardNum());
-        return CommonResult.success(map);
-    }
+
 
 }

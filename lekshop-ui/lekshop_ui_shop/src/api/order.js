@@ -95,3 +95,19 @@ export function getGroupMemberList(data) {
 		params: data
   })
 }
+
+export function editPrice(data) {
+  return request({
+    url: 'member/order/editPriceSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function getPriceList(data) {
+  return request({
+    url: 'member/order/getPriceLog',
+    method: 'get',
+		params: data
+  })
+}

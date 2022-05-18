@@ -58,7 +58,7 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 
 		Map<String,String> extras = new HashMap<>(16);
 		extras.put("reqId", remind.getId().toString());
-		extras.put("rid", member.getUid().toString());
+		extras.put("rid", "member-"+member.getId().toString());
 		extras.put("type", type.getType().toString());
 		extras.put("content", content);
 		extras.put("addTime", DateUtil.current(false)+"");

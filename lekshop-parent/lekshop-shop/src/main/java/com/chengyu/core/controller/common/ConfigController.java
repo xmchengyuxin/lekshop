@@ -1,10 +1,13 @@
 package com.chengyu.core.controller.common;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.DeliveryEnums;
 import com.chengyu.core.domain.enums.MemberTypes;
 import com.chengyu.core.domain.enums.SecretEnum;
 import com.chengyu.core.domain.enums.ThirdEnums;
+import com.chengyu.core.domain.result.KeyNameResult;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.*;
@@ -252,5 +255,17 @@ public class ConfigController extends ShopBaseController {
 		//校验短信验证码
     	verifyCodeService.validateCode(phone, code);
     	return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "物流选择器")
+	@ResponseBody
+	@RequestMapping(value="/deliveryType/getSelector", method=RequestMethod.GET)
+	public CommonResult<List<KeyNameResult>> getSelector() {
+		List<KeyNameResult> list = CollectionUtil.newArrayList();
+		DeliveryEnums.DeliveryType[] types = DeliveryEnums.DeliveryType.values();
+		for (DeliveryEnums.DeliveryType mtype : types) {
+			list.add(new KeyNameResult(mtype.getName(), mtype.getKey()));
+		}
+		return CommonResult.success(list);
 	}
 }

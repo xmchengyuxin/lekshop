@@ -32,7 +32,7 @@
       		<el-tag :type="scope.row.type == 1 ? 'success' : 'danger'">{{ scope.row.type | typeFilter}}</el-tag>
         </template>
       </el-table-column>
-			<el-table-column label="优惠券名称" width="200px"  align="center">
+			<el-table-column label="优惠券名称" min-width="200px"  align="center">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.name }}</span>
 			  </template>
@@ -110,7 +110,7 @@
 					  <el-input v-model.number="couponConfig.amount" style="width: 60%;" placeholder="请输入金额" />
 					</el-form-item>
           <el-form-item label="优惠折扣" prop="amount"  v-if="couponConfig.type == 2">
-            <el-input v-model.number="couponConfig.amount" style="width: 60%;" placeholder="请输入折扣" /> 折
+            <el-input v-model="couponConfig.amount" style="width: 60%;" placeholder="请输入折扣" /> 折
             <p class="tips">温馨提示：95折直接输入9.5</p>
           </el-form-item>
 					<el-form-item label="发放数量" prop="totalNum">

@@ -119,5 +119,14 @@ public interface OrderGroupService {
 	 * @throws ServiceException 业务异常
 	 */
 	boolean isInGroup(Integer goodsId) throws ServiceException;
+
+	/**
+	 * 判断该笔团购是否成功
+	 * @author LeGreen
+	 * @date   2022/5/18
+	 * @param  orderNo
+	 * @return boolean
+	 */
+	boolean isGroupSus(String orderNo);
 	
 }

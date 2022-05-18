@@ -18,6 +18,12 @@ public class UmsMemberCollectionGoods implements Serializable {
     @ApiModelProperty(value = "头像")
     private String headImg;
 
+    @ApiModelProperty(value = "店铺ID")
+    private Integer shopId;
+
+    @ApiModelProperty(value = "店铺名称")
+    private String shopName;
+
     @ApiModelProperty(value = "商品ID")
     private Integer goodsId;
 
@@ -73,6 +79,22 @@ public class UmsMemberCollectionGoods implements Serializable {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public Integer getGoodsId() {
@@ -149,6 +171,8 @@ public class UmsMemberCollectionGoods implements Serializable {
         sb.append(", memberId=").append(memberId);
         sb.append(", memberName=").append(memberName);
         sb.append(", headImg=").append(headImg);
+        sb.append(", shopId=").append(shopId);
+        sb.append(", shopName=").append(shopName);
         sb.append(", goodsId=").append(goodsId);
         sb.append(", goodsName=").append(goodsName);
         sb.append(", goodsMainImg=").append(goodsMainImg);

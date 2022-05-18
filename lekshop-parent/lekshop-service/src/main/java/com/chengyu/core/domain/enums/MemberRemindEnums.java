@@ -15,11 +15,9 @@ public class MemberRemindEnums {
 		 * 商家提醒通知
 		 */
 		WITHDRAW_SUS("提现到账", 1),
-		TASK_TAKED("任务被接单", 2),
-		WAIT_VERIFY_BUYER("等待审核买号", 3),
-		WAIT_REBATES("等待返款", 4),
-		WAIT_VERIFY_COMMENT("等待审核评价", 5),
-		WAIT_VERIFY_ZHUI_COMMENT("等待审核追评", 6);
+		NEW_ORDER("新订单待发货", 2),
+		WAIT_VERIFY_REFUND("等待审核售后申请", 3),
+		WAIT_CONFIRM_RECEIVE("买家已退货,等待确认收货", 4);
 
 		private final String title;
 		private final Integer type;

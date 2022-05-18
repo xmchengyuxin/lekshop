@@ -1316,6 +1316,66 @@ public class OmsOrderDetailExample {
             return (Criteria) this;
         }
 
+        public Criteria andJoinGroupIdIsNull() {
+            addCriterion("join_group_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdIsNotNull() {
+            addCriterion("join_group_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdEqualTo(Integer value) {
+            addCriterion("join_group_id =", value, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdNotEqualTo(Integer value) {
+            addCriterion("join_group_id <>", value, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdGreaterThan(Integer value) {
+            addCriterion("join_group_id >", value, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("join_group_id >=", value, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdLessThan(Integer value) {
+            addCriterion("join_group_id <", value, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdLessThanOrEqualTo(Integer value) {
+            addCriterion("join_group_id <=", value, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdIn(List<Integer> values) {
+            addCriterion("join_group_id in", values, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdNotIn(List<Integer> values) {
+            addCriterion("join_group_id not in", values, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdBetween(Integer value1, Integer value2) {
+            addCriterion("join_group_id between", value1, value2, "joinGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinGroupIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("join_group_id not between", value1, value2, "joinGroupId");
+            return (Criteria) this;
+        }
+
         public Criteria andGroupIdIsNull() {
             addCriterion("group_id is null");
             return (Criteria) this;

@@ -46,19 +46,19 @@ public class NettyPushUtil {
 	}
 
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		for(int i = 0; i<=300; i++){
+		for(int i = 0; i<=1; i++){
 			System.out.println(i);
 			try {
 				Map<String,String> extras = new HashMap<>(16);
 				extras.put("reqId", StringUtils.genenrateInd());
-				extras.put("rid", "admin-29");
+				extras.put("rid", "shop-4");
 				extras.put("type", "1");
 				extras.put("content", "「13666011848」申请了实名认证, 请尽快审批");
 				extras.put("addTime", DateUtil.current(false)+"");
 
 				MessageBase message = new MessageBase(null, Command.CommandType.PUSH_DATA, JSONUtil.toJsonStr(extras));
 				Map<String,Object> params = BeanUtil.beanToMap(message);
-				HttpClientUtil.httpPostRequest("http://47.104.250.127:8008", params);
+				HttpClientUtil.httpPostRequest("http://127.0.0.1:8008", params);
 				} catch (Exception ignored) {
 				}
 		}

@@ -7,7 +7,6 @@
 				<el-tab-pane label="失败" name="fourth"></el-tab-pane>
 		</el-tabs>
     <div class="filter-container">
-			 <el-input v-model="listQuery.shopName" clearable placeholder="商家" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
 			 <el-date-picker class="filter-item" v-model="listQuery.startTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择开始时间" />
 			 -
 			 <el-date-picker  class="filter-item"  v-model="listQuery.endTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择结束时间" />

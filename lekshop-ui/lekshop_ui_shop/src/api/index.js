@@ -1,38 +1,30 @@
 import request from '@/utils/request'
 
-export function countMember() {
+export function countGoods() {
   return request({
-    url: '/system/countMember',
+    url: 'member/countGoods',
     method: 'get'
   })
 }
 
 export function getOrderAddList() {
   return request({
-    url: '/system/getMemberAddList',
+    url: 'member/getOrderAddList',
     method: 'get'
   })
 }
 
 export function countNumber(data) {
   return request({
-    url: '/system/countNumber',
+    url: 'member/countNumber',
     method: 'get',
 		params: data
   })
 }
 
-export function countVerifyNum(data) {
+export function getGoodsSellList(data) {
   return request({
-    url: '/system/countVerifyNum',
-    method: 'get',
-		params: data
-  })
-}
-
-export function countAmount(data) {
-  return request({
-    url: '/system/countAmount',
+    url: 'member/getGoodsSellList',
     method: 'get',
 		params: data
   })
