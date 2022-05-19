@@ -6,6 +6,7 @@ import com.chengyu.core.model.UmsMemberCoupon;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @title  用户优惠券
@@ -67,4 +68,16 @@ public interface MemberCouponService {
      * @return Long
      */
     Long countUnUseCoupon(Integer memberId);
+
+   /**
+    * 获取可用的优惠券
+    * @author LeGreen
+    * @date   2022/5/19
+    * @param  member
+    * @param  shopId
+    * @param  goodsIds
+    * @param  totalAmount
+    * @return List<UmsMemberCoupon>
+    */
+   List<Map<String,Object>> getCanUseCouponList(UmsMember member, Integer shopId, String goodsIds, String cateIds, BigDecimal totalAmount);
 }

@@ -49,7 +49,56 @@
     </el-row> -->
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:10px;">
-      <line-chart :chart-data="lineChartData"/>
+      <el-col style="width: 75%;">
+        <line-chart :chart-data="lineChartData"/>
+      </el-col>
+      <el-col style="width: 25%;">
+        <el-card class="box-card" style="height: 330px; background-image: linear-gradient(180deg,#f5f8ff,#fff);
+          box-shadow: inset 0 1px 3px 0 hsl(0deg 0% 100% / 50%) ">
+              <div>
+                <el-image
+                  style="height: 80px"
+                  :src="shop.logo">
+                </el-image>
+                <span style="line-height: 80px;vertical-align: top; font-size: 18px; font-weight: bold;">{{ shop.name}}</span>
+              </div>
+              <p class="tips">{{ shop.produce}}</p>
+              <p style="margin:10px;float: left;width: 100%;">
+                <div style="float: left;">宝贝描述: </div>
+                <el-rate
+                  style="float: left;"
+                  v-model="shop.goodsStar"
+                  disabled
+                  show-score
+                  text-color="#ff9900">
+                </el-rate>
+              </p>
+              <p style="margin:10px;float: left;width: 100%;">
+                <div style="float: left;">卖家服务: </div>
+                <el-rate
+                  style="float: left;"
+                  v-model="shop.sellerStar"
+                  disabled
+                  show-score
+                  text-color="#ff9900">
+                </el-rate>
+              </p>
+              <p style="margin:10px;float: left;width: 100%;">
+                <div style="float: left;">物流服务: </div>
+                <el-rate
+                  style="float: left;"
+                  v-model="shop.logisticStar"
+                  disabled
+                  show-score
+                  text-color="#ff9900">
+                </el-rate>
+              </p>
+              <p style="margin:10px;float: left;width: 100%;">
+                <div style="float: left;">店铺收藏: </div>
+                <el-progress style="width: 165px;float: left;" :percentage="90" :format="format"></el-progress>
+              </p>
+        </el-card>
+      </el-col>
     </el-row>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:5px;">
@@ -132,6 +181,7 @@
 
 <script>
 import {countGoods, getOrderAddList, countNumber, getGoodsSellList, getLoginInfo} from '@/api/index'
+import { getShop } from '@/api/shop'
 import PanThumb from '@/components/PanThumb'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
@@ -198,13 +248,17 @@ export default {
       mixData:[],
       loginData:{},
       platformIncome: 0,
-      goodsSellList: []
+      goodsSellList: [],
+      shop: {}
     }
   },
 	created() {
 	  this.getInfo()
 	},
   methods: {
+     format(percentage) {
+      return this.shop.likeNum;
+    },
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     },
@@ -212,6 +266,10 @@ export default {
       getLoginInfo().then(response => {
       	const result = response.data
         this.loginData = result
+      })
+
+      getShop().then(response => {
+        this.shop = response.data
       })
 
 			countGoods().then(response => {

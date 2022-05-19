@@ -7,16 +7,17 @@ const freightRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'freight',
+  alwaysShow: true,
   meta: {
-    title: '运费模板',
-    icon: 'table'
+    title: '物流运费',
+    icon: 'promotion-freedelivery'
   },
   children: [
     {
       path: 'list',
       component: () => import('@/views/shop/freight/index'),
       name: 'freightTemplate',
-      meta: { title: '运费模板', icon:'promotion-freedelivery', noCache: true, role: ['admin'] }
+      meta: { title: '运费模板', icon:'list', noCache: true, role: ['admin'] }
     },
     {
     	path: 'add',

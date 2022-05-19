@@ -42,6 +42,12 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 		OmsOrderCommentExample example = new OmsOrderCommentExample();
 		example.setOrderByClause("add_time desc");
 		OmsOrderCommentExample.Criteria criteria = example.createCriteria();
+		if(form.getOrderId() != null){
+			OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
+			detailExample.createCriteria().andOrderIdEqualTo(form.getOrderId());
+			List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(detailExample);
+			criteria.andDetailIdIn(detailList.stream().map(OmsOrderDetail::getId).collect(Collectors.toList()));
+		}
 		if(form.getGoodsId() != null){
 			criteria.andGoodsIdEqualTo(form.getGoodsId());
 		}
@@ -53,6 +59,9 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 		}
 		if(form.getStatus() != null){
 			criteria.andStatusEqualTo(form.getStatus());
+		}
+		if(CollectionUtil.isNotEmpty(form.getStatusList())){
+			criteria.andStatusIn(form.getStatusList());
 		}
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());

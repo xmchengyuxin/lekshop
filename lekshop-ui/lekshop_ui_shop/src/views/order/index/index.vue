@@ -80,7 +80,7 @@
                   <span>¥{{ item.buyPrice | moneyFormat}} * {{item.buyNum}} = ¥{{item.buyTotalPrice | moneyFormat}}</span>
                 </div>
                 <span class="order-role flex f-a-c f-j-c" v-if="scope.row.order.type == 3">拼</span>
-                <span class="order-role flex f-a-c f-j-c" v-if="scope.row.order.type == 2">秒</span>
+                <span class="order-role flex f-a-c f-j-c miaosha" v-if="scope.row.order.type == 2">秒</span>
             </div>
           </el-card>
 
@@ -430,6 +430,9 @@
       color: #333333;
       background-color: #fafafa;
       border-color: #ddd;
+    }
+    .miaosha{
+      background-color: #ffaa00;
     }
 </style>
 

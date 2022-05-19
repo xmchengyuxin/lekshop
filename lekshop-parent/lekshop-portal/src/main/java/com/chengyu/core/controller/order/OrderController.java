@@ -13,6 +13,7 @@ import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.goods.GoodsService;
+import com.chengyu.core.service.member.MemberCouponService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.order.OrderService;
 import com.chengyu.core.utils.StringUtils;
@@ -48,9 +49,10 @@ public class OrderController extends UserBaseController {
 	private CallbackManager paySusManager;
 	@Autowired
 	private OrderGroupService orderGroupService;
+	@Autowired
+	private MemberCouponService memberCouponService;
 
 	@ApiOperation(value = "确认订单查询")
-	@OperationLog
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "goodsParams", value = "[shopId,店铺ID,skuId:商品skuId,num:购买数量]"),
 			@ApiImplicitParam(name = "groupId", value = "拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID")
@@ -173,5 +175,19 @@ public class OrderController extends UserBaseController {
 			return CommonResult.failed("不能参加自己的团");
 		}
 		return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "获取当前可用优惠券")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "shopId", value = "店铺ID"),
+			@ApiImplicitParam(name = "goodsIds", value = "商品ID逗号隔开"),
+			@ApiImplicitParam(name = "cateIds", value = "商品分类ID逗号隔开"),
+			@ApiImplicitParam(name = "totalAmount", value = "总金额"),
+	})
+	@ResponseBody
+	@RequestMapping(value="/order/getCouponSelector", method=RequestMethod.GET)
+	public CommonResult<List<Map<String,Object>>> getCouponSelector(Integer shopId, String goodsIds, String cateIds, BigDecimal totalAmount) throws ServiceException {
+		List<Map<String,Object>> list = memberCouponService.getCanUseCouponList(getCurrentMember(), shopId, goodsIds, cateIds, totalAmount);
+		return CommonResult.success(list);
 	}
 }

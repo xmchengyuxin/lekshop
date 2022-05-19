@@ -7,6 +7,7 @@ const promotionRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'promotion',
+  alwaysShow: true,
   meta: {
     title: '营销活动',
     icon: 'lock'
@@ -16,7 +17,7 @@ const promotionRouter = {
       path: 'coupon',
       component: () => import('@/views/promotion/coupon/index'),
       name: 'coupon',
-      meta: { title: '优惠券', icon:'lock', role: ['admin'] }
+      meta: { title: '优惠券', icon:'list', role: ['admin'] }
     },
   ]
 }

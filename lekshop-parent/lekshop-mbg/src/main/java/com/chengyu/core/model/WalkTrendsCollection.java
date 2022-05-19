@@ -9,28 +9,25 @@ public class WalkTrendsCollection implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "用户ID")
-    private Integer memberId;
+    private Integer viewMemberId;
 
     @ApiModelProperty(value = "用户名")
-    private String memberName;
+    private String viewMemberName;
 
     @ApiModelProperty(value = "头像")
-    private String memberHeadImg;
+    private String viewMemberHeadImg;
 
-    @ApiModelProperty(value = "商家ID")
-    private Integer shopId;
+    @ApiModelProperty(value = "创作人ID")
+    private Integer walkMemberId;
 
-    @ApiModelProperty(value = "商家名称")
-    private String shopName;
+    @ApiModelProperty(value = "创作人")
+    private String walkMemberName;
 
-    @ApiModelProperty(value = "商家LOGO")
-    private String shopLogo;
+    @ApiModelProperty(value = "创作人头像")
+    private String walkMemberHeadImg;
 
     @ApiModelProperty(value = "动态ID")
     private Integer trendsId;
-
-    @ApiModelProperty(value = "动态内容")
-    private String trendsContent;
 
     @ApiModelProperty(value = "动态主图")
     private String trendsImages;
@@ -50,6 +47,9 @@ public class WalkTrendsCollection implements Serializable {
     @ApiModelProperty(value = "修改人")
     private String updBy;
 
+    @ApiModelProperty(value = "动态内容")
+    private String trendsContent;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -60,52 +60,52 @@ public class WalkTrendsCollection implements Serializable {
         this.id = id;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Integer getViewMemberId() {
+        return viewMemberId;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setViewMemberId(Integer viewMemberId) {
+        this.viewMemberId = viewMemberId;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getViewMemberName() {
+        return viewMemberName;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setViewMemberName(String viewMemberName) {
+        this.viewMemberName = viewMemberName;
     }
 
-    public String getMemberHeadImg() {
-        return memberHeadImg;
+    public String getViewMemberHeadImg() {
+        return viewMemberHeadImg;
     }
 
-    public void setMemberHeadImg(String memberHeadImg) {
-        this.memberHeadImg = memberHeadImg;
+    public void setViewMemberHeadImg(String viewMemberHeadImg) {
+        this.viewMemberHeadImg = viewMemberHeadImg;
     }
 
-    public Integer getShopId() {
-        return shopId;
+    public Integer getWalkMemberId() {
+        return walkMemberId;
     }
 
-    public void setShopId(Integer shopId) {
-        this.shopId = shopId;
+    public void setWalkMemberId(Integer walkMemberId) {
+        this.walkMemberId = walkMemberId;
     }
 
-    public String getShopName() {
-        return shopName;
+    public String getWalkMemberName() {
+        return walkMemberName;
     }
 
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
+    public void setWalkMemberName(String walkMemberName) {
+        this.walkMemberName = walkMemberName;
     }
 
-    public String getShopLogo() {
-        return shopLogo;
+    public String getWalkMemberHeadImg() {
+        return walkMemberHeadImg;
     }
 
-    public void setShopLogo(String shopLogo) {
-        this.shopLogo = shopLogo;
+    public void setWalkMemberHeadImg(String walkMemberHeadImg) {
+        this.walkMemberHeadImg = walkMemberHeadImg;
     }
 
     public Integer getTrendsId() {
@@ -114,14 +114,6 @@ public class WalkTrendsCollection implements Serializable {
 
     public void setTrendsId(Integer trendsId) {
         this.trendsId = trendsId;
-    }
-
-    public String getTrendsContent() {
-        return trendsContent;
-    }
-
-    public void setTrendsContent(String trendsContent) {
-        this.trendsContent = trendsContent;
     }
 
     public String getTrendsImages() {
@@ -172,6 +164,14 @@ public class WalkTrendsCollection implements Serializable {
         this.updBy = updBy;
     }
 
+    public String getTrendsContent() {
+        return trendsContent;
+    }
+
+    public void setTrendsContent(String trendsContent) {
+        this.trendsContent = trendsContent;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -179,20 +179,20 @@ public class WalkTrendsCollection implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", memberId=").append(memberId);
-        sb.append(", memberName=").append(memberName);
-        sb.append(", memberHeadImg=").append(memberHeadImg);
-        sb.append(", shopId=").append(shopId);
-        sb.append(", shopName=").append(shopName);
-        sb.append(", shopLogo=").append(shopLogo);
+        sb.append(", viewMemberId=").append(viewMemberId);
+        sb.append(", viewMemberName=").append(viewMemberName);
+        sb.append(", viewMemberHeadImg=").append(viewMemberHeadImg);
+        sb.append(", walkMemberId=").append(walkMemberId);
+        sb.append(", walkMemberName=").append(walkMemberName);
+        sb.append(", walkMemberHeadImg=").append(walkMemberHeadImg);
         sb.append(", trendsId=").append(trendsId);
-        sb.append(", trendsContent=").append(trendsContent);
         sb.append(", trendsImages=").append(trendsImages);
         sb.append(", trendsVideoUrl=").append(trendsVideoUrl);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);
         sb.append(", updBy=").append(updBy);
+        sb.append(", trendsContent=").append(trendsContent);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

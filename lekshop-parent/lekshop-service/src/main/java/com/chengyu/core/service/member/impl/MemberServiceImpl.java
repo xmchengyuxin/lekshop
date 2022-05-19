@@ -19,6 +19,7 @@ import com.chengyu.core.service.config.ConfigMissionService;
 import com.chengyu.core.service.member.*;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.service.system.SysInviteCodeService;
+import com.chengyu.core.service.walk.WalkMemberService;
 import com.chengyu.core.util.ip.IpSearch;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -75,6 +76,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberWithdrawService withdrawService;
 	@Autowired
 	private SysInviteCodeService sysInviteCodeService;
+	@Autowired
+	private WalkMemberService walkMemberService;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -137,6 +140,9 @@ public class MemberServiceImpl implements MemberService {
 
 		//初始化用户账户
 		memberAccountService.initAccount(member, memberGroup);
+
+		//初始化创作号
+		walkMemberService.addWalkMember(member);
 	}
 
 	@Override

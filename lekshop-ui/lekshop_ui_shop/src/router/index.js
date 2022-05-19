@@ -16,6 +16,8 @@ import orderRouter from './modules/order'
 import configRouter from './modules/config'
 import cateRouter from './modules/cate'
 import freightRouter from './modules/freight'
+import trendsRouter from './modules/trends'
+
 
 
 
@@ -104,6 +106,7 @@ export const asyncRoutes = [
   goodsRouter,
   cateRouter,
   shopRouter,
+  trendsRouter,
 	promotionRouter,
   freightRouter,
   fundRouter,

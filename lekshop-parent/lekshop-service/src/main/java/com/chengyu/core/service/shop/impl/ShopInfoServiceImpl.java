@@ -9,13 +9,11 @@ import com.chengyu.core.domain.form.ShopSearchForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.UmsShopInfoMapper;
 import com.chengyu.core.mapper.UmsShopMapper;
-import com.chengyu.core.model.UmsMember;
-import com.chengyu.core.model.UmsShop;
-import com.chengyu.core.model.UmsShopInfo;
-import com.chengyu.core.model.UmsShopInfoExample;
+import com.chengyu.core.model.*;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.shop.ShopConfigService;
 import com.chengyu.core.service.shop.ShopInfoService;
+import com.chengyu.core.service.walk.WalkMemberService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +39,8 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 	private ShopConfigService shopConfigService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private WalkMemberService walkMemberService;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -163,6 +163,14 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 			updateMember.setId(shopInfo.getMemberId());
 			updateMember.setType(CommonConstant.SELLER);
 			memberService.updateMember(updateMember);
+
+			WalkMember walkMember = walkMemberService.getWalkMemberByMember(shopInfo.getMemberId());
+			if(walkMember != null){
+				WalkMember updateWalk = new WalkMember();
+				updateWalk.setId(walkMember.getId());
+				updateWalk.setType(CommonConstant.SELLER);
+				walkMemberService.updateWalkMember(updateWalk);
+			}
 
 			shopConfigService.initShopConfig(shop);
 		}

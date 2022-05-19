@@ -4,17 +4,17 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class WalkTrendsComment implements Serializable {
+public class WalkMemberCollection implements Serializable {
     @ApiModelProperty(value = "主键ID")
     private Integer id;
 
     @ApiModelProperty(value = "用户ID")
     private Integer viewMemberId;
 
-    @ApiModelProperty(value = "用户名称")
+    @ApiModelProperty(value = "用户名")
     private String viewMemberName;
 
-    @ApiModelProperty(value = "用户头像")
+    @ApiModelProperty(value = "头像")
     private String viewMemberHeadImg;
 
     @ApiModelProperty(value = "创作人ID")
@@ -26,19 +26,7 @@ public class WalkTrendsComment implements Serializable {
     @ApiModelProperty(value = "创作人头像")
     private String walkMemberHeadImg;
 
-    @ApiModelProperty(value = "动态ID")
-    private Integer trendsId;
-
-    @ApiModelProperty(value = "0隐藏 1显示")
-    private Integer status;
-
-    @ApiModelProperty(value = "父级ID")
-    private Integer pid;
-
-    @ApiModelProperty(value = "1直评 2回评")
-    private Integer type;
-
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty(value = "创建时间")
     private Date addTime;
 
     @ApiModelProperty(value = "添加人")
@@ -49,9 +37,6 @@ public class WalkTrendsComment implements Serializable {
 
     @ApiModelProperty(value = "修改人")
     private String updBy;
-
-    @ApiModelProperty(value = "内容")
-    private String content;
 
     private static final long serialVersionUID = 1L;
 
@@ -111,38 +96,6 @@ public class WalkTrendsComment implements Serializable {
         this.walkMemberHeadImg = walkMemberHeadImg;
     }
 
-    public Integer getTrendsId() {
-        return trendsId;
-    }
-
-    public void setTrendsId(Integer trendsId) {
-        this.trendsId = trendsId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
     public Date getAddTime() {
         return addTime;
     }
@@ -175,14 +128,6 @@ public class WalkTrendsComment implements Serializable {
         this.updBy = updBy;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -196,15 +141,10 @@ public class WalkTrendsComment implements Serializable {
         sb.append(", walkMemberId=").append(walkMemberId);
         sb.append(", walkMemberName=").append(walkMemberName);
         sb.append(", walkMemberHeadImg=").append(walkMemberHeadImg);
-        sb.append(", trendsId=").append(trendsId);
-        sb.append(", status=").append(status);
-        sb.append(", pid=").append(pid);
-        sb.append(", type=").append(type);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);
         sb.append(", updBy=").append(updBy);
-        sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

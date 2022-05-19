@@ -1,7 +1,10 @@
 package com.chengyu.core.service.member.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.NumberUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.ShopEnums;
@@ -19,8 +22,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @title  用户优惠券
@@ -66,28 +71,28 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 			throw new ServiceException("满"+ NumberUtils.format2(coupon.getFullAmount())+"元才能使用");
 		}
 		Date now = DateUtil.date();
-		if(coupon.getValidityBeginTime().after(now)){
+		if(coupon.getValidityBeginTime() != null && coupon.getValidityBeginTime().after(now)){
 			throw new ServiceException("未到优惠券使用时间");
 		}
-		if(coupon.getValidityEndTime().before(now)){
+		if(coupon.getValidityEndTime() != null && coupon.getValidityEndTime().before(now)){
 			throw new ServiceException("优惠券已过期");
 		}
 		if(coupon.getUseType() == ShopEnums.CouponUseType.SOME_GOODS.getValue()){
 			//指定商品
 			for(Integer goodsId : goodsIdList){
-				if(!coupon.getUseGoodsIds().contains(goodsId.toString())){
+				if(!coupon.getUseGoodsIds().contains(","+goodsId.toString()+",")){
 					throw new ServiceException("该优惠券仅限指定商品使用");
 				}
 			}
 		}else if(coupon.getUseType() == ShopEnums.CouponUseType.SOME_CATE.getValue()){
 			//指定商品分类
 			for(Integer goodsCateId : goodsCateIdList){
-				if(!coupon.getUseGoodsCateIds().contains(goodsCateId.toString())){
+				if(!coupon.getUseGoodsCateIds().contains(","+goodsCateId.toString()+",")){
 					throw new ServiceException("该优惠券仅限指定分类使用");
 				}
 			}
 		}
-		return coupon.getType() == ShopEnums.CouponType.FULL_REDUCE_COUPON.getValue() ? coupon.getAmount() : NumberUtil.mul(totalAmount, NumberUtil.div(coupon.getAmount(), 10));
+		return coupon.getType() == ShopEnums.CouponType.FULL_REDUCE_COUPON.getValue() ? coupon.getAmount() : NumberUtil.sub(totalAmount, NumberUtil.mul(totalAmount, NumberUtil.div(coupon.getAmount(), 10)));
 	}
 
 	@Override
@@ -128,5 +133,32 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 		UmsMemberCouponExample example = new UmsMemberCouponExample();
 		example.createCriteria().andMemberIdEqualTo(memberId).andStatusEqualTo(CommonConstant.NO_INT);
 		return memberCouponMapper.countByExample(example);
+	}
+
+	@Override
+	public List<Map<String,Object>> getCanUseCouponList(UmsMember member, Integer shopId, String goodsIds, String cateIds, BigDecimal totalAmount) {
+		UmsMemberCouponExample example = new UmsMemberCouponExample();
+		example.createCriteria().andMemberIdEqualTo(member.getId()).andShopIdEqualTo(shopId).andStatusEqualTo(CommonConstant.NO_INT);
+		List<UmsMemberCoupon> list = memberCouponMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(list)){
+			return null;
+		}
+		List<Map<String,Object>> canUseList = new ArrayList<>();
+		List<Map<String,Object>> cannotUseList = new ArrayList<>();
+		for(UmsMemberCoupon coupon : list){
+			Map<String,Object> couponMap = BeanUtil.beanToMap(coupon);
+			try {
+				List<Integer> goodsIdList = Convert.convert(new TypeReference<List<Integer>>() {}, goodsIds.split(CommonConstant.DH_REGEX));
+				List<Integer> cateIdList = Convert.convert(new TypeReference<List<Integer>>() {}, cateIds.split(CommonConstant.DH_REGEX));
+				BigDecimal discountAmount = this.validateCoupon(member, coupon.getId(), totalAmount, goodsIdList, cateIdList);
+				couponMap.put("discountAmount", discountAmount);
+				canUseList.add(couponMap);
+			}catch (ServiceException e){
+				couponMap.put("reason", e.getMessage());
+				cannotUseList.add(couponMap);
+			}
+		}
+		canUseList.addAll(cannotUseList);
+		return canUseList;
 	}
 }

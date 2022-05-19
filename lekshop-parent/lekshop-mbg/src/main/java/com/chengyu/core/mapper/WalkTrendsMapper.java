@@ -16,15 +16,21 @@ public interface WalkTrendsMapper {
 
     int insertSelective(WalkTrends record);
 
+    List<WalkTrends> selectByExampleWithBLOBs(WalkTrendsExample example);
+
     List<WalkTrends> selectByExample(WalkTrendsExample example);
 
     WalkTrends selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") WalkTrends record, @Param("example") WalkTrendsExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") WalkTrends record, @Param("example") WalkTrendsExample example);
+
     int updateByExample(@Param("record") WalkTrends record, @Param("example") WalkTrendsExample example);
 
     int updateByPrimaryKeySelective(WalkTrends record);
+
+    int updateByPrimaryKeyWithBLOBs(WalkTrends record);
 
     int updateByPrimaryKey(WalkTrends record);
 }

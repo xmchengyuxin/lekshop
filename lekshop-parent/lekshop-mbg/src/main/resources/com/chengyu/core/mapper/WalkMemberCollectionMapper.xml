@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chengyu.core.mapper.WalkTrendsCollectionMapper">
-  <resultMap id="BaseResultMap" type="com.chengyu.core.model.WalkTrendsCollection">
+<mapper namespace="com.chengyu.core.mapper.WalkMemberCollectionMapper">
+  <resultMap id="BaseResultMap" type="com.chengyu.core.model.WalkMemberCollection">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="view_member_id" jdbcType="INTEGER" property="viewMemberId" />
     <result column="view_member_name" jdbcType="VARCHAR" property="viewMemberName" />
@@ -9,16 +9,10 @@
     <result column="walk_member_id" jdbcType="INTEGER" property="walkMemberId" />
     <result column="walk_member_name" jdbcType="VARCHAR" property="walkMemberName" />
     <result column="walk_member_head_img" jdbcType="VARCHAR" property="walkMemberHeadImg" />
-    <result column="trends_id" jdbcType="INTEGER" property="trendsId" />
-    <result column="trends_images" jdbcType="VARCHAR" property="trendsImages" />
-    <result column="trends_video_url" jdbcType="VARCHAR" property="trendsVideoUrl" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_by" jdbcType="VARCHAR" property="addBy" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
     <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chengyu.core.model.WalkTrendsCollection">
-    <result column="trends_content" jdbcType="LONGVARCHAR" property="trendsContent" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -80,21 +74,15 @@
   </sql>
   <sql id="Base_Column_List">
     id, view_member_id, view_member_name, view_member_head_img, walk_member_id, walk_member_name, 
-    walk_member_head_img, trends_id, trends_images, trends_video_url, add_time, add_by, 
-    upd_time, upd_by
+    walk_member_head_img, add_time, add_by, upd_time, upd_by
   </sql>
-  <sql id="Blob_Column_List">
-    trends_content
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.chengyu.core.model.WalkTrendsCollectionExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExample" parameterType="com.chengyu.core.model.WalkMemberCollectionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from walk_trends_collection
+    from walk_member_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,58 +90,40 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.chengyu.core.model.WalkTrendsCollectionExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from walk_trends_collection
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from walk_trends_collection
+    from walk_member_collection
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from walk_trends_collection
+    delete from walk_member_collection
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.chengyu.core.model.WalkTrendsCollectionExample">
-    delete from walk_trends_collection
+  <delete id="deleteByExample" parameterType="com.chengyu.core.model.WalkMemberCollectionExample">
+    delete from walk_member_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.chengyu.core.model.WalkTrendsCollection">
+  <insert id="insert" parameterType="com.chengyu.core.model.WalkMemberCollection">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into walk_trends_collection (view_member_id, view_member_name, view_member_head_img, 
+    insert into walk_member_collection (view_member_id, view_member_name, view_member_head_img, 
       walk_member_id, walk_member_name, walk_member_head_img, 
-      trends_id, trends_images, trends_video_url, 
       add_time, add_by, upd_time, 
-      upd_by, trends_content)
+      upd_by)
     values (#{viewMemberId,jdbcType=INTEGER}, #{viewMemberName,jdbcType=VARCHAR}, #{viewMemberHeadImg,jdbcType=VARCHAR}, 
       #{walkMemberId,jdbcType=INTEGER}, #{walkMemberName,jdbcType=VARCHAR}, #{walkMemberHeadImg,jdbcType=VARCHAR}, 
-      #{trendsId,jdbcType=INTEGER}, #{trendsImages,jdbcType=VARCHAR}, #{trendsVideoUrl,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
-      #{updBy,jdbcType=VARCHAR}, #{trendsContent,jdbcType=LONGVARCHAR})
+      #{updBy,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.chengyu.core.model.WalkTrendsCollection">
+  <insert id="insertSelective" parameterType="com.chengyu.core.model.WalkMemberCollection">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into walk_trends_collection
+    insert into walk_member_collection
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="viewMemberId != null">
         view_member_id,
@@ -173,15 +143,6 @@
       <if test="walkMemberHeadImg != null">
         walk_member_head_img,
       </if>
-      <if test="trendsId != null">
-        trends_id,
-      </if>
-      <if test="trendsImages != null">
-        trends_images,
-      </if>
-      <if test="trendsVideoUrl != null">
-        trends_video_url,
-      </if>
       <if test="addTime != null">
         add_time,
       </if>
@@ -193,9 +154,6 @@
       </if>
       <if test="updBy != null">
         upd_by,
-      </if>
-      <if test="trendsContent != null">
-        trends_content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -217,15 +175,6 @@
       <if test="walkMemberHeadImg != null">
         #{walkMemberHeadImg,jdbcType=VARCHAR},
       </if>
-      <if test="trendsId != null">
-        #{trendsId,jdbcType=INTEGER},
-      </if>
-      <if test="trendsImages != null">
-        #{trendsImages,jdbcType=VARCHAR},
-      </if>
-      <if test="trendsVideoUrl != null">
-        #{trendsVideoUrl,jdbcType=VARCHAR},
-      </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
       </if>
@@ -238,19 +187,16 @@
       <if test="updBy != null">
         #{updBy,jdbcType=VARCHAR},
       </if>
-      <if test="trendsContent != null">
-        #{trendsContent,jdbcType=LONGVARCHAR},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.chengyu.core.model.WalkTrendsCollectionExample" resultType="java.lang.Long">
-    select count(*) from walk_trends_collection
+  <select id="countByExample" parameterType="com.chengyu.core.model.WalkMemberCollectionExample" resultType="java.lang.Long">
+    select count(*) from walk_member_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update walk_trends_collection
+    update walk_member_collection
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -273,15 +219,6 @@
       <if test="record.walkMemberHeadImg != null">
         walk_member_head_img = #{record.walkMemberHeadImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.trendsId != null">
-        trends_id = #{record.trendsId,jdbcType=INTEGER},
-      </if>
-      <if test="record.trendsImages != null">
-        trends_images = #{record.trendsImages,jdbcType=VARCHAR},
-      </if>
-      <if test="record.trendsVideoUrl != null">
-        trends_video_url = #{record.trendsVideoUrl,jdbcType=VARCHAR},
-      </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
       </if>
@@ -294,37 +231,13 @@
       <if test="record.updBy != null">
         upd_by = #{record.updBy,jdbcType=VARCHAR},
       </if>
-      <if test="record.trendsContent != null">
-        trends_content = #{record.trendsContent,jdbcType=LONGVARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update walk_trends_collection
-    set id = #{record.id,jdbcType=INTEGER},
-      view_member_id = #{record.viewMemberId,jdbcType=INTEGER},
-      view_member_name = #{record.viewMemberName,jdbcType=VARCHAR},
-      view_member_head_img = #{record.viewMemberHeadImg,jdbcType=VARCHAR},
-      walk_member_id = #{record.walkMemberId,jdbcType=INTEGER},
-      walk_member_name = #{record.walkMemberName,jdbcType=VARCHAR},
-      walk_member_head_img = #{record.walkMemberHeadImg,jdbcType=VARCHAR},
-      trends_id = #{record.trendsId,jdbcType=INTEGER},
-      trends_images = #{record.trendsImages,jdbcType=VARCHAR},
-      trends_video_url = #{record.trendsVideoUrl,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      add_by = #{record.addBy,jdbcType=VARCHAR},
-      upd_time = #{record.updTime,jdbcType=TIMESTAMP},
-      upd_by = #{record.updBy,jdbcType=VARCHAR},
-      trends_content = #{record.trendsContent,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByExample" parameterType="map">
-    update walk_trends_collection
+    update walk_member_collection
     set id = #{record.id,jdbcType=INTEGER},
       view_member_id = #{record.viewMemberId,jdbcType=INTEGER},
       view_member_name = #{record.viewMemberName,jdbcType=VARCHAR},
@@ -332,9 +245,6 @@
       walk_member_id = #{record.walkMemberId,jdbcType=INTEGER},
       walk_member_name = #{record.walkMemberName,jdbcType=VARCHAR},
       walk_member_head_img = #{record.walkMemberHeadImg,jdbcType=VARCHAR},
-      trends_id = #{record.trendsId,jdbcType=INTEGER},
-      trends_images = #{record.trendsImages,jdbcType=VARCHAR},
-      trends_video_url = #{record.trendsVideoUrl,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
@@ -343,8 +253,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.WalkTrendsCollection">
-    update walk_trends_collection
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.WalkMemberCollection">
+    update walk_member_collection
     <set>
       <if test="viewMemberId != null">
         view_member_id = #{viewMemberId,jdbcType=INTEGER},
@@ -364,15 +274,6 @@
       <if test="walkMemberHeadImg != null">
         walk_member_head_img = #{walkMemberHeadImg,jdbcType=VARCHAR},
       </if>
-      <if test="trendsId != null">
-        trends_id = #{trendsId,jdbcType=INTEGER},
-      </if>
-      <if test="trendsImages != null">
-        trends_images = #{trendsImages,jdbcType=VARCHAR},
-      </if>
-      <if test="trendsVideoUrl != null">
-        trends_video_url = #{trendsVideoUrl,jdbcType=VARCHAR},
-      </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
@@ -385,41 +286,17 @@
       <if test="updBy != null">
         upd_by = #{updBy,jdbcType=VARCHAR},
       </if>
-      <if test="trendsContent != null">
-        trends_content = #{trendsContent,jdbcType=LONGVARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chengyu.core.model.WalkTrendsCollection">
-    update walk_trends_collection
+  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.WalkMemberCollection">
+    update walk_member_collection
     set view_member_id = #{viewMemberId,jdbcType=INTEGER},
       view_member_name = #{viewMemberName,jdbcType=VARCHAR},
       view_member_head_img = #{viewMemberHeadImg,jdbcType=VARCHAR},
       walk_member_id = #{walkMemberId,jdbcType=INTEGER},
       walk_member_name = #{walkMemberName,jdbcType=VARCHAR},
       walk_member_head_img = #{walkMemberHeadImg,jdbcType=VARCHAR},
-      trends_id = #{trendsId,jdbcType=INTEGER},
-      trends_images = #{trendsImages,jdbcType=VARCHAR},
-      trends_video_url = #{trendsVideoUrl,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=TIMESTAMP},
-      add_by = #{addBy,jdbcType=VARCHAR},
-      upd_time = #{updTime,jdbcType=TIMESTAMP},
-      upd_by = #{updBy,jdbcType=VARCHAR},
-      trends_content = #{trendsContent,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.WalkTrendsCollection">
-    update walk_trends_collection
-    set view_member_id = #{viewMemberId,jdbcType=INTEGER},
-      view_member_name = #{viewMemberName,jdbcType=VARCHAR},
-      view_member_head_img = #{viewMemberHeadImg,jdbcType=VARCHAR},
-      walk_member_id = #{walkMemberId,jdbcType=INTEGER},
-      walk_member_name = #{walkMemberName,jdbcType=VARCHAR},
-      walk_member_head_img = #{walkMemberHeadImg,jdbcType=VARCHAR},
-      trends_id = #{trendsId,jdbcType=INTEGER},
-      trends_images = #{trendsImages,jdbcType=VARCHAR},
-      trends_video_url = #{trendsVideoUrl,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},

@@ -3,12 +3,12 @@
 <mapper namespace="com.chengyu.core.mapper.WalkTrendsCommentMapper">
   <resultMap id="BaseResultMap" type="com.chengyu.core.model.WalkTrendsComment">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="member_id" jdbcType="INTEGER" property="memberId" />
-    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
-    <result column="member_head_img" jdbcType="VARCHAR" property="memberHeadImg" />
-    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
-    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
-    <result column="shop_logo" jdbcType="VARCHAR" property="shopLogo" />
+    <result column="view_member_id" jdbcType="INTEGER" property="viewMemberId" />
+    <result column="view_member_name" jdbcType="VARCHAR" property="viewMemberName" />
+    <result column="view_member_head_img" jdbcType="VARCHAR" property="viewMemberHeadImg" />
+    <result column="walk_member_id" jdbcType="INTEGER" property="walkMemberId" />
+    <result column="walk_member_name" jdbcType="VARCHAR" property="walkMemberName" />
+    <result column="walk_member_head_img" jdbcType="VARCHAR" property="walkMemberHeadImg" />
     <result column="trends_id" jdbcType="INTEGER" property="trendsId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="pid" jdbcType="INTEGER" property="pid" />
@@ -80,8 +80,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, member_name, member_head_img, shop_id, shop_name, shop_logo, trends_id, 
-    status, pid, type, add_time, add_by, upd_time, upd_by
+    id, view_member_id, view_member_name, view_member_head_img, walk_member_id, walk_member_name, 
+    walk_member_head_img, trends_id, status, pid, type, add_time, add_by, upd_time, upd_by
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -138,14 +138,14 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into walk_trends_comment (member_id, member_name, member_head_img, 
-      shop_id, shop_name, shop_logo, 
+    insert into walk_trends_comment (view_member_id, view_member_name, view_member_head_img, 
+      walk_member_id, walk_member_name, walk_member_head_img, 
       trends_id, status, pid, 
       type, add_time, add_by, 
       upd_time, upd_by, content
       )
-    values (#{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{memberHeadImg,jdbcType=VARCHAR}, 
-      #{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{shopLogo,jdbcType=VARCHAR}, 
+    values (#{viewMemberId,jdbcType=INTEGER}, #{viewMemberName,jdbcType=VARCHAR}, #{viewMemberHeadImg,jdbcType=VARCHAR}, 
+      #{walkMemberId,jdbcType=INTEGER}, #{walkMemberName,jdbcType=VARCHAR}, #{walkMemberHeadImg,jdbcType=VARCHAR}, 
       #{trendsId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
       #{type,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
       #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
@@ -157,23 +157,23 @@
     </selectKey>
     insert into walk_trends_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="memberId != null">
-        member_id,
+      <if test="viewMemberId != null">
+        view_member_id,
       </if>
-      <if test="memberName != null">
-        member_name,
+      <if test="viewMemberName != null">
+        view_member_name,
       </if>
-      <if test="memberHeadImg != null">
-        member_head_img,
+      <if test="viewMemberHeadImg != null">
+        view_member_head_img,
       </if>
-      <if test="shopId != null">
-        shop_id,
+      <if test="walkMemberId != null">
+        walk_member_id,
       </if>
-      <if test="shopName != null">
-        shop_name,
+      <if test="walkMemberName != null">
+        walk_member_name,
       </if>
-      <if test="shopLogo != null">
-        shop_logo,
+      <if test="walkMemberHeadImg != null">
+        walk_member_head_img,
       </if>
       <if test="trendsId != null">
         trends_id,
@@ -204,23 +204,23 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="memberId != null">
-        #{memberId,jdbcType=INTEGER},
+      <if test="viewMemberId != null">
+        #{viewMemberId,jdbcType=INTEGER},
       </if>
-      <if test="memberName != null">
-        #{memberName,jdbcType=VARCHAR},
+      <if test="viewMemberName != null">
+        #{viewMemberName,jdbcType=VARCHAR},
       </if>
-      <if test="memberHeadImg != null">
-        #{memberHeadImg,jdbcType=VARCHAR},
+      <if test="viewMemberHeadImg != null">
+        #{viewMemberHeadImg,jdbcType=VARCHAR},
       </if>
-      <if test="shopId != null">
-        #{shopId,jdbcType=INTEGER},
+      <if test="walkMemberId != null">
+        #{walkMemberId,jdbcType=INTEGER},
       </if>
-      <if test="shopName != null">
-        #{shopName,jdbcType=VARCHAR},
+      <if test="walkMemberName != null">
+        #{walkMemberName,jdbcType=VARCHAR},
       </if>
-      <if test="shopLogo != null">
-        #{shopLogo,jdbcType=VARCHAR},
+      <if test="walkMemberHeadImg != null">
+        #{walkMemberHeadImg,jdbcType=VARCHAR},
       </if>
       <if test="trendsId != null">
         #{trendsId,jdbcType=INTEGER},
@@ -263,23 +263,23 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.memberId != null">
-        member_id = #{record.memberId,jdbcType=INTEGER},
+      <if test="record.viewMemberId != null">
+        view_member_id = #{record.viewMemberId,jdbcType=INTEGER},
       </if>
-      <if test="record.memberName != null">
-        member_name = #{record.memberName,jdbcType=VARCHAR},
+      <if test="record.viewMemberName != null">
+        view_member_name = #{record.viewMemberName,jdbcType=VARCHAR},
       </if>
-      <if test="record.memberHeadImg != null">
-        member_head_img = #{record.memberHeadImg,jdbcType=VARCHAR},
+      <if test="record.viewMemberHeadImg != null">
+        view_member_head_img = #{record.viewMemberHeadImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.shopId != null">
-        shop_id = #{record.shopId,jdbcType=INTEGER},
+      <if test="record.walkMemberId != null">
+        walk_member_id = #{record.walkMemberId,jdbcType=INTEGER},
       </if>
-      <if test="record.shopName != null">
-        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      <if test="record.walkMemberName != null">
+        walk_member_name = #{record.walkMemberName,jdbcType=VARCHAR},
       </if>
-      <if test="record.shopLogo != null">
-        shop_logo = #{record.shopLogo,jdbcType=VARCHAR},
+      <if test="record.walkMemberHeadImg != null">
+        walk_member_head_img = #{record.walkMemberHeadImg,jdbcType=VARCHAR},
       </if>
       <if test="record.trendsId != null">
         trends_id = #{record.trendsId,jdbcType=INTEGER},
@@ -316,12 +316,12 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update walk_trends_comment
     set id = #{record.id,jdbcType=INTEGER},
-      member_id = #{record.memberId,jdbcType=INTEGER},
-      member_name = #{record.memberName,jdbcType=VARCHAR},
-      member_head_img = #{record.memberHeadImg,jdbcType=VARCHAR},
-      shop_id = #{record.shopId,jdbcType=INTEGER},
-      shop_name = #{record.shopName,jdbcType=VARCHAR},
-      shop_logo = #{record.shopLogo,jdbcType=VARCHAR},
+      view_member_id = #{record.viewMemberId,jdbcType=INTEGER},
+      view_member_name = #{record.viewMemberName,jdbcType=VARCHAR},
+      view_member_head_img = #{record.viewMemberHeadImg,jdbcType=VARCHAR},
+      walk_member_id = #{record.walkMemberId,jdbcType=INTEGER},
+      walk_member_name = #{record.walkMemberName,jdbcType=VARCHAR},
+      walk_member_head_img = #{record.walkMemberHeadImg,jdbcType=VARCHAR},
       trends_id = #{record.trendsId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       pid = #{record.pid,jdbcType=INTEGER},
@@ -338,12 +338,12 @@
   <update id="updateByExample" parameterType="map">
     update walk_trends_comment
     set id = #{record.id,jdbcType=INTEGER},
-      member_id = #{record.memberId,jdbcType=INTEGER},
-      member_name = #{record.memberName,jdbcType=VARCHAR},
-      member_head_img = #{record.memberHeadImg,jdbcType=VARCHAR},
-      shop_id = #{record.shopId,jdbcType=INTEGER},
-      shop_name = #{record.shopName,jdbcType=VARCHAR},
-      shop_logo = #{record.shopLogo,jdbcType=VARCHAR},
+      view_member_id = #{record.viewMemberId,jdbcType=INTEGER},
+      view_member_name = #{record.viewMemberName,jdbcType=VARCHAR},
+      view_member_head_img = #{record.viewMemberHeadImg,jdbcType=VARCHAR},
+      walk_member_id = #{record.walkMemberId,jdbcType=INTEGER},
+      walk_member_name = #{record.walkMemberName,jdbcType=VARCHAR},
+      walk_member_head_img = #{record.walkMemberHeadImg,jdbcType=VARCHAR},
       trends_id = #{record.trendsId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       pid = #{record.pid,jdbcType=INTEGER},
@@ -359,23 +359,23 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chengyu.core.model.WalkTrendsComment">
     update walk_trends_comment
     <set>
-      <if test="memberId != null">
-        member_id = #{memberId,jdbcType=INTEGER},
+      <if test="viewMemberId != null">
+        view_member_id = #{viewMemberId,jdbcType=INTEGER},
       </if>
-      <if test="memberName != null">
-        member_name = #{memberName,jdbcType=VARCHAR},
+      <if test="viewMemberName != null">
+        view_member_name = #{viewMemberName,jdbcType=VARCHAR},
       </if>
-      <if test="memberHeadImg != null">
-        member_head_img = #{memberHeadImg,jdbcType=VARCHAR},
+      <if test="viewMemberHeadImg != null">
+        view_member_head_img = #{viewMemberHeadImg,jdbcType=VARCHAR},
       </if>
-      <if test="shopId != null">
-        shop_id = #{shopId,jdbcType=INTEGER},
+      <if test="walkMemberId != null">
+        walk_member_id = #{walkMemberId,jdbcType=INTEGER},
       </if>
-      <if test="shopName != null">
-        shop_name = #{shopName,jdbcType=VARCHAR},
+      <if test="walkMemberName != null">
+        walk_member_name = #{walkMemberName,jdbcType=VARCHAR},
       </if>
-      <if test="shopLogo != null">
-        shop_logo = #{shopLogo,jdbcType=VARCHAR},
+      <if test="walkMemberHeadImg != null">
+        walk_member_head_img = #{walkMemberHeadImg,jdbcType=VARCHAR},
       </if>
       <if test="trendsId != null">
         trends_id = #{trendsId,jdbcType=INTEGER},
@@ -409,12 +409,12 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chengyu.core.model.WalkTrendsComment">
     update walk_trends_comment
-    set member_id = #{memberId,jdbcType=INTEGER},
-      member_name = #{memberName,jdbcType=VARCHAR},
-      member_head_img = #{memberHeadImg,jdbcType=VARCHAR},
-      shop_id = #{shopId,jdbcType=INTEGER},
-      shop_name = #{shopName,jdbcType=VARCHAR},
-      shop_logo = #{shopLogo,jdbcType=VARCHAR},
+    set view_member_id = #{viewMemberId,jdbcType=INTEGER},
+      view_member_name = #{viewMemberName,jdbcType=VARCHAR},
+      view_member_head_img = #{viewMemberHeadImg,jdbcType=VARCHAR},
+      walk_member_id = #{walkMemberId,jdbcType=INTEGER},
+      walk_member_name = #{walkMemberName,jdbcType=VARCHAR},
+      walk_member_head_img = #{walkMemberHeadImg,jdbcType=VARCHAR},
       trends_id = #{trendsId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       pid = #{pid,jdbcType=INTEGER},
@@ -428,12 +428,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chengyu.core.model.WalkTrendsComment">
     update walk_trends_comment
-    set member_id = #{memberId,jdbcType=INTEGER},
-      member_name = #{memberName,jdbcType=VARCHAR},
-      member_head_img = #{memberHeadImg,jdbcType=VARCHAR},
-      shop_id = #{shopId,jdbcType=INTEGER},
-      shop_name = #{shopName,jdbcType=VARCHAR},
-      shop_logo = #{shopLogo,jdbcType=VARCHAR},
+    set view_member_id = #{viewMemberId,jdbcType=INTEGER},
+      view_member_name = #{viewMemberName,jdbcType=VARCHAR},
+      view_member_head_img = #{viewMemberHeadImg,jdbcType=VARCHAR},
+      walk_member_id = #{walkMemberId,jdbcType=INTEGER},
+      walk_member_name = #{walkMemberName,jdbcType=VARCHAR},
+      walk_member_head_img = #{walkMemberHeadImg,jdbcType=VARCHAR},
       trends_id = #{trendsId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       pid = #{pid,jdbcType=INTEGER},
