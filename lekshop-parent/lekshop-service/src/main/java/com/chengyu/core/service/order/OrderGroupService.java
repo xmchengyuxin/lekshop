@@ -1,6 +1,7 @@
 package com.chengyu.core.service.order;
 
 import com.chengyu.core.domain.form.OrderGroupSearchForm;
+import com.chengyu.core.domain.result.OrderGroupResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.OmsOrderDetail;
 import com.chengyu.core.model.OmsOrderGroup;
@@ -78,7 +79,7 @@ public interface OrderGroupService {
 	 * @return OmsOrderGroup
 	 * @throws ServiceException 业务异常
 	 */
-	OmsOrderGroup getOrderGroupById(Integer orderGroupId) throws ServiceException;
+	OmsOrderGroup getOrderGroupById(Integer orderGroupId);
 
 	/**
 	 * 根据订单号获取拼团成员
@@ -128,5 +129,14 @@ public interface OrderGroupService {
 	 * @return boolean
 	 */
 	boolean isGroupSus(String orderNo);
-	
+
+	/**
+	 * 获取订单的团购详情
+	 * @author LeGreen
+	 * @date   2022/5/20
+	 * @param  orderNo
+	 * @return OmsOrderGroup
+	 * @throws ServiceException 业务异常
+	 */
+	OrderGroupResult getOrderGroupByOrderNo(String orderNo);
 }

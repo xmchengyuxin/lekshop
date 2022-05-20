@@ -4,6 +4,7 @@ import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.enums.GoodsEnums;
 import com.chengyu.core.domain.form.OrderSearchForm;
+import com.chengyu.core.domain.result.OrderGroupResult;
 import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
@@ -49,7 +50,9 @@ public class MemberOrderController extends UserBaseController {
 		OrderResult result = orderService.getOrder(orderId);
 		if(result.getOrder().getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue()){
 			//团购商品查询团购人员
-			result.setGroupMemberList(orderGroupService.getGroupMemberByOrderNo(result.getOrder().getOrderNo()));
+			OrderGroupResult groupResult = orderGroupService.getOrderGroupByOrderNo(result.getOrder().getOrderNo());
+			result.setOrderGroup(groupResult.getOrderGroup());
+			result.setGroupMemberList(groupResult.getGroupMemberList());
 		}
 		return CommonResult.success(result);
 	}

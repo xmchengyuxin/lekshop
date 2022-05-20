@@ -192,6 +192,26 @@ public class OrderServiceImpl implements OrderService {
 				if(sku.getStock() < buyDetailForm.getNum()){
 					throw new ServiceException("「"+goods.getTitle()+"」库存不足");
 				}
+				if(type == GoodsEnums.GoodsType.SECKILL_GOODS.getValue()){
+					//秒杀商品的校验
+					if(goods.getSeckillBeginTime().after(now)){
+						throw new ServiceException("未到秒杀时间");
+					}
+					if(goods.getSeckillEndTime().before(now)){
+						throw new ServiceException("秒杀已结束");
+					}
+					if(buyDetailForm.getNum() > goods.getSeckillLimitNum()){
+						throw new ServiceException("商品限购"+goods.getSeckillLimitNum()+"件");
+					}
+				}else if(type == GoodsEnums.GoodsType.GROUP_GOODS.getValue()){
+					//团购商品的校验
+					if(goods.getGroupSingleBuy() == CommonConstant.NO_INT && form.getGroupId() == -1){
+						throw new ServiceException("该商品不支持单独购买");
+					}
+					if(buyDetailForm.getNum() > goods.getGroupLimitBuy()){
+						throw new ServiceException("商品限购"+goods.getGroupLimitBuy()+"件");
+					}
+				}
 				OmsOrderDetail detail = new OmsOrderDetail();
 				detail.setMemberId(member.getId());
 				detail.setMemberName(member.getCode());
@@ -228,7 +248,7 @@ public class OrderServiceImpl implements OrderService {
 				detail.setBuyNum(buyDetailForm.getNum());
 				detail.setStockType(goods.getStockType());
 				detail.setRefundAmount(BigDecimal.ZERO);
-				detail.setBuyTotalPrice(NumberUtil.mul(sku.getPrice(), buyDetailForm.getNum()));
+				detail.setBuyTotalPrice(NumberUtil.mul(detail.getBuyPrice(), buyDetailForm.getNum()));
 				detail.setStatus(OrderEnums.OrderStatus.WAIT_PAY.getValue());
 				detail.setRefundStatus(OrderEnums.RefundStatus.UN_REFUND.getValue());
 				detail.setRemark(form.getRemark());

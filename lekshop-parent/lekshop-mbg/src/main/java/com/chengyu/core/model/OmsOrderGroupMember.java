@@ -33,6 +33,9 @@ public class OmsOrderGroupMember implements Serializable {
     @ApiModelProperty(value = "商品拼购价")
     private BigDecimal groupPrice;
 
+    @ApiModelProperty(value = "商品阶梯拼团ID")
+    private Integer goodsGroupId;
+
     @ApiModelProperty(value = "购买数量")
     private Integer buyNum;
 
@@ -128,6 +131,14 @@ public class OmsOrderGroupMember implements Serializable {
         this.groupPrice = groupPrice;
     }
 
+    public Integer getGoodsGroupId() {
+        return goodsGroupId;
+    }
+
+    public void setGoodsGroupId(Integer goodsGroupId) {
+        this.goodsGroupId = goodsGroupId;
+    }
+
     public Integer getBuyNum() {
         return buyNum;
     }
@@ -199,6 +210,7 @@ public class OmsOrderGroupMember implements Serializable {
         sb.append(", memberHeadImg=").append(memberHeadImg);
         sb.append(", originalPrice=").append(originalPrice);
         sb.append(", groupPrice=").append(groupPrice);
+        sb.append(", goodsGroupId=").append(goodsGroupId);
         sb.append(", buyNum=").append(buyNum);
         sb.append(", payPrice=").append(payPrice);
         sb.append(", payStatus=").append(payStatus);

@@ -109,13 +109,13 @@
         <template slot-scope="scope">
           <el-button-group>
             <el-tooltip class="item" effect="dark" content="查看" placement="top">
-               <el-button  type="primary" icon="el-icon-s-promotion" size="mini" @click="handleViewGoodsQuality(scope.row)"></el-button>
+               <el-button  type="primary" icon="el-icon-s-promotion" size="mini" @click="handleViewTrends(scope.row)"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="播放" placement="top" v-if="scope.row.walkTrends.type == 1">
                <el-button  type="primary" icon="el-icon-video-camera-solid" size="mini" @click="viewVideo(scope.row.walkTrends)"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="查看评论" placement="top">
-               <el-button  type="primary" icon="el-icon-s-comment" size="mini" @click="handleViewGoodsQuality(scope.row)"></el-button>
+               <el-button  type="primary" icon="el-icon-s-comment" size="mini" @click="handleViewComment(scope.row.walkTrends.id)"></el-button>
             </el-tooltip>
           </el-button-group>
 
@@ -133,7 +133,7 @@
           		<el-radio :label="1" border>短视频</el-radio>
           		<el-radio :label="2" border>宝贝上新</el-radio>
               <el-radio :label="3" border>种草</el-radio>
-              <el-radio :label="4" border>买家秀</el-radio>
+              <!-- <el-radio :label="4" border>买家秀</el-radio> -->
           	</el-radio-group>
           </el-form-item>
 		      <el-form-item label="文案" prop="content" :rules="[{ required: true, message: '请填写文案', trigger: 'blur' }]">
@@ -146,7 +146,23 @@
           <el-form-item label="上传视频" prop="videoUrl" :rules="[{ required: true, message: '请上传视频', trigger: 'blur' }]" v-if="trendsForm.type == 1">
               <SingleVideoUpload v-model="trendsForm.videoUrl" />
           </el-form-item>
-          <el-form-item label="选择商品" prop="goodsId">
+          <el-form-item label="选择商品" prop="goodsId" :rules="[{ required: true, message: '请选择商品', trigger: 'change' }]" v-if="trendsForm.type == 2">
+            <el-select
+                v-model="trendsForm.goodsId"
+                multiple
+                collapse-tags
+                filterable
+                style="width: 60%;"
+                placeholder="请选择">
+                <el-option
+                  v-for="item in goodsOptions"
+                  :key="item.id"
+                  :label="item.title"
+                  :value="item.id +''">
+                </el-option>
+              </el-select>
+          </el-form-item>
+          <el-form-item label="选择商品" prop="goodsId" v-if="trendsForm.type == 1">
             <el-select
                 v-model="trendsForm.goodsId"
                 multiple
@@ -176,8 +192,107 @@
       </video>
     </el-dialog>
 
+    <!--查看详情-->
+    <el-dialog title="查看" :visible.sync="dialogViewVisible" :destroy-on-close="true">
+      <div class="flex">
+        <el-image
+           class="flex f-s-0 margin-r8"
+          style="height: 40px"
+          :src="trendsDetail.walkMemberHeadImg">
+        </el-image>
+        <div class="flex f-c">
+          <span class="link-type" style="font-size: 12px;">{{ trendsDetail.walkMemberName}}</span>
+          <span class="tips-class margin-t6">创作号: {{ trendsDetail.walkMemberUid}}</span>
+        </div>
+        <div class="flex f-j-e flex-1">
+          <span class="tips-class" style="float: right;">{{ trendsDetail.addTime | parseTime}}</span>
+         </div>
+      </div>
+
+      <div>
+       <p v-text="trendsDetail.content" style="white-space: pre-wrap; font-size: 13px; padding: 10px;"></p>
+       <p v-if="trendsDetail.images">
+         <el-image
+             v-for="item in trendsDetail.images.split('|')"
+             style="width: 30%;margin-left: 5px;border-radius: 5px;"
+             :src="item"
+             :preview-src-list="trendsDetail.images.split('|')">
+           </el-image>
+       </p>
+       <p v-if="trendsDetail.videoUrl">
+           <video id="playVideos" width="50%" height="100%" webkit-playsinline="true" preload="auto" controls="controls">
+                <source :src="trendsDetail.videoUrl" type="video/mp4">
+           </video>
+       </p>
+      </div>
+      <div style="margin-top: 20px;">
+          <span class="tips-class margin-r10" style="font-size: 13px;">浏览量({{trendsDetail.viewNum}})</span>
+           <span class="tips-class margin-r10" style="font-size: 13px;"><i class="el-icon-s-comment"></i>评论({{trendsDetail.commentNum}})</span>
+           <span class="tips-class margin-r10" style="font-size: 13px;"><i class="el-icon-star-on"></i>点赞({{trendsDetail.collectionNum}})</span>
+      </div>
+    </el-dialog>
+
+    <!--评论弹窗-->
+    <el-dialog title="评论" :visible.sync="dialogCommentVisible" >
+        <el-empty description="暂无评论" v-if="!commentList || commentList.length == 0"></el-empty>
+
+        <div v-for="item in commentList" class="comment comment-item">
+            <div class="flex">
+              <el-avatar class="flex f-s-0 margin-r8 margin-t8"
+                size="small"
+                 :src="item.walkTrendsComment.viewMemberHeadImg"></el-avatar>
+              <div class="flex flex-1 f-c margin-t12 padding-8">
+                <span style="font-size: 13px;font-weight: bold;">{{item.walkTrendsComment.viewMemberName}}</span>
+                <span style="padding: 10px 0 10px 0; font-size: 13px;">{{item.walkTrendsComment.content}}</span>
+                <span class="tips-class flex f-j-s flex-1 w100" style="float: right;">
+                  {{ item.walkTrendsComment.addTime | parseTime}}
+                  <span style="font-size: 13px;"><i class="el-icon-star-on"></i>{{item.walkTrendsComment.likeNum}}</span>
+                </span>
+
+              </div>
+            </div>
+
+          <div v-for="item2 in item.chilidCommentList" class="sub-item">
+            <div class="flex">
+                <el-avatar class="flex f-s-0 margin-r8 margin-t8"
+                  size="small" :src="item2.viewMemberHeadImg"></el-avatar>
+              <div class="flex flex-1 f-c margin-t12 padding-8">
+                <span style="font-size: 13px;font-weight: bold;">{{item2.viewMemberName}}</span>
+                <span style="padding: 10px 0 10px 0; font-size: 13px;">{{item2.content}}</span>
+                <span class="tips-class flex f-j-s flex-1 w100" style="float: right;">{{ item2.addTime | parseTime}}
+                <span style="font-size: 13px;"><i class="el-icon-star-on"></i>{{item2.likeNum}}</span>
+                </span>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      <pagination v-show="commentTotal>0" :total="commentTotal" :page.sync="commentListQuery.page" :limit.sync="commentListQuery.pageSize" @pagination="getCommentList" />
+    </el-dialog>
+
   </div>
 </template>
+
+<style>
+  .tips-class {
+    font-size: 12px;
+    color: #999;
+  }
+  .comment-item {
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 12px;
+  }
+   .comment .sub-item {
+    padding: 10px;
+    background-color: #e8ecef;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 34px;
+  }
+</style>
 
 <script>
 import {getTrendsList, publishTrends, deleteTrends, getCommentList } from '@/api/trends'
@@ -193,7 +308,7 @@ const typeOptions = [
   { key: 1, text: '短视频' },
   { key: 2, text: '上新' },
   { key: 3, text: '种草' },
-  { key: 4, text: '买家秀' },
+  /* { key: 4, text: '买家秀' }, */
 ]
 
 // arr to obj ,such as { CN : "China", US : "USA" }
@@ -243,13 +358,24 @@ export default {
       trendsForm: {},
       dialogFormVisible: false,
       dialogVideoVisible: false,
+      dialogViewVisible: false,
+      dialogCommentVisible: false,
       dialogType: '',
 			multipleSelection: [],
 			typeOptions,
       statusOptions,
 			activeName: '0',
       goodsOptions:[],
-      videoUrl:''
+      videoUrl:'',
+      trendsDetail: {},
+      commentList: [],
+      commentTotal: 0,
+      commentListLoading: true,
+      commentListQuery: {
+        page: 1,
+        pageSize: 20,
+      },
+      activeNames: []
     }
   },
   created() {
@@ -273,6 +399,7 @@ export default {
 			this.multipleSelection = val;
      },
      handleCreate() {
+       this.trendsForm = {}
        this.dialogStatus = 'add'
        this.dialogFormVisible = true
        this.getGoodsSelector()
@@ -319,7 +446,7 @@ export default {
 			}).then(async() => {
 				  let values = [];
 					delVals.forEach(val =>{
-						values.push(val.id);
+						values.push(val.walkTrends.id);
 					})
 			    deleteTrends(values.join(',')).then(() => {
 			    	this.getList()
@@ -352,35 +479,22 @@ export default {
     	document.getElementById("playVideos").src=''
     	this.dialogVideoVisible = false
     },
-    getGoodsQualityList(goodsId){
-    	getGoodsQualityList(goodsId).then((result) => {
-    		this.goodsQualityList = result.data;
-    	})
+    handleViewTrends(row){
+      this.trendsDetail = row.walkTrends
+      this.dialogViewVisible = true
     },
-    handleViewGoodsQuality(row) {
-      this.dialogFormVisible = true
-    	this.tempGoodsId = row.id
-    	this.goodsQuality = {}
-    	this.getGoodsQualityList(this.tempGoodsId)
+    handleViewComment(trendsId){
+      this.commentListQuery.trendsId = trendsId
+      this.getCommentList()
+      this.dialogCommentVisible = true
     },
-    handleDeleteGoodsQuality(id){
-    	this.$confirm('您确定要删除这条记录?', '提醒', {
-    	  confirmButtonText: '确定',
-    	  cancelButtonText: '取消',
-    	  type: 'warning'
-    	}).then(async() => {
-    	    deleteGoodsQuality(id).then(() => {
-    				this.getGoodsQualityList(this.tempGoodsId)
-    	      this.$notify({
-    	        title: '成功',
-    	        message: '删除成功',
-    	        type: 'success',
-    	        duration: 2000
-    	      })
-    	    })
-    	  })
-    	  .catch(err => { console.error(err) })
-    },
+    getCommentList(){
+      getCommentList(this.commentListQuery).then(response => {
+        this.commentList = response.data.list
+        this.commentTotal = response.data.total
+        this.commentListLoading = false
+      })
+    }
 
   }
 }

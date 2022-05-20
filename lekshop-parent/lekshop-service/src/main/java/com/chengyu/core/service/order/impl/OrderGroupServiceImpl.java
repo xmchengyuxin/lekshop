@@ -3,6 +3,7 @@ package com.chengyu.core.service.order.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.OrderGroupSearchForm;
+import com.chengyu.core.domain.result.OrderGroupResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.CustomOrderGroupMapper;
 import com.chengyu.core.mapper.OmsOrderGroupMapper;
@@ -89,8 +90,11 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		}
 
 		OmsOrderGroup orderGroup = new OmsOrderGroup();
+		orderGroup.setOrderId(orderDetail.getOrderId());
+		orderGroup.setOrderNo(orderDetail.getOrderNo());
 		orderGroup.setMemberId(orderDetail.getMemberId());
 		orderGroup.setMemberName(orderDetail.getMemberName());
+		orderGroup.setMemberHeadImg(orderDetail.getMemberHeadImg());
 		orderGroup.setShopId(orderDetail.getShopId());
 		orderGroup.setShopName(orderDetail.getShopName());
 		orderGroup.setGoodsId(orderDetail.getGoodsId());
@@ -100,6 +104,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		orderGroup.setGroupPrice(orderDetail.getBuyPrice());
 		orderGroup.setGroupNum(orderDetail.getGroupNum());
 		orderGroup.setHaveGroupNum(1);
+		orderGroup.setGoodsGroupId(orderDetail.getGroupId());
 		orderGroup.setStatus(CommonConstant.YES_INT);
 		orderGroup.setAddTime(new Date());
 		orderGroup.setEndTime(cn.hutool.core.date.DateUtil.offsetHour(orderGroup.getAddTime(), orderDetail.getGroupLimitHours()));
@@ -109,6 +114,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		
 		OmsOrderGroupMember assembleMember = new OmsOrderGroupMember();
 		assembleMember.setOrderGroupId(orderGroupId);
+		assembleMember.setOrderId(orderDetail.getOrderId());
 		assembleMember.setOrderNo(orderDetail.getOrderNo());
 		assembleMember.setMemberId(orderDetail.getMemberId());
 		assembleMember.setMemberName(orderDetail.getMemberName());
@@ -117,6 +123,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		assembleMember.setBuyNum(orderDetail.getBuyNum());
 		assembleMember.setOriginalPrice(orderDetail.getBuyOriPrice());
 		assembleMember.setPayPrice(orderDetail.getBuyPrice().multiply(new BigDecimal(orderDetail.getBuyNum())));
+		assembleMember.setGoodsGroupId(orderDetail.getGroupId());
 		assembleMember.setAddTime(cn.hutool.core.date.DateUtil.date());
 		assembleMember.setUpdTime(assembleMember.getAddTime());
 		assembleMemberMapper.insertSelective(assembleMember);
@@ -200,6 +207,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	@Override
 	public List<OmsOrderGroupMember> getGroupMemberByOrderNo(String orderNo) {
 		OmsOrderGroupMemberExample example = new OmsOrderGroupMemberExample();
+		example.setOrderByClause("add_time asc");
 		example.createCriteria().andOrderNoEqualTo(orderNo);
 		List<OmsOrderGroupMember> list = assembleMemberMapper.selectByExample(example);
 		if(list == null) {
@@ -255,6 +263,17 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 
 		OmsOrderGroup assemble = this.getOrderGroupById(assembleMember.get(0).getOrderGroupId());
 		return assemble.getStatus() == 2;
+	}
+
+	@Override
+	public OrderGroupResult getOrderGroupByOrderNo(String orderNo) {
+		OrderGroupResult result = new OrderGroupResult();
+		OmsOrderGroupExample example = new OmsOrderGroupExample();
+		example.createCriteria().andOrderNoEqualTo(orderNo);
+		List<OmsOrderGroup> list = assembleMapper.selectByExample(example);
+		result.setOrderGroup(CollectionUtil.isNotEmpty(list) ? list.get(0) : null);
+		result.setGroupMemberList(this.getGroupMemberByOrderNo(orderNo));
+		return result;
 	}
 
 

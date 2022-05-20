@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,10 +70,11 @@ public class GoodsController extends UserBaseController {
 	@ApiOperation(value = "商品详情")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "goodsId", value = "商品ID"),
+		@ApiImplicitParam(name = "orderGroupId", value = "分享的团长订单ID"),
 	})
 	@ResponseBody
 	@RequestMapping(value="/goods/get", method=RequestMethod.GET)
-	public CommonResult<Map<String,Object>> get(Integer goodsId) {
+	public CommonResult<Map<String,Object>> get(Integer goodsId, Integer orderGroupId) {
 		Map<String,Object> result = new HashMap<>();
 		PmsGoods goods = goodsService.getGoods(goodsId);
 		if(goods == null){
@@ -107,11 +109,18 @@ public class GoodsController extends UserBaseController {
 			long pintuanNum = orderGroupService.countGroupNum(goods.getId());
 			result.put("pintuanNum", pintuanNum);
 
-			//查询快到期的两个团
-			OrderGroupSearchForm form = new OrderGroupSearchForm();
-			form.setGoodsId(goods.getId());
-			form.setStatus(1);
-			List<OmsOrderGroup> assembleList = orderGroupService.getOrderGroupList(form, 1, 2);
+			List<OmsOrderGroup> assembleList = new ArrayList<>();
+			if(orderGroupId == null){
+				//查询快到期的两个团
+				OrderGroupSearchForm form = new OrderGroupSearchForm();
+				form.setGoodsId(goods.getId());
+				form.setStatus(1);
+				assembleList = orderGroupService.getOrderGroupList(form, 1, 2);
+			}else{
+				//查询分享的团
+				OmsOrderGroup orderGroup = orderGroupService.getOrderGroupById(orderGroupId);
+				assembleList.add(orderGroup);
+			}
 			result.put("assembleList", assembleList);
 		}
 		return CommonResult.success(result);

@@ -32,11 +32,17 @@ public class WalkTrendsComment implements Serializable {
     @ApiModelProperty(value = "0隐藏 1显示")
     private Integer status;
 
+    @ApiModelProperty(value = "最顶级的评论ID")
+    private Integer tid;
+
     @ApiModelProperty(value = "父级ID")
     private Integer pid;
 
     @ApiModelProperty(value = "1直评 2回评")
     private Integer type;
+
+    @ApiModelProperty(value = "点赞数量")
+    private Integer likeNum;
 
     @ApiModelProperty(value = "修改时间")
     private Date addTime;
@@ -127,6 +133,14 @@ public class WalkTrendsComment implements Serializable {
         this.status = status;
     }
 
+    public Integer getTid() {
+        return tid;
+    }
+
+    public void setTid(Integer tid) {
+        this.tid = tid;
+    }
+
     public Integer getPid() {
         return pid;
     }
@@ -141,6 +155,14 @@ public class WalkTrendsComment implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
     }
 
     public Date getAddTime() {
@@ -198,8 +220,10 @@ public class WalkTrendsComment implements Serializable {
         sb.append(", walkMemberHeadImg=").append(walkMemberHeadImg);
         sb.append(", trendsId=").append(trendsId);
         sb.append(", status=").append(status);
+        sb.append(", tid=").append(tid);
         sb.append(", pid=").append(pid);
         sb.append(", type=").append(type);
+        sb.append(", likeNum=").append(likeNum);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);

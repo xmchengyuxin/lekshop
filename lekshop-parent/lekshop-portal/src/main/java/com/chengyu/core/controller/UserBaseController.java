@@ -3,9 +3,11 @@ package com.chengyu.core.controller;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.model.WalkMember;
 import com.chengyu.core.security.util.JwtTokenUtil;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.system.ThirdConfigService;
+import com.chengyu.core.service.walk.WalkMemberService;
 import com.chengyu.core.util.RedisUtil;
 import com.chengyu.core.util.third.manager.ThirdManager;
 import com.chengyu.core.utils.StringUtils;
@@ -46,6 +48,8 @@ public class UserBaseController {
 	protected ThirdManager thirdManager;
 	@Autowired
 	private ThirdConfigService thirdConfigService;
+	@Autowired
+	private WalkMemberService walkMemberService;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {
@@ -72,7 +76,15 @@ public class UserBaseController {
 	public Integer getCurrentMemberId() throws ServiceException {
 		return getCurrentMember().getId();
 	}
-	
+
+	public WalkMember getCurrentWalkMember() {
+		UmsMember member = getCurrentMemberOrNull();
+		if(member == null){
+			return null;
+		}
+		return walkMemberService.getWalkMemberByMember(member.getId());
+	}
+
 	public HttpServletRequest getRequest() {
 		return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 	}

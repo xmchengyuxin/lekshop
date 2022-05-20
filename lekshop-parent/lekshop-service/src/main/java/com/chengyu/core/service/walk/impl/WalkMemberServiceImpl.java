@@ -58,4 +58,9 @@ public class WalkMemberServiceImpl implements WalkMemberService {
 		List<WalkMember> list = walkMemberMapper.selectByExample(example);
 		return CollectionUtil.isNotEmpty(list) ? list.get(0) : null;
 	}
+
+	@Override
+	public WalkMember getWalkMemberById(Integer walkMemberId) {
+		return walkMemberMapper.selectByPrimaryKey(walkMemberId);
+	}
 }

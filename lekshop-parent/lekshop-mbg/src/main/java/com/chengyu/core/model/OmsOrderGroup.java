@@ -21,6 +21,9 @@ public class OmsOrderGroup implements Serializable {
     @ApiModelProperty(value = "用户名")
     private String memberName;
 
+    @ApiModelProperty(value = "头像")
+    private String memberHeadImg;
+
     @ApiModelProperty(value = "商家ID")
     private Integer shopId;
 
@@ -47,6 +50,9 @@ public class OmsOrderGroup implements Serializable {
 
     @ApiModelProperty(value = "已拼团人数")
     private Integer haveGroupNum;
+
+    @ApiModelProperty(value = "商品阶梯拼团ID")
+    private Integer goodsGroupId;
 
     @ApiModelProperty(value = "结束时间")
     private Date endTime;
@@ -106,6 +112,14 @@ public class OmsOrderGroup implements Serializable {
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    public String getMemberHeadImg() {
+        return memberHeadImg;
+    }
+
+    public void setMemberHeadImg(String memberHeadImg) {
+        this.memberHeadImg = memberHeadImg;
     }
 
     public Integer getShopId() {
@@ -180,6 +194,14 @@ public class OmsOrderGroup implements Serializable {
         this.haveGroupNum = haveGroupNum;
     }
 
+    public Integer getGoodsGroupId() {
+        return goodsGroupId;
+    }
+
+    public void setGoodsGroupId(Integer goodsGroupId) {
+        this.goodsGroupId = goodsGroupId;
+    }
+
     public Date getEndTime() {
         return endTime;
     }
@@ -239,6 +261,7 @@ public class OmsOrderGroup implements Serializable {
         sb.append(", orderNo=").append(orderNo);
         sb.append(", memberId=").append(memberId);
         sb.append(", memberName=").append(memberName);
+        sb.append(", memberHeadImg=").append(memberHeadImg);
         sb.append(", shopId=").append(shopId);
         sb.append(", shopName=").append(shopName);
         sb.append(", goodsId=").append(goodsId);
@@ -248,6 +271,7 @@ public class OmsOrderGroup implements Serializable {
         sb.append(", groupPrice=").append(groupPrice);
         sb.append(", groupNum=").append(groupNum);
         sb.append(", haveGroupNum=").append(haveGroupNum);
+        sb.append(", goodsGroupId=").append(goodsGroupId);
         sb.append(", endTime=").append(endTime);
         sb.append(", status=").append(status);
         sb.append(", addTime=").append(addTime);

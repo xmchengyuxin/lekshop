@@ -132,7 +132,7 @@ public class OrderController extends UserBaseController {
 	@ApiOperation(value = "添加订单")
 	@OperationLog
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "addFormJson", value = "[goodsDetail:[skuId:商品skuId,num:购买数量],carIds:购物车ID集合,couponId:优惠券ID,remark:备注,groupId:拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID]")
+		@ApiImplicitParam(name = "addFormJson", value = "[goodsDetail:[skuId:商品skuId,num:购买数量],carIds:购物车ID集合,couponId:优惠券ID,remark:备注,groupId:拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID,joinGroupId:参团ID]")
 	})
 	@ResponseBody
 	@RequestMapping(value={"/order/add"}, method=RequestMethod.POST)

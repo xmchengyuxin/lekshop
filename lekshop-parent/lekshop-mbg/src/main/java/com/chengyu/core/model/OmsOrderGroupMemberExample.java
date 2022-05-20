@@ -676,6 +676,66 @@ public class OmsOrderGroupMemberExample {
             return (Criteria) this;
         }
 
+        public Criteria andGoodsGroupIdIsNull() {
+            addCriterion("goods_group_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdIsNotNull() {
+            addCriterion("goods_group_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdEqualTo(Integer value) {
+            addCriterion("goods_group_id =", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdNotEqualTo(Integer value) {
+            addCriterion("goods_group_id <>", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdGreaterThan(Integer value) {
+            addCriterion("goods_group_id >", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("goods_group_id >=", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdLessThan(Integer value) {
+            addCriterion("goods_group_id <", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdLessThanOrEqualTo(Integer value) {
+            addCriterion("goods_group_id <=", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdIn(List<Integer> values) {
+            addCriterion("goods_group_id in", values, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdNotIn(List<Integer> values) {
+            addCriterion("goods_group_id not in", values, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdBetween(Integer value1, Integer value2) {
+            addCriterion("goods_group_id between", value1, value2, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("goods_group_id not between", value1, value2, "goodsGroupId");
+            return (Criteria) this;
+        }
+
         public Criteria andBuyNumIsNull() {
             addCriterion("buy_num is null");
             return (Criteria) this;

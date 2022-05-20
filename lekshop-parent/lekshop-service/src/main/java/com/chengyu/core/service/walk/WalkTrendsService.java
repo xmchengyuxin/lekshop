@@ -59,7 +59,7 @@ public interface WalkTrendsService {
 	 * @return List<WalkTrends>
 	 * @throws ServiceException 业务异常
 	 */
-	CommonPage<WalkTrendsResult> getTrendsList(TrendsForm form, Integer page, Integer pageSize) throws ServiceException;
+	CommonPage<WalkTrendsResult> getTrendsList(TrendsForm form, Integer page, Integer pageSize);
 	
 	/**
 	 * 删除动态
@@ -80,7 +80,7 @@ public interface WalkTrendsService {
 	 * @return boolean
 	 * @throws ServiceException 业务异常
 	 */
-	boolean isCollection(WalkMember viewMember, Integer trendId) throws ServiceException;
+	boolean isCollection(WalkMember viewMember, Integer trendId);
 	
 	/**
 	 * 点赞或取消点赞
@@ -90,7 +90,7 @@ public interface WalkTrendsService {
 	 * @param  trendId
 	 * @throws ServiceException 业务异常
 	 */
-	void collectOrCancelTrends(WalkMember viewMember, Integer trendId) throws ServiceException;
+	void collectOrCancelTrends(WalkMember viewMember, Integer trendId);
 	
 	/**
 	 * 我点赞的动态
@@ -125,7 +125,7 @@ public interface WalkTrendsService {
 	 * @param  content
 	 * @throws ServiceException 业务异常
 	 */
-	void addComment(WalkMember viewMember, Integer trendsId, Integer commentId, String content) throws ServiceException;
+	void addComment(WalkMember viewMember, Integer trendsId, Integer commentId, String content);
 	
 	/**
 	 * 删除评论
@@ -135,6 +135,26 @@ public interface WalkTrendsService {
 	 * @throws ServiceException 业务异常
 	 */
 	void deleteComment(Integer commentId) throws ServiceException;
+
+	/**
+	 * 是否点赞评论
+	 * @author LeGreen
+	 * @date   2022/5/19
+	 * @param  viewMember
+	 * @param  commentId
+	 * @return boolean
+	 */
+	boolean isLikeComment(WalkMember viewMember, Integer commentId);
+
+	/**
+	 * 点赞或取消点赞评论
+	 * @author LeGreen
+	 * @date   2022/5/19
+	 * @param  viewMember
+	 * @param  commentId
+	 * @throws ServiceException 业务异常
+	 */
+	void likeOrCancelComment(WalkMember viewMember, Integer commentId);
 	
 	/**
 	 * 评论列表
@@ -145,7 +165,7 @@ public interface WalkTrendsService {
 	 * @param  pageSize
 	 * @return List<WalkTrendsComment>
 	 */
-	CommonPage<WalkTrendsCommentResult> getTrendsCommentList(Integer trendsId, Integer viewWalkMemberId, Integer walkMemberId, Integer page, Integer pageSize) throws ServiceException;
+	CommonPage<WalkTrendsCommentResult> getTrendsCommentList(Integer trendsId, Integer viewWalkMemberId, Integer walkMemberId, Integer page, Integer pageSize);
 	
 	/**
 	 * 获取动态详情
@@ -155,7 +175,7 @@ public interface WalkTrendsService {
 	 * @return WalkTrends
 	 * @throws ServiceException 业务异常
 	 */
-	WalkTrends getTrendsById(Integer trendsId) throws ServiceException;
+	WalkTrends getTrendsById(Integer trendsId);
 	
 	/**
 	 * 增加浏览数量
@@ -165,5 +185,14 @@ public interface WalkTrendsService {
 	 * @param  num
 	 * @throws ServiceException 业务异常
 	 */
-	void addViewNums(Integer trendsId, Integer num) throws ServiceException;
+	void addViewNums(Integer trendsId, Integer num);
+
+	/**
+	 * 动态详情
+	 * @author LeGreen
+	 * @date   2022/5/20
+	 * @param  trendsId
+	 * @return WalkTrendsResult
+	 */
+	WalkTrendsResult getTrendsDetail(Integer trendsId);
 }

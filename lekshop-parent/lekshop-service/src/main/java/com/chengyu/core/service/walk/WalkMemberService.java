@@ -37,4 +37,13 @@ public interface WalkMemberService {
      * @return WalkMember
      */
     WalkMember getWalkMemberByMember(Integer memberId);
+
+    /**
+     * 获取创作人信息
+     * @author LeGreen
+     * @date   2022/5/20
+     * @param  walkMemberId
+     * @return WalkMember
+     */
+    WalkMember getWalkMemberById(Integer walkMemberId);
 }

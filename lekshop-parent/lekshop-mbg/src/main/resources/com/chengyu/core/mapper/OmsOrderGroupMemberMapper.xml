@@ -11,6 +11,7 @@
     <result column="member_head_img" jdbcType="VARCHAR" property="memberHeadImg" />
     <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
     <result column="group_price" jdbcType="DECIMAL" property="groupPrice" />
+    <result column="goods_group_id" jdbcType="INTEGER" property="goodsGroupId" />
     <result column="buy_num" jdbcType="INTEGER" property="buyNum" />
     <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
     <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
@@ -79,8 +80,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, order_group_id, order_id, order_no, member_id, member_name, member_head_img, 
-    original_price, group_price, buy_num, pay_price, pay_status, add_time, add_by, upd_time, 
-    upd_by
+    original_price, group_price, goods_group_id, buy_num, pay_price, pay_status, add_time, 
+    add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.OmsOrderGroupMemberExample" resultMap="BaseResultMap">
     select
@@ -118,16 +119,16 @@
     </selectKey>
     insert into oms_order_group_member (order_group_id, order_id, order_no, 
       member_id, member_name, member_head_img, 
-      original_price, group_price, buy_num, 
-      pay_price, pay_status, add_time, 
-      add_by, upd_time, upd_by
-      )
+      original_price, group_price, goods_group_id, 
+      buy_num, pay_price, pay_status, 
+      add_time, add_by, upd_time, 
+      upd_by)
     values (#{orderGroupId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, 
       #{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{memberHeadImg,jdbcType=VARCHAR}, 
-      #{originalPrice,jdbcType=DECIMAL}, #{groupPrice,jdbcType=DECIMAL}, #{buyNum,jdbcType=INTEGER}, 
-      #{payPrice,jdbcType=DECIMAL}, #{payStatus,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
-      )
+      #{originalPrice,jdbcType=DECIMAL}, #{groupPrice,jdbcType=DECIMAL}, #{goodsGroupId,jdbcType=INTEGER}, 
+      #{buyNum,jdbcType=INTEGER}, #{payPrice,jdbcType=DECIMAL}, #{payStatus,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
+      #{updBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.OmsOrderGroupMember">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -158,6 +159,9 @@
       </if>
       <if test="groupPrice != null">
         group_price,
+      </if>
+      <if test="goodsGroupId != null">
+        goods_group_id,
       </if>
       <if test="buyNum != null">
         buy_num,
@@ -205,6 +209,9 @@
       </if>
       <if test="groupPrice != null">
         #{groupPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsGroupId != null">
+        #{goodsGroupId,jdbcType=INTEGER},
       </if>
       <if test="buyNum != null">
         #{buyNum,jdbcType=INTEGER},
@@ -265,6 +272,9 @@
       <if test="record.groupPrice != null">
         group_price = #{record.groupPrice,jdbcType=DECIMAL},
       </if>
+      <if test="record.goodsGroupId != null">
+        goods_group_id = #{record.goodsGroupId,jdbcType=INTEGER},
+      </if>
       <if test="record.buyNum != null">
         buy_num = #{record.buyNum,jdbcType=INTEGER},
       </if>
@@ -302,6 +312,7 @@
       member_head_img = #{record.memberHeadImg,jdbcType=VARCHAR},
       original_price = #{record.originalPrice,jdbcType=DECIMAL},
       group_price = #{record.groupPrice,jdbcType=DECIMAL},
+      goods_group_id = #{record.goodsGroupId,jdbcType=INTEGER},
       buy_num = #{record.buyNum,jdbcType=INTEGER},
       pay_price = #{record.payPrice,jdbcType=DECIMAL},
       pay_status = #{record.payStatus,jdbcType=INTEGER},
@@ -340,6 +351,9 @@
       <if test="groupPrice != null">
         group_price = #{groupPrice,jdbcType=DECIMAL},
       </if>
+      <if test="goodsGroupId != null">
+        goods_group_id = #{goodsGroupId,jdbcType=INTEGER},
+      </if>
       <if test="buyNum != null">
         buy_num = #{buyNum,jdbcType=INTEGER},
       </if>
@@ -374,6 +388,7 @@
       member_head_img = #{memberHeadImg,jdbcType=VARCHAR},
       original_price = #{originalPrice,jdbcType=DECIMAL},
       group_price = #{groupPrice,jdbcType=DECIMAL},
+      goods_group_id = #{goodsGroupId,jdbcType=INTEGER},
       buy_num = #{buyNum,jdbcType=INTEGER},
       pay_price = #{payPrice,jdbcType=DECIMAL},
       pay_status = #{payStatus,jdbcType=INTEGER},

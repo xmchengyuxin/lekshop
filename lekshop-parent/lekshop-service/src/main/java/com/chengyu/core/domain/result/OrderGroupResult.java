@@ -11,11 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class OrderResult {
-
-	private OmsOrder order;
-	
-	private List<OmsOrderDetail> orderDetailList;
+public class OrderGroupResult {
 
 	private OmsOrderGroup orderGroup;
 

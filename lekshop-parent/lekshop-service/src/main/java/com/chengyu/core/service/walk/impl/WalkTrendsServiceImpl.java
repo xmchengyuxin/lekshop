@@ -5,6 +5,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.TypeReference;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.TrendsEnums;
 import com.chengyu.core.domain.form.TrendsForm;
 import com.chengyu.core.domain.result.WalkTrendsCommentResult;
 import com.chengyu.core.domain.result.WalkTrendsResult;
@@ -40,6 +41,8 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 	private WalkTrendsGoodsMapper walkTrendsGoodsMapper;
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private WalkTrendsCommentLikeMapper trendsCommentLikeMapper;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -76,6 +79,7 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 	private void addTrendsGoods(WalkTrends trends, List<Integer> goodsIdList){
 		if(CollectionUtil.isNotEmpty(goodsIdList)){
+			StringBuilder goodsImgs = new StringBuilder();
 			for(Integer goodsId : goodsIdList){
 				WalkTrendsGoods walkTrendsGoods = new WalkTrendsGoods();
 				walkTrendsGoods.setTrendsId(trends.getId());
@@ -87,6 +91,14 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 				walkTrendsGoods.setAddTime(trends.getAddTime());
 				walkTrendsGoods.setUpdTime(trends.getAddTime());
 				walkTrendsGoodsMapper.insertSelective(walkTrendsGoods);
+				goodsImgs.append("|"+goods.getMainImg());
+			}
+			if(trends.getType() == TrendsEnums.TrendsType.GOODS.getValue()){
+				//宝贝上新将宝贝主图插入到images
+				WalkTrends updateTrends = new WalkTrends();
+				updateTrends.setId(trends.getId());
+				updateTrends.setImages(goodsImgs.substring(1));
+				trendsMapper.updateByPrimaryKeySelective(updateTrends);
 			}
 		}
 	}
@@ -122,10 +134,13 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		if(form.getType() != null){
 			criteria.andTypeEqualTo(form.getType());
 		}
+		if(CollectionUtil.isNotEmpty(form.getTypeList())){
+			criteria.andTypeIn(form.getTypeList());
+		}
 		if(form.getStatus() != null){
 			criteria.andStatusEqualTo(form.getStatus());
 		}
-		List<WalkTrends> list = trendsMapper.selectByExample(example);
+		List<WalkTrends> list = trendsMapper.selectByExampleWithBLOBs(example);
 
 		List<WalkTrendsResult> trendsList = new ArrayList<>();
 		for(WalkTrends walkTrends : list){
@@ -175,6 +190,7 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void collectOrCancelTrends(WalkMember viewMember, Integer trendsId) {
+		WalkTrends trends = trendsMapper.selectByPrimaryKey(trendsId);
 		if(this.isCollection(viewMember, trendsId)){
 			//取消关注
 			WalkTrendsCollectionExample example = new WalkTrendsCollectionExample();
@@ -183,14 +199,13 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 			//关注人数-1
 			baseMapper.update("update walk_trends set collection_num = collection_num-1 where id = "+trendsId);
+			baseMapper.update("update walk_member set like_num = like_num-1 where id = "+trends.getWalkMemberId());
 		}else{
 			//关注
 			WalkTrendsCollection collection = new WalkTrendsCollection();
 			collection.setViewMemberId(viewMember.getId());
 			collection.setViewMemberName(viewMember.getNickname());
 			collection.setViewMemberHeadImg(viewMember.getHeadImg());
-
-			WalkTrends trends = trendsMapper.selectByPrimaryKey(trendsId);
 			collection.setWalkMemberId(trends.getWalkMemberId());
 			collection.setWalkMemberName(trends.getWalkMemberName());
 			collection.setWalkMemberHeadImg(trends.getWalkMemberHeadImg());
@@ -204,6 +219,7 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 			//关注人数+1
 			baseMapper.update("update walk_trends set collection_num = collection_num+1 where id = "+trendsId);
+			baseMapper.update("update walk_member set like_num = like_num+1 where id = "+trends.getWalkMemberId());
 		}
 	}
 
@@ -246,6 +262,13 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		if(commentId != null){
 			comment.setType(2);
 			comment.setPid(commentId);
+			WalkTrendsComment parentComment = trendsCommentMapper.selectByPrimaryKey(commentId);
+			if(parentComment.getTid() == null){
+				comment.setTid(parentComment.getId());
+			}else{
+				comment.setTid(parentComment.getTid());
+			}
+			comment.setContent("@"+parentComment.getViewMemberName()+" "+comment.getContent());
 		}else{
 			comment.setType(1);
 		}
@@ -258,6 +281,45 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void deleteComment(Integer commentId) {
 		trendsCommentMapper.deleteByPrimaryKey(commentId);
+
+		WalkTrendsCommentLikeExample example = new WalkTrendsCommentLikeExample();
+		example.createCriteria().andCommentIdEqualTo(commentId);
+		trendsCommentLikeMapper.deleteByExample(example);
+	}
+
+	@Override
+	public boolean isLikeComment(WalkMember viewMember, Integer commentId) {
+		WalkTrendsCommentLikeExample example = new WalkTrendsCommentLikeExample();
+		example.createCriteria().andViewMemberIdEqualTo(viewMember.getId()).andCommentIdEqualTo(commentId);
+		long num = trendsCommentLikeMapper.countByExample(example);
+		return num > 0;
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void likeOrCancelComment(WalkMember viewMember, Integer commentId) {
+		if(this.isLikeComment(viewMember, commentId)){
+			//取消关注
+			WalkTrendsCommentLikeExample example = new WalkTrendsCommentLikeExample();
+			example.createCriteria().andViewMemberIdEqualTo(viewMember.getId()).andCommentIdEqualTo(commentId);
+			trendsCommentLikeMapper.deleteByExample(example);
+
+			//关注人数-1
+			baseMapper.update("update walk_trends_comment set like_num = like_num-1 where id = "+commentId);
+		}else{
+			//关注
+			WalkTrendsCommentLike commentLike = new WalkTrendsCommentLike();
+			commentLike.setViewMemberId(viewMember.getId());
+			commentLike.setViewMemberName(viewMember.getNickname());
+			commentLike.setViewMemberHeadImg(viewMember.getHeadImg());
+			commentLike.setCommentId(commentId);
+			commentLike.setAddTime(DateUtil.date());
+			commentLike.setUpdTime(commentLike.getAddTime());
+			trendsCommentLikeMapper.insertSelective(commentLike);
+
+			//关注人数+1
+			baseMapper.update("update walk_trends_comment set like_num = like_num+1 where id = "+commentId);
+		}
 	}
 
 	@Override
@@ -286,7 +348,7 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 			example = new WalkTrendsCommentExample();
 			example.setOrderByClause("add_time desc");
-			example.createCriteria().andPidEqualTo(walkTrendsComment.getId()).andTypeEqualTo(2);
+			example.createCriteria().andTidEqualTo(walkTrendsComment.getId()).andTypeEqualTo(2);
 			walkTrendsCommentResult.setChilidCommentList(trendsCommentMapper.selectByExampleWithBLOBs(example));
 			commentList.add(walkTrendsCommentResult);
 		}
@@ -305,5 +367,15 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void addViewNums(Integer trendsId, Integer num) {
 		baseMapper.update("update walk_trends set view_num = view_num+"+num+" where id = "+trendsId);
+	}
+
+	@Override
+	public WalkTrendsResult getTrendsDetail(Integer trendsId) {
+		WalkTrendsResult result = new WalkTrendsResult();
+		result.setWalkTrends(this.getTrendsById(trendsId));
+		WalkTrendsGoodsExample goodsExample = new WalkTrendsGoodsExample();
+		goodsExample.createCriteria().andTrendsIdEqualTo(trendsId);
+		result.setTrendsGoodsList(walkTrendsGoodsMapper.selectByExample(goodsExample));
+		return result;
 	}
 }

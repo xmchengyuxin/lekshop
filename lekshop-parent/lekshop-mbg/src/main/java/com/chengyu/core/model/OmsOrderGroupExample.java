@@ -426,6 +426,76 @@ public class OmsOrderGroupExample {
             return (Criteria) this;
         }
 
+        public Criteria andMemberHeadImgIsNull() {
+            addCriterion("member_head_img is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgIsNotNull() {
+            addCriterion("member_head_img is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgEqualTo(String value) {
+            addCriterion("member_head_img =", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgNotEqualTo(String value) {
+            addCriterion("member_head_img <>", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgGreaterThan(String value) {
+            addCriterion("member_head_img >", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgGreaterThanOrEqualTo(String value) {
+            addCriterion("member_head_img >=", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgLessThan(String value) {
+            addCriterion("member_head_img <", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgLessThanOrEqualTo(String value) {
+            addCriterion("member_head_img <=", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgLike(String value) {
+            addCriterion("member_head_img like", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgNotLike(String value) {
+            addCriterion("member_head_img not like", value, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgIn(List<String> values) {
+            addCriterion("member_head_img in", values, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgNotIn(List<String> values) {
+            addCriterion("member_head_img not in", values, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgBetween(String value1, String value2) {
+            addCriterion("member_head_img between", value1, value2, "memberHeadImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberHeadImgNotBetween(String value1, String value2) {
+            addCriterion("member_head_img not between", value1, value2, "memberHeadImg");
+            return (Criteria) this;
+        }
+
         public Criteria andShopIdIsNull() {
             addCriterion("shop_id is null");
             return (Criteria) this;
@@ -993,6 +1063,66 @@ public class OmsOrderGroupExample {
 
         public Criteria andHaveGroupNumNotBetween(Integer value1, Integer value2) {
             addCriterion("have_group_num not between", value1, value2, "haveGroupNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdIsNull() {
+            addCriterion("goods_group_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdIsNotNull() {
+            addCriterion("goods_group_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdEqualTo(Integer value) {
+            addCriterion("goods_group_id =", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdNotEqualTo(Integer value) {
+            addCriterion("goods_group_id <>", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdGreaterThan(Integer value) {
+            addCriterion("goods_group_id >", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("goods_group_id >=", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdLessThan(Integer value) {
+            addCriterion("goods_group_id <", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdLessThanOrEqualTo(Integer value) {
+            addCriterion("goods_group_id <=", value, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdIn(List<Integer> values) {
+            addCriterion("goods_group_id in", values, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdNotIn(List<Integer> values) {
+            addCriterion("goods_group_id not in", values, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdBetween(Integer value1, Integer value2) {
+            addCriterion("goods_group_id between", value1, value2, "goodsGroupId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsGroupIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("goods_group_id not between", value1, value2, "goodsGroupId");
             return (Criteria) this;
         }
 

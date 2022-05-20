@@ -7,6 +7,7 @@
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="member_id" jdbcType="INTEGER" property="memberId" />
     <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="member_head_img" jdbcType="VARCHAR" property="memberHeadImg" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
     <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
@@ -16,6 +17,7 @@
     <result column="group_price" jdbcType="DECIMAL" property="groupPrice" />
     <result column="group_num" jdbcType="INTEGER" property="groupNum" />
     <result column="have_group_num" jdbcType="INTEGER" property="haveGroupNum" />
+    <result column="goods_group_id" jdbcType="INTEGER" property="goodsGroupId" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
@@ -82,9 +84,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, order_no, member_id, member_name, shop_id, shop_name, goods_id, goods_name, 
-    goods_main_img, original_price, group_price, group_num, have_group_num, end_time, 
-    status, add_time, add_by, upd_time, upd_by
+    id, order_id, order_no, member_id, member_name, member_head_img, shop_id, shop_name, 
+    goods_id, goods_name, goods_main_img, original_price, group_price, group_num, have_group_num, 
+    goods_group_id, end_time, status, add_time, add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.OmsOrderGroupExample" resultMap="BaseResultMap">
     select
@@ -121,19 +123,21 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into oms_order_group (order_id, order_no, member_id, 
-      member_name, shop_id, shop_name, 
-      goods_id, goods_name, goods_main_img, 
-      original_price, group_price, group_num, 
-      have_group_num, end_time, status, 
-      add_time, add_by, upd_time, 
-      upd_by)
+      member_name, member_head_img, shop_id, 
+      shop_name, goods_id, goods_name, 
+      goods_main_img, original_price, group_price, 
+      group_num, have_group_num, goods_group_id, 
+      end_time, status, add_time, 
+      add_by, upd_time, upd_by
+      )
     values (#{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
-      #{memberName,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, 
-      #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsMainImg,jdbcType=VARCHAR}, 
-      #{originalPrice,jdbcType=DECIMAL}, #{groupPrice,jdbcType=DECIMAL}, #{groupNum,jdbcType=INTEGER}, 
-      #{haveGroupNum,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
-      #{updBy,jdbcType=VARCHAR})
+      #{memberName,jdbcType=VARCHAR}, #{memberHeadImg,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, 
+      #{shopName,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsMainImg,jdbcType=VARCHAR}, #{originalPrice,jdbcType=DECIMAL}, #{groupPrice,jdbcType=DECIMAL}, 
+      #{groupNum,jdbcType=INTEGER}, #{haveGroupNum,jdbcType=INTEGER}, #{goodsGroupId,jdbcType=INTEGER}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.OmsOrderGroup">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -152,6 +156,9 @@
       </if>
       <if test="memberName != null">
         member_name,
+      </if>
+      <if test="memberHeadImg != null">
+        member_head_img,
       </if>
       <if test="shopId != null">
         shop_id,
@@ -179,6 +186,9 @@
       </if>
       <if test="haveGroupNum != null">
         have_group_num,
+      </if>
+      <if test="goodsGroupId != null">
+        goods_group_id,
       </if>
       <if test="endTime != null">
         end_time,
@@ -212,6 +222,9 @@
       <if test="memberName != null">
         #{memberName,jdbcType=VARCHAR},
       </if>
+      <if test="memberHeadImg != null">
+        #{memberHeadImg,jdbcType=VARCHAR},
+      </if>
       <if test="shopId != null">
         #{shopId,jdbcType=INTEGER},
       </if>
@@ -238,6 +251,9 @@
       </if>
       <if test="haveGroupNum != null">
         #{haveGroupNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsGroupId != null">
+        #{goodsGroupId,jdbcType=INTEGER},
       </if>
       <if test="endTime != null">
         #{endTime,jdbcType=TIMESTAMP},
@@ -283,6 +299,9 @@
       <if test="record.memberName != null">
         member_name = #{record.memberName,jdbcType=VARCHAR},
       </if>
+      <if test="record.memberHeadImg != null">
+        member_head_img = #{record.memberHeadImg,jdbcType=VARCHAR},
+      </if>
       <if test="record.shopId != null">
         shop_id = #{record.shopId,jdbcType=INTEGER},
       </if>
@@ -309,6 +328,9 @@
       </if>
       <if test="record.haveGroupNum != null">
         have_group_num = #{record.haveGroupNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsGroupId != null">
+        goods_group_id = #{record.goodsGroupId,jdbcType=INTEGER},
       </if>
       <if test="record.endTime != null">
         end_time = #{record.endTime,jdbcType=TIMESTAMP},
@@ -340,6 +362,7 @@
       order_no = #{record.orderNo,jdbcType=VARCHAR},
       member_id = #{record.memberId,jdbcType=INTEGER},
       member_name = #{record.memberName,jdbcType=VARCHAR},
+      member_head_img = #{record.memberHeadImg,jdbcType=VARCHAR},
       shop_id = #{record.shopId,jdbcType=INTEGER},
       shop_name = #{record.shopName,jdbcType=VARCHAR},
       goods_id = #{record.goodsId,jdbcType=INTEGER},
@@ -349,6 +372,7 @@
       group_price = #{record.groupPrice,jdbcType=DECIMAL},
       group_num = #{record.groupNum,jdbcType=INTEGER},
       have_group_num = #{record.haveGroupNum,jdbcType=INTEGER},
+      goods_group_id = #{record.goodsGroupId,jdbcType=INTEGER},
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -373,6 +397,9 @@
       </if>
       <if test="memberName != null">
         member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberHeadImg != null">
+        member_head_img = #{memberHeadImg,jdbcType=VARCHAR},
       </if>
       <if test="shopId != null">
         shop_id = #{shopId,jdbcType=INTEGER},
@@ -401,6 +428,9 @@
       <if test="haveGroupNum != null">
         have_group_num = #{haveGroupNum,jdbcType=INTEGER},
       </if>
+      <if test="goodsGroupId != null">
+        goods_group_id = #{goodsGroupId,jdbcType=INTEGER},
+      </if>
       <if test="endTime != null">
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
@@ -428,6 +458,7 @@
       order_no = #{orderNo,jdbcType=VARCHAR},
       member_id = #{memberId,jdbcType=INTEGER},
       member_name = #{memberName,jdbcType=VARCHAR},
+      member_head_img = #{memberHeadImg,jdbcType=VARCHAR},
       shop_id = #{shopId,jdbcType=INTEGER},
       shop_name = #{shopName,jdbcType=VARCHAR},
       goods_id = #{goodsId,jdbcType=INTEGER},
@@ -437,6 +468,7 @@
       group_price = #{groupPrice,jdbcType=DECIMAL},
       group_num = #{groupNum,jdbcType=INTEGER},
       have_group_num = #{haveGroupNum,jdbcType=INTEGER},
+      goods_group_id = #{goodsGroupId,jdbcType=INTEGER},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
