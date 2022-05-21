@@ -7,11 +7,9 @@ import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.NumberUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.domain.CommonConstant;
-import com.chengyu.core.domain.enums.AccountEnums;
-import com.chengyu.core.domain.enums.GoodsEnums;
-import com.chengyu.core.domain.enums.OrderEnums;
-import com.chengyu.core.domain.enums.ShopEnums;
+import com.chengyu.core.domain.enums.*;
 import com.chengyu.core.domain.form.*;
+import com.chengyu.core.domain.result.OrderGroupResult;
 import com.chengyu.core.domain.result.OrderPayResult;
 import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
@@ -23,6 +21,7 @@ import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.member.MemberAddressService;
 import com.chengyu.core.service.member.MemberCouponService;
+import com.chengyu.core.service.member.MemberRemindService;
 import com.chengyu.core.service.order.*;
 import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
 import com.chengyu.core.service.shop.ShopConfigService;
@@ -89,6 +88,8 @@ public class OrderServiceImpl implements OrderService {
 	private CarService carService;
 	@Autowired
 	private OrderGroupService orderGroupService;
+	@Autowired
+	private MemberRemindService memberRemindService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -135,6 +136,12 @@ public class OrderServiceImpl implements OrderService {
 			OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
 			detailExample.createCriteria().andOrderIdEqualTo(order.getId());
 			orderResult.setOrderDetailList(orderDetailMapper.selectByExample(detailExample));
+
+			if(order.getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue() && order.getGroupId() != -1){
+				OrderGroupResult orderGroup = orderGroupService.getOrderGroupByOrderNo(order.getOrderNo());
+				orderResult.setOrderGroup(orderGroup.getOrderGroup());
+				orderResult.setGroupMemberList(orderGroup.getGroupMemberList());
+			}
 			orderList.add(orderResult);
 		}
 
@@ -231,6 +238,8 @@ public class OrderServiceImpl implements OrderService {
 					if(form.getGroupId() == -1){
 						//单独购买
 						detail.setBuyPrice(sku.getOriPrice());
+						//单独购买的话,订单为普通订单
+						type = GoodsEnums.GoodsType.NORMAL_GOODS.getValue();
 					}else if(form.getGroupId() == 0){
 						//普通拼团
 						detail.setGroupNum(goods.getGroupNum());
@@ -404,6 +413,8 @@ public class OrderServiceImpl implements OrderService {
 				if(order.getCouponStatus() == CommonConstant.YES_INT && order.getCouponId() != null){
 					memberCouponService.useCoupon(order.getCouponId());
 				}
+
+				memberRemindService.addShopRemind(order.getShopId(), MemberRemindEnums.MemberRemindTypes.NEW_ORDER, "重要! 您有一笔新的订单,请及时发货~");
 			}
 
 			//拼团订单
@@ -433,7 +444,9 @@ public class OrderServiceImpl implements OrderService {
 			OmsOrder order = orderMapper.selectByPrimaryKey(form.getOrderId());
 			if(order.getStatus() != OrderEnums.OrderStatus.WAIT_DELIVERY.getValue() || StringUtils.isBlank(form.getDeliveryNo())){
 				errorNum++;
-			}else if(order.getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue() && !orderGroupService.isGroupSus(order.getOrderNo())){
+			}else if(order.getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue()
+					&& order.getGroupId() == -1
+					&& !orderGroupService.isGroupSus(order.getOrderNo())){
 				//团购订单需要拼团成功才能发货
 				errorNum++;
 			}else{
@@ -445,6 +458,7 @@ public class OrderServiceImpl implements OrderService {
 				updatedOrder.setDeliveryTime(now);
 				updatedOrder.setFinishExpiredTime(DateUtil.offsetDay(now, config.getAutoReceiveDay()));
 				updatedOrder.setDeliveryType(form.getDeliveryType());
+
 				updatedOrder.setStatus(OrderEnums.OrderStatus.WAIT_RECEIVE.getValue());
 				orderMapper.updateByPrimaryKeySelective(updatedOrder);
 

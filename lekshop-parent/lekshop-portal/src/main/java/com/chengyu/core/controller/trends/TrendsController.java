@@ -66,7 +66,7 @@ public class TrendsController extends UserBaseController {
 			@ApiImplicitParam(name = "trendsId", value = "动态ID")
 	})
 	@ResponseBody
-	@RequestMapping(value="/common/trends/search", method=RequestMethod.GET)
+	@RequestMapping(value="/common/trends/getCommentList", method=RequestMethod.GET)
 	public CommonResult<CommonPage<WalkTrendsCommentResult>> search(Integer trendsId, Integer page, Integer pageSize) {
 		CommonPage<WalkTrendsCommentResult> list = walkTrendsService.getTrendsCommentList(trendsId, null, null, page, pageSize);
 		return CommonResult.success(list);

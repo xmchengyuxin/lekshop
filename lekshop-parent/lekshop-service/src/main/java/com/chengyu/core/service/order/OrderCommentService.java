@@ -4,6 +4,7 @@ import com.chengyu.core.domain.form.OrderCommentForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.OmsOrderComment;
+import com.chengyu.core.model.OmsOrderCommentLeft;
 import com.chengyu.core.model.OmsOrderDetail;
 import com.chengyu.core.model.UmsMember;
 
@@ -68,4 +69,32 @@ public interface OrderCommentService {
 	 * @param  orderNo
 	 */
 	void autoComment(String orderNo);
+
+	/**
+	 * 获取子评论
+	 * @author LeGreen
+	 * @date   2022/5/21
+	 * @param  commentId
+	 * @return List<OmsOrderCommentLeft>
+	 */
+	List<OmsOrderCommentLeft> getLeftCommentList(Integer commentId);
+
+	/**
+	 * 回复评论
+	 * @author LeGreen
+	 * @date   2022/5/21
+	 * @param  member
+	 * @param  commentId
+	 * @param  content
+	 * @param  img
+	 */
+	void addLeftComment(UmsMember member, Integer commentId, Integer type, String content, String img);
+
+	/**
+	 * 删除子评论
+	 * @author LeGreen
+	 * @date   2022/5/21
+	 * @param  leftCommentId
+	 */
+	void deleteLeftComment(Integer leftCommentId);
 }

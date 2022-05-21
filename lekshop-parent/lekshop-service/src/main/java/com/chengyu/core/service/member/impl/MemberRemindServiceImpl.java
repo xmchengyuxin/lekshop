@@ -12,6 +12,7 @@ import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberRemind;
 import com.chengyu.core.model.UmsMemberRemindExample;
 import com.chengyu.core.service.member.MemberRemindService;
+import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.service.system.AdminService;
 import com.chengyu.core.service.system.AdminTypeService;
 import com.chengyu.core.service.system.MenuService;
@@ -42,6 +43,8 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 	private AdminService adminService;
 	@Autowired
 	private NettyPushUtil nettyPushUtil;
+	@Autowired
+	private ShopService shopService;
 
 	@Override
 	public void addMemberRemind(UmsMember member, MemberRemindTypes type, String content) {
@@ -63,6 +66,12 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 		extras.put("content", content);
 		extras.put("addTime", DateUtil.current(false)+"");
 		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
+	}
+
+	@Override
+	public void addShopRemind(Integer shopId, MemberRemindTypes type, String content) {
+		UmsMember member = shopService.getMemberByShopId(shopId);
+		this.addMemberRemind(member, type, content);
 	}
 
 	@Override

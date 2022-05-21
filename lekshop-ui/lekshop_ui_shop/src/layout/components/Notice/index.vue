@@ -1,7 +1,7 @@
 <template>
 	<div >
 		<div @click="showList = !showList;readAll()" class="wrap-notice-icon cursor">
-			<span v-if="count > 0" class="count-num f10-size t-color-w b-radius flex f-a-c f-j-c">{{count}}</span>
+			<span v-if="msgCount > 0" class="count-num f10-size t-color-w b-radius flex f-a-c f-j-c">{{msgCount}}</span>
 			<img class="w-80" src="./notice_icon.png" alt="">
 		</div>
 		<div v-if="showList" class="wrap-notice-content animate fadeInDown" :style="{'bottom': show ? '150px' : '20px'}" >
@@ -92,11 +92,11 @@
 	export default {
 		data() {
 			return {
-				titleType: ['','提现通知','任务通知','审核买号','等待返款','审核评价','审核追评'],
+				titleType: ['','提现通知','新订单通知','申请售后通知','买家退货通知'],
 				list: [],
 				showList: false,
 				show: false,
-				count: 0,
+				msgCount: 0,
         ws: {}, //websocket对象
         delay: 5000, //重连延迟，单位：毫秒
         count: 0,//重连次数
@@ -119,13 +119,13 @@
 			},
 			clickItem(info,index) {
 				if(info.type == 1) {
-					this.go('/fund/withdraw')
+					this.$router.push('/fund/withdraw')
 				}
 				if(info.type == 2) {
-					this.go('/order/list')
+					this.$router.push('/order/list')
 				}
 				if(info.type == 3 || info.type == 4 ) {
-					this.go('/order/refund')
+					this.$router.push('/order/refund')
 				}
 				info.status = 1;
 				this.$set(this.list,index,info);
@@ -157,13 +157,13 @@
 			readAll() {
 				const self = this;
         readAll().then((res) => {
-        	self.count = 0;
+        	self.msgCount = 0;
         })
 			},
 			getCount() {
 				const self = this;
         count().then(res => {
-         self.count = res.data ? res.data.num : 0;
+         self.msgCount = res.data ? res.data.num : 0;
         })
 			},
 			init() {
@@ -175,7 +175,7 @@
 						let info = JSON.parse(res);
 						// console.log(info,'onmessage');
 						if(info.cmd == 5) {
-							self.count += 1;
+							self.msgCount += 1;
 							self.playAudio();
 							self.list.unshift(JSON.parse(info.data));
 							self.show = true;

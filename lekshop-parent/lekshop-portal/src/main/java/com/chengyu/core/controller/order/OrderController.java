@@ -8,6 +8,7 @@ import com.chengyu.core.controller.callback.manager.CallbackManager;
 import com.chengyu.core.domain.form.CaculateFreightFeeForm;
 import com.chengyu.core.domain.form.OrderAddForm;
 import com.chengyu.core.domain.form.OrderBuyDetailForm;
+import com.chengyu.core.domain.form.PayBaseForm;
 import com.chengyu.core.domain.result.OrderPayResult;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -16,6 +17,7 @@ import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.member.MemberCouponService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.order.OrderService;
+import com.chengyu.core.service.pay.PayService;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -146,7 +148,7 @@ public class OrderController extends UserBaseController {
 	@ApiOperation(value = "支付订单")
 	@ResponseBody
 	@RequestMapping(value={"/order/pay"}, method=RequestMethod.POST)
-	public CommonResult<Map<String,Object>> payOrder(String payOrderNo) throws Exception{
+	public CommonResult<Map<String,Object>> payOrder(String payOrderNo, PayBaseForm payBaseForm) throws Exception{
 		UmsMember member = getCurrentMember();
 		super.validateRepeat("payOrder-"+member.getId(), 5000L, "点太快了~");
 		paySusManager.getPaySusFactory(CallbackManager.CALLBACK_ORDER).paySus(payOrderNo);

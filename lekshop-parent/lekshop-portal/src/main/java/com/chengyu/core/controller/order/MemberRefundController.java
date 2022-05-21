@@ -4,6 +4,7 @@ import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.form.OrderRefundForm;
 import com.chengyu.core.domain.form.OrderRefundSearchForm;
+import com.chengyu.core.domain.result.OrderRefundResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -46,6 +47,19 @@ public class MemberRefundController extends UserBaseController {
 		form.setMemberId(getCurrentMemberId());
 		List<OmsOrderRefund> list = orderRefundService.getRefundList(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
+	}
+
+	@ApiOperation(value = "退款详情")
+	@ResponseBody
+	@RequestMapping(value="/refund/get", method=RequestMethod.GET)
+	public CommonResult<OrderRefundResult> get(Integer detailId, Integer refundId) throws ServiceException {
+		OrderRefundResult result = null;
+		if(refundId != null){
+			result = orderRefundService.getOrderRefund(refundId);
+		}else{
+			result = orderRefundService.getOrderRefundByDetailId(detailId);
+		}
+		return CommonResult.success(result);
 	}
 
 	@OperationLog

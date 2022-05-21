@@ -3,6 +3,7 @@ package com.chengyu.core.service.order.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import com.chengyu.core.domain.enums.MemberRemindEnums;
 import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.OrderRefundForm;
 import com.chengyu.core.domain.form.OrderRefundSearchForm;
@@ -14,6 +15,7 @@ import com.chengyu.core.mapper.OmsOrderRefundLogMapper;
 import com.chengyu.core.mapper.OmsOrderRefundMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigOrderService;
+import com.chengyu.core.service.member.MemberRemindService;
 import com.chengyu.core.service.order.OrderRefundService;
 import com.chengyu.core.service.schedule.job.RefundAutoAgreeJob;
 import com.chengyu.core.service.schedule.job.RefundAutoCancelJob;
@@ -52,6 +54,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	private ConfigOrderService configOrderService;
 	@Autowired
 	private TaskTriggerService taskTriggerService;
+	@Autowired
+	private MemberRemindService memberRemindService;
 
 	@Override
 	public List<OmsOrderRefund> getRefundList(OrderRefundSearchForm form, Integer page, Integer pageSize) {
@@ -151,7 +155,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		//超过该时间未处理,自动同意
 		ConfigOrder config = configOrderService.getConfigOrder();
 		refund.setAutoAgreeTime(DateUtil.offsetDay(refund.getAddTime(), config.getAutoAgreeRefundDay()));
-		orderRefundMapper.insert(refund);
+		orderRefundMapper.insertSelective(refund);
 
 		//自动同意定时器
 		taskTriggerService.addTrigger(RefundAutoAgreeJob.class, refund.getAutoAgreeTime(), refund.getRefundNo());
@@ -173,10 +177,16 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setOperatorId(member.getId());
 		log.setOperatorName(member.getCode());
 		log.setHeadImg(member.getHeadImg());
-		log.setContent("发起售后申请");
+		StringBuilder content = new StringBuilder();
+		content.append("买家申请退款(").append(refund.getRefundInd() == 1 ? "仅退款" : "退货退款").append(")");
+		content.append(",退款原因:").append(refund.getReason());
+		content.append(",退款金额:").append(refund.getRefundAmount());
+		log.setContent(content.toString());
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
+
+		memberRemindService.addShopRemind(order.getShopId(), MemberRemindEnums.MemberRemindTypes.WAIT_VERIFY_REFUND, "重要! 有用户申请售后,请及时处理~");
 	}
 
 	@Override
@@ -195,7 +205,9 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setOperatorId(shop.getId());
 		log.setOperatorName(shop.getName());
 		log.setHeadImg(shop.getLogo());
-		log.setContent("商家同意退款");
+		StringBuilder content = new StringBuilder();
+		content.append("卖家同意退款申请(").append(refund.getRefundInd() == 1 ? "仅退款" : "退货退款").append(")");
+		log.setContent(content.toString());
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
@@ -211,6 +223,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		OmsOrderDetail updateDetail = new OmsOrderDetail();
 		updateDetail.setId(refund.getDetailId());
 		updateDetail.setRefundStatus(OrderEnums.RefundStatus.REFUND_SUS.getValue());
+		updateDetail.setStatus(OrderEnums.OrderStatus.REFUNDED.getValue());
 		updateDetail.setRefundAmount(refund.getRefundAmount());
 		orderDetailMapper.updateByPrimaryKeySelective(updateDetail);
 
@@ -261,7 +274,10 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setOperatorId(shop.getId());
 		log.setOperatorName(shop.getName());
 		log.setHeadImg(shop.getLogo());
-		log.setContent("商家拒绝退款:"+reason);
+		StringBuilder content = new StringBuilder();
+		content.append("卖家拒绝退款申请(").append(refund.getRefundInd() == 1 ? "仅退款" : "退货退款").append(")");
+		content.append(",拒绝原因:"+reason);
+		log.setContent(content.toString());
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
@@ -425,6 +441,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
+
+		memberRemindService.addShopRemind(refund.getShopId(), MemberRemindEnums.MemberRemindTypes.WAIT_CONFIRM_RECEIVE, "重要! 买家已退货,请及时确认~");
 	}
 
 	@Override
@@ -448,7 +466,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setOperatorId(shop.getId());
 		log.setOperatorName(shop.getName());
 		log.setHeadImg(shop.getLogo());
-		log.setContent("商家已收货,退款成功");
+		log.setContent("卖家已收货,退款成功");
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
@@ -566,10 +584,30 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setOperatorId(refund.getMemberId());
 		log.setOperatorName(refund.getMemberName());
 		log.setHeadImg(refund.getHeadImg());
-		log.setContent("买家取消售后申请");
+		log.setContent("买家取消退款申请");
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
+	}
+
+	@Override
+	public OrderRefundResult getOrderRefundByDetailId(Integer detailId) {
+		OmsOrderRefundExample example = new OmsOrderRefundExample();
+		example.setOrderByClause("add_time desc");
+		example.createCriteria().andDetailIdEqualTo(detailId);
+		List<OmsOrderRefund> refundList = orderRefundMapper.selectByExample(example);
+
+		if (CollectionUtil.isEmpty(refundList)) {
+			return null;
+		}
+		OrderRefundResult result = new OrderRefundResult();
+		result.setRefund(refundList.get(0));
+
+		OmsOrderRefundLogExample logExample = new OmsOrderRefundLogExample();
+		logExample.setOrderByClause("add_time desc");
+		logExample.createCriteria().andRefundIdEqualTo(refundList.get(0).getId());
+		result.setRefundLogList(orderRefundLogMapper.selectByExample(logExample));
+		return result;
 	}
 
 	private OmsOrderRefund getRefundByShop(UmsShop shop, Integer refundId) throws ServiceException {

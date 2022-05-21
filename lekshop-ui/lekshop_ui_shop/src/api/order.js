@@ -40,6 +40,32 @@ export function getCommentList(data) {
   })
 }
 
+export function getLeftCommentList(data) {
+  return request({
+    url: 'member/comment/getLeftList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function answerComment(data) {
+  return request({
+    url: 'member/comment/answer',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteLeftComment(data) {
+  return request({
+    url: 'member/comment/deleteLeftComment',
+    method: 'post',
+    data
+  })
+}
+
+
+
 export function getRefundList(data) {
   return request({
     url: 'member/refund/getList',

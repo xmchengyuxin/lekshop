@@ -21,70 +21,89 @@
       style="width: 100%;"
 			@selection-change="handleSelectionChange"
     >
-			<el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column :label="$t('table.id')" prop="id" align="center" width="65">
+			<el-table-column type="selection" width="45" align="center"></el-table-column>
+      <!-- <el-table-column :label="$t('table.id')" prop="id" align="center" width="55">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
-      </el-table-column>
-			<el-table-column label="买家" align="center">
+      </el-table-column> -->
+			<el-table-column label="买家" align="center" width="100">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.memberName }}</span>
 			  </template>
 			</el-table-column>
-			<el-table-column label="商品" align="center">
+			<el-table-column label="商品" align="center" min-width="150">
 			  <template slot-scope="scope">
-			    <span class="link-type">{{ scope.row.goodsName }}</span>
+          <div  class="flex  padding-tb10">
+            <el-image
+            class="flex f-s-0 margin-r12"
+                style="height: 40px"
+                :src="scope.row.goodsMainImg"
+                :preview-src-list="[scope.row.goodsMainImg]">
+              </el-image>
+              <div class="flex f-c">
+                <span class="line2">{{scope.row.goodsName}}</span>
+              </div>
+          </div>
 			  </template>
 			</el-table-column>
-			<el-table-column label="评论内容"  align="center">
+			<el-table-column label="评论内容"  align="center" min-width="150">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.content | filterFun}}</span>
 			  </template>
 			</el-table-column>
-      <el-table-column label="评论图片"  align="center">
+      <el-table-column label="评论图片"  align="center" min-width="100">
         <template slot-scope="scope">
-          <span>{{ scope.row.img}}</span>
+          <div v-if="scope.row.img">
+          <el-image
+              v-for="item in scope.row.img.split('|')"
+              style="height: 30px;margin-left: 5px;"
+              :src="item"
+              :preview-src-list="scope.row.img.split('|')">
+            </el-image>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="评价" align="center">
+      <el-table-column label="评价" align="center" width="70">
         <template slot-scope="scope">
-      		<span>{{ scope.row.goodsComment}}</span>
+      		<span>{{ scope.row.goodsComment | goodsCommentFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="综合评分" align="center">
+      <el-table-column label="综合评分" align="center" width="70">
         <template slot-scope="scope">
       		<span>{{ scope.row.avgStarNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="描述相符"  align="center">
+      <el-table-column label="描述相符"  align="center" width="70">
         <template slot-scope="scope">
       		<span>{{ scope.row.goodsStarNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="发货速度"  align="center">
+      <el-table-column label="发货速度"  align="center" width="70">
         <template slot-scope="scope">
       		<span>{{ scope.row.deliveryStarNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="服务态度"  align="center">
+      <el-table-column label="服务态度"  align="center" width="70">
         <template slot-scope="scope">
       		<span>{{ scope.row.shopStarNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="物流服务"  align="center">
+      <el-table-column label="物流服务"  align="center" width="70">
         <template slot-scope="scope">
       		<span>{{ scope.row.logisticStarNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="评论时间" align="center" prop="addTime" >
+      <el-table-column label="评论时间" align="center" prop="addTime" width="150">
         <template slot-scope="scope">
           <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-			<el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right">
+			<el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="60">
 			  <template slot-scope="scope">
-			    <el-button type="primary" icon="el-icon-search" size="mini" @click="handleView(scope.row)">查看</el-button>
+          <el-tooltip class="item" effect="dark" content="查看" placement="top">
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleView(scope.row)"></el-button>
+          </el-tooltip>
 			  </template>
 			</el-table-column>
     </el-table>
@@ -94,18 +113,28 @@
 		<!--查看评论框-->
 		<el-dialog title="查看评论" :visible.sync="dialogFormVisible">
 		    <el-form ref="dataForm" :model="comment" label-position="left" style="margin-left:50px;">
-		      <el-collapse v-model="activeName" accordion>
+		      <el-collapse v-model="actName" accordion>
 							<el-collapse-item name="1">
 								<template slot="title">
-									<i class="el-icon-time"></i> {{comment.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')}}  {{comment.memberName}}
+									<i class="el-icon-time"></i>
+                  &nbsp;{{comment.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')}}
+                  &nbsp;<span style="font-weight: 600;">{{comment.memberName}}</span>
 								</template>
 								<div style="margin-left:10px;">{{comment.content}}</div>
-								<div><img v-for="img in imgList" :src="img" class="avatar" style="height:150px;margin-left:10px;"></div>
+								<div>
+                  <el-image
+                      style="height:150px;margin-left:10px;"
+                      v-for="img in imgList" :src="img"
+                      :preview-src-list="imgList">
+                    </el-image>
+                </div>
 							</el-collapse-item>
 							<el-collapse-item v-for="item in leftCommentList" :name="item.id">
 								<template slot="title" @click.stop>
-									<i class="el-icon-time"></i> {{item.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')}}  {{item.memberName}}
-									&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;" @click="handleDeleteComment(item.id)"><i class="el-icon-delete"></i>&nbsp;删除</span>
+									<i class="el-icon-time"></i>
+                  &nbsp;{{item.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')}}
+                  &nbsp;<span style="font-weight: 600;">{{item.type == 1 ? '掌柜回复' : item.memberName}}</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;<span v-if="item.type == 1" style="color:red;" @click="handleDeleteComment(item.id)"><i class="el-icon-delete"></i>&nbsp;删除</span>
 								</template>
 								<div>{{item.content}}</div>
 							</el-collapse-item>
@@ -113,7 +142,7 @@
 						</el-collapse>
 
 						<el-form-item style="margin-top:10px;" prop="reviewContent">
-							<el-input type="textarea" v-model="comment.reviewContent" />
+							<el-input type="textarea" :rows="4" v-model="comment.reviewContent" />
 							<el-button type="primary" size="mini" @click="handleReview()">回复评论</el-button>
 						</el-form-item>
 		    </el-form>
@@ -123,10 +152,22 @@
 </template>
 
 <script>
-import {getCommentList} from '@/api/order'
+import {getCommentList, getLeftCommentList, answerComment, deleteLeftComment} from '@/api/order'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+
+const goodsCommentOptions = [
+  { key: 1, text: '好评' },
+  { key: 2, text: '中评' },
+  { key: 3, text: '差评' },
+]
+
+// arr to obj ,such as { CN : "China", US : "USA" }
+const goodsCommentKeyValue = goodsCommentOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.text
+  return acc
+}, {})
 
 export default {
   name: 'commentList',
@@ -137,7 +178,10 @@ export default {
 		 value= value.substring(0,20)+ '...';
 		}
 		 return value;
-		}
+		},
+    goodsCommentFilter(status) {
+      return goodsCommentKeyValue[status]
+    },
 	},
   directives: { waves },
   data() {
@@ -157,6 +201,7 @@ export default {
 			multipleSelection: [],
 			leftCommentList : [],
 			imgList:[],
+      actName: ''
     }
   },
   created() {
@@ -176,20 +221,18 @@ export default {
 			if(this.comment.img && this.comment.img != ''){
 				this.imgList = this.comment.img.split('|')
 			}
-			this.activeName = '1'
-			getLeftCommentList(this.comment.id).then(response => {
-			  this.leftCommentList = response.data
-			})
+			this.actName = '1'
+			this.getLeftCommentList();
 		  this.dialogFormVisible = true
 		},
 		handleReview() {
 			this.$refs['dataForm'].validate((valid) => {
 			  if (valid) {
 			    let formData = {
-						 pid: this.comment.id,
+						 commentId: this.comment.id,
 						 content: this.comment.reviewContent
 					}
-			    addComment(formData).then(() => {
+			    answerComment(formData).then(() => {
 			      this.$notify({
 			        title: '成功',
 			        message: '回复评论成功',
@@ -197,14 +240,17 @@ export default {
 			        duration: 2000
 			      })
 
-						this.comment.reviewContent = ''
-						getLeftCommentList(this.comment.id).then(response => {
-						  this.leftCommentList = response.data
-						})
+						this.comment.reviewContent = '';
+            this.getLeftCommentList();
 			    })
 			  }
 			})
 		},
+    getLeftCommentList(){
+      getLeftCommentList({commentId:this.comment.id}).then(response => {
+        this.leftCommentList = response.data
+      })
+    },
 		handleSelectionChange(val) {
 			this.multipleSelection = val;
      },
@@ -245,7 +291,7 @@ export default {
 			  cancelButtonText: '取消',
 			  type: 'warning'
 			}).then(async() => {
-			    deleteComment(id).then(() => {
+			    deleteLeftComment({leftCommentId:id}).then(() => {
 			      this.$notify({
 			        title: '成功',
 			        message: '删除成功',
@@ -253,9 +299,7 @@ export default {
 			        duration: 2000
 			      })
 
-						getLeftCommentList(this.comment.id).then(response => {
-						  this.leftCommentList = response.data
-						})
+						this.getLeftCommentList();
 			    })
 			  })
 			  .catch(err => { console.error(err) })
@@ -281,13 +325,13 @@ export default {
     	}
     	this.activeName = tab.name
     	if(tab.name == 'first'){
-    		this.listQuery.goodComment = null
+    		this.listQuery.goodsComment = null
     	}else if(tab.name == 'second'){
-    		this.listQuery.goodComment = 1
+    		this.listQuery.goodsComment = 1
     	}else if(tab.name == 'third'){
-    		this.listQuery.goodComment = 2
+    		this.listQuery.goodsComment = 2
     	}else if(tab.name == 'fourth'){
-    		this.listQuery.goodComment = 3
+    		this.listQuery.goodsComment = 3
     	}
     	this.getList()
     },

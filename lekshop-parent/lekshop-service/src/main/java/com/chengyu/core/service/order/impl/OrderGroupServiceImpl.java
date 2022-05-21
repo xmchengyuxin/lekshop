@@ -210,7 +210,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		example.setOrderByClause("add_time asc");
 		example.createCriteria().andOrderNoEqualTo(orderNo);
 		List<OmsOrderGroupMember> list = assembleMemberMapper.selectByExample(example);
-		if(list == null) {
+		if(CollectionUtil.isEmpty(list)) {
 			return null;
 		}
 		

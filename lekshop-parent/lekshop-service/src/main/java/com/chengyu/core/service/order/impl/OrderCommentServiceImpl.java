@@ -9,6 +9,7 @@ import com.chengyu.core.domain.form.OrderCommentForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.BaseMapper;
+import com.chengyu.core.mapper.OmsOrderCommentLeftMapper;
 import com.chengyu.core.mapper.OmsOrderCommentMapper;
 import com.chengyu.core.mapper.OmsOrderDetailMapper;
 import com.chengyu.core.model.*;
@@ -33,6 +34,8 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	private BaseMapper baseMapper;
 	@Autowired
 	private OmsOrderDetailMapper orderDetailMapper;
+	@Autowired
+	private OmsOrderCommentLeftMapper orderCommentLeftMapper;
 
 
 	@Override
@@ -151,6 +154,10 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void deleteComment(Integer commentId) {
 		orderCommentMapper.deleteByPrimaryKey(commentId);
+
+		OmsOrderCommentLeftExample example = new OmsOrderCommentLeftExample();
+		example.createCriteria().andCommentIdEqualTo(commentId);
+		orderCommentLeftMapper.deleteByExample(example);
 	}
 
 	@Override
@@ -181,5 +188,35 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<OmsOrderCommentLeft> getLeftCommentList(Integer commentId) {
+		OmsOrderCommentLeftExample example = new OmsOrderCommentLeftExample();
+		example.setOrderByClause("add_time desc");
+		example.createCriteria().andCommentIdEqualTo(commentId);
+		return orderCommentLeftMapper.selectByExample(example);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void addLeftComment(UmsMember member, Integer commentId, Integer type, String content, String img) {
+		OmsOrderCommentLeft commentLeft = new OmsOrderCommentLeft();
+		commentLeft.setCommentId(commentId);
+		commentLeft.setType(type);
+		commentLeft.setContent(content);
+		commentLeft.setImg(img);
+		commentLeft.setMemberId(member.getId());
+		commentLeft.setMemberName(member.getNickname());
+		commentLeft.setMemberHeadImg(member.getHeadImg());
+		commentLeft.setAddTime(DateUtil.date());
+		commentLeft.setUpdTime(commentLeft.getAddTime());
+		orderCommentLeftMapper.insertSelective(commentLeft);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void deleteLeftComment(Integer leftCommentId) {
+		orderCommentLeftMapper.deleteByPrimaryKey(leftCommentId);
 	}
 }

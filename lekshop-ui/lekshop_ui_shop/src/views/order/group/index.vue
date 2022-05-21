@@ -23,47 +23,61 @@
 			@selection-change="handleSelectionChange"
     >
 			<el-table-column type="selection" width="55" align="center" ></el-table-column>
-			<el-table-column label="所属订单" prop="orderNo" align="center" width="150">
+			<el-table-column label="所属订单" prop="orderNo" align="center" width="130">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.orderNo }}</span>
 			  </template>
 			</el-table-column>
-			<el-table-column label="开团用户" prop="memberName" align="center" width="150">
+			<el-table-column label="团长" prop="memberName" align="center" width="100">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.memberName }}</span>
 			  </template>
 			</el-table-column>
-			<el-table-column label="商品信息" prop="goodsInfo" align="center" width="250">
+			<el-table-column label="商品信息" prop="goodsInfo" width="250">
 			  <template slot-scope="scope">
-					<img :src="scope.row.mainFile" class="avatar" style="height:100px;width:100px;margin-right:5px;">
-					<p style="margin-top: 1px;">{{ scope.row.goodsName}}</p>
+          <div  class="flex  padding-tb10">
+            <el-image
+            class="flex f-s-0 margin-r12"
+                style="height: 50px"
+                :src="scope.row.goodsMainImg"
+                :preview-src-list="[scope.row.goodsMainImg]">
+              </el-image>
+              <div class="flex f-c">
+                <span class="line1">{{scope.row.goodsName}}</span>
+                <span>
+                  <span style="font-size: 16px; color: #A94442;">¥{{ scope.row.groupPrice | moneyFormat}}</span>
+                  &nbsp;
+                  <span style="text-decoration: line-through;">¥{{ scope.row.originalPrice | moneyFormat}}</span>
+                </span>
+              </div>
+          </div>
 			  </template>
 			</el-table-column>
-			<el-table-column label="拼团价格" prop="price" width="150">
+			<el-table-column label="已团/拼团" width="170">
 			  <template slot-scope="scope">
-			    <p>商品原价:<span style="color:red">¥{{ scope.row.originalPrice | moneyFormat }}</span></p>
-					<p>拼购价格:<span style="color:red">¥{{ scope.row.pingouPrice | moneyFormat }}</span></p>
+            <span>{{scope.row.haveGroupNum}}/{{scope.row.groupNum}}</span>
+            <span v-if="scope.row.haveGroupNum < scope.row.groupNum">距离拼团成功还差{{scope.row.groupNum-scope.row.haveGroupNum}}人</span>
+					  <el-progress style="width: 150px;" status="exception" :text-inside="true" :stroke-width="15" :percentage="parseInt((scope.row.haveGroupNum/scope.row.groupNum*100).toFixed(2))">
+            </el-progress>
+						<!-- <img v-for="item in scope.row.memberList" :src="item.memberHeadImg" class="avatar" style="height:50px;width:50px;border-radius: 50%;"> -->
 			  </template>
 			</el-table-column>
-			<el-table-column label="已团/拼团" min-width="300" align="center">
-			  <template slot-scope="scope">
-						<span>{{scope.row.havePintuanNum}}/{{scope.row.pintuanNum}}</span>
-					  <el-progress :text-inside="true" :stroke-width="26" :percentage="(scope.row.havePintuanNum/scope.row.pintuanNum*100).toFixed(2)"></el-progress>
-						<br>
-						<img v-for="item in scope.row.expand.memberList" :src="item.headImg" class="avatar" style="height:50px;width:50px;border-radius: 50%;">
-			  </template>
-			</el-table-column>
-			<el-table-column label="参团时间" width="170"  align="center">
+      <el-table-column label="成员" min-width="150" align="center">
+        <template slot-scope="scope">
+           <el-avatar shape="square" size="small" v-for="item in scope.row.memberList" :src="item.memberHeadImg"></el-avatar>
+        </template>
+      </el-table-column>
+			<el-table-column label="参团时间" width="150"  align="center">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')  }}</span>
 			  </template>
 			</el-table-column>
-			<el-table-column label="到期时间" width="170"  align="center">
+			<el-table-column label="到期时间" width="150"  align="center">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.endTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')  }}</span>
 			  </template>
 			</el-table-column>
-			<el-table-column label="状态" width="100"  align="center">
+			<el-table-column label="状态" width="75"  align="center">
 			  <template slot-scope="scope">
 					<el-tag>{{ scope.row.status | statusFilter }}</el-tag>
 			  </template>

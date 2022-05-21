@@ -43,6 +43,12 @@
             <div slot="header" class="clearfix">
               <span>订单号： {{ scope.row.order.orderNo }}</span>
               <span style="margin-left: 20px;">下单时间：{{ scope.row.order.buyTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')  }}</span>
+                <span style="margin-left: 20px; color: #f90647; font-weight: bold;" v-if="scope.row.order.type == 3 && scope.row.order.groupId != -1 && scope.row.orderGroup">
+                  {{ scope.row.orderGroup.groupNum}}人团
+                  <span v-if="scope.row.orderGroup.haveGroupNum < scope.row.orderGroup.groupNum">, 距离拼团成功还差{{scope.row.orderGroup.groupNum-scope.row.orderGroup.haveGroupNum}}人</span>
+                  <span v-else>, 拼团成功</span>
+                </span>
+              </span>
               <div style="float: right; padding: 3px 10px">
                 <el-button-group>
                    <!-- <el-tooltip class="item" effect="dark" content="删除" placement="top">
@@ -79,7 +85,7 @@
                   <span>{{item.goodsParamName}}</span>
                   <span>¥{{ item.buyPrice | moneyFormat}} * {{item.buyNum}} = ¥{{item.buyTotalPrice | moneyFormat}}</span>
                 </div>
-                <span class="order-role flex f-a-c f-j-c" v-if="scope.row.order.type == 3">拼</span>
+                <span class="order-role flex f-a-c f-j-c" v-if="scope.row.order.type == 3 && scope.row.order.groupId != -1">拼</span>
                 <span class="order-role flex f-a-c f-j-c miaosha" v-if="scope.row.order.type == 2">秒</span>
             </div>
           </el-card>
@@ -208,6 +214,29 @@
             <p style="height: 30px;">支付方式： {{order.payMethod}}</p>
             <p style="height: 40px;">配送方式： {{order.deliveryType}}</p>
           </div>
+      </el-card>
+      <br>
+      <el-card class="box-card-dialog" shadow="hover" v-if="order.type == 3 && order.groupId != -1 && orderGroup">
+        <div slot="header" class="clearfix">
+          <span>拼团进度</span>
+        </div>
+        <el-descriptions title="" :column="1" border>
+            <el-descriptions-item>
+              <template slot="label">
+                进度
+              </template>
+              <span style="color: #f90647; font-weight: bold;">{{orderGroup.groupNum}}人团</span>
+              <span style="color: #f90647; font-weight: bold;" v-if="orderGroup.haveGroupNum < orderGroup.groupNum">, 距离拼团成功还差{{orderGroup.haveGroupNum}}人</span>
+              <el-progress style="width: 150px;" status="exception" :text-inside="true" :stroke-width="15" :percentage="parseInt((orderGroup.haveGroupNum/orderGroup.groupNum*100).toFixed(2))">
+              </el-progress>
+            </el-descriptions-item>
+            <el-descriptions-item>
+              <template slot="label">
+                拼团成员
+              </template>
+              <el-avatar shape="square" size="small" v-for="item in groupMemberList" :src="item.memberHeadImg"></el-avatar>
+            </el-descriptions-item>
+          </el-descriptions>
       </el-card>
       <br>
       <el-card class="box-card-dialog" shadow="hover">
@@ -521,7 +550,9 @@ export default {
       deliveryForm: {},
       deliveryList: [],
       freightDetailList: [],
-      activeNum: 0
+      activeNum: 0,
+      orderGroup: {},
+      groupMemberList: []
     }
   },
   created() {
@@ -544,6 +575,8 @@ export default {
     handleOrderDetail(row){
        this.order = row.order;
        this.orderDetailList = row.orderDetailList;
+       this.orderGroup = row.orderGroup
+       this.groupMemberList = row.groupMemberList
        this.activeNum = this.order.status;
        if(this.activeNum == 4){
          this.activeNum = 0

@@ -154,4 +154,13 @@ public interface OrderRefundService {
      * @param  refundId
      */
     void cancelRefund(UmsMember member, Integer refundId) throws ServiceException;
+
+    /**
+     * 退款详情
+     * @author LeGreen
+     * @date   2022/4/29
+     * @param  detailId
+     * @return OrderRefundResult
+     */
+    OrderRefundResult getOrderRefundByDetailId(Integer detailId);
 }

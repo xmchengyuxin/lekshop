@@ -4,6 +4,7 @@ import com.chengyu.core.domain.enums.MemberRemindEnums;
 import com.chengyu.core.domain.enums.MemberRemindEnums.AdminRemindTypes;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberRemind;
+import com.chengyu.core.model.UmsShop;
 
 import java.util.List;
 
@@ -23,6 +24,16 @@ public interface MemberRemindService {
 	 * @param  content
 	 */
 	void addMemberRemind(UmsMember member, MemberRemindEnums.MemberRemindTypes type, String content);
+
+	/**
+	 * 推送商家提醒
+	 * @author LeGreen
+	 * @date   2022/5/21
+	 * @param  shopId
+	 * @param  type
+	 * @param  content
+	 */
+	void addShopRemind(Integer shopId, MemberRemindEnums.MemberRemindTypes type, String content);
 
 	/**
 	 * 推送后台提醒
