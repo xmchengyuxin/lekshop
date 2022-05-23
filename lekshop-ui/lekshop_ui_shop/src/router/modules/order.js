@@ -16,7 +16,7 @@ const orderRouter = {
       path: 'list',
       component: () => import('@/views/order/index/index'),
       name: 'orderList',
-      meta: { title: '订单管理', icon:'list', role: ['admin'] }
+      meta: { title: '订单管理', noCache: true, icon:'list', role: ['admin'] }
     },
     {
       path: 'group',
@@ -34,7 +34,7 @@ const orderRouter = {
       path: 'refund',
       component: () => import('@/views/order/refund/index'),
       name: 'refundList',
-      meta: { title: '退款管理', icon:'list', role: ['admin'] }
+      meta: { title: '退款管理', noCache: true, icon:'list', role: ['admin'] }
     },
   ]
 }

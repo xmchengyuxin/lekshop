@@ -132,6 +132,9 @@ public class OmsOrder implements Serializable {
     @ApiModelProperty(value = "拼团购买方式>>-1单独购买>>0普通拼团>>其他为阶梯拼团ID")
     private Integer groupId;
 
+    @ApiModelProperty(value = "新单或复购单")
+    private Integer newOrOld;
+
     @ApiModelProperty(value = "添加时间")
     private Date addTime;
 
@@ -482,6 +485,14 @@ public class OmsOrder implements Serializable {
         this.groupId = groupId;
     }
 
+    public Integer getNewOrOld() {
+        return newOrOld;
+    }
+
+    public void setNewOrOld(Integer newOrOld) {
+        this.newOrOld = newOrOld;
+    }
+
     public Date getAddTime() {
         return addTime;
     }
@@ -562,6 +573,7 @@ public class OmsOrder implements Serializable {
         sb.append(", finishExpiredTime=").append(finishExpiredTime);
         sb.append(", refundExpiredTime=").append(refundExpiredTime);
         sb.append(", groupId=").append(groupId);
+        sb.append(", newOrOld=").append(newOrOld);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);

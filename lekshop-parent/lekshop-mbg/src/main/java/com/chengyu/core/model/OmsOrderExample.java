@@ -2806,6 +2806,66 @@ public class OmsOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andNewOrOldIsNull() {
+            addCriterion("new_or_old is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldIsNotNull() {
+            addCriterion("new_or_old is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldEqualTo(Integer value) {
+            addCriterion("new_or_old =", value, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldNotEqualTo(Integer value) {
+            addCriterion("new_or_old <>", value, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldGreaterThan(Integer value) {
+            addCriterion("new_or_old >", value, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldGreaterThanOrEqualTo(Integer value) {
+            addCriterion("new_or_old >=", value, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldLessThan(Integer value) {
+            addCriterion("new_or_old <", value, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldLessThanOrEqualTo(Integer value) {
+            addCriterion("new_or_old <=", value, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldIn(List<Integer> values) {
+            addCriterion("new_or_old in", values, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldNotIn(List<Integer> values) {
+            addCriterion("new_or_old not in", values, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldBetween(Integer value1, Integer value2) {
+            addCriterion("new_or_old between", value1, value2, "newOrOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewOrOldNotBetween(Integer value1, Integer value2) {
+            addCriterion("new_or_old not between", value1, value2, "newOrOld");
+            return (Criteria) this;
+        }
+
         public Criteria andAddTimeIsNull() {
             addCriterion("add_time is null");
             return (Criteria) this;

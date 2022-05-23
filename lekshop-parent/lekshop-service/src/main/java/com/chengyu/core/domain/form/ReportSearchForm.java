@@ -1,50 +1,52 @@
 package com.chengyu.core.domain.form;
 
-import io.swagger.annotations.ApiModelProperty;
+import cn.hutool.core.date.DateUtil;
+import com.chengyu.core.exception.ServiceException;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * @title  报表查询表单
- * @author LeGreen
- * @date   2021/1/8
- */
 @Getter
 @Setter
 public class ReportSearchForm {
-
-    @ApiModelProperty(value = "用户")
-    private Integer memberId;
-
-    @ApiModelProperty(value = "用户")
-    private String memberName;
-
-    @ApiModelProperty(value = "开始时间")
-    private Date dateFrom;
-
-    @ApiModelProperty(value = "结束时间")
-    private Date dateTo;
-
-    @ApiModelProperty(value = "分站ID")
-    private Integer subId;
-
-    @ApiModelProperty(value = "分站名称")
-    private String subName;
-
-    @ApiModelProperty(value = "代理ID")
-    private Integer agentId;
-
-    @ApiModelProperty(value = "代理名称")
-    private String agentName;
-
-    @ApiModelProperty(value = "店铺ID")
-    private Integer shopId;
-
-    @ApiModelProperty(value = "店铺名称")
-    private String shopName;
-
-    @ApiModelProperty(value = "仅查询有数据")
-    private boolean onlyNum;
+	
+	private Integer shopId;
+	
+	private String shopName;
+	
+	private String goodsName;
+	
+	private Integer cateId;
+	
+	private Date dateFrom;
+	
+	private Date dateTo;
+	
+	public void validateDayRange() throws ServiceException {
+		if(dateFrom == null){
+			throw new ServiceException("请选择开始日期");
+		}
+		if(dateTo == null){
+			throw new ServiceException("请选择结束日期");
+		}
+		if(dateFrom.after(dateTo)){
+			throw new ServiceException("结束日期不能早于开始日期");
+		}
+		if(DateUtil.betweenDay(dateFrom, dateTo, true) > 31){
+			throw new ServiceException("查询日期跨度不能超过31天");
+		}
+	} 
+	
+	public void validateMonthRange() throws ServiceException{
+		if(dateFrom == null){
+			throw new ServiceException("请选择开始月份");
+		}
+		if(dateTo == null) {
+			throw new ServiceException("请选择结束月份");
+		}
+		if(DateUtil.betweenMonth(dateFrom, dateTo, true) > 12){
+			throw new ServiceException("查询月份跨度不能超过12个月");
+		}
+	} 
 }

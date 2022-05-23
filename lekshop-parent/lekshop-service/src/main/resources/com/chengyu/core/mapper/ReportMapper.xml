@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomReportMapper">
+
+	<!-- 查询报表所需数据/营业额/运费支出/有效订单/下单人数/取消订单/退单/好评数/中评数/差评数
+	/商品销售额/餐盒收入/拒单数/催单数/出餐平均时间 -->
+	<select id="getReportShopDayData" resultType="com.chengyu.core.model.RepShopDay">
+	    select
+		    ifnull(sum(if(ofo.status in(1,2,3),ofo.pay_price-ofo.refund_amount,0)),0) as businessAmount,
+		    ifnull(sum(if(ofo.status in(1,2,3),ofo.freight_fee,0)),0) as deliveryAmount,
+		    count(ofo.status in(1,2,3) or null) as orderNum,
+		    count(distinct case when ofo.status in(1,2,3) then ofo.member_id end) as memberNum,
+		    count(ofo.status = 4 or null) as cancelNum,
+		    count(ofo.refund_status in (1,2,3) or null) as refundNum,
+			ifnull(sum(if(ofo.status in(1,2,3),ofo.total_price,0)),0) as goodsAmount,
+			ifnull(sum(if(ofo.status in(1,2,3), ofo.coupon_amount, 0)),0) AS couponAmount
+	    from oms_order ofo
+	    where
+	    	ofo.shop_id = #{shopId} and ofo.add_time &gt;= #{beginTime} and ofo.add_time &lt;= #{endTime}
+	</select>
+	
+
+  <select id="getReportPlatformDayData" resultType="com.chengyu.core.model.RepPlatformDay">
+	  select
+		  ifnull(sum(if(ofo.status in(1,2,3),ofo.pay_price-ofo.refund_amount,0)),0) as businessAmount,
+		  ifnull(sum(if(ofo.status in(1,2,3),ofo.freight_fee,0)),0) as deliveryAmount,
+		  count(ofo.status in(1,2,3) or null) as orderNum,
+		  count(distinct case when ofo.status in(1,2,3) then ofo.member_id end) as memberNum,
+		  count(ofo.status = 4 or null) as cancelNum,
+		  count(ofo.refund_status in (1,2,3) or null) as refundNum,
+		  ifnull(sum(if(ofo.status in(1,2,3),ofo.total_price,0)),0) as goodsAmount,
+		  ifnull(sum(if(ofo.status in(1,2,3), ofo.coupon_amount, 0)),0) AS couponAmount
+	  from oms_order ofo
+	  where
+		  ofo.add_time &gt;= #{beginTime} and ofo.add_time &lt;= #{endTime}
+	</select>
+
+  <insert id="genMemberDayReport">
+	insert into rep_member_day (day, total_num, activite_num, 
+      register_num, order_num, xcx_num, 
+      app_num, link_num, xcx_order_num,
+      app_order_num, link_order_num,
+	  new_order_num,
+	  old_order_num,add_time, upd_time)
+      
+      select 
+        #{beginTime},
+      	count(distinct um.id) as totalNum,
+     	ifnull(umal.activiteNum,0),
+     	umt.registerNum,
+     	ofo.orderNum,
+     	umt.xcxNum,
+     	umt.appNum,
+     	umt.linkNum,
+     	ofo.xcxOrderNum,
+     	ofo.appOrderNum,
+     	ofo.linkOrderNum,
+		ofo.newOrderNum,
+		ofo.oldOrderNum,
+     	#{beginTime},
+     	#{beginTime}
+      from ums_member um
+      
+      left join
+      (select 
+      	count(umtemp.id) registerNum,
+      	count(umtemp.method = '1' or null) xcxNum,
+     	count(umtemp.method = '2' or null) appNum,
+     	count(umtemp.method = '3' or null) linkNum
+     	from ums_member umtemp
+      	where umtemp.add_time &gt;= #{beginTime} and umtemp.add_time &lt;= #{endTime}) umt on 1=1
+      	
+      left join
+      (select 
+      		count(*) activiteNum
+      		from ums_member_active_log 
+      		where add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      		group by member_id
+      		) umal on 1=1
+      		
+      left join
+      (select
+      		count(distinct member_id) orderNum,
+      		count(distinct case when pay_channel = 'xcx' then member_id end) as xcxOrderNum,
+      		count(distinct case when pay_channel = 'app' then member_id end) as appOrderNum,
+      		count(distinct case when pay_channel = 'gzh' then member_id end) as linkOrderNum,
+			count((new_or_old = 0 and status in(1,2,3)) or NULL) newOrderNum,
+			count((new_or_old = 1 and status in(1,2,3)) or NULL) oldOrderNum
+      		from oms_order
+      		where status in(1,2,3) and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}) ofo on 1=1
+      
+  </insert>
+  
+  <update id="updateConversion">
+    update rep_conversion_day
+    <set>
+	    <if test='type != null and type == "1" '>
+	    	xcx_open_num = xcx_open_num+1
+	    </if>
+	    <if test='type != null and type == "2" '>
+	      	app_open_num = app_open_num+1
+	    </if>
+    </set>
+    where to_days(day) = to_days(now())
+  </update>
+  
+  <insert id="genShopMonthReport">
+	 insert into rep_shop_month (
+		 shop_id, shop_name, month, business_amount, delivery_amount, order_num, member_num,
+		 cancel_num, refund_num, good_comment_num, medium_comment_num, bad_comment_num, goods_amount,
+		 coupon_amount, refund_rate, add_time, upd_time
+      )
+      
+      select
+      	shop_id,shop_name, #{month},
+      	sum(business_amount),
+      	sum(delivery_amount),
+      	sum(order_num),
+      	sum(member_num),
+      	sum(cancel_num),
+      	sum(refund_num),
+      	sum(goods_comment_num),
+      	sum(medium_comment_num),
+      	sum(bad_comment_num),
+      	sum(goods_amount),
+      	sum(coupon_amount),
+      	avg(refund_rate),
+      	#{beginTime},
+      	#{beginTime}
+      	from rep_shop_day
+      	where add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      	group by shop_id
+  </insert>
+  
+  <insert id="genPlatformMonthReport">
+	 insert into rep_brand_month (month, business_amount, delivery_amount, order_num, member_num,
+								  cancel_num, refund_num, good_comment_num, medium_comment_num, bad_comment_num, goods_amount,
+								  coupon_amount, refund_rate, add_time, upd_time)
+      
+      select
+      	#{month},
+		sum(business_amount),
+		sum(delivery_amount),
+		sum(order_num),
+		sum(member_num),
+		sum(cancel_num),
+		sum(refund_num),
+		sum(goods_comment_num),
+		sum(medium_comment_num),
+		sum(bad_comment_num),
+		sum(goods_amount),
+		sum(coupon_amount),
+		avg(refund_rate),
+		#{beginTime},
+		#{beginTime}
+      	from rep_brand_day 
+      	where add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      	order by add_time desc
+  </insert>
+  
+  
+  <insert id="genMemberMonthReport">
+	 insert into rep_member_month (month, total_num, activite_num, 
+      register_num, order_num, xcx_num, 
+      app_num, link_num, xcx_order_num,
+      app_order_num, link_order_num, new_order_num,
+      old_order_num, add_time, upd_time)
+      
+      select
+      	#{month},
+      	total_num,
+      	sum(activite_num),
+      	sum(register_num),
+      	sum(order_num),
+      	sum(xcx_num),
+      	sum(app_num),
+      	sum(link_num),
+      	sum(xcx_order_num),
+      	sum(app_order_num),
+      	sum(link_order_num),
+      	sum(new_order_num),
+      	sum(old_order_num),
+      	#{beginTime},
+      	#{beginTime}
+      	from rep_member_day 
+      	where add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      	order by day desc
+  </insert>
+  
+  <insert id="genShopGoodsMonthReport">
+	insert into rep_shop_goods_month (shop_id, shop_name, month,
+									 goods_id, goods_name, goods_main_img, price, cate_id,
+									 cate_name, sell_num, sell_amount, good_comment_num, medium_comment_num, bad_comment_num,
+									 rebuy_rate, buy_two_mannum, buy_mannum, rebuy_num, add_time, upd_time)
+      
+      select
+      	shop_id, shop_name, #{month},
+		goods_id, goods_name, goods_main_img, price, cate_id, cate_name,
+      	sum(sell_num),
+      	sum(sell_amount),
+      	sum(good_comment_num),
+      	sum(medium_comment_num),
+      	sum(bad_comment_num),
+      	avg(rebuy_rate),
+      	sum(buy_two_mannum),
+      	sum(buy_mannum),
+      	sum(rebuy_num),
+      	#{beginTime},
+      	#{beginTime}
+      	from rep_shop_goods_day
+      	where add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      	group by shop_id, goods_id
+  </insert>
+  
+  <insert id="genPlatformGoodsMonthReport">
+	insert into rep_platform_goods_month (
+	  month,
+	  goods_id, goods_name, goods_main_img, price, cate_id,
+	  cate_name, sell_num, sell_amount, good_comment_num, medium_comment_num, bad_comment_num,
+	  rebuy_rate, buy_two_mannum, buy_mannum, rebuy_num, add_time, upd_time)
+      
+      select
+      	#{month},
+		goods_id, goods_name, goods_main_img, price, cate_id, cate_name,
+		sum(sell_num),
+		sum(sell_amount),
+		sum(good_comment_num),
+		sum(medium_comment_num),
+		sum(bad_comment_num),
+		avg(rebuy_rate),
+		sum(buy_two_mannum),
+		sum(buy_mannum),
+		sum(rebuy_num),
+		#{beginTime},
+		#{beginTime}
+      	from rep_platform_goods_day
+      	where add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      	group by goods_id
+  </insert>
+
+	<select id="getRepGoodsCountResult" resultType="com.chengyu.core.domain.result.RepGoodsCountResult">
+		SELECT
+		ofod.goods_id as goodsId,
+		ofod.goods_name as goodsName,
+		ofod.goods_main_img as mainImg,
+		ifnull(sum(ofod.buy_num), 0) AS sellNum,
+		ifnull(sum(ofod.buy_total_price), 0) AS sellAmount
+		FROM
+		oms_order_detail ofod
+		join oms_order ofd on ofd.id = ofod.order_id
+		where ofd.add_time &gt;= #{beginTime} and ofd.add_time &lt;= #{endTime}
+		and ofod.status in(1,2,3)
+		<choose>
+			<when test='shopId != null'>
+				and ofod.shop_id = #{shopId}
+				group by ofod.shop_id, ofod.goods_id
+			</when >
+			<otherwise>
+				group by ofod.goods_id
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getRebuyCount" resultType="com.chengyu.core.domain.result.RebuyCountResult">
+		SELECT
+		count(DISTINCT ofod.member_id) as buyManNum,
+		(case when ofd.new_or_old = 1 then count(DISTINCT ofod.member_id) else 0 end) as buyTwoMannum,
+		ifnull(sum(if(ofd.new_or_old = 1,ofod.buy_num,0)),0) as rebuyNum
+		FROM
+		oms_order_detail ofod
+		join oms_order ofd on ofd.id = ofod.order_id
+		where ofd.add_time &gt;= #{beginTime} and ofd.add_time &lt;= #{endTime}
+		and ofod.status in(1,2,3) and ofod.goods_id = #{goodsId}
+		<if test='shopId != null'>
+			and ofod.shop_id = #{shopId}
+		</if>
+	</select>
+  
+</mapper>

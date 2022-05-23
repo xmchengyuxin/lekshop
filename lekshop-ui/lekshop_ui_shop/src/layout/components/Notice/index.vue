@@ -2,7 +2,8 @@
 	<div >
 		<div @click="showList = !showList;readAll()" class="wrap-notice-icon cursor">
 			<span v-if="msgCount > 0" class="count-num f10-size t-color-w b-radius flex f-a-c f-j-c">{{msgCount}}</span>
-			<img class="w-80" src="./notice_icon.png" alt="">
+			<!-- <img class="w-80" src="./notice_icon.png" alt=""> -->
+      <i class="el-icon-message-solid hover-effect " id="message-icon" style="line-height: 50px;" ></i>
 		</div>
 		<div v-if="showList" class="wrap-notice-content animate fadeInDown" :style="{'bottom': show ? '150px' : '20px'}" >
 			<div @click="closeNotices" class="flex f-a-c f-j-e padding-tb6">
@@ -10,7 +11,7 @@
 				<div class="w-12"></div>
 			</div>
 			<div class="wrap-notice-scroll" style="height: 480px;overflow-y: scroll;">
-			<div  v-if="list.length > 0" @click="clickItem(item,index)" v-for="(item,index) in list" :key="index" class="flex padding-tb15 b-bottom cursor">
+			<div  v-if="list.length > 0" @click="clickItem(item,index)" v-for="(item,index) in list" :key="index" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
 				<div class="flex f-a-s f-s-0">
 					<img style="width: 24px;" class="margin-r8" src="./notice_chat_icon.png" alt="">
 				</div>
@@ -27,7 +28,7 @@
 			<div v-if="list.length <= 0" class="t-color-9 flex f-j-c padding-15 margin-t30">暂无消息</div>
 			</div>
 		</div>
-		<div v-if="list.length > 0 && show" class="wrap-notice-content animate fadeInRight cursor" style="bottom: 20px;">
+		<div v-if="list.length > 0 && show" class="wrap-notice-content animate fadeInRight cursor" style="bottom: 20px;line-height: 20px; color: #000000;">
 			<div @click="show=!show" class="wrap-close-notice">
 				<span class="el-icon-close f18-size t-color-9 cursor"></span>
 			</div>
@@ -48,9 +49,9 @@
 </template>
 <style scoped="scoped">
 	.wrap-notice-icon {
-		position: fixed;
+		/* position: fixed;
 		right: 0px;
-		top: 50%;
+		top: 50%; */
 		z-index: 11;
 	}
 	.wrap-notice-content {
@@ -75,12 +76,13 @@
 	}
 	.count-num {
 		position: absolute;
-		top: 20px;
-		left: 45px;
+		top: 10px;
+		/* left: 45px; */
+    right: 90px;
 		padding: 0px 2px;
 		height: 16px;
 		min-width: 16px;
-		background-color: #FDA615;
+		background-color: #18bc9c;
 	}
 </style>
 <script>

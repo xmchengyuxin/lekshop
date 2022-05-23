@@ -11,7 +11,7 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
-        <notice />
+       <!-- <notice /> -->
     </div>
   </div>
 

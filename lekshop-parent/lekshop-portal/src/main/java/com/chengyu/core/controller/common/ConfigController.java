@@ -71,7 +71,7 @@ public class ConfigController extends UserBaseController {
 		return CommonResult.success(map);
 	}
 
-	@ApiOperation(value = "系统参数列表")
+	@ApiOperation(value = "热门搜索列表")
 	@ResponseBody
 	@RequestMapping(value="/search/getList", method=RequestMethod.GET)
 	public CommonResult<List<ConfigSearch>> getSearch() {

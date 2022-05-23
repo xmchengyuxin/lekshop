@@ -247,14 +247,14 @@
           <MultipleUpload :value="postForm.goodsImg" v-model="postForm.goodsImg" />
           <ImageSource style="margin-left: 72px;margin-top: 5px;" :mul="true" v-model="postForm.goodsImg" />
         </el-form-item>
-        <el-form-item label="商品视频" prop="mainVideo" >
+        <el-form-item label="* 商品视频" prop="mainVideo" >
             <SingleVideoUpload v-model="postForm.mainVideo" />
         </el-form-item>
         <el-form-item prop="description" label="商品描述" :rules="[{ required: true, message: '必填', trigger: 'blur' }]">
           <el-input type="textarea" v-model="postForm.description" placeholder="" style="width: 60%;" />
         </el-form-item>
         <el-form-item prop="detail" label="商品详情" :rules="[{ required: true, message: '必填', trigger: 'blur' }]">
-          <Tinymce ref="editor" v-model="postForm.detail" :height="400" style="margin-left: 65px;width: 60%;"/>
+          <Tinymce ref="editor" v-model="postForm.detail" :height="400" style="margin-left: 72px;width: 60%;"/>
         </el-form-item>
       </el-card>
       <br>

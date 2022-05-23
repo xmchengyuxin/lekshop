@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomReportLogMapper">
+
+	<select id="getRepConversionDay" resultType="com.chengyu.core.model.RepConversionDay">
+	    select
+	      	ifnull(sum(xcx_open_num),0) as xcxOpenNum,
+	      	ifnull(sum(app_open_num),0) as appOpenNum,
+	      	ifnull(avg(trans_rate*100),0) as transRate
+      	from rep_conversion_day 
+      	where 1=1
+      		<if test='beginTime != null and endTime != null '>
+      			and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      		</if>
+	</select>
+	
+	<!-- 统计营业额 -->
+	<select id="countBussinessAmount" resultType="java.math.BigDecimal">
+	   select
+		    ifnull(sum(ofo.pay_price-ofo.refund_amount),0) as businessAmount
+	    from oms_order ofo
+	    where
+	    	ofo.status in(1,2,3)
+	    	and ofo.shop_id = #{shopId} and ofo.add_time &gt;= #{beginTime} and ofo.add_time &lt;= #{endTime}
+	</select>
+	
+	<!-- 统计商品退款金额 -->
+	<select id="countGoodsRefundAmount" resultType="java.math.BigDecimal">
+	   SELECT
+		ifnull(sum(ofod.refund_amount), 0) AS goodsRefundAmount
+	FROM
+		oms_order_detail ofod
+	where
+		   ofod.add_time &gt;= #{beginTime} and ofod.add_time &lt;= #{endTime}
+		and ofod.status in(1,2,3,5)
+	   	and ofod.shop_id = #{shopId}
+	</select>
+	
+	<!-- 获取店铺某段时间的商品大类 -->
+	<select id="getGoodsCateListByShopId" resultType="com.chengyu.core.model.PmsGoodsCate">
+	    select
+	      	cate_id as id,
+	      	cate_name as name
+      	from rep_shop_goods_day
+      	where 
+      		shop_id = #{shopId} 
+      		<if test='beginTime != null and endTime != null '>
+      		and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      		</if>
+      	group by cate_id
+	</select>
+	
+	<!-- 获取品牌某段时间的商品大类 -->
+	<select id="getGoodsCateListByPlatform" resultType="com.chengyu.core.model.PmsGoodsCate">
+	    select
+	      	cate_id as id,
+	      	cate_name as name
+      	from rep_platform_goods_day
+      	where 1=1
+      		<if test='beginTime != null and endTime != null '>
+      		and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      		</if>
+      	group by cate_id
+	</select>
+	
+	<!-- 获取店铺某段时间的大类及商品统计 -->
+	<select id="countShopGoodsByCateId" resultType="com.chengyu.core.model.RepShopGoodsDay">
+	    select
+	      	shop_id as shopId,
+	      	shop_name as shopName,
+			goods_id as goodsId,
+			goods_name as goodsName,
+			goods_main_img as goodsMainImg,
+	      	price as price,
+	      	cate_id as cateId,
+	      	cate_name as cateName,
+	      	ifnull(sum(sell_num),0) as sellNum,
+	      	ifnull(sum(sell_amount),0) as sellAmount,
+	      	ifnull(sum(good_comment_num),0) as goodCommentNum,
+	      	ifnull(sum(bad_comment_num),0) as badCommentNum
+      	from rep_shop_goods_day
+      	where 
+      		shop_id = #{shopId} 
+      		and cate_id = #{cateId} 
+      		and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      	group by goods_id
+      	order by sum(sell_num) desc 
+	</select>
+	
+	<!-- 获取平台某段时间的大类及商品统计 -->
+	<select id="countPlatformGoodsByCateId" resultType="com.chengyu.core.model.RepPlatformGoodsDay">
+	    select
+			goods_id as goodsId,
+			goods_name as goodsName,
+			goods_main_img as goodsMainImg,
+			price as price,
+			cate_id as cateId,
+			cate_name as cateName,
+			ifnull(sum(sell_num),0) as sellNum,
+			ifnull(sum(sell_amount),0) as sellAmount,
+			ifnull(sum(good_comment_num),0) as goodCommentNum,
+			ifnull(sum(bad_comment_num),0) as badCommentNum
+      	from rep_platform_goods_day
+      	where 
+      		cate_id = #{cateId}
+      		and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+      	group by goods_id
+      	order by sum(sell_num) desc 
+	</select>
+	
+</mapper>

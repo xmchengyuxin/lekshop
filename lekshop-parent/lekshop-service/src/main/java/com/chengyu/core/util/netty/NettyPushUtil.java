@@ -51,7 +51,7 @@ public class NettyPushUtil {
 			try {
 				Map<String,String> extras = new HashMap<>(16);
 				extras.put("reqId", StringUtils.genenrateInd());
-				extras.put("rid", "shop-4");
+				extras.put("rid", "member-4");
 				extras.put("type", "1");
 				extras.put("content", "「13666011848」申请了实名认证, 请尽快审批");
 				extras.put("addTime", DateUtil.current(false)+"");

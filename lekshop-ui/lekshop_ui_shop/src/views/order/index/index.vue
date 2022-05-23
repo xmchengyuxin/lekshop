@@ -226,7 +226,7 @@
                 进度
               </template>
               <span style="color: #f90647; font-weight: bold;">{{orderGroup.groupNum}}人团</span>
-              <span style="color: #f90647; font-weight: bold;" v-if="orderGroup.haveGroupNum < orderGroup.groupNum">, 距离拼团成功还差{{orderGroup.haveGroupNum}}人</span>
+              <span style="color: #f90647; font-weight: bold;" v-if="orderGroup.haveGroupNum < orderGroup.groupNum">, 距离拼团成功还差{{orderGroup.groupNum-orderGroup.haveGroupNum}}人</span>
               <el-progress style="width: 150px;" status="exception" :text-inside="true" :stroke-width="15" :percentage="parseInt((orderGroup.haveGroupNum/orderGroup.groupNum*100).toFixed(2))">
               </el-progress>
             </el-descriptions-item>
@@ -337,7 +337,7 @@
 		</el-dialog>
 
 		<!--发货框-->
-		<el-dialog title="发货" :visible.sync="dialogFahuoVisible">
+		<el-dialog title="发货" :visible.sync="dialogFahuoVisible" width="60%">
 		    <el-form ref="deliveryForm" :rules="rules" :model="deliveryForm" label-width="80px" label-position="right" style="width: 100%;">
 		      <el-form-item label="快递公司" prop="deliveryType" :rules="[{ required: true, message: '请选择快递公司', trigger: 'change' }]">
 						<el-select v-model="deliveryForm.deliveryType" class="filter-item" placeholder="请选择" style="width: 60%;" @change="changeDeliveryType">

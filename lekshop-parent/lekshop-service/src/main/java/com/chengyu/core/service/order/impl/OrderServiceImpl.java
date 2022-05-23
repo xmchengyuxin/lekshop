@@ -307,6 +307,12 @@ public class OrderServiceImpl implements OrderService {
 			order.setRemark(form.getRemark());
 			order.setAddTime(now);
 			order.setUpdTime(now);
+			//判断是新客单还是老客单
+			OmsOrderExample example = new OmsOrderExample();
+			example.createCriteria()
+					.andMemberIdEqualTo(order.getMemberId())
+					.andAddTimeLessThan(new Date()).andStatusIn(CollectionUtil.newArrayList(1,2,3));
+			order.setNewOrOld(orderMapper.countByExample(example) > 0 ? 1 : 0);
 			orderMapper.insertSelective(order);
 			orderNoList.add(order.getOrderNo());
 			payAmount = NumberUtil.add(payAmount, order.getPayPrice());

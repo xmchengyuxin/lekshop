@@ -46,7 +46,7 @@
           </el-tooltip>
 			  </template>
 			</el-table-column>
-			<el-table-column label="宝贝主图" width="100px"  align="center">
+			<el-table-column label="宝贝主图" width="80px"  align="center">
 			  <template slot-scope="scope">
           <el-image
               style="height: 30px"
@@ -105,7 +105,7 @@
       		 <span>{{ scope.row.collectionNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" width="170px" align="center" prop="addTime" >
+      <el-table-column label="创建时间" width="150px" align="center" prop="addTime" >
         <template slot-scope="scope">
           <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
