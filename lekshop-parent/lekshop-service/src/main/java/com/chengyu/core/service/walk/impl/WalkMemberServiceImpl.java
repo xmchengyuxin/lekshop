@@ -31,6 +31,7 @@ public class WalkMemberServiceImpl implements WalkMemberService {
 			walkMember.setMemberId(member.getId());
 			walkMember.setMemberName(member.getCode());
 			walkMember.setMemberHeadImg(member.getHeadImg());
+			walkMember.setHeadImg(member.getHeadImg());
 			walkMember.setType(CommonConstant.BUYER);
 			walkMember.setGender(member.getGender());
 			walkMember.setNickname(member.getNickname());

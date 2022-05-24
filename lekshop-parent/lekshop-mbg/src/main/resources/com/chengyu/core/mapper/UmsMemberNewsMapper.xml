@@ -5,11 +5,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="member_id" jdbcType="INTEGER" property="memberId" />
     <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_logo" jdbcType="VARCHAR" property="shopLogo" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="img" jdbcType="VARCHAR" property="img" />
     <result column="produce" jdbcType="VARCHAR" property="produce" />
-    <result column="turn_page" jdbcType="VARCHAR" property="turnPage" />
+    <result column="turn_params" jdbcType="VARCHAR" property="turnParams" />
     <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
     <result column="send_status" jdbcType="VARCHAR" property="sendStatus" />
     <result column="read_status" jdbcType="VARCHAR" property="readStatus" />
@@ -82,8 +85,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, member_name, title, type, img, produce, turn_page, send_time, send_status, 
-    read_status, add_by, add_time, upd_by, upd_time, from_id, from_name
+    id, member_id, member_name, shop_id, shop_name, shop_logo, title, type, img, produce, 
+    turn_params, send_time, send_status, read_status, add_by, add_time, upd_by, upd_time, 
+    from_id, from_name
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -140,15 +144,17 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_member_news (member_id, member_name, title, 
+    insert into ums_member_news (member_id, member_name, shop_id, 
+      shop_name, shop_logo, title, 
       type, img, produce, 
-      turn_page, send_time, send_status, 
+      turn_params, send_time, send_status, 
       read_status, add_by, add_time, 
       upd_by, upd_time, from_id, 
       from_name, content)
-    values (#{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+    values (#{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, 
+      #{shopName,jdbcType=VARCHAR}, #{shopLogo,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{produce,jdbcType=VARCHAR}, 
-      #{turnPage,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, #{sendStatus,jdbcType=VARCHAR}, 
+      #{turnParams,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, #{sendStatus,jdbcType=VARCHAR}, 
       #{readStatus,jdbcType=VARCHAR}, #{addBy,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
       #{updBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{fromId,jdbcType=INTEGER}, 
       #{fromName,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
@@ -165,6 +171,15 @@
       <if test="memberName != null">
         member_name,
       </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="shopLogo != null">
+        shop_logo,
+      </if>
       <if test="title != null">
         title,
       </if>
@@ -177,8 +192,8 @@
       <if test="produce != null">
         produce,
       </if>
-      <if test="turnPage != null">
-        turn_page,
+      <if test="turnParams != null">
+        turn_params,
       </if>
       <if test="sendTime != null">
         send_time,
@@ -218,6 +233,15 @@
       <if test="memberName != null">
         #{memberName,jdbcType=VARCHAR},
       </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLogo != null">
+        #{shopLogo,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
@@ -230,8 +254,8 @@
       <if test="produce != null">
         #{produce,jdbcType=VARCHAR},
       </if>
-      <if test="turnPage != null">
-        #{turnPage,jdbcType=VARCHAR},
+      <if test="turnParams != null">
+        #{turnParams,jdbcType=VARCHAR},
       </if>
       <if test="sendTime != null">
         #{sendTime,jdbcType=TIMESTAMP},
@@ -283,6 +307,15 @@
       <if test="record.memberName != null">
         member_name = #{record.memberName,jdbcType=VARCHAR},
       </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLogo != null">
+        shop_logo = #{record.shopLogo,jdbcType=VARCHAR},
+      </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
       </if>
@@ -295,8 +328,8 @@
       <if test="record.produce != null">
         produce = #{record.produce,jdbcType=VARCHAR},
       </if>
-      <if test="record.turnPage != null">
-        turn_page = #{record.turnPage,jdbcType=VARCHAR},
+      <if test="record.turnParams != null">
+        turn_params = #{record.turnParams,jdbcType=VARCHAR},
       </if>
       <if test="record.sendTime != null">
         send_time = #{record.sendTime,jdbcType=TIMESTAMP},
@@ -338,11 +371,14 @@
     set id = #{record.id,jdbcType=INTEGER},
       member_id = #{record.memberId,jdbcType=INTEGER},
       member_name = #{record.memberName,jdbcType=VARCHAR},
+      shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_logo = #{record.shopLogo,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       img = #{record.img,jdbcType=VARCHAR},
       produce = #{record.produce,jdbcType=VARCHAR},
-      turn_page = #{record.turnPage,jdbcType=VARCHAR},
+      turn_params = #{record.turnParams,jdbcType=VARCHAR},
       send_time = #{record.sendTime,jdbcType=TIMESTAMP},
       send_status = #{record.sendStatus,jdbcType=VARCHAR},
       read_status = #{record.readStatus,jdbcType=VARCHAR},
@@ -362,11 +398,14 @@
     set id = #{record.id,jdbcType=INTEGER},
       member_id = #{record.memberId,jdbcType=INTEGER},
       member_name = #{record.memberName,jdbcType=VARCHAR},
+      shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_logo = #{record.shopLogo,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       img = #{record.img,jdbcType=VARCHAR},
       produce = #{record.produce,jdbcType=VARCHAR},
-      turn_page = #{record.turnPage,jdbcType=VARCHAR},
+      turn_params = #{record.turnParams,jdbcType=VARCHAR},
       send_time = #{record.sendTime,jdbcType=TIMESTAMP},
       send_status = #{record.sendStatus,jdbcType=VARCHAR},
       read_status = #{record.readStatus,jdbcType=VARCHAR},
@@ -389,6 +428,15 @@
       <if test="memberName != null">
         member_name = #{memberName,jdbcType=VARCHAR},
       </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLogo != null">
+        shop_logo = #{shopLogo,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
@@ -401,8 +449,8 @@
       <if test="produce != null">
         produce = #{produce,jdbcType=VARCHAR},
       </if>
-      <if test="turnPage != null">
-        turn_page = #{turnPage,jdbcType=VARCHAR},
+      <if test="turnParams != null">
+        turn_params = #{turnParams,jdbcType=VARCHAR},
       </if>
       <if test="sendTime != null">
         send_time = #{sendTime,jdbcType=TIMESTAMP},
@@ -441,11 +489,14 @@
     update ums_member_news
     set member_id = #{memberId,jdbcType=INTEGER},
       member_name = #{memberName,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_logo = #{shopLogo,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       img = #{img,jdbcType=VARCHAR},
       produce = #{produce,jdbcType=VARCHAR},
-      turn_page = #{turnPage,jdbcType=VARCHAR},
+      turn_params = #{turnParams,jdbcType=VARCHAR},
       send_time = #{sendTime,jdbcType=TIMESTAMP},
       send_status = #{sendStatus,jdbcType=VARCHAR},
       read_status = #{readStatus,jdbcType=VARCHAR},
@@ -462,11 +513,14 @@
     update ums_member_news
     set member_id = #{memberId,jdbcType=INTEGER},
       member_name = #{memberName,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_logo = #{shopLogo,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       img = #{img,jdbcType=VARCHAR},
       produce = #{produce,jdbcType=VARCHAR},
-      turn_page = #{turnPage,jdbcType=VARCHAR},
+      turn_params = #{turnParams,jdbcType=VARCHAR},
       send_time = #{sendTime,jdbcType=TIMESTAMP},
       send_status = #{sendStatus,jdbcType=VARCHAR},
       read_status = #{readStatus,jdbcType=VARCHAR},

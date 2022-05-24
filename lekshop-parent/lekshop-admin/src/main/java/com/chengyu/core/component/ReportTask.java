@@ -28,6 +28,7 @@ public class ReportTask {
      *每日报表
      */
 	@Scheduled(cron="0 15 00 ? * *")
+//	@Scheduled(cron = "0 0/2 * ? * ?")
     private void dayReport(){
 		Date now = com.chengyu.core.utils.DateUtil.addDay(new Date(), -1);
 		Date beginTime = DateUtil.beginOfDay(now);
@@ -62,6 +63,7 @@ public class ReportTask {
      *每月1号12点20分报表
      */
 	@Scheduled(cron="0 20 0 1 * ?")
+//	@Scheduled(cron = "0 0/2 * ? * ?")
     private void monthReport() throws Exception{
 		Date now = com.chengyu.core.utils.DateUtil.addDay(new Date(), -1);
 		Date beginTime = DateUtil.beginOfMonth(now);

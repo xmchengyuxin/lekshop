@@ -125,7 +125,7 @@ public interface WalkTrendsService {
 	 * @param  content
 	 * @throws ServiceException 业务异常
 	 */
-	void addComment(WalkMember viewMember, Integer trendsId, Integer commentId, String content);
+	WalkTrendsComment addComment(WalkMember viewMember, Integer trendsId, Integer commentId, String content);
 	
 	/**
 	 * 删除评论

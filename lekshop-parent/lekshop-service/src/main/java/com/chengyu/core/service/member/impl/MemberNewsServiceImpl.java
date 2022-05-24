@@ -3,10 +3,12 @@ package com.chengyu.core.service.member.impl;
 import cn.hutool.core.date.DateUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.MemberNewsEnums;
+import com.chengyu.core.domain.form.MemberNewsForm;
 import com.chengyu.core.mapper.UmsMemberNewsMapper;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberNews;
 import com.chengyu.core.model.UmsMemberNewsExample;
+import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -49,16 +51,25 @@ public class MemberNewsServiceImpl implements MemberNewsService {
 	}
 
 	@Override
-	public void addMemberNews(UmsMember member, MemberNewsEnums.MemberNewsTypes newsType, String title, String img, String content) {
+	public void addMemberNews(UmsMember member, UmsShop shop, MemberNewsEnums.MemberNewsTypes newsType, String title, String img, String content) {
+		this.insertNews(member, shop, newsType.getType(), title, img, content, null);
+	}
+
+	private void insertNews(UmsMember member, UmsShop shop, Integer type, String title, String img, String content, String turnParams){
 		try {
 			UmsMemberNews news = new UmsMemberNews();
 			news.setMemberId(member.getId());
 			news.setMemberName(member.getRealname());
-			news.setType(newsType.getType());
-			news.setTitle(StringUtils.isBlank(title) ? newsType.getTypeName() : title);
-			news.setImg(StringUtils.isBlank(img) ? newsType.getImg() : img);
+			if(shop != null){
+				news.setShopId(shop.getId());
+				news.setShopName(shop.getName());
+				news.setShopLogo(shop.getLogo());
+			}
+			news.setType(type);
+			news.setTitle(title);
+			news.setImg(img);
 			news.setContent(content);
-			news.setTurnPage(newsType.getTurnPage());
+			news.setTurnParams(turnParams);
 			news.setSendTime(new Date());
 			news.setSendStatus(CommonConstant.WAIT);
 			news.setReadStatus(CommonConstant.NO);
@@ -68,6 +79,11 @@ public class MemberNewsServiceImpl implements MemberNewsService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void addMemberNews(UmsMember member, MemberNewsForm newsForm) {
+		this.insertNews(member, newsForm.getShop(), newsForm.getType(), newsForm.getTitle(), newsForm.getImg(), newsForm.getContent(), newsForm.getTurnParams());
 	}
 
 	@Override

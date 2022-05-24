@@ -1,9 +1,11 @@
 package com.chengyu.core.service.member;
 
 import com.chengyu.core.domain.enums.MemberNewsEnums;
+import com.chengyu.core.domain.form.MemberNewsForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberNews;
+import com.chengyu.core.model.UmsShop;
 
 import java.util.List;
 
@@ -39,7 +41,18 @@ public interface MemberNewsService {
 	 * @param  content
 	 * @throws ServiceException 业务异常
 	 */
-	void addMemberNews(UmsMember member, MemberNewsEnums.MemberNewsTypes newsType, String title, String img, String content);
+	void addMemberNews(UmsMember member, UmsShop shop, MemberNewsEnums.MemberNewsTypes newsType, String title, String img, String content);
+
+	/**
+	 * 发消息
+	 * @author LeGreen
+	 * @date   2022/5/24
+	 * @param  member
+	 * @param  newsForm
+	 * @return void
+	 * @throws ServiceException 业务异常
+	 */
+	void addMemberNews(UmsMember member, MemberNewsForm newsForm);
 	
 	/**
 	 * 统计未读

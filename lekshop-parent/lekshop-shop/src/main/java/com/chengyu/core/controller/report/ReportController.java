@@ -33,8 +33,15 @@ public class ReportController extends ShopBaseController {
 			ReportSearchForm form,
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
-		
+
 		form.validateDayRange();
+		if(form.getDateFrom() != null){
+			form.setDateFrom(DateUtil.beginOfDay(form.getDateFrom()));
+		}
+		if(form.getDateTo() != null){
+			form.setDateTo(DateUtil.endOfDay(form.getDateTo()));
+		}
+		form.setShopId(getCurrentShop().getId());
 		List<RepShopDay> list = reportLogService.getRepShopDay(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
@@ -48,37 +55,14 @@ public class ReportController extends ShopBaseController {
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
 		
 		form.validateMonthRange();
+		if(form.getDateFrom() != null){
+			form.setDateFrom(DateUtil.beginOfMonth(form.getDateFrom()));
+		}
 		if(form.getDateTo() != null){
 			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
 		}
+		form.setShopId(getCurrentShop().getId());
 		List<RepShopMonth> list = reportLogService.getRepShopMonth(form, page, pageSize);
-		return CommonResult.success(CommonPage.restPage(list));
-	}
-	
-	@ApiOperation(value = "平台营业日报表")
-	@ResponseBody
-	@RequestMapping(value="/platformReport/getDayList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<RepPlatformDay>> getPlatformDayList(
-			ReportSearchForm form, 
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
-		form.validateDayRange();
-		List<RepPlatformDay> list = reportLogService.getRepPlatformDay(form, page, pageSize);
-		return CommonResult.success(CommonPage.restPage(list));
-	}
-	
-	@ApiOperation(value = "平台营业月报表")
-	@ResponseBody
-	@RequestMapping(value="/platformReport/getMonthList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<RepPlatformMonth>> getPlatformMonthList(
-			ReportSearchForm form, 
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
-		form.validateMonthRange();
-		if(form.getDateTo() != null){
-			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
-		}
-		List<RepPlatformMonth> list = reportLogService.getRepPlatformMonth(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 	
@@ -92,13 +76,15 @@ public class ReportController extends ShopBaseController {
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
 		
 		form.validateDayRange();
-		if(form.getShopId() == null){
-			List<RepPlatformGoodsDay> list = reportLogService.getRepPlatformGoodsDay(form, page, pageSize);
-			return CommonResult.success(CommonPage.restPage(list));
-		}else{
-			List<RepShopGoodsDay> list = reportLogService.getRepShopGoodsDay(form, page, pageSize);
-			return CommonResult.success(CommonPage.restPage(list));
+		if(form.getDateFrom() != null){
+			form.setDateFrom(DateUtil.beginOfDay(form.getDateFrom()));
 		}
+		if(form.getDateTo() != null){
+			form.setDateTo(DateUtil.endOfDay(form.getDateTo()));
+		}
+		form.setShopId(getCurrentShop().getId());
+		List<RepShopGoodsDay> list = reportLogService.getRepShopGoodsDay(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(list));
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -110,52 +96,15 @@ public class ReportController extends ShopBaseController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
 		form.validateMonthRange();
+		if(form.getDateFrom() != null){
+			form.setDateFrom(DateUtil.beginOfMonth(form.getDateFrom()));
+		}
 		if(form.getDateTo() != null){
 			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
 		}
-		if(form.getShopId() == null){
-			List<RepPlatformGoodsMonth> list = reportLogService.getRepPlatformGoodsMonth(form, page, pageSize);
-			return CommonResult.success(CommonPage.restPage(list));
-		}else{
-			List<RepShopGoodsMonth> list = reportLogService.getRepShopGoodsMonth(form, page, pageSize);
-			return CommonResult.success(CommonPage.restPage(list));
-		}
+		form.setShopId(getCurrentShop().getId());
+		List<RepShopGoodsMonth> list = reportLogService.getRepShopGoodsMonth(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(list));
 	}
 
-	@ApiOperation(value = "顾客人数日报表")
-	@ResponseBody
-	@RequestMapping(value="/memberReport/getDayList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<RepMemberDay>> getMemberDayList(
-			ReportSearchForm form, 
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
-		form.validateDayRange();
-		List<RepMemberDay> list = reportLogService.getRepMemberDay(form, page, pageSize);
-		return CommonResult.success(CommonPage.restPage(list));
-	}
-	
-	@ApiOperation(value = "顾客人数月报表")
-	@ResponseBody
-	@RequestMapping(value="/memberReport/getMonthList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<RepMemberMonth>> getMemberMonthList(
-			ReportSearchForm form, 
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
-		
-		form.validateMonthRange();
-		if(form.getDateTo() != null){
-			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
-		}
-		List<RepMemberMonth> list = reportLogService.getRepMemberMonth(form, page, pageSize);
-		return CommonResult.success(CommonPage.restPage(list));
-	}
-	
-	@ApiOperation(value = "转化率报表")
-	@ResponseBody
-	@RequestMapping(value="/conversionReport/getList", method=RequestMethod.GET)
-	public CommonResult<RepConversionDay> getRepConversionDay(ReportSearchForm form) throws Exception {
-		RepConversionDay repconversionDay = reportLogService.getRepConversionDay(form);
-		return CommonResult.success(repconversionDay);
-	}
-	
 }

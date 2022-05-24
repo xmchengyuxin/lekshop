@@ -266,7 +266,7 @@ public class MemberController extends AdminBaseController {
 	@RequestMapping(value="/member/sendMsg", method=RequestMethod.POST)
 	public CommonResult<String> sendMsg(Integer memberId, String title, String content) throws ServiceException {
 		UmsMember member = memberService.getMemberById(memberId);
-		memberNewsService.addMemberNews(member, MemberNewsEnums.MemberNewsTypes.NEWS_USER, title, null, content);
+		memberNewsService.addMemberNews(member, null, MemberNewsEnums.MemberNewsTypes.NEWS_USER, title, null, content);
 		return CommonResult.success(null);
 	}
 

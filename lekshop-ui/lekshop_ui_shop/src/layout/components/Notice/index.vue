@@ -10,22 +10,57 @@
 				<span class="el-icon-close f18-size t-color-9 cursor"></span>
 				<div class="w-12"></div>
 			</div>
-			<div class="wrap-notice-scroll" style="height: 480px;overflow-y: scroll;">
-			<div  v-if="list.length > 0" @click="clickItem(item,index)" v-for="(item,index) in list" :key="index" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
-				<div class="flex f-a-s f-s-0">
-					<img style="width: 24px;" class="margin-r8" src="./notice_chat_icon.png" alt="">
-				</div>
-				<div class="flex f-c">
-					<div class="flex f-a-c">
-						<p class="f16-size f-w-b t-color-3 margin-r6">{{titleType[item.type]}}</p>
-						<span v-if="item.status != 1" class="bg-color-r b-radius" style="width: 6px;height: 6px;"></span>
-					</div>
-					<p class="f13-size margin-t8">{{item.content}}</p>
-					<p class="f10-size t-color-9 margin-t8">{{item.addTime | parseTime}}</p>
-				</div>
-				<div class="flex f-s-0 w-20"></div>
-			</div>
-			<div v-if="list.length <= 0" class="t-color-9 flex f-j-c padding-15 margin-t30">暂无消息</div>
+			<div class="wrap-notice-scroll" style="height: 480px;overflow-y: scroll;color: #000000;">
+        <div style="font-size: 15px; font-weight: 600;border-bottom: 1px solid #ece5e5;">今天</div>
+        <div  v-if="todayList.length > 0" @click="clickItem(item,index)" v-for="(item,index) in todayList" :key="index" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
+          <div class="flex f-a-s f-s-0">
+            <img style="width: 24px;" class="margin-r8" src="./notice_chat_icon.png" alt="">
+          </div>
+          <div class="flex f-c">
+            <div class="flex f-a-c">
+              <p class="f16-size f-w-b t-color-3 margin-r6">{{titleType[item.type]}}</p>
+              <span v-if="item.status != 1" class="bg-color-r b-radius" style="width: 6px;height: 6px;"></span>
+            </div>
+            <p class="f13-size margin-t8">{{item.content}}</p>
+            <p class="f10-size t-color-9 margin-t8">{{item.addTime | parseTime}}</p>
+          </div>
+          <div class="flex f-s-0 w-20"></div>
+        </div>
+        <div v-if="todayList.length <= 0" class="t-color-9 flex f-j-c padding-15 margin-t30">暂无消息</div>
+
+        <div style="font-size: 15px; font-weight: 600;border-bottom: 1px solid #ece5e5;">更早之前</div>
+        <div  v-if="earlierList.length > 0" @click="clickItem(item,index)" v-for="(item,index) in earlierList" :key="index" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
+          <div class="flex f-a-s f-s-0">
+            <img style="width: 24px;" class="margin-r8" src="./notice_chat_icon.png" alt="">
+          </div>
+          <div class="flex f-c">
+            <div class="flex f-a-c">
+              <p class="f16-size f-w-b t-color-3 margin-r6">{{titleType[item.type]}}</p>
+              <span v-if="item.status != 1" class="bg-color-r b-radius" style="width: 6px;height: 6px;"></span>
+            </div>
+            <p class="f13-size margin-t8">{{item.content}}</p>
+            <p class="f10-size t-color-9 margin-t8">{{item.addTime | parseTime}}</p>
+          </div>
+          <div class="flex f-s-0 w-20"></div>
+        </div>
+        <div v-if="earlierList.length <= 0" class="t-color-9 flex f-j-c padding-15 margin-t30">暂无消息</div>
+
+        <!-- <div  v-if="list.length > 0" @click="clickItem(item,index)" v-for="(item,index) in list" :key="index" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
+          <div class="flex f-s-0 w-20" style="font-size: 15px; font-weight: 600;border-bottom: 1px solid #ece5e5;" v-if="item.addTime < today && index == 0">更早之前</div>
+          <div class="flex f-a-s f-s-0">
+            <img style="width: 24px;" class="margin-r8" src="./notice_chat_icon.png" alt="">
+          </div>
+          <div class="flex f-c">
+            <div class="flex f-a-c">
+              <p class="f16-size f-w-b t-color-3 margin-r6">{{titleType[item.type]}}</p>
+              <span v-if="item.status != 1" class="bg-color-r b-radius" style="width: 6px;height: 6px;"></span>
+            </div>
+            <p class="f13-size margin-t8">{{item.content}}</p>
+            <p class="f10-size t-color-9 margin-t8">{{item.addTime | parseTime}}</p>
+          </div>
+          <div class="flex f-s-0 w-20"></div>
+        </div>
+        <div v-if="list.length <= 0" class="t-color-9 flex f-j-c padding-15 margin-t30">暂无消息</div> -->
 			</div>
 		</div>
 		<div v-if="list.length > 0 && show" class="wrap-notice-content animate fadeInRight cursor" style="bottom: 20px;line-height: 20px; color: #000000;">
@@ -105,7 +140,10 @@
         limitCount: 9999,//重来最多次数
         isAuth: false,
         uid: this.$store.state.user.wsId,
-        socketUrl: process.env.VUE_APP_SOCKET_API
+        socketUrl: process.env.VUE_APP_SOCKET_API,
+        today: new Date(new Date().toDateString()),
+        todayList: [],
+        earlierList:[],
 			};
 		},
 		methods: {
@@ -154,6 +192,15 @@
 				const self = this;
         getRemindList({page: 1, pageSize: 50}).then(res => {
           self.list = res.data.list ? res.data.list : [];
+          if(self.list && self.list.length > 0){
+            self.list.forEach((ele,index) => {
+              if(ele.addTime < this.today){
+                this.earlierList.push(ele);
+              }else{
+                this.todayList.push(ele);
+              }
+            })
+          }
         })
 			},
 			readAll() {
@@ -180,6 +227,7 @@
 							self.msgCount += 1;
 							self.playAudio();
 							self.list.unshift(JSON.parse(info.data));
+              self.todayList.unshift(JSON.parse(info.data));
 							self.show = true;
 						}
 

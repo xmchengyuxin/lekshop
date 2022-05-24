@@ -49,4 +49,13 @@ public interface MemberViewGoodsService {
      * @param  memberId
      */
     void deleteViewGoodsByMemberId(Integer memberId);
+
+    /**
+     * 查询近三个月浏览的商品分类ID
+     * @author LeGreen
+     * @date   2022/5/24
+     * @param  memberId
+     * @return List<Integer>
+     */
+    List<Integer> getMemberViewGoodsCateIdList(Integer memberId);
 }

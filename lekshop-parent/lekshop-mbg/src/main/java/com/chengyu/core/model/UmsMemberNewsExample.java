@@ -295,6 +295,206 @@ public class UmsMemberNewsExample {
             return (Criteria) this;
         }
 
+        public Criteria andShopIdIsNull() {
+            addCriterion("shop_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdIsNotNull() {
+            addCriterion("shop_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdEqualTo(Integer value) {
+            addCriterion("shop_id =", value, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdNotEqualTo(Integer value) {
+            addCriterion("shop_id <>", value, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdGreaterThan(Integer value) {
+            addCriterion("shop_id >", value, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shop_id >=", value, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdLessThan(Integer value) {
+            addCriterion("shop_id <", value, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdLessThanOrEqualTo(Integer value) {
+            addCriterion("shop_id <=", value, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdIn(List<Integer> values) {
+            addCriterion("shop_id in", values, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdNotIn(List<Integer> values) {
+            addCriterion("shop_id not in", values, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdBetween(Integer value1, Integer value2) {
+            addCriterion("shop_id between", value1, value2, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("shop_id not between", value1, value2, "shopId");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameIsNull() {
+            addCriterion("shop_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameIsNotNull() {
+            addCriterion("shop_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameEqualTo(String value) {
+            addCriterion("shop_name =", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameNotEqualTo(String value) {
+            addCriterion("shop_name <>", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameGreaterThan(String value) {
+            addCriterion("shop_name >", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameGreaterThanOrEqualTo(String value) {
+            addCriterion("shop_name >=", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameLessThan(String value) {
+            addCriterion("shop_name <", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameLessThanOrEqualTo(String value) {
+            addCriterion("shop_name <=", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameLike(String value) {
+            addCriterion("shop_name like", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameNotLike(String value) {
+            addCriterion("shop_name not like", value, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameIn(List<String> values) {
+            addCriterion("shop_name in", values, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameNotIn(List<String> values) {
+            addCriterion("shop_name not in", values, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameBetween(String value1, String value2) {
+            addCriterion("shop_name between", value1, value2, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopNameNotBetween(String value1, String value2) {
+            addCriterion("shop_name not between", value1, value2, "shopName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoIsNull() {
+            addCriterion("shop_logo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoIsNotNull() {
+            addCriterion("shop_logo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoEqualTo(String value) {
+            addCriterion("shop_logo =", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoNotEqualTo(String value) {
+            addCriterion("shop_logo <>", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoGreaterThan(String value) {
+            addCriterion("shop_logo >", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoGreaterThanOrEqualTo(String value) {
+            addCriterion("shop_logo >=", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoLessThan(String value) {
+            addCriterion("shop_logo <", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoLessThanOrEqualTo(String value) {
+            addCriterion("shop_logo <=", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoLike(String value) {
+            addCriterion("shop_logo like", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoNotLike(String value) {
+            addCriterion("shop_logo not like", value, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoIn(List<String> values) {
+            addCriterion("shop_logo in", values, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoNotIn(List<String> values) {
+            addCriterion("shop_logo not in", values, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoBetween(String value1, String value2) {
+            addCriterion("shop_logo between", value1, value2, "shopLogo");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopLogoNotBetween(String value1, String value2) {
+            addCriterion("shop_logo not between", value1, value2, "shopLogo");
+            return (Criteria) this;
+        }
+
         public Criteria andTitleIsNull() {
             addCriterion("title is null");
             return (Criteria) this;
@@ -565,73 +765,73 @@ public class UmsMemberNewsExample {
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageIsNull() {
-            addCriterion("turn_page is null");
+        public Criteria andTurnParamsIsNull() {
+            addCriterion("turn_params is null");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageIsNotNull() {
-            addCriterion("turn_page is not null");
+        public Criteria andTurnParamsIsNotNull() {
+            addCriterion("turn_params is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageEqualTo(String value) {
-            addCriterion("turn_page =", value, "turnPage");
+        public Criteria andTurnParamsEqualTo(String value) {
+            addCriterion("turn_params =", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageNotEqualTo(String value) {
-            addCriterion("turn_page <>", value, "turnPage");
+        public Criteria andTurnParamsNotEqualTo(String value) {
+            addCriterion("turn_params <>", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageGreaterThan(String value) {
-            addCriterion("turn_page >", value, "turnPage");
+        public Criteria andTurnParamsGreaterThan(String value) {
+            addCriterion("turn_params >", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageGreaterThanOrEqualTo(String value) {
-            addCriterion("turn_page >=", value, "turnPage");
+        public Criteria andTurnParamsGreaterThanOrEqualTo(String value) {
+            addCriterion("turn_params >=", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageLessThan(String value) {
-            addCriterion("turn_page <", value, "turnPage");
+        public Criteria andTurnParamsLessThan(String value) {
+            addCriterion("turn_params <", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageLessThanOrEqualTo(String value) {
-            addCriterion("turn_page <=", value, "turnPage");
+        public Criteria andTurnParamsLessThanOrEqualTo(String value) {
+            addCriterion("turn_params <=", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageLike(String value) {
-            addCriterion("turn_page like", value, "turnPage");
+        public Criteria andTurnParamsLike(String value) {
+            addCriterion("turn_params like", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageNotLike(String value) {
-            addCriterion("turn_page not like", value, "turnPage");
+        public Criteria andTurnParamsNotLike(String value) {
+            addCriterion("turn_params not like", value, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageIn(List<String> values) {
-            addCriterion("turn_page in", values, "turnPage");
+        public Criteria andTurnParamsIn(List<String> values) {
+            addCriterion("turn_params in", values, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageNotIn(List<String> values) {
-            addCriterion("turn_page not in", values, "turnPage");
+        public Criteria andTurnParamsNotIn(List<String> values) {
+            addCriterion("turn_params not in", values, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageBetween(String value1, String value2) {
-            addCriterion("turn_page between", value1, value2, "turnPage");
+        public Criteria andTurnParamsBetween(String value1, String value2) {
+            addCriterion("turn_params between", value1, value2, "turnParams");
             return (Criteria) this;
         }
 
-        public Criteria andTurnPageNotBetween(String value1, String value2) {
-            addCriterion("turn_page not between", value1, value2, "turnPage");
+        public Criteria andTurnParamsNotBetween(String value1, String value2) {
+            addCriterion("turn_params not between", value1, value2, "turnParams");
             return (Criteria) this;
         }
 

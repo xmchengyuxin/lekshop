@@ -10,6 +10,7 @@ import com.chengyu.core.domain.result.WalkTrendsCommentResult;
 import com.chengyu.core.domain.result.WalkTrendsResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
+import com.chengyu.core.model.WalkTrendsComment;
 import com.chengyu.core.service.walk.WalkTrendsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,7 +34,27 @@ public class TrendsController extends UserBaseController {
 	@RequestMapping(value="/common/trends/search", method=RequestMethod.GET)
 	public CommonResult<CommonPage<WalkTrendsResult>> search(TrendsForm form, Integer page, Integer pageSize) {
 		form.setStatus(CommonConstant.SUS_INT);
-		form.setTypeList(CollectionUtil.newArrayList(TrendsEnums.TrendsType.VIDEO.getValue(), TrendsEnums.TrendsType.DISCOVERY.getValue()));
+		CommonPage<WalkTrendsResult> list = walkTrendsService.getTrendsList(form, page, pageSize);
+		return CommonResult.success(list);
+	}
+
+	@ApiOperation(value = "逛逛精选页")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "trendsId", value = "首条动态ID"),
+		@ApiImplicitParam(name = "trendsType", value = "1文案类>>2视频类")
+	})
+	@ResponseBody
+	@RequestMapping(value="/common/trends/getSelectList", method=RequestMethod.GET)
+	public CommonResult<CommonPage<WalkTrendsResult>> getSelectList(Integer trendsId, Integer trendsType, Integer page, Integer pageSize) {
+		TrendsForm form = new TrendsForm();
+		form.setFirstTrendsId(trendsId);
+		form.setStatus(CommonConstant.SUS_INT);
+		if(trendsType == 1){
+			form.setTypeList(CollectionUtil.newArrayList(TrendsEnums.TrendsType.GOODS.getValue(), TrendsEnums.TrendsType.DISCOVERY.getValue(), TrendsEnums.TrendsType.BUYERSHOW.getValue()));
+		}else{
+			form.setType(TrendsEnums.TrendsType.VIDEO.getValue());
+		}
+		form.setWalkMember(getCurrentWalkMember());
 		CommonPage<WalkTrendsResult> list = walkTrendsService.getTrendsList(form, page, pageSize);
 		return CommonResult.success(list);
 	}
@@ -81,9 +102,9 @@ public class TrendsController extends UserBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value={"/member/trends/comment"}, method=RequestMethod.POST)
-	public CommonResult<String> comment(Integer trendsId, Integer commentId, String content) {
-		walkTrendsService.addComment(getCurrentWalkMember(), trendsId, commentId, content);
-		return CommonResult.success(null);
+	public CommonResult<WalkTrendsComment> comment(Integer trendsId, Integer commentId, String content) {
+		WalkTrendsComment comment = walkTrendsService.addComment(getCurrentWalkMember(), trendsId, commentId, content);
+		return CommonResult.success(comment);
 	}
 
 	@OperationLog

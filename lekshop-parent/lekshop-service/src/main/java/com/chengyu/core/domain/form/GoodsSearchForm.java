@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class GoodsSearchForm {
@@ -15,7 +17,13 @@ public class GoodsSearchForm {
 	private Integer cateTid;
 
 	private Integer cateId;
+
+	private List<Integer> catePidList;
 	
+	private Integer shopCatePid;
+
+	private Integer shopCateTid;
+
 	private Integer shopCateId;
 	
 	private String title;

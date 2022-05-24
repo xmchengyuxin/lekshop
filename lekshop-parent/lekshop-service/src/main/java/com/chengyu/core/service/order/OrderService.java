@@ -8,6 +8,7 @@ import com.chengyu.core.domain.result.OrderPayResult;
 import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.model.OmsOrderDetail;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberAddress;
 import com.chengyu.core.model.UmsShop;
@@ -148,4 +149,12 @@ public interface OrderService {
      */
     void deleteOrderByAdmin(List<Integer> idList);
 
+    /**
+     * 查询已购买的商品列表
+     * @author LeGreen
+     * @date   2022/5/24
+     * @param  memberId
+     * @return List<OmsOrderDetail>
+     */
+    List<OmsOrderDetail> getBuyGoodsList(Integer memberId, String goodsName);
 }

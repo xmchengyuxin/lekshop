@@ -14,4 +14,8 @@ public class WalkTrendsResult {
 	private WalkTrends walkTrends;
 	
 	private List<WalkTrendsGoods> trendsGoodsList;
+
+	private boolean isCollectTrends;
+
+	private boolean isCollectWalkMember;
 }

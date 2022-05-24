@@ -142,6 +142,7 @@ public class MemberServiceImpl implements MemberService {
 		memberAccountService.initAccount(member, memberGroup);
 
 		//初始化创作号
+		member.setUid(updateMember.getUid());
 		walkMemberService.addWalkMember(member);
 	}
 

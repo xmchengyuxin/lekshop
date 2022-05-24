@@ -119,7 +119,7 @@
       	sum(member_num),
       	sum(cancel_num),
       	sum(refund_num),
-      	sum(goods_comment_num),
+      	sum(good_comment_num),
       	sum(medium_comment_num),
       	sum(bad_comment_num),
       	sum(goods_amount),
@@ -133,7 +133,7 @@
   </insert>
   
   <insert id="genPlatformMonthReport">
-	 insert into rep_brand_month (month, business_amount, delivery_amount, order_num, member_num,
+	 insert into rep_platform_month (month, business_amount, delivery_amount, order_num, member_num,
 								  cancel_num, refund_num, good_comment_num, medium_comment_num, bad_comment_num, goods_amount,
 								  coupon_amount, refund_rate, add_time, upd_time)
       
@@ -145,7 +145,7 @@
 		sum(member_num),
 		sum(cancel_num),
 		sum(refund_num),
-		sum(goods_comment_num),
+		sum(good_comment_num),
 		sum(medium_comment_num),
 		sum(bad_comment_num),
 		sum(goods_amount),
@@ -153,7 +153,7 @@
 		avg(refund_rate),
 		#{beginTime},
 		#{beginTime}
-      	from rep_brand_day 
+      	from rep_platform_day
       	where add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
       	order by add_time desc
   </insert>

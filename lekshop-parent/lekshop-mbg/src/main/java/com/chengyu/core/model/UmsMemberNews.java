@@ -14,6 +14,15 @@ public class UmsMemberNews implements Serializable {
     @ApiModelProperty(value = "用户名称")
     private String memberName;
 
+    @ApiModelProperty(value = "店铺ID")
+    private Integer shopId;
+
+    @ApiModelProperty(value = "店铺名称")
+    private String shopName;
+
+    @ApiModelProperty(value = "店铺LOGO")
+    private String shopLogo;
+
     @ApiModelProperty(value = "标题")
     private String title;
 
@@ -26,8 +35,8 @@ public class UmsMemberNews implements Serializable {
     @ApiModelProperty(value = "简介")
     private String produce;
 
-    @ApiModelProperty(value = "跳转模块")
-    private String turnPage;
+    @ApiModelProperty(value = "跳转参数")
+    private String turnParams;
 
     @ApiModelProperty(value = "发送时间")
     private Date sendTime;
@@ -81,6 +90,30 @@ public class UmsMemberNews implements Serializable {
         this.memberName = memberName;
     }
 
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getShopLogo() {
+        return shopLogo;
+    }
+
+    public void setShopLogo(String shopLogo) {
+        this.shopLogo = shopLogo;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -113,12 +146,12 @@ public class UmsMemberNews implements Serializable {
         this.produce = produce;
     }
 
-    public String getTurnPage() {
-        return turnPage;
+    public String getTurnParams() {
+        return turnParams;
     }
 
-    public void setTurnPage(String turnPage) {
-        this.turnPage = turnPage;
+    public void setTurnParams(String turnParams) {
+        this.turnParams = turnParams;
     }
 
     public Date getSendTime() {
@@ -210,11 +243,14 @@ public class UmsMemberNews implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", memberId=").append(memberId);
         sb.append(", memberName=").append(memberName);
+        sb.append(", shopId=").append(shopId);
+        sb.append(", shopName=").append(shopName);
+        sb.append(", shopLogo=").append(shopLogo);
         sb.append(", title=").append(title);
         sb.append(", type=").append(type);
         sb.append(", img=").append(img);
         sb.append(", produce=").append(produce);
-        sb.append(", turnPage=").append(turnPage);
+        sb.append(", turnParams=").append(turnParams);
         sb.append(", sendTime=").append(sendTime);
         sb.append(", sendStatus=").append(sendStatus);
         sb.append(", readStatus=").append(readStatus);

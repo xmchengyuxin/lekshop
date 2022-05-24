@@ -56,7 +56,7 @@ public class ReportLogServiceImpl implements ReportLogService {
 			criteria.andShopNameLike("%"+form.getShopName()+"%");
 		}
 		if(form.getDateFrom() != null && form.getDateTo() != null){
-			criteria.andAddTimeBetween(form.getDateFrom(), form.getDateTo());
+			criteria.andDayBetween(form.getDateFrom(), form.getDateTo());
 		}
 		return repShopDayMapper.selectByExample(example);
 	}
@@ -88,7 +88,7 @@ public class ReportLogServiceImpl implements ReportLogService {
 		example.setOrderByClause("add_time desc, business_amount desc");
 		RepPlatformDayExample.Criteria criteria = example.createCriteria();
 		if(form.getDateFrom() != null && form.getDateTo() != null){
-			criteria.andAddTimeBetween(form.getDateFrom(), form.getDateTo());
+			criteria.andDayBetween(form.getDateFrom(), form.getDateTo());
 		}
 		return repPlatformDayMapper.selectByExample(example);
 	}

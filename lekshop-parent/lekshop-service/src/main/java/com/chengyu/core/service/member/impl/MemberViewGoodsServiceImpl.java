@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @title  浏览商品
@@ -74,6 +75,7 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 			viewGoods.setGoodsId(goods.getId());
 			viewGoods.setGoodsName(goods.getTitle());
 			viewGoods.setGoodsMainImg(goods.getMainImg());
+			viewGoods.setGoodsCateId(goods.getCatePid());
 			viewGoods.setPrice(goods.getPrice());
 			viewGoods.setAddTime(DateUtil.date());
 			viewGoods.setUpdTime(viewGoods.getAddTime());
@@ -93,6 +95,18 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 		UmsMemberViewGoodsExample example = new UmsMemberViewGoodsExample();
 		example.createCriteria().andMemberIdEqualTo(memberId);
 		memberViewGoodsMapper.deleteByExample(example);
+	}
+
+	@Override
+	public List<Integer> getMemberViewGoodsCateIdList(Integer memberId) {
+		Date now = DateUtil.date();
+		UmsMemberViewGoodsExample example = new UmsMemberViewGoodsExample();
+		example.createCriteria().andMemberIdEqualTo(memberId).andDateBetween(DateUtil.offsetDay(now, -90), now);
+		List<UmsMemberViewGoods> list = memberViewGoodsMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(list)){
+			return null;
+		}
+		return list.stream().map(UmsMemberViewGoods::getGoodsCateId).distinct().collect(Collectors.toList());
 	}
 
 }

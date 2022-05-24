@@ -1,6 +1,7 @@
 package com.chengyu.core.controller.common;
 
 import com.chengyu.core.controller.ShopBaseController;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
@@ -71,9 +72,9 @@ public class LoginController extends ShopBaseController {
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
         UmsMember member = memberService.getCurrentMember();
-        /*if(type != null && !member.getType().equals(type)){
-			return CommonResult.validateFailed(member.getType() == CommonConstant.SELLER ? "请登录商家端" : "请登录用户端");
-		}*/
+        if(member.getType() != CommonConstant.SELLER){
+			return CommonResult.validateFailed("请使用商家账号进行登录");
+		}
 		memberImeIdService.loginByImeId(member, imeId, phoneType);
         tokenMap.put("member", member);
 

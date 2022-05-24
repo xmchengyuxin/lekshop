@@ -19,9 +19,7 @@ import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigOrderService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.goods.GoodsService;
-import com.chengyu.core.service.member.MemberAddressService;
-import com.chengyu.core.service.member.MemberCouponService;
-import com.chengyu.core.service.member.MemberRemindService;
+import com.chengyu.core.service.member.*;
 import com.chengyu.core.service.order.*;
 import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
 import com.chengyu.core.service.shop.ShopConfigService;
@@ -90,6 +88,10 @@ public class OrderServiceImpl implements OrderService {
 	private OrderGroupService orderGroupService;
 	@Autowired
 	private MemberRemindService memberRemindService;
+	@Autowired
+	private MemberNewsService memberNewsService;
+	@Autowired
+	private MemberService memberService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -451,7 +453,7 @@ public class OrderServiceImpl implements OrderService {
 			if(order.getStatus() != OrderEnums.OrderStatus.WAIT_DELIVERY.getValue() || StringUtils.isBlank(form.getDeliveryNo())){
 				errorNum++;
 			}else if(order.getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue()
-					&& order.getGroupId() == -1
+					&& order.getGroupId() != -1
 					&& !orderGroupService.isGroupSus(order.getOrderNo())){
 				//团购订单需要拼团成功才能发货
 				errorNum++;
@@ -464,7 +466,6 @@ public class OrderServiceImpl implements OrderService {
 				updatedOrder.setDeliveryTime(now);
 				updatedOrder.setFinishExpiredTime(DateUtil.offsetDay(now, config.getAutoReceiveDay()));
 				updatedOrder.setDeliveryType(form.getDeliveryType());
-
 				updatedOrder.setStatus(OrderEnums.OrderStatus.WAIT_RECEIVE.getValue());
 				orderMapper.updateByPrimaryKeySelective(updatedOrder);
 
@@ -478,6 +479,10 @@ public class OrderServiceImpl implements OrderService {
 				orderFreightService.initOrderFreight(updatedOrder);
 				//添加自动确认收货
 				taskTriggerService.addTrigger(OrderAutoCancelJob.class, updatedOrder.getFinishExpiredTime(), order.getOrderNo());
+				//发货通知
+				UmsMember member = memberService.getMemberById(order.getMemberId());
+//				MemberNewsForm newsForm = new MemberNewsForm(shop, MemberNewsEnums.MemberNewsTypes.NEWS_DELIVERY_ORDER, "{orderId:}", "#goodsName#=");
+				memberNewsService.addMemberNews(member, shop, MemberNewsEnums.MemberNewsTypes.NEWS_DELIVERY_ORDER, "您的订单已发货", null, "订单");
 			}
 		}
 		return "批量发货成功"+susNum+"条, 失败"+errorNum+"条";
@@ -642,6 +647,18 @@ public class OrderServiceImpl implements OrderService {
 		OmsOrder updateOrder = new OmsOrder();
 		updateOrder.setDelInd(CommonConstant.YES_INT);
 		orderMapper.updateByExampleSelective(updateOrder, example);
+	}
+
+	@Override
+	public List<OmsOrderDetail> getBuyGoodsList(Integer memberId, String goodsName) {
+		OmsOrderDetailExample example = new OmsOrderDetailExample();
+		example.setOrderByClause("add_time desc");
+		OmsOrderDetailExample.Criteria criteria = example.createCriteria();
+		criteria.andMemberIdEqualTo(memberId).andStatusIn(OrderEnums.OrderSusStatusList());
+		if(StringUtils.isNotBlank(goodsName)){
+			criteria.andGoodsNameLike("%"+goodsName+"%");
+		}
+		return orderDetailMapper.selectByExample(example);
 	}
 
 	/**

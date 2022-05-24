@@ -13,6 +13,7 @@ import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.mapper.*;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.goods.GoodsService;
+import com.chengyu.core.service.walk.WalkMemberCollectService;
 import com.chengyu.core.service.walk.WalkTrendsService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -43,6 +44,8 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 	private GoodsService goodsService;
 	@Autowired
 	private WalkTrendsCommentLikeMapper trendsCommentLikeMapper;
+	@Autowired
+	private WalkMemberCollectService walkMemberCollectService;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -140,12 +143,23 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		if(form.getStatus() != null){
 			criteria.andStatusEqualTo(form.getStatus());
 		}
+		if(form.getFirstTrendsId() != null){
+			criteria.andIdNotEqualTo(form.getFirstTrendsId());
+		}
 		List<WalkTrends> list = trendsMapper.selectByExampleWithBLOBs(example);
 
 		List<WalkTrendsResult> trendsList = new ArrayList<>();
+		if(page == 1 && form.getFirstTrendsId() != null){
+			WalkTrendsResult walkTrendsResult = this.getTrendsDetail(form.getFirstTrendsId());
+			walkTrendsResult.setCollectTrends(this.isCollection(form.getWalkMember(), form.getFirstTrendsId()));
+			walkTrendsResult.setCollectWalkMember(walkMemberCollectService.isCollectWalkMember(form.getWalkMember(), walkTrendsResult.getWalkTrends().getWalkMemberId()));
+			trendsList.add(walkTrendsResult);
+		}
 		for(WalkTrends walkTrends : list){
 			WalkTrendsResult walkTrendsResult = new WalkTrendsResult();
 			walkTrendsResult.setWalkTrends(walkTrends);
+			walkTrendsResult.setCollectTrends(this.isCollection(form.getWalkMember(), form.getFirstTrendsId()));
+			walkTrendsResult.setCollectWalkMember(walkMemberCollectService.isCollectWalkMember(form.getWalkMember(), walkTrends.getWalkMemberId()));
 
 			WalkTrendsGoodsExample goodsExample = new WalkTrendsGoodsExample();
 			goodsExample.createCriteria().andTrendsIdEqualTo(walkTrends.getId());
@@ -181,6 +195,9 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 	@Override
 	public boolean isCollection(WalkMember viewMember, Integer trendId) {
+		if(viewMember == null){
+			return false;
+		}
 		WalkTrendsCollectionExample example = new WalkTrendsCollectionExample();
 		example.createCriteria().andViewMemberIdEqualTo(viewMember.getId()).andTrendsIdEqualTo(trendId);
 		long num = trendsCollectionMapper.countByExample(example);
@@ -245,7 +262,7 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void addComment(WalkMember viewMember, Integer trendsId, Integer commentId, String content) {
+	public WalkTrendsComment addComment(WalkMember viewMember, Integer trendsId, Integer commentId, String content) {
 		WalkTrendsComment comment = new WalkTrendsComment();
 		comment.setViewMemberId(viewMember.getId());
 		comment.setViewMemberName(viewMember.getNickname());
@@ -275,6 +292,7 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		comment.setAddTime(DateUtil.date());
 		comment.setUpdTime(comment.getAddTime());
 		trendsCommentMapper.insertSelective(comment);
+		return comment;
 	}
 
 	@Override

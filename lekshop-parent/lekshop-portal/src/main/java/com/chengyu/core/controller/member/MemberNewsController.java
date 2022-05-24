@@ -34,36 +34,6 @@ public class MemberNewsController extends UserBaseController {
 	@Autowired
 	private MemberNewsService newsService;
 	
-	@ApiOperation(value = "消息分类")
-	@ResponseBody
-	@RequestMapping(value="/news/getTypeList", method=RequestMethod.GET)
-    public CommonResult<List<MemberNewsResult>> getTypeList() throws Exception{
-		Integer memberId = getCurrentMemberId();
-		List<MemberNewsResult> list = new ArrayList<>();
-		List<MemberNewsResult> lastList = new ArrayList<>();
-		for(MemberNewsEnums.MemberNewsTypes type : MemberNewsEnums.MemberNewsTypes.values()){
-			MemberNewsResult result = new MemberNewsResult();
-			result.setType(type.getType());
-			result.setTypeName(type.getTypeName());
-			result.setImg(type.getImg());
-			result.setUnReadNums(newsService.countUnReadNews(memberId, type.getType()));
-			
-			List<UmsMemberNews> newsList = newsService.getMemberNewsList(memberId, result.getType(), null, 1, 1);
-			if(CollectionUtil.isNotEmpty(newsList)){
-				UmsMemberNews news = newsList.get(0);
-				result.setLastNews(news.getContent());
-				result.setLastNewsTime(news.getAddTime());
-				list.add(result);
-			}else{
-				lastList.add(result);
-			}
-		}
-		list = list.stream().sorted(Comparator.comparing(MemberNewsResult::getLastNewsTime)).collect(Collectors.toList());
-		CollectionUtil.reverse(list);
-		list.addAll(lastList);
-		return CommonResult.success(list);
-    }
-	
 	@ApiOperation(value = "消息列表")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "readStatus", value = "0未读 1已读"),

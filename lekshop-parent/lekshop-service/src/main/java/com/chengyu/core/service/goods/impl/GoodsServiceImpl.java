@@ -81,6 +81,12 @@ public class GoodsServiceImpl implements GoodsService {
 		if(form.getShopCateId() != null){
 			criteria.andShopCateIdEqualTo(form.getShopCateId());
 		}
+		if(form.getShopCatePid() != null){
+			criteria.andShopCatePidEqualTo(form.getShopCatePid());
+		}
+		if(form.getShopCateTid() != null){
+			criteria.andShopCateTidEqualTo(form.getShopCateTid());
+		}
 		if(StringUtils.isNotBlank(form.getTitle())){
 			criteria.andTitleLike("%"+form.getTitle()+"%");
 		}
@@ -89,6 +95,9 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		if(form.getType() != null){
 			criteria.andTypeEqualTo(form.getType());
+		}
+		if(CollectionUtil.isNotEmpty(form.getCatePidList())){
+			criteria.andCatePidIn(form.getCatePidList());
 		}
 		return goodsMapper.selectByExample(example);
 	}

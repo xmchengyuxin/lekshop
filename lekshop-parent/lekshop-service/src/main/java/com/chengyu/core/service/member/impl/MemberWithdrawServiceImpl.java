@@ -149,7 +149,7 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 				spmissionLogService.outAccount(member, AccountEnums.MemberSpmissionTypes.ACCOUNT_WITHDRAW_REDUCE, withdraw.getOrderNo(), withdraw.getAmount(), "提现成功,扣款金额", null);
 			}
 			try {
-				newsService.addMemberNews(member, MemberNewsEnums.MemberNewsTypes.NEWS_WITHDRAW, "提现成功", null, "您提现的"+ NumberUtils.format2(withdraw.getAmount())+"元已到账,请注意查收!");
+				newsService.addMemberNews(member, null, MemberNewsEnums.MemberNewsTypes.NEWS_WITHDRAW_SUS, "提现成功", null, "您提现的"+ NumberUtils.format2(withdraw.getAmount())+"元已到账,请注意查收!");
 				weixinNoticeService.withdrawSusNotice(withdraw);
 				memberRemindService.addMemberRemind(member, MemberRemindTypes.WITHDRAW_SUS, "您提现的"+ NumberUtils.format2(withdraw.getAmount())+"元已到账,请注意查收!");
 			} catch (Exception e) {
@@ -164,7 +164,7 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 				spmissionLogService.unfreezeAccount(member, AccountEnums.MemberSpmissionTypes.ACCOUNT_WITHDRAW_UNFREEZE, withdraw.getOrderNo(), withdraw.getAmount(), "提现失败,返还金额", null);
 			}
 			try {
-				newsService.addMemberNews(member, MemberNewsEnums.MemberNewsTypes.NEWS_WITHDRAW, "提现失败", null, "您申请提现的"+ NumberUtils.format2(withdraw.getAmount())+"元提现失败,失败原因为"+remark);
+				newsService.addMemberNews(member, null, MemberNewsEnums.MemberNewsTypes.NEWS_WITHDRAW_FAIL, "提现失败", null, "您申请提现的"+ NumberUtils.format2(withdraw.getAmount())+"元提现失败,失败原因为"+remark);
 				weixinNoticeService.withdrawFailNotice(withdraw);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -440,7 +440,7 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 				spmissionLogService.unfreezeAccount(member, AccountEnums.MemberSpmissionTypes.ACCOUNT_WITHDRAW_UNFREEZE, withdraw.getOrderNo(), withdraw.getAmount(), "提现失败,返还金额", null);
 			}
 			try {
-				newsService.addMemberNews(member, MemberNewsEnums.MemberNewsTypes.NEWS_WITHDRAW, "提现失败", null, "您申请提现的"+ NumberUtils.format2(withdraw.getAmount())+"元提现失败,失败原因为限制提现");
+				newsService.addMemberNews(member, null, MemberNewsEnums.MemberNewsTypes.NEWS_WITHDRAW_FAIL, "提现失败", null, "您申请提现的"+ NumberUtils.format2(withdraw.getAmount())+"元提现失败,失败原因为限制提现");
 				weixinNoticeService.withdrawFailNotice(withdraw);
 			} catch (Exception e) {
 				e.printStackTrace();

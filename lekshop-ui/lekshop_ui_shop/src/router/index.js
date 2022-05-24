@@ -17,9 +17,7 @@ import configRouter from './modules/config'
 import cateRouter from './modules/cate'
 import freightRouter from './modules/freight'
 import trendsRouter from './modules/trends'
-
-
-
+import reportRouter from './modules/report'
 
 
 
@@ -110,6 +108,7 @@ export const asyncRoutes = [
 	promotionRouter,
   freightRouter,
   fundRouter,
+  reportRouter,
   logRouter,
   configRouter,
 	 { path: '*', redirect: '/404', hidden: true }

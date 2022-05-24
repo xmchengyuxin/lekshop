@@ -8,6 +8,7 @@
     <result column="member_name" jdbcType="VARCHAR" property="memberName" />
     <result column="head_img" jdbcType="VARCHAR" property="headImg" />
     <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_cate_id" jdbcType="INTEGER" property="goodsCateId" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
     <result column="goods_main_img" jdbcType="VARCHAR" property="goodsMainImg" />
     <result column="price" jdbcType="DECIMAL" property="price" />
@@ -75,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, date, member_id, member_name, head_img, goods_id, goods_name, goods_main_img, 
-    price, add_time, add_by, upd_time, upd_by
+    id, date, member_id, member_name, head_img, goods_id, goods_cate_id, goods_name, 
+    goods_main_img, price, add_time, add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.UmsMemberViewGoodsExample" resultMap="BaseResultMap">
     select
@@ -113,15 +114,15 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_member_view_goods (date, member_id, member_name, 
-      head_img, goods_id, goods_name, 
-      goods_main_img, price, add_time, 
-      add_by, upd_time, upd_by
-      )
+      head_img, goods_id, goods_cate_id, 
+      goods_name, goods_main_img, price, 
+      add_time, add_by, upd_time, 
+      upd_by)
     values (#{date,jdbcType=DATE}, #{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, 
-      #{headImg,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
-      #{goodsMainImg,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
-      )
+      #{headImg,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{goodsCateId,jdbcType=INTEGER}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsMainImg,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
+      #{updBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsMemberViewGoods">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -143,6 +144,9 @@
       </if>
       <if test="goodsId != null">
         goods_id,
+      </if>
+      <if test="goodsCateId != null">
+        goods_cate_id,
       </if>
       <if test="goodsName != null">
         goods_name,
@@ -181,6 +185,9 @@
       </if>
       <if test="goodsId != null">
         #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCateId != null">
+        #{goodsCateId,jdbcType=INTEGER},
       </if>
       <if test="goodsName != null">
         #{goodsName,jdbcType=VARCHAR},
@@ -232,6 +239,9 @@
       <if test="record.goodsId != null">
         goods_id = #{record.goodsId,jdbcType=INTEGER},
       </if>
+      <if test="record.goodsCateId != null">
+        goods_cate_id = #{record.goodsCateId,jdbcType=INTEGER},
+      </if>
       <if test="record.goodsName != null">
         goods_name = #{record.goodsName,jdbcType=VARCHAR},
       </if>
@@ -266,6 +276,7 @@
       member_name = #{record.memberName,jdbcType=VARCHAR},
       head_img = #{record.headImg,jdbcType=VARCHAR},
       goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_cate_id = #{record.goodsCateId,jdbcType=INTEGER},
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       goods_main_img = #{record.goodsMainImg,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=DECIMAL},
@@ -294,6 +305,9 @@
       </if>
       <if test="goodsId != null">
         goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCateId != null">
+        goods_cate_id = #{goodsCateId,jdbcType=INTEGER},
       </if>
       <if test="goodsName != null">
         goods_name = #{goodsName,jdbcType=VARCHAR},
@@ -326,6 +340,7 @@
       member_name = #{memberName,jdbcType=VARCHAR},
       head_img = #{headImg,jdbcType=VARCHAR},
       goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_cate_id = #{goodsCateId,jdbcType=INTEGER},
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_main_img = #{goodsMainImg,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},

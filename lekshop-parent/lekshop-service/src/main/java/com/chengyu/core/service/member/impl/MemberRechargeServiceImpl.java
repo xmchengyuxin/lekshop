@@ -140,7 +140,7 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 			UmsMember member = memberService.getMemberById(recharge.getMemberId());
 			memberAccountLogService.inAccount(member, AccountEnums.MemberAccountTypes.ACCOUNT_RECHARGE, recharge.getOrderNo(), recharge.getAmount(), "充值成功", null);
 
-			newsService.addMemberNews(member, MemberNewsEnums.MemberNewsTypes.NEWS_RECHARGE, "账户余额充值成功", null,
+			newsService.addMemberNews(member, null, MemberNewsEnums.MemberNewsTypes.NEWS_RECHARGE, "账户余额充值成功", null,
 					"您好, 已成功为您充值"+ NumberUtils.format2(recharge.getRealAmount())+"元");
 		}
 
@@ -234,7 +234,7 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 		UmsMember member = memberService.getMemberById(recharge.getMemberId());
 		memberAccountLogService.inAccount(member, AccountEnums.MemberAccountTypes.ACCOUNT_RECHARGE, recharge.getOrderNo(), recharge.getAmount(), "充值成功", null);
 
-		newsService.addMemberNews(member, MemberNewsEnums.MemberNewsTypes.NEWS_RECHARGE, "账户余额充值成功", null,
+		newsService.addMemberNews(member, null, MemberNewsEnums.MemberNewsTypes.NEWS_RECHARGE, "账户余额充值成功", null,
 					"您好, 已成功为您充值"+ NumberUtils.format2(recharge.getRealAmount())+"元");
 	}
 

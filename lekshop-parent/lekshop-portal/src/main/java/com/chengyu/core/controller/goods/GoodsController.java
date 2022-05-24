@@ -63,6 +63,7 @@ public class GoodsController extends UserBaseController {
 	@ResponseBody
 	@RequestMapping(value="/goods/search", method=RequestMethod.GET)
 	public CommonResult<CommonPage<PmsGoods>> search(GoodsSearchForm form, Integer page, Integer pageSize) {
+		form.setStatus(GoodsEnums.GoodsStatus.SELL.getValue());
 		List<PmsGoods> list = goodsService.getGoodsList(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
@@ -138,6 +139,21 @@ public class GoodsController extends UserBaseController {
 		form.setGoodsId(goodsId);
 		form.setGoodsComment(goodsComment);
 		List<OmsOrderComment> list = orderCommentService.getCommentList(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(list));
+	}
+
+	@ApiOperation(value = "猜你喜欢的商品")
+	@ResponseBody
+	@RequestMapping(value="/goods/getLikeList", method=RequestMethod.GET)
+	public CommonResult<CommonPage<PmsGoods>> getLikeList(GoodsSearchForm form, Integer page, Integer pageSize) {
+		UmsMember member = getCurrentMemberOrNull();
+		if(member != null){
+			//查询用户近一个月浏览过的商品分类
+			List<Integer> cateIdList = memberViewGoodsService.getMemberViewGoodsCateIdList(member.getId());
+			form.setCatePidList(cateIdList);
+		}
+		form.setStatus(GoodsEnums.GoodsStatus.SELL.getValue());
+		List<PmsGoods> list = goodsService.getGoodsList(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 }

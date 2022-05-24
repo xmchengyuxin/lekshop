@@ -9,14 +9,14 @@
 		</el-tabs>
     <div class="filter-container">
       <el-input v-model.number="listQuery.walkMemberUid" clearable placeholder="创作号" style="width: 200px;" class="filter-item" @keyup.enter.native="getList()" />
-      <el-select v-model="listQuery.type" placeholder="类型" class="filter-item" clearable filterable>
+      <!-- <el-select v-model="listQuery.type" placeholder="类型" class="filter-item" clearable filterable>
           <el-option
             v-for="item in typeOptions"
             :key="item.key"
             :label="item.text"
             :value="item.key">
           </el-option>
-        </el-select>
+        </el-select> -->
         <el-select v-model="listQuery.status" placeholder="状态" class="filter-item" clearable filterable>
             <el-option
               v-for="item in statusOptions"
@@ -466,7 +466,7 @@ export default {
 			  pageSize: 20
 			}
 			this.activeName = tab.name
-      this.listQuery.status = this.activeName == '0' ? null : this.activeName
+      this.listQuery.type = this.activeName == '0' ? null : this.activeName
 			this.getList()
 		},
     viewVideo(row){

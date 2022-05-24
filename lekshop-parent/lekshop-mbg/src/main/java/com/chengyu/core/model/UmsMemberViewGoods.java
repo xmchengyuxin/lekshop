@@ -24,6 +24,9 @@ public class UmsMemberViewGoods implements Serializable {
     @ApiModelProperty(value = "商品ID")
     private Integer goodsId;
 
+    @ApiModelProperty(value = "商品分类")
+    private Integer goodsCateId;
+
     private String goodsName;
 
     @ApiModelProperty(value = "主图")
@@ -94,6 +97,14 @@ public class UmsMemberViewGoods implements Serializable {
         this.goodsId = goodsId;
     }
 
+    public Integer getGoodsCateId() {
+        return goodsCateId;
+    }
+
+    public void setGoodsCateId(Integer goodsCateId) {
+        this.goodsCateId = goodsCateId;
+    }
+
     public String getGoodsName() {
         return goodsName;
     }
@@ -162,6 +173,7 @@ public class UmsMemberViewGoods implements Serializable {
         sb.append(", memberName=").append(memberName);
         sb.append(", headImg=").append(headImg);
         sb.append(", goodsId=").append(goodsId);
+        sb.append(", goodsCateId=").append(goodsCateId);
         sb.append(", goodsName=").append(goodsName);
         sb.append(", goodsMainImg=").append(goodsMainImg);
         sb.append(", price=").append(price);

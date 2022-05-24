@@ -11,31 +11,27 @@ public class MemberNewsEnums {
 
 	@Getter
 	public enum MemberNewsTypes{
-		NEWS_TASK("任务消息", 1, "https://qiniuimg.wurun.net/icon/chat.png", ""),
-		NEWS_WITHDRAW("提现消息", 2, "https://qiniuimg.wurun.net/icon/withdraw.png", ""),
-		NEWS_PUNISHMENT("惩罚通知", 3, "https://qiniuimg.wurun.net/icon/fine.png", ""),
-		NEWS_COMPLAINT("申诉通知", 4, "https://qiniuimg.wurun.net/icon/complain.png", ""),
-		NEWS_RECHARGE("充值消息", 5, "https://qiniuimg.wurun.net/icon/overtime.png", ""),
-		NEWS_USER("私信消息", 6, "https://qiniuimg.wurun.net/icon/overtime.png", "");
-		/**NEWS_APPEAL("申诉结果通知", 6, "https://qiniuimg.wurun.net/icon/breakrule.png", ""),
-		NEWS_TRAIN("培训结果通知", 7, "https://qiniuimg.wurun.net/icon/study.png", ""),
-		NEWS_INSURANCE("保险通知", 8, "https://qiniuimg.wurun.net/icon/insurance.png", ""),
-		NEWS_HEALTH_EXPIRED("健康证过期通知", 9, "https://qiniuimg.wurun.net/icon/healthcard.png", ""),
-		NEWS_REFUND("退款通知", 10, "https://qiniuimg.wurun.net/icon/refund.png", ""),
-		NEWS_BAIL_NOENOUGH("保证金不足通知", 11, "https://qiniuimg.wurun.net/icon/bail.png", ""),
-		NEWS_ACTIVITY("活动通知", 12, "https://qiniuimg.wurun.net/icon/activity.png", ""),
-		NEWS_EXCEPTION("异常审核通知", 13, "https://qiniuimg.wurun.net/icon/activity.png", "");**/
-		
-		private final String typeName;
+		NEWS_DELIVERY_ORDER(1, "您的订单已发货", "订单[#goodsName#]已发货,您可以在订单列表查询物流信息。"),
+		NEWS_DELIVERY_DETAIL(2, "您的订单物流状态发生了变化", "订单[#goodsName#]的物流有了新变化,点击查看详情>>"),
+		NEWS_FINISH_ORDER(3, "您的订单已完成", "订单[#goodsName#]已配送完成,期待您分享商品评价与购物新得。"),
+		NEWS_AGREE_REFUND(4, "商家同意了您的退款申请", "卖家已经同意了您的订单[#goodsName#]退款申请,退款金额将原路返回,请实时关注您的账户变动。"),
+		NEWS_REFUSE_REFUND(5, "商家驳回了您的退款申请", "卖家驳回了您的订单[#goodsName#]退款申请,如有疑问您可以申请客服介入,点击查看详情>>"),
+		NEWS_RECHARGE( 6, "您已充值成功", "您已充值成功,请实时关注您的账户变动。"),
+		NEWS_WITHDRAW_SUS(7, "您已提现成功", "您已提现成功,请实时关注您的账户变动。"),
+		NEWS_WITHDRAW_FAIL(8, "您的提现失败了", "您的提现失败了,点击查看失败原因>>"),
+		NEWS_USER(9, "您有一条新私信", ""),
+		NEWS_COMMENT_REMIND(10, "评价提醒", "您买的[#goodsName#]感受如何? 期待您分享商品评价与购物新的。点击评价>>"),
+		NEWS_GROUP_SUS(11, "您已拼团成功", "您的订单[#goodsName#]已拼团成功, 请您耐心等待卖家发货。点击查看详情>>"),
+		NEWS_GROUP_FAIL(12, "您的拼团失败了", "您的订单[#goodsName#]拼团超时失败了, 金额将原路返回,请实时关注您的账户变动。点击查看详情>>");
+
 		private final Integer type;
-		private final String img;
-		private final String turnPage;
+		private final String title;
+		private final String content;
 		
-		MemberNewsTypes(String typeName, Integer type, String img, String turnPage){
-			this.typeName = typeName;
+		MemberNewsTypes(Integer type, String title, String content){
 			this.type = type;
-			this.img = img;
-			this.turnPage = turnPage;
+			this.title = title;
+			this.content = content;
 		}
 		
 	}

@@ -513,6 +513,66 @@ public class UmsMemberViewGoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andGoodsCateIdIsNull() {
+            addCriterion("goods_cate_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdIsNotNull() {
+            addCriterion("goods_cate_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdEqualTo(Integer value) {
+            addCriterion("goods_cate_id =", value, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdNotEqualTo(Integer value) {
+            addCriterion("goods_cate_id <>", value, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdGreaterThan(Integer value) {
+            addCriterion("goods_cate_id >", value, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("goods_cate_id >=", value, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdLessThan(Integer value) {
+            addCriterion("goods_cate_id <", value, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdLessThanOrEqualTo(Integer value) {
+            addCriterion("goods_cate_id <=", value, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdIn(List<Integer> values) {
+            addCriterion("goods_cate_id in", values, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdNotIn(List<Integer> values) {
+            addCriterion("goods_cate_id not in", values, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdBetween(Integer value1, Integer value2) {
+            addCriterion("goods_cate_id between", value1, value2, "goodsCateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCateIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("goods_cate_id not between", value1, value2, "goodsCateId");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodsNameIsNull() {
             addCriterion("goods_name is null");
             return (Criteria) this;

@@ -1,6 +1,9 @@
 package com.chengyu.core.domain.enums;
 
+import cn.hutool.core.collection.CollectionUtil;
 import lombok.Getter;
+
+import java.util.List;
 
 /**
  * @title  订单枚举
@@ -27,6 +30,10 @@ public class OrderEnums {
 		OrderStatus(int value){
 			this.value = value;
 		}
+	}
+
+	public static List<Integer> OrderSusStatusList(){
+		return CollectionUtil.newArrayList(OrderStatus.WAIT_DELIVERY.getValue(), OrderStatus.WAIT_RECEIVE.getValue(), OrderStatus.FINISHED.getValue());
 	}
 
 	/**
