@@ -220,8 +220,8 @@
 				this.getCount();
 				this.getList();
          self.socket.onMessage = function(res) {
-            let info = JSON.parse(res.data);
-            console.log(info,'onmessage');
+           // console.log(res,'onmessage');
+           let info = JSON.parse(res);
             if(info.cmd == 5) {
               self.msgCount += 1;
               self.playAudio();
