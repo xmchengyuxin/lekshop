@@ -79,7 +79,7 @@ public class WalkTrendsController extends ShopBaseController {
 	public CommonResult<CommonPage<WalkTrendsCommentResult>> getCommentList(Integer trendsId,
 																			@RequestParam(value = "page", defaultValue = "1") Integer page,
 																			@RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize ) throws ServiceException {
-		CommonPage<WalkTrendsCommentResult> list = walkTrendsService.getTrendsCommentList(trendsId, null, null, page, pageSize);
+		CommonPage<WalkTrendsCommentResult> list = walkTrendsService.getTrendsCommentList(trendsId, null, null, null, page, pageSize);
 		return CommonResult.success(list);
 	}
 }

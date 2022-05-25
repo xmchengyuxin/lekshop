@@ -88,7 +88,11 @@ public enum RedisEnums {
 	/**
 	 * 店铺服务
 	 */
-	SHOP_SERVICE("rds-ShopService");
+	SHOP_SERVICE("rds-ShopService"),
+	/**
+	 * IM用户
+	 */
+	CHAT_MEMBER("rds-chatMember");
 
 	private final String key;
 

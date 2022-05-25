@@ -4,7 +4,9 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.MemberNewsEnums;
 import com.chengyu.core.domain.enums.OrderEnums;
+import com.chengyu.core.domain.form.MemberNewsForm;
 import com.chengyu.core.domain.form.OrderCommentForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.exception.ServiceException;
@@ -99,7 +101,7 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 			comment.setStatus(OrderEnums.CommentStatus.WAIT_COMMENT.getValue());
 			comment.setAddTime(now);
 			comment.setUpdTime(now);
-			orderCommentMapper.insert(comment);
+			orderCommentMapper.insertSelective(comment);
 		}
 	}
 

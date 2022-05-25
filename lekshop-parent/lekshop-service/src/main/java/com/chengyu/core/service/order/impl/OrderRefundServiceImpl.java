@@ -3,8 +3,10 @@ package com.chengyu.core.service.order.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import com.chengyu.core.domain.enums.MemberNewsEnums;
 import com.chengyu.core.domain.enums.MemberRemindEnums;
 import com.chengyu.core.domain.enums.OrderEnums;
+import com.chengyu.core.domain.form.MemberNewsForm;
 import com.chengyu.core.domain.form.OrderRefundForm;
 import com.chengyu.core.domain.form.OrderRefundSearchForm;
 import com.chengyu.core.domain.result.OrderRefundResult;
@@ -15,12 +17,15 @@ import com.chengyu.core.mapper.OmsOrderRefundLogMapper;
 import com.chengyu.core.mapper.OmsOrderRefundMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigOrderService;
+import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberRemindService;
+import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderRefundService;
 import com.chengyu.core.service.schedule.job.RefundAutoAgreeJob;
 import com.chengyu.core.service.schedule.job.RefundAutoCancelJob;
 import com.chengyu.core.service.schedule.job.RefundAutoConfirmJob;
 import com.chengyu.core.service.shop.ShopConfigService;
+import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.NumberUtils;
 import com.chengyu.core.utils.StringUtils;
@@ -56,6 +61,12 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	private TaskTriggerService taskTriggerService;
 	@Autowired
 	private MemberRemindService memberRemindService;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private MemberNewsService memberNewsService;
+	@Autowired
+	private ShopService shopService;
 
 	@Override
 	public List<OmsOrderRefund> getRefundList(OrderRefundSearchForm form, Integer page, Integer pageSize) {
@@ -281,6 +292,15 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
+
+		//拒绝售后消息
+		UmsMember member = memberService.getMemberById(refund.getMemberId());
+		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_REFUSE_REFUND);
+		newsForm.setShop(shopService.getShopById(refund.getShopId()));
+		newsForm.initTurnParams("refundId", refund.getId().toString());
+		newsForm.replace("#goodsName#", refund.getGoodsName());
+		newsForm.setImg(refund.getGoodsMainImg());
+		memberNewsService.addMemberNews(member, newsForm);
 	}
 
 	@Override
@@ -373,6 +393,15 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 			taskTriggerService.addTrigger(RefundAutoCancelJob.class, updateRefund.getBuyerSendGoodsTime(), refund.getRefundNo());
 		}
 		orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
+
+		//同意售后消息
+		UmsMember member = memberService.getMemberById(refund.getMemberId());
+		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_AGREE_REFUND);
+		newsForm.setShop(shopService.getShopById(refund.getShopId()));
+		newsForm.initTurnParams("refundId", refund.getId().toString());
+		newsForm.replace("#goodsName#", refund.getGoodsName());
+		newsForm.setImg(refund.getGoodsMainImg());
+		memberNewsService.addMemberNews(member, newsForm);
 	}
 
 	@Override

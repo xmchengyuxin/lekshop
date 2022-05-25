@@ -126,4 +126,21 @@ public class OrderEnums {
 		}
 	}
 
+	/**
+	 * 拼团状态枚举
+	 */
+	@Getter
+	public enum GroupStatus{
+		/**进行中 2成功 3失败**/
+		ING(1),
+		SUS(2),
+		FAIL(3);
+
+		private final int value;
+
+		GroupStatus(int value){
+			this.value = value;
+		}
+	}
+
 }

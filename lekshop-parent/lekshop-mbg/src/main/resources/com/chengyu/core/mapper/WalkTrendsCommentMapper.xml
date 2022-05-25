@@ -15,6 +15,7 @@
     <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="like_status" jdbcType="INTEGER" property="likeStatus" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="add_by" jdbcType="VARCHAR" property="addBy" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
@@ -83,8 +84,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, view_member_id, view_member_name, view_member_head_img, walk_member_id, walk_member_name, 
-    walk_member_head_img, trends_id, status, tid, pid, type, like_num, add_time, add_by, 
-    upd_time, upd_by
+    walk_member_head_img, trends_id, status, tid, pid, type, like_num, like_status, add_time, 
+    add_by, upd_time, upd_by
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -145,14 +146,16 @@
       walk_member_id, walk_member_name, walk_member_head_img, 
       trends_id, status, tid, 
       pid, type, like_num, 
-      add_time, add_by, upd_time, 
-      upd_by, content)
+      like_status, add_time, add_by, 
+      upd_time, upd_by, content
+      )
     values (#{viewMemberId,jdbcType=INTEGER}, #{viewMemberName,jdbcType=VARCHAR}, #{viewMemberHeadImg,jdbcType=VARCHAR}, 
       #{walkMemberId,jdbcType=INTEGER}, #{walkMemberName,jdbcType=VARCHAR}, #{walkMemberHeadImg,jdbcType=VARCHAR}, 
       #{trendsId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, 
       #{pid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{likeNum,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
-      #{updBy,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+      #{likeStatus,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.WalkTrendsComment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -195,6 +198,9 @@
       </if>
       <if test="likeNum != null">
         like_num,
+      </if>
+      <if test="likeStatus != null">
+        like_status,
       </if>
       <if test="addTime != null">
         add_time,
@@ -248,6 +254,9 @@
       </if>
       <if test="likeNum != null">
         #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="likeStatus != null">
+        #{likeStatus,jdbcType=INTEGER},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
@@ -314,6 +323,9 @@
       <if test="record.likeNum != null">
         like_num = #{record.likeNum,jdbcType=INTEGER},
       </if>
+      <if test="record.likeStatus != null">
+        like_status = #{record.likeStatus,jdbcType=INTEGER},
+      </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
       </if>
@@ -349,6 +361,7 @@
       pid = #{record.pid,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       like_num = #{record.likeNum,jdbcType=INTEGER},
+      like_status = #{record.likeStatus,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
@@ -373,6 +386,7 @@
       pid = #{record.pid,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       like_num = #{record.likeNum,jdbcType=INTEGER},
+      like_status = #{record.likeStatus,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
@@ -420,6 +434,9 @@
       <if test="likeNum != null">
         like_num = #{likeNum,jdbcType=INTEGER},
       </if>
+      <if test="likeStatus != null">
+        like_status = #{likeStatus,jdbcType=INTEGER},
+      </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
@@ -452,6 +469,7 @@
       pid = #{pid,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       like_num = #{likeNum,jdbcType=INTEGER},
+      like_status = #{likeStatus,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},
@@ -473,6 +491,7 @@
       pid = #{pid,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       like_num = #{likeNum,jdbcType=INTEGER},
+      like_status = #{likeStatus,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},

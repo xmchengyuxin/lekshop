@@ -165,7 +165,7 @@ public interface WalkTrendsService {
 	 * @param  pageSize
 	 * @return List<WalkTrendsComment>
 	 */
-	CommonPage<WalkTrendsCommentResult> getTrendsCommentList(Integer trendsId, Integer viewWalkMemberId, Integer walkMemberId, Integer page, Integer pageSize);
+	CommonPage<WalkTrendsCommentResult> getTrendsCommentList(Integer trendsId, WalkMember currentMember, Integer viewWalkMemberId, Integer walkMemberId, Integer page, Integer pageSize);
 	
 	/**
 	 * 获取动态详情

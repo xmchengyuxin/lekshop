@@ -11,7 +11,7 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
-       <!-- <notice /> -->
+      <message />
     </div>
   </div>
 
@@ -19,7 +19,7 @@
 
 <script>
 import RightPanel from '@/components/RightPanel'
-import { Navbar, Sidebar, AppMain, TagsView, Settings, Notice } from './components'
+import { Navbar, Sidebar, AppMain, TagsView, Settings, Message } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
@@ -32,7 +32,7 @@ export default {
     AppMain,
     TagsView,
     Settings,
-    Notice
+    Message
   },
   mixins: [ResizeMixin],
   computed: {
@@ -56,6 +56,9 @@ export default {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
+  },
+  created(){
+    this.socket.creatSocket();
   }
 }
 </script>

@@ -17,6 +17,7 @@ import i18n from './lang' // Internationalization
 import './icons' // icon
 import './permission' // permission control
 import './utils/errorLog' // error log
+import socket from './socket'
 
 import * as filters from './filters' // global filters
 
@@ -24,7 +25,7 @@ import * as filters from './filters' // global filters
 
 // mock api in github pages site build
 // if (process.env.NODE_ENV === 'production') { mockXHR() }
-
+Vue.prototype.socket = socket;
 Vue.use(Element, {
   size: Cookies.get('size') || 'small', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)

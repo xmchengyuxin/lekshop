@@ -17,7 +17,8 @@ public class MemberRemindEnums {
 		WITHDRAW_SUS("提现到账", 1),
 		NEW_ORDER("新订单待发货", 2),
 		WAIT_VERIFY_REFUND("等待审核售后申请", 3),
-		WAIT_CONFIRM_RECEIVE("买家已退货,等待确认收货", 4);
+		WAIT_CONFIRM_RECEIVE("买家已退货,等待确认收货", 4),
+		CHAT("聊天信息", 5);
 
 		private final String title;
 		private final Integer type;

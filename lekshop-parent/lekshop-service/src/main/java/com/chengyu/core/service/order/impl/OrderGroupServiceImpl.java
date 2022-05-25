@@ -2,6 +2,9 @@ package com.chengyu.core.service.order.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.MemberNewsEnums;
+import com.chengyu.core.domain.enums.OrderEnums;
+import com.chengyu.core.domain.form.MemberNewsForm;
 import com.chengyu.core.domain.form.OrderGroupSearchForm;
 import com.chengyu.core.domain.result.OrderGroupResult;
 import com.chengyu.core.exception.ServiceException;
@@ -13,6 +16,9 @@ import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.order.OrderService;
+import com.chengyu.core.service.schedule.job.OrderGroupAutoCancelJob;
+import com.chengyu.core.service.shop.ShopService;
+import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +42,15 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	@Autowired
 	private MemberService memberService;
 	@Autowired
-	private MemberNewsService newsService;
+	private MemberNewsService memberNewsService;
 //	@Autowired
 //	private PayService payService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private ShopService shopService;
+	@Autowired
+	private TaskTriggerService taskTriggerService;
 	
 	@Override
 	public List<OmsOrderGroup> getOrderGroupList(OrderGroupSearchForm form, Integer page, Integer pageSize) {
@@ -129,7 +139,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		assembleMemberMapper.insertSelective(assembleMember);
 		
 		//发团成功后添加拼团到期定时器
-//		timerJobService.addTimerJob(orderGroup.getPintuanNo(), TimerJobService.TIMER_TYPE_PINTUAN_EXPIRED, orderGroup.getEndTime());
+		taskTriggerService.addTrigger(OrderGroupAutoCancelJob.class, orderGroup.getEndTime(), orderGroup.getId().toString());
 	}
 
 	@Override
@@ -181,13 +191,19 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		if(orderGroup.getStatus() == 2){
 			//拼团成功通知所有拼团人员
 			List<OmsOrderGroupMember> assembleMemberList = this.getGroupMemberList(orderGroupId, 999);
+			MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_GROUP_SUS);
+			UmsShop shop = new UmsShop();
+			shop.setId(orderGroup.getShopId());
+			shop.setName(orderGroup.getShopName());
+			newsForm.setShop(shop);
+			newsForm.initTurnParams("orderId", orderGroup.getOrderId().toString());
+			newsForm.replace("#goodsName#", orderGroup.getGoodsName());
+			newsForm.setImg(orderGroup.getGoodsMainImg());
 			for(OmsOrderGroupMember oam : assembleMemberList){
-				UmsMember m = memberService.getMemberById(oam.getMemberId());
-//				newsService.addMemberNews(m, "拼团成功通知", "您的拼团已成功,等待卖家发货", orderGroup.getGoodsMainImg());
+				//拼团成功通知
+				UmsMember member = memberService.getMemberById(oam.getMemberId());
+				memberNewsService.addMemberNews(member, newsForm);
 			}
-		}else{
-			UmsMember member = memberService.getMemberById(orderDetail.getMemberId());
-//			newsService.addMemberNews(member, "拼团通知", "您已参团成功,若您的拼团在"+ DateUtil.dateTimeFormat(orderGroup.getEndTime())+"时间内未拼团成功,则拼团失败", orderGroup.getMainFile());
 		}
 	}
 
@@ -224,18 +240,32 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	public void doRefundForFailPintuan(OmsOrderGroup assemble) {
 		OmsOrderGroup updateGroup = new OmsOrderGroup();
 		updateGroup.setId(assemble.getId());
-		updateGroup.setStatus(3);
+		updateGroup.setStatus(OrderEnums.GroupStatus.FAIL.getValue());
 		updateGroup.setUpdTime(new Date());
 		assembleMapper.updateByPrimaryKeySelective(updateGroup);
 		
 		List<OmsOrderGroupMember> list = this.getGroupMemberList(assemble.getId(), 9999);
+
+		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_GROUP_SUS);
+		OmsOrderGroup orderGroup = this.getOrderGroupById(assemble.getId());
+		UmsShop shop = new UmsShop();
+		shop.setId(orderGroup.getShopId());
+		shop.setName(orderGroup.getShopName());
+		newsForm.setShop(shop);
+		newsForm.initTurnParams("orderId", orderGroup.getOrderId().toString());
+		newsForm.replace("#goodsName#", orderGroup.getGoodsName());
+		newsForm.setImg(orderGroup.getGoodsMainImg());
 		for(OmsOrderGroupMember assembleMember : list){
 			OmsOrderGroupMember updateGroupMember = new OmsOrderGroupMember();
 			updateGroupMember.setId(assembleMember.getId());
 			updateGroupMember.setPayStatus(3);
 			updateGroupMember.setUpdTime(new Date());
 			assembleMemberMapper.updateByPrimaryKeySelective(updateGroupMember);
-			
+
+			//拼团失败消息
+			UmsMember member = memberService.getMemberById(assembleMember.getMemberId());
+			memberNewsService.addMemberNews(member, newsForm);
+
 //			OmsOrder order = orderService.getOrderByOrderNo(assembleMember.getOrderNo());
 //			payService.cancelAndRefundOrder(order.getId());
 		}
@@ -274,6 +304,14 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		result.setOrderGroup(CollectionUtil.isNotEmpty(list) ? list.get(0) : null);
 		result.setGroupMemberList(this.getGroupMemberByOrderNo(orderNo));
 		return result;
+	}
+
+	@Override
+	public void autoCancel(Integer orderGroupId) {
+		OmsOrderGroup orderGroup = this.getOrderGroupById(orderGroupId);
+		if(orderGroup != null && orderGroup.getStatus() != OrderEnums.GroupStatus.SUS.getValue()){
+			this.doRefundForFailPintuan(orderGroup);
+		}
 	}
 
 

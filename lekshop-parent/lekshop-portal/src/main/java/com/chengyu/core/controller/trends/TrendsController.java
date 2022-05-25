@@ -10,6 +10,7 @@ import com.chengyu.core.domain.result.WalkTrendsCommentResult;
 import com.chengyu.core.domain.result.WalkTrendsResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
+import com.chengyu.core.model.WalkMember;
 import com.chengyu.core.model.WalkTrendsComment;
 import com.chengyu.core.service.walk.WalkTrendsService;
 import io.swagger.annotations.Api;
@@ -41,13 +42,15 @@ public class TrendsController extends UserBaseController {
 	@ApiOperation(value = "逛逛精选页")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "trendsId", value = "首条动态ID"),
+		@ApiImplicitParam(name = "walkMemberId", value = "创作者ID"),
 		@ApiImplicitParam(name = "trendsType", value = "1文案类>>2视频类")
 	})
 	@ResponseBody
 	@RequestMapping(value="/common/trends/getSelectList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<WalkTrendsResult>> getSelectList(Integer trendsId, Integer trendsType, Integer page, Integer pageSize) {
+	public CommonResult<CommonPage<WalkTrendsResult>> getSelectList(Integer trendsId, Integer walkMemberId, Integer trendsType, Integer page, Integer pageSize) {
 		TrendsForm form = new TrendsForm();
 		form.setFirstTrendsId(trendsId);
+		form.setWalkMemberId(walkMemberId);
 		form.setStatus(CommonConstant.SUS_INT);
 		if(trendsType == 1){
 			form.setTypeList(CollectionUtil.newArrayList(TrendsEnums.TrendsType.GOODS.getValue(), TrendsEnums.TrendsType.DISCOVERY.getValue(), TrendsEnums.TrendsType.BUYERSHOW.getValue()));
@@ -89,7 +92,7 @@ public class TrendsController extends UserBaseController {
 	@ResponseBody
 	@RequestMapping(value="/common/trends/getCommentList", method=RequestMethod.GET)
 	public CommonResult<CommonPage<WalkTrendsCommentResult>> search(Integer trendsId, Integer page, Integer pageSize) {
-		CommonPage<WalkTrendsCommentResult> list = walkTrendsService.getTrendsCommentList(trendsId, null, null, page, pageSize);
+		CommonPage<WalkTrendsCommentResult> list = walkTrendsService.getTrendsCommentList(trendsId, getCurrentWalkMember(), null, null, page, pageSize);
 		return CommonResult.success(list);
 	}
 

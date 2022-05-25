@@ -151,9 +151,11 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		List<WalkTrendsResult> trendsList = new ArrayList<>();
 		if(page == 1 && form.getFirstTrendsId() != null){
 			WalkTrendsResult walkTrendsResult = this.getTrendsDetail(form.getFirstTrendsId());
-			walkTrendsResult.setCollectTrends(this.isCollection(form.getWalkMember(), form.getFirstTrendsId()));
-			walkTrendsResult.setCollectWalkMember(walkMemberCollectService.isCollectWalkMember(form.getWalkMember(), walkTrendsResult.getWalkTrends().getWalkMemberId()));
-			trendsList.add(walkTrendsResult);
+			if(walkTrendsResult != null && walkTrendsResult.getWalkTrends() != null){
+				walkTrendsResult.setCollectTrends(this.isCollection(form.getWalkMember(), form.getFirstTrendsId()));
+				walkTrendsResult.setCollectWalkMember(walkMemberCollectService.isCollectWalkMember(form.getWalkMember(), walkTrendsResult.getWalkTrends().getWalkMemberId()));
+				trendsList.add(walkTrendsResult);
+			}
 		}
 		for(WalkTrends walkTrends : list){
 			WalkTrendsResult walkTrendsResult = new WalkTrendsResult();
@@ -307,6 +309,9 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 	@Override
 	public boolean isLikeComment(WalkMember viewMember, Integer commentId) {
+		if(viewMember == null){
+			return false;
+		}
 		WalkTrendsCommentLikeExample example = new WalkTrendsCommentLikeExample();
 		example.createCriteria().andViewMemberIdEqualTo(viewMember.getId()).andCommentIdEqualTo(commentId);
 		long num = trendsCommentLikeMapper.countByExample(example);
@@ -341,7 +346,7 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 	}
 
 	@Override
-	public CommonPage<WalkTrendsCommentResult> getTrendsCommentList(Integer trendsId, Integer viewWalkMemberId, Integer walkMemberId, Integer page, Integer pageSize) {
+	public CommonPage<WalkTrendsCommentResult> getTrendsCommentList(Integer trendsId, WalkMember currentMember, Integer viewWalkMemberId, Integer walkMemberId, Integer page, Integer pageSize) {
 		PageHelper.startPage(page, pageSize);
 
 		WalkTrendsCommentExample example = new WalkTrendsCommentExample();
@@ -361,13 +366,20 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 
 		List<WalkTrendsCommentResult> commentList = new ArrayList<>();
 		for(WalkTrendsComment walkTrendsComment : list){
+			walkTrendsComment.setLikeStatus(this.isLikeComment(currentMember, walkTrendsComment.getId()) ? 1 : 0);
 			WalkTrendsCommentResult walkTrendsCommentResult = new WalkTrendsCommentResult();
 			walkTrendsCommentResult.setWalkTrendsComment(walkTrendsComment);
 
 			example = new WalkTrendsCommentExample();
 			example.setOrderByClause("add_time desc");
 			example.createCriteria().andTidEqualTo(walkTrendsComment.getId()).andTypeEqualTo(2);
-			walkTrendsCommentResult.setChilidCommentList(trendsCommentMapper.selectByExampleWithBLOBs(example));
+			List<WalkTrendsComment> child = trendsCommentMapper.selectByExampleWithBLOBs(example);
+			if(currentMember != null && CollectionUtil.isNotEmpty(child)){
+				for(WalkTrendsComment childComment : child){
+					childComment.setLikeStatus(this.isLikeComment(currentMember, childComment.getId()) ? 1 : 0);
+				}
+			}
+			walkTrendsCommentResult.setChilidCommentList(child);
 			commentList.add(walkTrendsCommentResult);
 		}
 

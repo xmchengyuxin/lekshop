@@ -1,10 +1,12 @@
 package com.chengyu.core.controller.trends;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.TypeReference;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.TrendsEnums;
 import com.chengyu.core.domain.form.TrendsForm;
 import com.chengyu.core.domain.result.WalkTrendsResult;
 import com.chengyu.core.entity.CommonPage;
@@ -44,7 +46,10 @@ public class MyTrendsController extends UserBaseController {
 	public CommonResult<CommonPage<WalkTrendsResult>> getList(TrendsForm form,
 															  @RequestParam(value = "page", defaultValue = "1") Integer page,
 															  @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize ) throws ServiceException {
-		form.setWalkMemberId(getCurrentWalkMember().getId());
+		if(form.getWalkMemberId() == null){
+			form.setWalkMemberId(getCurrentWalkMember().getId());
+		}
+		form.setTypeList(CollectionUtil.newArrayList(CollectionUtil.newArrayList(TrendsEnums.TrendsType.DISCOVERY.getValue(), TrendsEnums.TrendsType.VIDEO.getValue())));
 		CommonPage<WalkTrendsResult> list = walkTrendsService.getTrendsList(form, page, pageSize);
 		return CommonResult.success(list);
 	}

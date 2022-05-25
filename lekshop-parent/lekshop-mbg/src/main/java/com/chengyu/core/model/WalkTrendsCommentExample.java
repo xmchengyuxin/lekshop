@@ -925,6 +925,66 @@ public class WalkTrendsCommentExample {
             return (Criteria) this;
         }
 
+        public Criteria andLikeStatusIsNull() {
+            addCriterion("like_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusIsNotNull() {
+            addCriterion("like_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusEqualTo(Integer value) {
+            addCriterion("like_status =", value, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusNotEqualTo(Integer value) {
+            addCriterion("like_status <>", value, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusGreaterThan(Integer value) {
+            addCriterion("like_status >", value, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("like_status >=", value, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusLessThan(Integer value) {
+            addCriterion("like_status <", value, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("like_status <=", value, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusIn(List<Integer> values) {
+            addCriterion("like_status in", values, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusNotIn(List<Integer> values) {
+            addCriterion("like_status not in", values, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusBetween(Integer value1, Integer value2) {
+            addCriterion("like_status between", value1, value2, "likeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("like_status not between", value1, value2, "likeStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andAddTimeIsNull() {
             addCriterion("add_time is null");
             return (Criteria) this;

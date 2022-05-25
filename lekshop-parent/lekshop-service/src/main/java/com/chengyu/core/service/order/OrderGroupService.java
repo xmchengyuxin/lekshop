@@ -139,4 +139,12 @@ public interface OrderGroupService {
 	 * @throws ServiceException 业务异常
 	 */
 	OrderGroupResult getOrderGroupByOrderNo(String orderNo);
+
+	/**
+	 * 拼团到期失败
+	 * @author LeGreen
+	 * @date   2022/5/25
+	 * @param  orderGroupId
+	 */
+    void autoCancel(Integer orderGroupId);
 }

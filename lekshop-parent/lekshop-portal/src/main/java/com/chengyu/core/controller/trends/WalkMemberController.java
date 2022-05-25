@@ -6,7 +6,6 @@ import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
-import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.WalkMember;
 import com.chengyu.core.model.WalkMemberCollection;
 import com.chengyu.core.service.walk.WalkMemberCollectService;
@@ -44,10 +43,15 @@ public class WalkMemberController extends UserBaseController {
 	@RequestMapping(value="/common/walkMember/get", method=RequestMethod.GET)
 	public CommonResult<Map<String,Object>> get(Integer walkMemberId) {
 		Map<String,Object> result = new HashMap<>();
-		WalkMember walkMember = walkMemberService.getWalkMemberById(walkMemberId);
+		WalkMember walkMember;
+		if(walkMemberId == null){
+			walkMember = getCurrentWalkMember();
+		}else{
+			walkMember = walkMemberService.getWalkMemberById(walkMemberId);
+			//是否已关注他
+			result.put("isCollect", walkMemberCollectService.isCollectWalkMember(getCurrentWalkMember(), walkMemberId));
+		}
 		result.put("walkMember", walkMember);
-		//是否已关注他
-		result.put("isCollect", walkMemberCollectService.isCollectWalkMember(getCurrentWalkMember(), walkMemberId));
 		return CommonResult.success(result);
 	}
 
@@ -105,10 +109,10 @@ public class WalkMemberController extends UserBaseController {
 		}
 
 		//更新头像
-		UmsMember updateMember = new UmsMember();
-		updateMember.setId(getCurrentMemberId());
+		WalkMember updateMember = new WalkMember();
+		updateMember.setId(getCurrentWalkMember().getId());
 		updateMember.setHeadImg(imgPath);
-		memberService.updateMember(updateMember);
+		walkMemberService.updateWalkMember(updateMember);
 		return CommonResult.success(imgPath);
 	}
 

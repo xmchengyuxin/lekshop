@@ -479,13 +479,34 @@ public class OrderServiceImpl implements OrderService {
 				orderFreightService.initOrderFreight(updatedOrder);
 				//添加自动确认收货
 				taskTriggerService.addTrigger(OrderAutoCancelJob.class, updatedOrder.getFinishExpiredTime(), order.getOrderNo());
+
 				//发货通知
 				UmsMember member = memberService.getMemberById(order.getMemberId());
-//				MemberNewsForm newsForm = new MemberNewsForm(shop, MemberNewsEnums.MemberNewsTypes.NEWS_DELIVERY_ORDER, "{orderId:}", "#goodsName#=");
-				memberNewsService.addMemberNews(member, shop, MemberNewsEnums.MemberNewsTypes.NEWS_DELIVERY_ORDER, "您的订单已发货", null, "订单");
+				MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_DELIVERY_ORDER);
+				newsForm.setShop(shop);
+				newsForm.initTurnParams("orderId", order.getId().toString());
+				OmsOrderDetail firstGoods = this.getGoodsByOrderId(order.getId());
+				newsForm.replace("#goodsName#", firstGoods.getGoodsName());
+				newsForm.setImg(firstGoods.getGoodsMainImg());
+				memberNewsService.addMemberNews(member, newsForm);
 			}
 		}
 		return "批量发货成功"+susNum+"条, 失败"+errorNum+"条";
+	}
+
+	/**
+	 * 查询第一条商品
+	 * @author LeGreen
+	 * @date   2022/5/25
+	 * @param  orderId
+	 * @return String
+	 */
+	private OmsOrderDetail getGoodsByOrderId(Integer orderId){
+		OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
+		detailExample.setOrderByClause("add_time desc");
+		detailExample.createCriteria().andOrderIdEqualTo(orderId);
+		List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(detailExample);
+		return detailList.get(0);
 	}
 
 	@Override
@@ -525,6 +546,25 @@ public class OrderServiceImpl implements OrderService {
 		//添加自动评价定时器
 		orderCommentService.initComment(detailList);
 		taskTriggerService.addTrigger(OrderAutoCancelJob.class, updateOrder.getCommentExpiredTime(), order.getOrderNo());
+
+		//订单评价提醒
+		UmsMember member = memberService.getMemberById(order.getMemberId());
+		UmsShop shop = shopService.getShopById(order.getShopId());
+		OmsOrderDetail firstGoods = detailList.get(0);
+		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_COMMENT_REMIND);
+		newsForm.setShop(shop);
+		newsForm.initTurnParams("orderId", order.getId().toString());
+		newsForm.replace("#goodsName#", firstGoods.getGoodsName());
+		newsForm.setImg(firstGoods.getGoodsMainImg());
+		memberNewsService.addMemberNews(member, newsForm);
+
+		//订单完成消息
+		newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_FINISH_ORDER);
+		newsForm.setShop(shopService.getShopById(order.getShopId()));
+		newsForm.initTurnParams("orderId", order.getId().toString());
+		newsForm.replace("#goodsName#", firstGoods.getGoodsName());
+		newsForm.setImg(firstGoods.getGoodsMainImg());
+		memberNewsService.addMemberNews(member, newsForm);
 	}
 
 	@Override

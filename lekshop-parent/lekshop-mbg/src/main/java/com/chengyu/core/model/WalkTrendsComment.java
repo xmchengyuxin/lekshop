@@ -44,6 +44,9 @@ public class WalkTrendsComment implements Serializable {
     @ApiModelProperty(value = "点赞数量")
     private Integer likeNum;
 
+    @ApiModelProperty(value = "冗余字段")
+    private Integer likeStatus;
+
     @ApiModelProperty(value = "修改时间")
     private Date addTime;
 
@@ -165,6 +168,14 @@ public class WalkTrendsComment implements Serializable {
         this.likeNum = likeNum;
     }
 
+    public Integer getLikeStatus() {
+        return likeStatus;
+    }
+
+    public void setLikeStatus(Integer likeStatus) {
+        this.likeStatus = likeStatus;
+    }
+
     public Date getAddTime() {
         return addTime;
     }
@@ -224,6 +235,7 @@ public class WalkTrendsComment implements Serializable {
         sb.append(", pid=").append(pid);
         sb.append(", type=").append(type);
         sb.append(", likeNum=").append(likeNum);
+        sb.append(", likeStatus=").append(likeStatus);
         sb.append(", addTime=").append(addTime);
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);
