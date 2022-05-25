@@ -6,37 +6,19 @@
       <div class="water3"></div>
       <img src="./chat_mini.png">
     </div>
-    <el-dialog title="" :visible.sync="imDialog" width="900px" height="40%">
-      <lemon-imui :user='this.user' ref='IMUI'></lemon-imui>
-      <!-- <iframe src="http://im.chyuxin.cn/service/login/index.html" scrolling="auto" frameborder="0" security="restricted"
-        sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts" id="iframe">
-        您当前的浏览器不支持页面上的功能，请升级您当前的浏览器版本或使用谷歌浏览器访问当前页面
-      </iframe> -->
-      <el-alert
-          title="说明：本系统集成了第三方客服系统"
-          type="error"
-          description=""
-          :closable="false"
-          >
-          <p class="tips">
-          第三方客服系统适用于总后台管理员和商家使用
-          </p>
-         <br/>
-         <p class="tips">
-          平台总管理员可以在第三方客服系统直接创建多客服坐席
-         </p>
-         <br/>
-          <p class="tips">
-          测试账号: lekshop
-          </p>
-          <br/>
-          <p class="tips">
-          测试密码: 123456
-          </p>
-        </el-alert>
-        <br>
-        <el-button @click="getContect()" type="primary" size="mini" >立即登录</el-button>
-        <a href="http://im.chyuxin.cn/service" target="_blank"><el-button type="primary" size="mini" >立即登录</el-button></a>
+
+    <el-dialog v-el-drag-dialog title="" :visible.sync="imDialog" :modal="false" :close-on-click-modal="false" width="850px" height="640px">
+      <lemon-imui
+      ref='IMUI'
+      :user='this.user'
+      :hideMenu="true"
+      :hideMessageName="true"
+      :hideMessageTime="true"
+      :contact-contextmenu="contactContextmenu">
+          <template #sidebar-message-fixedtop>
+            <span></span>
+          </template>
+      </lemon-imui>
     </el-dialog>
   </div>
 
@@ -44,14 +26,31 @@
 </template>
 
 <script>
+  import elDragDialog from '@/directive/el-drag-dialog' // base on element-ui
+  import EmojiData from "./database/emoji";
 
   export default {
+    directives: { elDragDialog },
     components: {
     },
     data() {
       return {
         user:{id:1,displayName:'June',avatar:''},
         imDialog: false,
+        contactContextmenu: [
+          {
+            text: "删除聊天",
+            click: (e, instance, hide) => {
+              const { IMUI, contact } = instance;
+              IMUI.updateContact({
+                id: contact.id,
+                lastContent: null,
+              });
+              if (IMUI.currentContactId == contact.id) IMUI.changeContact(null);
+              hide();
+            },
+          },
+        ],
       }
     },
     methods: {
@@ -64,14 +63,14 @@
       getContect(){
         const IMUI= this.$refs.IMUI;
           //初始化表情包。
-          // IMUI.initEmoji(...);
+          IMUI.initEmoji(EmojiData);
           //从后端请求联系人数据，包装成下面的样子
           const contacts = [{
             id: 2,
             displayName: '丽安娜',
             avatar:'',
             index: 'L',
-            unread: 0,
+            unread: 9,
             //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
             //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
             lastContent: IMUI.lastContentRender({type:'text',content:'你在干嘛呢？'}),
@@ -88,6 +87,24 @@
 </script>
 
 <style lang="scss" scoped>
+  ::v-deep .el-dialog__header  {
+    padding: 25px;
+  }
+  ::v-deep .el-dialog__headerbtn {
+    top: 14px;
+    right: 15px;
+  }
+  ::v-deep .el-dialog {
+    background:#1d232a;
+    box-shadow: unset;
+  }
+  ::v-deep .el-dialog__body {
+    color:#000;
+    padding: 0;
+  }
+  ::v-deep .lemon-wrapper *{
+    box-sizing: content-box;
+  }
   .wrap-bottom-men {
     position: fixed;
     bottom: 0;
