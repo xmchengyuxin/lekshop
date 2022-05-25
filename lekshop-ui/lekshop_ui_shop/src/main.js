@@ -18,6 +18,9 @@ import './icons' // icon
 import './permission' // permission control
 import './utils/errorLog' // error log
 import socket from './socket'
+import LemonIMUI from 'lemon-imui';
+import 'lemon-imui/dist/index.css';
+Vue.use(LemonIMUI);
 
 import * as filters from './filters' // global filters
 

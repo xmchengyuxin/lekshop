@@ -58,6 +58,7 @@
     "jsonlint": "1.6.3",
     "jszip": "3.2.1",
     "jwchat": "^1.0.7",
+    "lemon-imui": "^1.7.4",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",

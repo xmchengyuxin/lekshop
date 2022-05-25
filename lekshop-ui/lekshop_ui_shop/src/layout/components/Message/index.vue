@@ -6,7 +6,8 @@
       <div class="water3"></div>
       <img src="./chat_mini.png">
     </div>
-    <el-dialog title="" :visible.sync="imDialog" width="20%" height="40%">
+    <el-dialog title="" :visible.sync="imDialog" width="900px" height="40%">
+      <lemon-imui :user='this.user' ref='IMUI'></lemon-imui>
       <!-- <iframe src="http://im.chyuxin.cn/service/login/index.html" scrolling="auto" frameborder="0" security="restricted"
         sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts" id="iframe">
         您当前的浏览器不支持页面上的功能，请升级您当前的浏览器版本或使用谷歌浏览器访问当前页面
@@ -34,6 +35,7 @@
           </p>
         </el-alert>
         <br>
+        <el-button @click="getContect()" type="primary" size="mini" >立即登录</el-button>
         <a href="http://im.chyuxin.cn/service" target="_blank"><el-button type="primary" size="mini" >立即登录</el-button></a>
     </el-dialog>
   </div>
@@ -48,14 +50,40 @@
     },
     data() {
       return {
+        user:{id:1,displayName:'June',avatar:''},
         imDialog: false,
       }
     },
     methods: {
       handleIm() {
-      	this.imDialog = true
+      	this.imDialog = true;
+        this.$nextTick(()=>{
+          this.getContect();
+        })
+      },
+      getContect(){
+        const IMUI= this.$refs.IMUI;
+          //初始化表情包。
+          // IMUI.initEmoji(...);
+          //从后端请求联系人数据，包装成下面的样子
+          const contacts = [{
+            id: 2,
+            displayName: '丽安娜',
+            avatar:'',
+            index: 'L',
+            unread: 0,
+            //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
+            //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
+            lastContent: IMUI.lastContentRender({type:'text',content:'你在干嘛呢？'}),
+            //最近一条消息的发送时间
+            lastSendTime: 1566047865417,
+          }];
+          IMUI.initContacts(contacts);
       },
     },
+    created() {
+
+    }
   }
 </script>
 
