@@ -1,7 +1,7 @@
 package com.chengyu.core.controller.member;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.crypto.SecureUtil;
+import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.BankForm;
@@ -15,7 +15,6 @@ import com.chengyu.core.model.UmsMemberBank;
 import com.chengyu.core.model.UmsMemberWithdraw;
 import com.chengyu.core.service.member.MemberBankService;
 import com.chengyu.core.service.member.MemberWithdrawService;
-import com.chengyu.core.service.system.VerifyCodeService;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -42,8 +41,6 @@ public class MemberWithdrawController extends UserBaseController {
 	
 	@Autowired
 	private MemberWithdrawService withdrawService;
-	@Autowired
-	private VerifyCodeService verifyCodeService;
 	@Autowired
 	private MemberBankService memberBankService;
 
@@ -106,31 +103,21 @@ public class MemberWithdrawController extends UserBaseController {
 		return CommonResult.success(CollectionUtil.isEmpty(list) ? null : list.get(0));
 	}
 
+	@OperationLog
 	@ApiOperation(value = "申请提现")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "method", value = "出款方式>>1账户资金>>2佣金资金", required=true),
-		@ApiImplicitParam(name = "type", value = "提现方式>>1银行>>2支付宝>>3微信", required=true),
-		@ApiImplicitParam(name = "amount", value = "提现金额", required=true),
-		@ApiImplicitParam(name = "payPassword", value = "交易密码", required=true)
+			@ApiImplicitParam(name = "method", value = "出款方式>>1账户资金>>2佣金资金", required=true),
+			@ApiImplicitParam(name = "type", value = "提现方式>>1银行>>2支付宝>>3微信", required=true),
+			@ApiImplicitParam(name = "amount", value = "提现金额", required=true),
 	})
 	@ResponseBody
 	@RequestMapping(value="/withdraw/apply", method=RequestMethod.POST)
-    public CommonResult<String> apply(BigDecimal amount, Integer type, Integer method, String payPassword, BankForm bankForm, String code) throws Exception{
+	public CommonResult<String> apply(BigDecimal amount, Integer type, Integer method, BankForm bankForm) throws Exception{
 		UmsMember member = memberService.getMemberById(getCurrentMemberId());
 		super.validateRepeat("do-withdraw-time-between-" + member.getId(), 5000L, "请勿重复提现,5秒后再试!");
 
-		if(StringUtils.isNotBlank(code)){
-			//校验短信验证码
-			verifyCodeService.validateCode(member.getPhone(), code);
-		}
-
-		//校验支付密码
-		if(!SecureUtil.md5(payPassword).equals(member.getPayPassword())){
-			return CommonResult.failed("二级密码不正确");
-		}
-
 		withdrawService.withdraw(member, type, method, amount, bankForm);
 		return CommonResult.success(null);
-    }
+	}
 	
 }

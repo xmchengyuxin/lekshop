@@ -127,6 +127,20 @@ public class GoodsController extends UserBaseController {
 		return CommonResult.success(result);
 	}
 
+	@ApiOperation(value = "商品拼团列表")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "goodsId", value = "商品ID"),
+	})
+	@ResponseBody
+	@RequestMapping(value="/goods/getGroupList", method=RequestMethod.GET)
+	public CommonResult<CommonPage<OmsOrderGroup>> getGroupList(Integer goodsId, Integer page, Integer pageSize) {
+		OrderGroupSearchForm form = new OrderGroupSearchForm();
+		form.setGoodsId(goodsId);
+		form.setStatus(1);
+		List<OmsOrderGroup> groupList = orderGroupService.getOrderGroupList(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(groupList));
+	}
+
 	@ApiOperation(value = "商品评论列表")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "goodsId", value = "商品ID"),

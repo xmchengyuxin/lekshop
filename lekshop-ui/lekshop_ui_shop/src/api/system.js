@@ -20,3 +20,11 @@ export function getDeliveryTypeSelector() {
     method: 'get'
   })
 }
+
+export function upload(data) {
+  return request({
+    url: '/common/upload',
+    method: 'post',
+    data
+  })
+}

@@ -625,6 +625,76 @@ public class ImChatSessionExample {
             return (Criteria) this;
         }
 
+        public Criteria andMsgTypeIsNull() {
+            addCriterion("msg_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeIsNotNull() {
+            addCriterion("msg_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeEqualTo(String value) {
+            addCriterion("msg_type =", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeNotEqualTo(String value) {
+            addCriterion("msg_type <>", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeGreaterThan(String value) {
+            addCriterion("msg_type >", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("msg_type >=", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeLessThan(String value) {
+            addCriterion("msg_type <", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeLessThanOrEqualTo(String value) {
+            addCriterion("msg_type <=", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeLike(String value) {
+            addCriterion("msg_type like", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeNotLike(String value) {
+            addCriterion("msg_type not like", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeIn(List<String> values) {
+            addCriterion("msg_type in", values, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeNotIn(List<String> values) {
+            addCriterion("msg_type not in", values, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeBetween(String value1, String value2) {
+            addCriterion("msg_type between", value1, value2, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeNotBetween(String value1, String value2) {
+            addCriterion("msg_type not between", value1, value2, "msgType");
+            return (Criteria) this;
+        }
+
         public Criteria andLastMsgIsNull() {
             addCriterion("last_msg is null");
             return (Criteria) this;

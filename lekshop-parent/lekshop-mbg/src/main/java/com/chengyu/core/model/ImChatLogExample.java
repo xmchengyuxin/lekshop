@@ -695,52 +695,62 @@ public class ImChatLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeEqualTo(Integer value) {
+        public Criteria andMsgTypeEqualTo(String value) {
             addCriterion("msg_type =", value, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeNotEqualTo(Integer value) {
+        public Criteria andMsgTypeNotEqualTo(String value) {
             addCriterion("msg_type <>", value, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeGreaterThan(Integer value) {
+        public Criteria andMsgTypeGreaterThan(String value) {
             addCriterion("msg_type >", value, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andMsgTypeGreaterThanOrEqualTo(String value) {
             addCriterion("msg_type >=", value, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeLessThan(Integer value) {
+        public Criteria andMsgTypeLessThan(String value) {
             addCriterion("msg_type <", value, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeLessThanOrEqualTo(Integer value) {
+        public Criteria andMsgTypeLessThanOrEqualTo(String value) {
             addCriterion("msg_type <=", value, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeIn(List<Integer> values) {
+        public Criteria andMsgTypeLike(String value) {
+            addCriterion("msg_type like", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeNotLike(String value) {
+            addCriterion("msg_type not like", value, "msgType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgTypeIn(List<String> values) {
             addCriterion("msg_type in", values, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeNotIn(List<Integer> values) {
+        public Criteria andMsgTypeNotIn(List<String> values) {
             addCriterion("msg_type not in", values, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeBetween(Integer value1, Integer value2) {
+        public Criteria andMsgTypeBetween(String value1, String value2) {
             addCriterion("msg_type between", value1, value2, "msgType");
             return (Criteria) this;
         }
 
-        public Criteria andMsgTypeNotBetween(Integer value1, Integer value2) {
+        public Criteria andMsgTypeNotBetween(String value1, String value2) {
             addCriterion("msg_type not between", value1, value2, "msgType");
             return (Criteria) this;
         }

@@ -204,7 +204,7 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 		recharge.setOrderNo("R"+StringUtils.genOrderNo(member.getId()));
 		recharge.setMemberId(member.getId());
 		recharge.setMemberName(member.getCode());
-		recharge.setPaymethod("5");
+		recharge.setPaymethod(payMethod);
 		recharge.setAmount(amount);
 		recharge.setRealAmount(amount);
 		recharge.setAddTime(DateUtil.date());

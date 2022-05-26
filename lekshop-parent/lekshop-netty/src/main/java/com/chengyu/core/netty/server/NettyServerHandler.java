@@ -1,24 +1,15 @@
-package com.chengyu.weroom.netty.server;
+package com.chengyu.core.netty.server;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.chengyu.weroom.netty.common.Command.CommandType;
-import com.chengyu.weroom.netty.common.MessageBase;
+import com.chengyu.core.netty.common.Command;
+import com.chengyu.core.netty.common.MessageBase;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
+import io.netty.channel.*;
+import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.multipart.DefaultHttpDataFactory;
 import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
 import io.netty.handler.codec.http.multipart.InterfaceHttpData;
@@ -92,17 +83,17 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 				}
 			}
 
-    		if(msgBase.getCmd() == CommandType.AUTH.value){
+    		if(msgBase.getCmd() == Command.CommandType.AUTH.value){
 				log.info("client auth>>> "+clientId);
 				Attribute<String> attr = ctx.attr(clientInfo);
 				attr.set(clientId);
 				channelCache.put(clientId, ctx.channel());
 
-				ctx.writeAndFlush(createData(clientId, CommandType.AUTH_BACK, "auth_back>>> auth success"));
+				ctx.writeAndFlush(createData(clientId, Command.CommandType.AUTH_BACK, "auth_back>>> auth success"));
 
-			}else if(msgBase.getCmd() == CommandType.PING.value){
+			}else if(msgBase.getCmd() == Command.CommandType.PING.value){
 				//处理ping消息
-				ctx.writeAndFlush(createData(clientId, CommandType.PONG, "pong>>> This is pong data"));
+				ctx.writeAndFlush(createData(clientId, Command.CommandType.PONG, "pong>>> This is pong data"));
 			}else{
 				if(JSONUtil.isJson(msgBase.getData())){
 					Map<String, String> map = JSONUtil.toBean(msgBase.getData(), Map.class);
@@ -127,7 +118,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 							}
 						}*/
 						otherCh.writeAndFlush(
-								createData(rid, CommandType.PUSH_DATA, msgBase.getData())
+								createData(rid, Command.CommandType.PUSH_DATA, msgBase.getData())
 							);
 					}
 				}
@@ -137,7 +128,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 		}
     }
 
-	private TextWebSocketFrame createData(String clientId, CommandType cmd, String data){
+	private TextWebSocketFrame createData(String clientId, Command.CommandType cmd, String data){
 		MessageBase msg = new MessageBase();
 		msg.setClientId(clientId);
 		msg.setCmd(cmd.value);

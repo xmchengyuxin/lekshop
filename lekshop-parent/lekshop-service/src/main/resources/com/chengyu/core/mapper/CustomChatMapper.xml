@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomChatMapper">
+  <select id="countUnReadNum" resultType="java.lang.Long">
+    select
+      sum(un_read_num) unReadNum
+    from im_chat_session
+    where member_id = #{memberId}
+  </select>
+
+</mapper>

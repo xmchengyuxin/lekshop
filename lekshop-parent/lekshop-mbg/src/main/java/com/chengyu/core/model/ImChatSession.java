@@ -29,6 +29,9 @@ public class ImChatSession implements Serializable {
     @ApiModelProperty(value = "未读数量")
     private Integer unReadNum;
 
+    @ApiModelProperty(value = "消息类型>>text文本>>image图片>>file文件>>event事件")
+    private String msgType;
+
     @ApiModelProperty(value = "最后一条信息")
     private String lastMsg;
 
@@ -104,6 +107,14 @@ public class ImChatSession implements Serializable {
         this.unReadNum = unReadNum;
     }
 
+    public String getMsgType() {
+        return msgType;
+    }
+
+    public void setMsgType(String msgType) {
+        this.msgType = msgType;
+    }
+
     public String getLastMsg() {
         return lastMsg;
     }
@@ -142,6 +153,7 @@ public class ImChatSession implements Serializable {
         sb.append(", targetNickname=").append(targetNickname);
         sb.append(", targetHeadImg=").append(targetHeadImg);
         sb.append(", unReadNum=").append(unReadNum);
+        sb.append(", msgType=").append(msgType);
         sb.append(", lastMsg=").append(lastMsg);
         sb.append(", addTime=").append(addTime);
         sb.append(", updTime=").append(updTime);

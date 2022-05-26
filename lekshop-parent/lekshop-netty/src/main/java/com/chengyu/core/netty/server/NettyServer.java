@@ -1,12 +1,4 @@
-package com.chengyu.weroom.netty.server;
-
-import java.net.InetSocketAddress;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+package com.chengyu.core.netty.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -15,6 +7,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.net.InetSocketAddress;
 
 /**
  * @类描述   	Netty启动Server

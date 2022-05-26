@@ -40,6 +40,9 @@ const mutations = {
   SET_WS_ID: (state, wsId) => {
     state.wsId = wsId
   },
+  SET_ID: (state, id) => {
+    state.id = id
+  },
 }
 
  const actions = {
@@ -96,6 +99,7 @@ const mutations = {
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.logo )
           commit('SET_WS_ID', 'member-'+data.memberId )
+          commit('SET_ID', data.memberId )
           /* commit('SET_MENUS', data.menus )
           commit('SET_BRAND_NAME', data.brandName )
           commit('SET_BRAND_LOGO', data.brandLogo ) */

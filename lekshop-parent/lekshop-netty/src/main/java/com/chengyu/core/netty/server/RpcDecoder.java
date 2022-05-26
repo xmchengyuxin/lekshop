@@ -1,4 +1,4 @@
-package com.chengyu.weroom.netty.server;
+package com.chengyu.core.netty.server;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;

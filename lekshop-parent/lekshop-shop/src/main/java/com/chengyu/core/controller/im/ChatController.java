@@ -1,7 +1,7 @@
 package com.chengyu.core.controller.im;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.controller.ShopBaseController;
-import com.chengyu.core.domain.form.AccountSearchForm;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -29,7 +29,7 @@ public class ChatController extends ShopBaseController {
 	@ApiOperation(value = "会话列表")
 	@ResponseBody
 	@RequestMapping(value="/chatSession/getList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<ImChatSession>> getSessionList(AccountSearchForm form, Integer page, Integer pageSize) throws ServiceException {
+	public CommonResult<CommonPage<ImChatSession>> getSessionList(Integer page, Integer pageSize) throws ServiceException {
 		List<ImChatSession> list = chatService.getChatSessionList(getCurrentMemberId(), page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
@@ -47,15 +47,30 @@ public class ChatController extends ShopBaseController {
 	@RequestMapping(value="/chat/getList", method=RequestMethod.GET)
 	public CommonResult<CommonPage<ImChatLog>> getSessionList(Integer targetMemberId, Integer page, Integer pageSize) throws ServiceException {
 		List<ImChatLog> list = chatService.getChatLogList(getCurrentMemberId(), targetMemberId, page, pageSize);
-		return CommonResult.success(CommonPage.restPage(list));
+		return CommonResult.success(CommonPage.restPage(CollectionUtil.reverse(list)));
 	}
 
 	@ApiOperation(value = "发消息")
 	@ResponseBody
 	@RequestMapping(value="/chat/send", method=RequestMethod.POST)
-	public CommonResult<String> send(Integer targetMemberId, Integer msgType, String content) throws ServiceException {
+	public CommonResult<String> send(Integer targetMemberId, String msgType, String content) throws ServiceException {
 		chatService.sendMsg(getCurrentMember(), targetMemberId, msgType, content);
 		return CommonResult.success(null);
 	}
 
+	@ApiOperation(value = "当前会话置为已读")
+	@ResponseBody
+	@RequestMapping(value="/chat/read", method=RequestMethod.POST)
+	public CommonResult<String> read(Long sessionId) throws ServiceException {
+		chatService.readBySessionId(getCurrentMember(), sessionId);
+		return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "统计总未读数量")
+	@ResponseBody
+	@RequestMapping(value="/chat/countUnReadNum", method=RequestMethod.GET)
+	public CommonResult<Long> countUnReadNum() throws ServiceException {
+		Long num = chatService.countUnReadNum(getCurrentMemberId());
+		return CommonResult.success(num);
+	}
 }

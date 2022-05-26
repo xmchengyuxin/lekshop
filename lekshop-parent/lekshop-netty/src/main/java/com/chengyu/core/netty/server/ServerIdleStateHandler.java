@@ -1,4 +1,4 @@
-package com.chengyu.weroom.netty.server;
+package com.chengyu.core.netty.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;

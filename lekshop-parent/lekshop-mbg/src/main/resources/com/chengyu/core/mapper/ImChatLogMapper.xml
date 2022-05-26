@@ -11,7 +11,7 @@
     <result column="target_nickname" jdbcType="VARCHAR" property="targetNickname" />
     <result column="target_head_img" jdbcType="VARCHAR" property="targetHeadImg" />
     <result column="send_type" jdbcType="INTEGER" property="sendType" />
-    <result column="msg_type" jdbcType="INTEGER" property="msgType" />
+    <result column="msg_type" jdbcType="VARCHAR" property="msgType" />
     <result column="read_status" jdbcType="INTEGER" property="readStatus" />
     <result column="send_status" jdbcType="INTEGER" property="sendStatus" />
     <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
@@ -144,7 +144,7 @@
       upd_time, msg_content)
     values (#{sessionId,jdbcType=BIGINT}, #{memberId,jdbcType=INTEGER}, #{memberNickname,jdbcType=VARCHAR}, 
       #{memberHeadImg,jdbcType=VARCHAR}, #{targetId,jdbcType=INTEGER}, #{targetNickname,jdbcType=VARCHAR}, 
-      #{targetHeadImg,jdbcType=VARCHAR}, #{sendType,jdbcType=INTEGER}, #{msgType,jdbcType=INTEGER}, 
+      #{targetHeadImg,jdbcType=VARCHAR}, #{sendType,jdbcType=INTEGER}, #{msgType,jdbcType=VARCHAR}, 
       #{readStatus,jdbcType=INTEGER}, #{sendStatus,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP}, 
       #{updTime,jdbcType=TIMESTAMP}, #{msgContent,jdbcType=LONGVARCHAR})
   </insert>
@@ -223,7 +223,7 @@
         #{sendType,jdbcType=INTEGER},
       </if>
       <if test="msgType != null">
-        #{msgType,jdbcType=INTEGER},
+        #{msgType,jdbcType=VARCHAR},
       </if>
       <if test="readStatus != null">
         #{readStatus,jdbcType=INTEGER},
@@ -279,7 +279,7 @@
         send_type = #{record.sendType,jdbcType=INTEGER},
       </if>
       <if test="record.msgType != null">
-        msg_type = #{record.msgType,jdbcType=INTEGER},
+        msg_type = #{record.msgType,jdbcType=VARCHAR},
       </if>
       <if test="record.readStatus != null">
         read_status = #{record.readStatus,jdbcType=INTEGER},
@@ -312,7 +312,7 @@
       target_nickname = #{record.targetNickname,jdbcType=VARCHAR},
       target_head_img = #{record.targetHeadImg,jdbcType=VARCHAR},
       send_type = #{record.sendType,jdbcType=INTEGER},
-      msg_type = #{record.msgType,jdbcType=INTEGER},
+      msg_type = #{record.msgType,jdbcType=VARCHAR},
       read_status = #{record.readStatus,jdbcType=INTEGER},
       send_status = #{record.sendStatus,jdbcType=INTEGER},
       send_time = #{record.sendTime,jdbcType=TIMESTAMP},
@@ -333,7 +333,7 @@
       target_nickname = #{record.targetNickname,jdbcType=VARCHAR},
       target_head_img = #{record.targetHeadImg,jdbcType=VARCHAR},
       send_type = #{record.sendType,jdbcType=INTEGER},
-      msg_type = #{record.msgType,jdbcType=INTEGER},
+      msg_type = #{record.msgType,jdbcType=VARCHAR},
       read_status = #{record.readStatus,jdbcType=INTEGER},
       send_status = #{record.sendStatus,jdbcType=INTEGER},
       send_time = #{record.sendTime,jdbcType=TIMESTAMP},
@@ -370,7 +370,7 @@
         send_type = #{sendType,jdbcType=INTEGER},
       </if>
       <if test="msgType != null">
-        msg_type = #{msgType,jdbcType=INTEGER},
+        msg_type = #{msgType,jdbcType=VARCHAR},
       </if>
       <if test="readStatus != null">
         read_status = #{readStatus,jdbcType=INTEGER},
@@ -400,7 +400,7 @@
       target_nickname = #{targetNickname,jdbcType=VARCHAR},
       target_head_img = #{targetHeadImg,jdbcType=VARCHAR},
       send_type = #{sendType,jdbcType=INTEGER},
-      msg_type = #{msgType,jdbcType=INTEGER},
+      msg_type = #{msgType,jdbcType=VARCHAR},
       read_status = #{readStatus,jdbcType=INTEGER},
       send_status = #{sendStatus,jdbcType=INTEGER},
       send_time = #{sendTime,jdbcType=TIMESTAMP},
@@ -418,7 +418,7 @@
       target_nickname = #{targetNickname,jdbcType=VARCHAR},
       target_head_img = #{targetHeadImg,jdbcType=VARCHAR},
       send_type = #{sendType,jdbcType=INTEGER},
-      msg_type = #{msgType,jdbcType=INTEGER},
+      msg_type = #{msgType,jdbcType=VARCHAR},
       read_status = #{readStatus,jdbcType=INTEGER},
       send_status = #{sendStatus,jdbcType=INTEGER},
       send_time = #{sendTime,jdbcType=TIMESTAMP},

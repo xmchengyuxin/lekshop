@@ -49,7 +49,7 @@ public class MemberBankController extends UserBaseController {
 	@ApiOperation(value = "绑定银行卡")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "id", value = "ID(修改时必传)"),
-		@ApiImplicitParam(name = "realname", value = "真实姓名"),
+		@ApiImplicitParam(name = "accountName", value = "真实姓名"),
 		@ApiImplicitParam(name = "bank", value = "银行"),
 		@ApiImplicitParam(name = "bankAccount", value = "银行账号"),
 		@ApiImplicitParam(name = "zfbAccount", value = "支付宝收款账号"),

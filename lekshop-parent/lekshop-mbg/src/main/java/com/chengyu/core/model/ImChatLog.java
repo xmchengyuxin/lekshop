@@ -32,8 +32,8 @@ public class ImChatLog implements Serializable {
     @ApiModelProperty(value = "1发送>>2接收")
     private Integer sendType;
 
-    @ApiModelProperty(value = "消息类型>>1文本>>2图片>>3视频>>4商品>>5订单")
-    private Integer msgType;
+    @ApiModelProperty(value = "消息类型>>text文本>>image图片>>file文件>>event事件")
+    private String msgType;
 
     @ApiModelProperty(value = "0未读 1已读")
     private Integer readStatus;
@@ -124,11 +124,11 @@ public class ImChatLog implements Serializable {
         this.sendType = sendType;
     }
 
-    public Integer getMsgType() {
+    public String getMsgType() {
         return msgType;
     }
 
-    public void setMsgType(Integer msgType) {
+    public void setMsgType(String msgType) {
         this.msgType = msgType;
     }
 

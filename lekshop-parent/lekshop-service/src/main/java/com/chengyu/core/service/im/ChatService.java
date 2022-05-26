@@ -53,7 +53,7 @@ public interface ChatService {
      * @param  content
      * @return ImChatLog
      */
-    ImChatLog sendMsg(UmsMember member, Integer targetMemberId, Integer msgType, String content);
+    ImChatLog sendMsg(UmsMember member, Integer targetMemberId, String msgType, String content);
 
     /**
      * 获取聊天记录
@@ -66,4 +66,22 @@ public interface ChatService {
      * @return List<ImChatLog>
      */
     List<ImChatLog> getChatLogList(Integer memberId, Integer targetMemberId, Integer page, Integer pageSize);
+
+    /**
+     * 将会话置为已读
+     * @author LeGreen
+     * @date   2022/5/26
+     * @param  currentMember
+     * @param  sessionId
+     */
+    void readBySessionId(UmsMember currentMember, Long sessionId);
+
+    /**
+     * 统计总未读数量
+     * @author LeGreen
+     * @date   2022/5/26
+     * @param  memberId
+     * @return Long
+     */
+    Long countUnReadNum(Integer memberId);
 }

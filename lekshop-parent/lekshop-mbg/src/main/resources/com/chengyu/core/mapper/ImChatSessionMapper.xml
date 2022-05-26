@@ -10,6 +10,7 @@
     <result column="target_nickname" jdbcType="VARCHAR" property="targetNickname" />
     <result column="target_head_img" jdbcType="VARCHAR" property="targetHeadImg" />
     <result column="un_read_num" jdbcType="INTEGER" property="unReadNum" />
+    <result column="msg_type" jdbcType="VARCHAR" property="msgType" />
     <result column="last_msg" jdbcType="VARCHAR" property="lastMsg" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, member_id, member_nickname, member_head_img, target_id, target_nickname, target_head_img, 
-    un_read_num, last_msg, add_time, upd_time
+    un_read_num, msg_type, last_msg, add_time, upd_time
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.ImChatSessionExample" resultMap="BaseResultMap">
     select
@@ -112,12 +113,12 @@
     </selectKey>
     insert into im_chat_session (member_id, member_nickname, member_head_img, 
       target_id, target_nickname, target_head_img, 
-      un_read_num, last_msg, add_time, 
-      upd_time)
+      un_read_num, msg_type, last_msg, 
+      add_time, upd_time)
     values (#{memberId,jdbcType=INTEGER}, #{memberNickname,jdbcType=VARCHAR}, #{memberHeadImg,jdbcType=VARCHAR}, 
       #{targetId,jdbcType=INTEGER}, #{targetNickname,jdbcType=VARCHAR}, #{targetHeadImg,jdbcType=VARCHAR}, 
-      #{unReadNum,jdbcType=INTEGER}, #{lastMsg,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{updTime,jdbcType=TIMESTAMP})
+      #{unReadNum,jdbcType=INTEGER}, #{msgType,jdbcType=VARCHAR}, #{lastMsg,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.ImChatSession">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -145,6 +146,9 @@
       </if>
       <if test="unReadNum != null">
         un_read_num,
+      </if>
+      <if test="msgType != null">
+        msg_type,
       </if>
       <if test="lastMsg != null">
         last_msg,
@@ -177,6 +181,9 @@
       </if>
       <if test="unReadNum != null">
         #{unReadNum,jdbcType=INTEGER},
+      </if>
+      <if test="msgType != null">
+        #{msgType,jdbcType=VARCHAR},
       </if>
       <if test="lastMsg != null">
         #{lastMsg,jdbcType=VARCHAR},
@@ -222,6 +229,9 @@
       <if test="record.unReadNum != null">
         un_read_num = #{record.unReadNum,jdbcType=INTEGER},
       </if>
+      <if test="record.msgType != null">
+        msg_type = #{record.msgType,jdbcType=VARCHAR},
+      </if>
       <if test="record.lastMsg != null">
         last_msg = #{record.lastMsg,jdbcType=VARCHAR},
       </if>
@@ -246,6 +256,7 @@
       target_nickname = #{record.targetNickname,jdbcType=VARCHAR},
       target_head_img = #{record.targetHeadImg,jdbcType=VARCHAR},
       un_read_num = #{record.unReadNum,jdbcType=INTEGER},
+      msg_type = #{record.msgType,jdbcType=VARCHAR},
       last_msg = #{record.lastMsg,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP}
@@ -277,6 +288,9 @@
       <if test="unReadNum != null">
         un_read_num = #{unReadNum,jdbcType=INTEGER},
       </if>
+      <if test="msgType != null">
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
       <if test="lastMsg != null">
         last_msg = #{lastMsg,jdbcType=VARCHAR},
       </if>
@@ -298,6 +312,7 @@
       target_nickname = #{targetNickname,jdbcType=VARCHAR},
       target_head_img = #{targetHeadImg,jdbcType=VARCHAR},
       un_read_num = #{unReadNum,jdbcType=INTEGER},
+      msg_type = #{msgType,jdbcType=VARCHAR},
       last_msg = #{lastMsg,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       upd_time = #{updTime,jdbcType=TIMESTAMP}

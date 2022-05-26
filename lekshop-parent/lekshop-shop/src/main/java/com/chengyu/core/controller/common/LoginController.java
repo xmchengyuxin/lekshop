@@ -72,9 +72,9 @@ public class LoginController extends ShopBaseController {
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
         UmsMember member = memberService.getCurrentMember();
-        if(member.getType() != CommonConstant.SELLER){
+        /*if(member.getType() != CommonConstant.SELLER){
 			return CommonResult.validateFailed("请使用商家账号进行登录");
-		}
+		}*/
 		memberImeIdService.loginByImeId(member, imeId, phoneType);
         tokenMap.put("member", member);
 

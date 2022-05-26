@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import { getAccountLog } from '@/api/account'
-
 export default {
   filters: {
     remarkFilter(str) {
@@ -41,9 +39,6 @@ export default {
 			let queryForm = {
 				page : 1, pageSize: 9
 			}
-      getAccountLog(queryForm).then(response => {
-        this.list = response.data.items
-      })
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.chengyu.weroom;
+package com.chengyu.core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

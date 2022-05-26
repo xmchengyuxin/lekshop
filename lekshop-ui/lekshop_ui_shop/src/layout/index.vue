@@ -11,7 +11,7 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
-      <message />
+      <message/>
     </div>
   </div>
 
@@ -58,7 +58,8 @@ export default {
     }
   },
   created(){
-    this.socket.creatSocket();
+    const self = this;
+    self.socket.creatSocket();
   }
 }
 </script>

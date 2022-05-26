@@ -62,6 +62,9 @@ public class WalkMemberController extends UserBaseController {
 	@ResponseBody
 	@RequestMapping(value={"/common/walkMember/getCollectionList"}, method=RequestMethod.GET)
 	public CommonResult<CommonPage<WalkMemberCollection>> getCollectionList(Integer walkMemberId, Integer page, Integer pageSize) {
+		if(walkMemberId == null){
+			walkMemberId = getCurrentWalkMember().getId();
+		}
 		List<WalkMemberCollection> list = walkMemberCollectService.getWalkMemberCollectionList(walkMemberId, null, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
@@ -73,6 +76,9 @@ public class WalkMemberController extends UserBaseController {
 	@ResponseBody
 	@RequestMapping(value={"/common/walkMember/getFansList"}, method=RequestMethod.GET)
 	public CommonResult<CommonPage<WalkMemberCollection>> getFansList(Integer walkMemberId, Integer page, Integer pageSize) {
+		if(walkMemberId == null){
+			walkMemberId = getCurrentWalkMember().getId();
+		}
 		List<WalkMemberCollection> list = walkMemberCollectService.getWalkMemberCollectionList(null, walkMemberId, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}

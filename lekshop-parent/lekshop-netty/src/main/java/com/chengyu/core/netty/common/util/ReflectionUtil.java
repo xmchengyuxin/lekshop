@@ -1,4 +1,4 @@
-package com.chengyu.weroom.netty.common.util;
+package com.chengyu.core.netty.common.util;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

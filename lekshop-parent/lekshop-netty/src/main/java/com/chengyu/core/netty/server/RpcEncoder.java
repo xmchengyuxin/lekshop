@@ -1,4 +1,4 @@
-package com.chengyu.weroom.netty.server;
+package com.chengyu.core.netty.server;
 
 import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;

@@ -1,6 +1,5 @@
-package com.chengyu.weroom.netty.common;
+package com.chengyu.core.netty.common;
 
-import com.chengyu.weroom.netty.common.Command.CommandType;
 import lombok.Getter;
 import lombok.Setter;
 

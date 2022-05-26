@@ -1,21 +1,12 @@
-package com.chengyu.weroom.netty.server;
+package com.chengyu.core.netty.server;
 
-import com.chengyu.weroom.netty.common.MessageBase;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpRequestDecoder;
-import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import io.netty.util.CharsetUtil;
 
 public class NettyServerHandlerInitializer extends ChannelInitializer<Channel> {
 

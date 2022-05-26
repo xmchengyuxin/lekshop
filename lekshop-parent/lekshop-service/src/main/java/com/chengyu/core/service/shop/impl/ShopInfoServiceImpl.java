@@ -162,6 +162,8 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 			UmsMember updateMember = new UmsMember();
 			updateMember.setId(shopInfo.getMemberId());
 			updateMember.setType(CommonConstant.SELLER);
+			updateMember.setNickname(shop.getName());
+			updateMember.setHeadImg(shop.getLogo());
 			memberService.updateMember(updateMember);
 
 			WalkMember walkMember = walkMemberService.getWalkMemberByMember(shopInfo.getMemberId());

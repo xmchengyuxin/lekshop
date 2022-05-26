@@ -8,6 +8,7 @@ import com.chengyu.core.domain.enums.BlockTypeEnums;
 import com.chengyu.core.domain.enums.ConfigEnums;
 import com.chengyu.core.domain.enums.MemberTypes;
 import com.chengyu.core.domain.form.MemberSearchForm;
+import com.chengyu.core.domain.result.CustomerConstatnt;
 import com.chengyu.core.domain.result.MemberDetails;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.UmsMemberLoginLogMapper;
@@ -16,6 +17,7 @@ import com.chengyu.core.mapper.UmsMemberRelMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.security.util.JwtTokenUtil;
 import com.chengyu.core.service.config.ConfigMissionService;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.*;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.service.system.SysInviteCodeService;
@@ -78,6 +80,8 @@ public class MemberServiceImpl implements MemberService {
 	private SysInviteCodeService sysInviteCodeService;
 	@Autowired
 	private WalkMemberService walkMemberService;
+	@Autowired
+	private ChatService chatService;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -144,6 +148,14 @@ public class MemberServiceImpl implements MemberService {
 		//初始化创作号
 		member.setUid(updateMember.getUid());
 		walkMemberService.addWalkMember(member);
+
+		//初始化智能小兵
+		UmsMember targetMember = new UmsMember();
+		targetMember.setId(CustomerConstatnt.MEMBER_ID);
+		targetMember.setNickname(CustomerConstatnt.NICKNAME);
+		targetMember.setHeadImg(CustomerConstatnt.AVATAR);
+		targetMember.setUid(CustomerConstatnt.UID);
+		chatService.initChatSession(member, targetMember);
 	}
 
 	@Override

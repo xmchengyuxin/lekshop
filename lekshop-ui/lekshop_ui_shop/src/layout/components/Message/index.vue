@@ -5,37 +5,46 @@
       <div class="water2"></div>
       <div class="water3"></div>
       <img src="./chat_mini.png">
+      <span v-if="totalUnReadNum > 0" class="chat-num flex f-a-c f-j-c padding-lr2 f10-size t-color-w bg-color-r b-radius-30">{{totalUnReadNum}}</span>
     </div>
 
     <el-dialog v-el-drag-dialog title="" :visible.sync="imDialog" :modal="false" :close-on-click-modal="false" width="850px" height="640px">
       <lemon-imui
       ref='IMUI'
-      :user='this.user'
+      :user="user"
       :hideMenu="true"
       :hideMessageName="true"
       :hideMessageTime="true"
-      :contact-contextmenu="contactContextmenu">
+      :contact-contextmenu="contactContextmenu"
+      :contextmenu="contextmenu"
+      @pull-messages="handlePullMessages"
+      @send="handleSend"
+      @change-contact="handleChangeContact">
           <template #sidebar-message-fixedtop>
             <span></span>
           </template>
       </lemon-imui>
     </el-dialog>
-  </div>
 
+    <audio ref="chataudio"  src="./ding.mp3"></audio>
+  </div>
 
 </template>
 
 <script>
   import elDragDialog from '@/directive/el-drag-dialog' // base on element-ui
   import EmojiData from "./database/emoji";
+  import {getChatSessionList, deleteChatSession, getChatList, sendMsg, readBySession, countUnReadNum} from '@/api/chat'
+  import {upload} from '@/api/system'
+  import axios from 'axios'
 
+  let IMUI;
   export default {
     directives: { elDragDialog },
     components: {
     },
     data() {
       return {
-        user:{id:1,displayName:'June',avatar:''},
         imDialog: false,
         contactContextmenu: [
           {
@@ -48,40 +57,268 @@
               });
               if (IMUI.currentContactId == contact.id) IMUI.changeContact(null);
               hide();
+              deleteChatSession({sessionId: contact.sessionId}).then((response) => {
+              })
             },
           },
         ],
+        contextmenu: [
+          {
+            click: (e, instance, hide) => {
+              const { message } = instance;
+              window.open(message.content);
+              hide();
+            },
+            visible: instance => {
+              return instance.message.type == "image";
+            },
+            text: "查看大图",
+          },
+        ],
+        chatSessionList: [],
+        chatList: [],
+        user: {
+          id: this.$store.state.user.id,
+          displayName: this.$store.state.user.name,
+          avatar: this.$store.state.user.avatar,
+        },
+        page: 1,
+        totalUnReadNum: 0
       }
     },
     methods: {
       handleIm() {
+        this.totalUnReadNum = 0
       	this.imDialog = true;
         this.$nextTick(()=>{
           this.getContect();
         })
       },
       getContect(){
-        const IMUI= this.$refs.IMUI;
+          if(!IMUI){
+            IMUI= this.$refs.IMUI;
+          }
+          IMUI.initEditorTools([
+            {
+              name: "emoji",
+            },
+            {
+              name: "uploadImage",
+            },
+          ]);
           //初始化表情包。
           IMUI.initEmoji(EmojiData);
           //从后端请求联系人数据，包装成下面的样子
-          const contacts = [{
-            id: 2,
-            displayName: '丽安娜',
-            avatar:'',
-            index: 'L',
-            unread: 9,
-            //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
-            //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
-            lastContent: IMUI.lastContentRender({type:'text',content:'你在干嘛呢？'}),
-            //最近一条消息的发送时间
-            lastSendTime: 1566047865417,
-          }];
-          IMUI.initContacts(contacts);
+          let contacts = []
+          getChatSessionList({page:1, pageSize:9999}).then(response => {
+            this.chatSessionList = response.data.list
+            if(this.chatSessionList && this.chatSessionList.length > 0){
+              this.chatSessionList.forEach(item=>{
+                if(item.lastMsg){
+                  contacts.push({
+                    sessionId: item.id,
+                    id: item.targetId,
+                    displayName: item.targetNickname,
+                    avatar: item.targetHeadImg,
+                    unread: item.unReadNum,
+                    //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
+                    //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
+                    lastContent: IMUI.lastContentRender({type:item.msgType, content:item.lastMsg}),
+                    //最近一条消息的发送时间
+                    lastSendTime: item.updTime,
+                  })
+                }
+              })
+
+              IMUI.initContacts(contacts);
+              if(contacts.length > 0){
+                setTimeout(() => {
+                  IMUI.changeContact(contacts[0].id);
+                }, 500);
+              }
+
+            }
+          })
       },
+      //加载聊天记录
+      handlePullMessages(contact, next, instance) {
+        let messages = []
+        let total = 0;
+        getChatList({targetMemberId:contact.id, page:this.page, pageSize:50}).then(response => {
+          this.chatList = response.data.list
+          total = response.data.total
+          if(this.page <= response.data.totalPage){
+            this.page++;
+          }
+          if(this.chatList && this.chatList.length > 0){
+            this.chatList.forEach(item=>{
+              messages.push({
+                id: item.id,
+                status: 'succeed',
+                type: item.msgType,
+                sendTime: item.sendTime,
+                content: item.msgContent,
+                toContactId: item.sendType == 1 ? item.targetId : item.memberId,
+                fromUser: {
+                  id: item.sendType == 1 ? item.memberId : item.targetId,
+                  displayName: item.sendType == 1 ? item.memberNickname : item.targetNickname,
+                  avatar: item.sendType == 1 ? item.memberHeadImg : item.targetHeadImg
+                }
+              })
+            })
+          }
+          setTimeout(() => {
+            let isEnd = false;
+            if((this.page-1) >= response.data.totalPage){
+              isEnd = true;
+            }
+            next(messages, isEnd);
+          }, 500);
+        })
+      },
+      handleSend(message, next, file) {
+        const self= this;
+        let sendForm = {
+          targetMemberId: message.toContactId,
+          msgType: message.type,
+          content: message.content
+        }
+        if(file){
+          //上传到服务器
+          self.addImg({file: file, success(res){
+            sendForm.content = res;
+            self.sendMsg(sendForm, next);
+          }})
+        }else{
+          self.sendMsg(sendForm, next);
+        }
+      },
+      sendMsg(sendForm, next){
+        sendMsg(sendForm).then((response) => {
+          setTimeout(() => {
+            next();
+          }, 500);
+        })
+      },
+      handleChangeContact(contact, instance) {
+        this.page = 1;
+        instance.updateContact({
+          id: contact.id,
+          unread: 0,
+        });
+        readBySession({sessionId: contact.sessionId}).then((response) => {
+        })
+      },
+      watchSocket(){
+        const self= this;
+        self.socket.onMessage = function(res) {
+          //将接收到的数据包装成下面的样子
+          let info = JSON.parse(res);
+           if(info.cmd == 5) {
+             let data = JSON.parse(info.data);
+             if(data.type && data.type == 5){
+               let item = JSON.parse(data.content);
+                const msg = {
+                  id: item.id,
+                  status: 'succeed',
+                  type: item.msgType,
+                  sendTime: item.sendTime,
+                  content: item.msgContent,
+                  toContactId: item.sendType == 2 ? item.targetId : item.memberId,
+                  fromUser: {
+                    id: item.sendType == 1 ? item.memberId : item.targetId,
+                    displayName: item.sendType == 1 ? item.memberNickname : item.targetNickname,
+                    avatar: item.sendType == 1 ? item.memberHeadImg : item.targetHeadImg
+                  }
+              };
+              self.playAudio();
+              if(!IMUI || !self.imDialog){
+                //未打开聊天窗口
+                self.totalUnReadNum++;
+                let msgContent;
+                if(msg.type == 'image'){
+                  msgContent = '[图片]';
+                }else if(msg.type == 'file'){
+                   msgContent = '[文件]';
+                }else{
+                  msgContent = msg.content;
+                }
+                self.$notify({
+                  title: '',
+                  dangerouslyUseHTMLString: true,
+                  // message: '<img style="width:50px;height:50px;border-radius:20%;" src="'+msg.fromUser.avatar+'"></img> :'+msg.content,
+                  message: '<div class="flex">'
+                            +'<img class="flex f-s-0 margin-r8 margin-t8" style="width:40px;height:40px;border-radius:50%;" '
+                              +'size="small"'
+                               +'src="'+msg.fromUser.avatar+'"></img>'
+                            +'<div class="flex flex-1 f-c margin-t4">'
+                              +'<span style="font-size: 13px;font-weight: bold;">'+msg.fromUser.displayName+'</span>'
+                              +'<span style=" font-size: 13px;">'+msgContent+'</span>'
+                            +'</div>'
+                          +'</div>',
+                  position: 'bottom-right',
+                  duration: 5000,
+                  offset: 100
+                });
+              }else{
+                IMUI.setLastContentRender(item.msgType, message => {
+                  return item.msgContent;
+                });
+                IMUI.appendMessage(msg, true);
+              }
+             }
+           }
+        };
+      },
+      playAudio() {
+      	const self = this;
+      	let audio = this.$refs.chataudio;
+      		let play = audio.play();
+      		if (play !== undefined) {
+      		  play.then(function(res) {
+      		    // Automatic playback started!
+      		  }).catch(function(error) {
+      			   self.$alert('有新的聊天信息,请及时查看', '消息提醒', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                   self.playAudio();
+                  }
+                });
+      		  });
+      		}
+      },
+      addImg(options) {
+        const self = this;
+        var formdata = new FormData();
+        formdata.append("file", options.file);
+        var postData = {  // 设置axios的参数
+           url: process.env.VUE_APP_BASE_API+'common/upload',
+           data: formdata,
+           method: 'post',
+           headers: {
+            'Content-Type': 'multipart/form-data'
+           }
+        }
+        axios(postData).then((res) => {
+          if(options.success){
+            options.success(res.data.data.imgUrl);
+          }
+        })
+       },
+       countUnReadNum(){
+         countUnReadNum().then(response => {
+           this.totalUnReadNum = response.data
+         })
+       }
+
     },
     created() {
-
+      this.countUnReadNum();
+      this.$nextTick(()=> {
+        this.watchSocket();
+      })
+    },
+    mounted(){
     }
   }
 </script>
@@ -105,6 +342,15 @@
   ::v-deep .lemon-wrapper *{
     box-sizing: content-box;
   }
+  .chat-num {
+    position: absolute;
+    right: 24px;
+    top: 20px;
+    height: 18px;
+    min-width: 18px;
+    background-color: #000;
+    border-radius: 30px;
+  }
   .wrap-bottom-men {
     position: fixed;
     bottom: 0;
@@ -121,7 +367,6 @@
       border-radius: 50%;
     }
   }
-
   .wanl-chat-mini .water1,
   .wanl-chat-mini .water2,
   .wanl-chat-mini .water3 {

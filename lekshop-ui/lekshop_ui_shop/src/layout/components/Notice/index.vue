@@ -223,11 +223,14 @@
            // console.log(res,'onmessage');
            let info = JSON.parse(res);
             if(info.cmd == 5) {
-              self.msgCount += 1;
-              self.playAudio();
-              self.list.unshift(JSON.parse(info.data));
-              self.todayList.unshift(JSON.parse(info.data));
-              self.show = true;
+              let data = JSON.parse(info.data);
+              if(data.type && data.type != 5){
+                self.msgCount += 1;
+                self.playAudio();
+                self.list.unshift(data);
+                self.todayList.unshift(data);
+                self.show = true;
+              }
             }
          };
 			},

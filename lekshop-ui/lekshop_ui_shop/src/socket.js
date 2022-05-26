@@ -45,7 +45,7 @@ let keepAliveTimer;
          self.count = 0;
 
          //调用keepalive方法（不一定都需要调用此方法，可注释）
-         self.keepAlive()
+         self.keepAlive(options)
        }
        //监听websocket错误方法
        self.ws.onerror = function(ev) {
@@ -86,7 +86,7 @@ let keepAliveTimer;
        console.log("您的浏览器不支持 WebSocket!");
      }
    },
-   keepAlive() {
+   keepAlive(options) {
      let self = this;
      clearTimeout(keepAliveTimer);
      //判断当前webscokt状态
@@ -96,7 +96,10 @@ let keepAliveTimer;
            "cmd": '1',
            "clientId": self.uid
          })
-         self.isAuth = true;
+         /* self.isAuth = true;
+         if (options && options.onopen) {
+           options.onopen();
+         } */
        } else {
          //调用发送方法
          self.sendMsg({

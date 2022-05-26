@@ -114,19 +114,9 @@ public class MemberWithdrawController extends ShopBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value="/withdraw/apply", method=RequestMethod.POST)
-    public CommonResult<String> apply(BigDecimal amount, Integer type, Integer method, String payPassword, BankForm bankForm, String code) throws Exception{
+    public CommonResult<String> apply(BigDecimal amount, Integer type, Integer method, BankForm bankForm) throws Exception{
 		UmsMember member = memberService.getMemberById(getCurrentMemberId());
 		super.validateRepeat("do-withdraw-time-between-" + member.getId(), 5000L, "请勿重复提现,5秒后再试!");
-
-		/*if(StringUtils.isNotBlank(code)){
-			//校验短信验证码
-			verifyCodeService.validateCode(member.getPhone(), code);
-		}
-
-		//校验支付密码
-		if(!SecureUtil.md5(payPassword).equals(member.getPayPassword())){
-			return CommonResult.failed("交易密码不正确");
-		}*/
 
 		withdrawService.withdraw(member, type, method, amount, bankForm);
 		return CommonResult.success(null);
