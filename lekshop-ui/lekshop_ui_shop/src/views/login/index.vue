@@ -1,91 +1,98 @@
 <template>
   <div class="login-container flex f-a-s f-j-c" style="padding-bottom: 50px;">
     <Nav></Nav>
-    <el-card :body-style="{padding:0}">
+    <el-card :body-style="{padding:0}" shadow="never" style="width: 800px; height: 400px;">
       <div class="flex f16-size">
         <div @click="active=1;" class="flex f-a-c flex-1 f-j-c h-60 w-230 cursor" :class="active == 1 || active==3 ? '' : 'bg-color'">登 录</div>
         <div @click="active=2;getCode();" class="flex f-a-c flex-1 f-j-c h-60  w-230 cursor" :class="active == 2 ? '' : 'bg-color'">注 册</div>
       </div>
       <div class="padding-15">
-      <div class="padding-30">
+      <div class="padding-10 flex">
         <template v-if="active==1">
+        <div class="flex f-c">
         <div class="padding-15 login-tip ">
-          <p>测试账号：admin 密码:123456 </p>
-          <p class="margin-t10">如果体验入驻流程请注册新会员后进入 [用户中心] - [商家控制台] 进入入驻流程</p>
+          <p class="margin-t2">如果体验入驻流程请注册新会员后进入 [用户中心] - [商家控制台] 进入入驻流程</p>
         </div>
         <div class="margin-t10"></div>
-        <el-form ref="loginForm" size="medium" label-position="top" label-width="80px" class="" :model="loginForm" :rules="loginRules"  auto-complete="on">
-          <el-form-item prop="username" label="账号">
+        <el-form ref="loginForm" size="medium" label-width="0px" style="width: 370px;" class="" :model="loginForm" :rules="loginRules"  auto-complete="on">
+          <el-form-item prop="username" label="">
             <el-input
               ref="username"
               v-model="loginForm.username"
               :placeholder="$t('login.username')"
               name="username"
               type="text"
-              auto-complete="on"
+              auto-complete="off"
+              size="big"
             />
           </el-form-item>
 
-          <el-form-item prop="password"  label="密码">
+          <el-form-item prop="password"  label="">
             <el-input
               ref="password"
               v-model="loginForm.password"
               :type="passwordType"
               :placeholder="$t('login.password')"
               name="password"
-              auto-complete="on"
+              auto-complete="off"
               @keyup.enter.native="handleLogin"
+              size="big"
             />
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
+          <div class="padding-10"></div>
+          <el-button :loading="loading" type="primary" style="width:100%;" size="big" round @click.native.prevent="handleLogin">
+            登录
+          </el-button>
           <div class="padding-10"></div>
           <div class="flex f-a-c f-j-e">
             <el-link @click="active=3;getCode()">修改密码</el-link>
           </div>
           <div class="padding-10"></div>
-          <el-button :loading="loading" type="primary" style="width:100%;" size="medium" @click.native.prevent="handleLogin">
-            登录
-          </el-button>
         </el-form>
+        </div>
         </template>
-        <el-form ref="registerForm" v-if="active == 2"  size="medium" label-position="top" label-width="80px" class="" :model="registerForm" :rules="registerRules"  auto-complete="on">
-          <el-form-item prop="username" label="用户名">
+        <el-form ref="registerForm" v-if="active == 2"  size="big" label-width="0px" style="width: 370px;"  class="" :model="registerForm" :rules="registerRules"  auto-complete="on">
+          <el-form-item prop="username" label="">
             <el-input
               ref="username"
               v-model="registerForm.username"
-              placeholder="用户名"
+              placeholder="手机号"
               name="username"
               type="text"
+              size="big"
             />
           </el-form-item>
 
-          <el-form-item prop="password"  label="密码">
+          <el-form-item prop="password"  label="">
             <el-input
               ref="password1"
               v-model="registerForm.password"
               :type="passwordType"
               :placeholder="$t('login.password')"
               name="password"
+              size="big"
             />
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-          <el-form-item prop="confirmPassword"  label="确认密码">
+          <el-form-item prop="confirmPassword"  label="">
             <el-input
               ref="confirmPassword"
               v-model="registerForm.confirmPassword"
               :type="passwordType"
               placeholder="确认密码"
               name="confirmPassword"
+              size="big"
             />
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-          <el-form-item prop="phone" label="手机号">
+         <!-- <el-form-item prop="phone" label="手机号">
             <div class="flex f-a-c">
               <el-input
                 ref="phone"
@@ -107,8 +114,8 @@
             />
               <img @click="getCode()" v-if="code != ''" class="h-36" :src="'data:image/png;base64,'+code.img" alt="">
             </div>
-          </el-form-item>
-          <el-form-item prop="code" label="验证码">
+          </el-form-item> -->
+          <el-form-item prop="code" label="">
             <div class="flex">
             <el-input
               ref="code"
@@ -117,19 +124,21 @@
               name="code"
               type="text"
               class="margin-r12"
+              size="big"
             />
-              <el-button @click="getPhoneCode()">{{smsTxt}}</el-button>
+              <el-button size="big" @click="getPhoneCode()">{{smsTxt}}</el-button>
             </div>
           </el-form-item>
 
           <div class="padding-10"></div>
-          <el-button :loading="loading" type="primary" style="width:100%;" size="medium" @click.native.prevent="handleRegister">
-            登录
+          <el-button :loading="loading" type="primary" style="width:100%;" size="big" round @click.native.prevent="handleRegister">
+            注册
           </el-button>
         </el-form>
 
-        <el-form ref="changeForm" v-if="active == 3"  size="medium" label-position="top" label-width="80px" class="" :model="registerForm" :rules="registerRules"  auto-complete="on">
-          <el-form-item prop="phone" label="手机号">
+        <el-form ref="changeForm" v-if="active == 3"  size="big" label-width="0px" style="width: 370px;"  class="" :model="registerForm" :rules="registerRules"  auto-complete="on">
+          <span style="font-size: 18px;font-weight: 600;line-height: 40px;">修改密码</span>
+          <el-form-item prop="phone" label="">
             <div class="flex f-a-c">
               <el-input
                 ref="phone"
@@ -140,7 +149,7 @@
               />
             </div>
           </el-form-item>
-          <el-form-item prop="password"  label="密码">
+          <el-form-item prop="password"  label="">
             <el-input
               ref="password1"
               v-model="registerForm.password"
@@ -152,7 +161,7 @@
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-          <el-form-item prop="confirmPassword"  label="确认密码">
+          <el-form-item prop="confirmPassword"  label="">
             <el-input
               ref="confirmPassword"
               v-model="registerForm.confirmPassword"
@@ -165,7 +174,7 @@
             </span>
           </el-form-item>
 
-          <el-form-item prop="imgCode" label="图形验证码">
+          <!-- <el-form-item prop="imgCode" label="图形验证码">
             <div class="flex">
             <el-input
               ref="imgCode"
@@ -176,8 +185,8 @@
             />
               <img @click="getCode()" v-if="code != ''" class="h-36" :src="'data:image/png;base64,'+code.img" alt="">
             </div>
-          </el-form-item>
-          <el-form-item prop="code" label="验证码">
+          </el-form-item> -->
+          <el-form-item prop="code" label="">
             <div class="flex">
             <el-input
               ref="code"
@@ -192,10 +201,14 @@
           </el-form-item>
 
           <div class="padding-10"></div>
-          <el-button :loading="loading" type="primary" style="width:100%;" size="medium" @click.native.prevent="changePassword">
+          <el-button :loading="loading" type="primary" style="width:100%;" size="big" round @click.native.prevent="changePassword">
             修改密码
           </el-button>
         </el-form>
+
+        <div class="flex f-a-c flex-1 f-j-c">
+          <img style="height: 300px;margin-top: -30px;"  src="https://qiniu.chengyuwb.com/1653641700352.gif">
+        </div>
       </div>
       </div>
     </el-card>
@@ -298,11 +311,11 @@ export default {
   methods: {
     getPhoneCode() {
       const self = this;
-      if(this.registerForm.imgCode == '') {
+      /* if(this.registerForm.imgCode == '') {
         this.$message.error('请先输入图形验证码');
         return;
-      }
-      if(validPhone(this.registerForm.phone)) {
+      } */
+      if(validPhone(this.registerForm.username)) {
         this.$message.error('请输入正确的手机号码');
         return;
       }
@@ -311,7 +324,7 @@ export default {
         return
       }
       let postData = {
-      	phone: this.registerForm.phone,
+      	phone: this.registerForm.username,
       	sendType: this.active == 2 ? 1 : 3,
         cToken: this.code.cToken,
         captcha: this.registerForm.imgCode
@@ -436,7 +449,7 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: #f4f6f8;
+  background-color: #FFFFFF;
   padding-top: 120px;
   // background:url(img/background.jpg) center no-repeat;
   background-size: cover;
@@ -469,6 +482,9 @@ $light_gray:#eee;
   }
   .bg-color {
     background-color: #F7f7f7;
+  }
+  .svg-container {
+    color: #000!important;
   }
 
 }

@@ -48,13 +48,13 @@ public class RegisterController extends ShopBaseController {
 		}
 		
 		//校验短信验证码
-		verifyCodeService.validateCode(regParam.getPhone(), regParam.getCode());
+		verifyCodeService.validateCode(regParam.getUsername(), regParam.getCode());
 
 		UmsMember member = new UmsMember();
 		member.setType(CommonConstant.BUYER);
 		member.setCode(regParam.getUsername().trim());
 		member.setNickname(regParam.getUsername().trim());
-		member.setPhone(regParam.getPhone());
+		member.setPhone(regParam.getUsername());
 		member.setPassword(regParam.getPassword());
 		member.setQq(regParam.getQq());
 		if(StringUtils.isNotBlank(regParam.getInviteCode())){

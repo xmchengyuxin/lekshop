@@ -202,6 +202,7 @@ public class ChatServiceImpl implements ChatService {
 		targetLog.setTargetHeadImg(CustomerConstatnt.AVATAR);
 		targetLog.setSendType(2);
 		targetLog.setReadStatus(CommonConstant.NO_INT);
+		chatLogMapper.insertSelective(targetLog);
 
 		//通过netty发送
 		Map<String,String> extras = new HashMap<>(16);

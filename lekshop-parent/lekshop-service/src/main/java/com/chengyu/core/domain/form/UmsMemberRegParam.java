@@ -31,8 +31,7 @@ public class UmsMemberRegParam {
     @NotNull(message = "确认密码不能为空")
     private String confirmPassword;
 
-    @ApiModelProperty(value = "手机号码", required = true)
-    @NotNull(message = "手机号码不能为空")
+    @ApiModelProperty(value = "手机号码")
     private String phone;
 
     @ApiModelProperty(value = "验证码", required = true)

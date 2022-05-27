@@ -2,7 +2,8 @@
   <div class="">
     <div class="wrap-nav flex">
       <div class="flex f-j-s nav-content f15-size t-color-w padding-lr15">
-        <img @click="$router.push('/show')" class="h-34 cursor" src="../img/logo-login.png" alt="">
+        <h1>LEKSHOP</h1>
+        <!-- <img @click="$router.push('/show')" class="h-34 cursor" src="../img/logo-login.png" alt=""> -->
         <div class="flex">
           <div @click="$router.push('/show')" class="flex f-a-c padding-lr15 cursor t-color-w" style="font-size: 14px; color: #aaa;">首页</div>
           <div @click="$router.push('/join')" class="flex f-a-c padding-lr15 cursor t-color-w" style="font-size: 14px; color: #aaa;">商家入驻</div>
@@ -36,7 +37,7 @@
     right: 0;
     left: 0;
     z-index: 1030;
-    background-color: #222;
+    background-color: #e74c3c;
     min-height: 50px;
     min-width: 1200px;
   }

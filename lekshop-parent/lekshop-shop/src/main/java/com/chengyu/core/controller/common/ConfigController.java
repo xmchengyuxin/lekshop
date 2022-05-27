@@ -224,7 +224,7 @@ public class ConfigController extends ShopBaseController {
 		
 		if("1".equals(sendType)){
 			//校验图形验证码
-			super.validateCaptcha(cToken, captcha);
+//			super.validateCaptcha(cToken, captcha);
 
 			//注册
 			UmsMember phoneMember = memberService.getMemberByParams(phone, MemberTypes.PHONE);
