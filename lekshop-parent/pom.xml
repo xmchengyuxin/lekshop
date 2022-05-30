@@ -37,7 +37,7 @@
         <pagehelper-starter.version>1.2.10</pagehelper-starter.version>
         <pagehelper.version>5.1.8</pagehelper.version>
         <druid.version>1.1.10</druid.version>
-        <hutool.version>4.5.7</hutool.version>
+        <hutool.version>5.8.2</hutool.version>
         <poi.version>4.1.2</poi.version>
         <swagger2.version>2.7.0</swagger2.version>
         <knife4j.version>2.0.4</knife4j.version>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrap-bottom-men wanl-chat-mini flex f-a-c f-j-c"  @click="handleIm">
+    <div class="wrap-bottom-men wanl-chat-mini flex f-a-c f-j-c"  @click="handleIm()">
       <div class="water1"></div>
       <div class="water2"></div>
       <div class="water3"></div>
@@ -87,14 +87,14 @@
       }
     },
     methods: {
-      handleIm() {
+      handleIm(memberId) {
         this.totalUnReadNum = 0
       	this.imDialog = true;
         this.$nextTick(()=>{
-          this.getContect();
+          this.getContect(memberId);
         })
       },
-      getContect(){
+      getContect(memberId){
           if(!IMUI){
             IMUI= this.$refs.IMUI;
           }
@@ -110,30 +110,35 @@
           IMUI.initEmoji(EmojiData);
           //从后端请求联系人数据，包装成下面的样子
           let contacts = []
-          getChatSessionList({page:1, pageSize:9999}).then(response => {
+          getChatSessionList({targetMemberId:memberId, page:1, pageSize:9999}).then(response => {
             this.chatSessionList = response.data.list
             if(this.chatSessionList && this.chatSessionList.length > 0){
               this.chatSessionList.forEach(item=>{
-                if(item.lastMsg){
-                  contacts.push({
-                    sessionId: item.id,
-                    id: item.targetId,
-                    displayName: item.targetNickname,
-                    avatar: item.targetHeadImg,
-                    unread: item.unReadNum,
-                    //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
-                    //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
-                    lastContent: IMUI.lastContentRender({type:item.msgType, content:item.lastMsg}),
-                    //最近一条消息的发送时间
-                    lastSendTime: item.updTime,
-                  })
+                if(!item.lastMsg){
+                  item.lastMsg = '   ';
                 }
+                contacts.push({
+                  sessionId: item.id,
+                  id: item.targetId,
+                  displayName: item.targetNickname,
+                  avatar: item.targetHeadImg,
+                  unread: item.unReadNum,
+                  //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
+                  //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
+                  lastContent: IMUI.lastContentRender({type:item.msgType, content:item.lastMsg}),
+                  //最近一条消息的发送时间
+                  lastSendTime: item.updTime,
+                })
               })
 
               IMUI.initContacts(contacts);
               if(contacts.length > 0){
                 setTimeout(() => {
-                  IMUI.changeContact(contacts[0].id);
+                  if(memberId){
+                    IMUI.changeContact(memberId);
+                  }else{
+                    IMUI.changeContact(contacts[0].id);
+                  }
                 }, 500);
               }
 
@@ -206,8 +211,10 @@
           id: contact.id,
           unread: 0,
         });
-        readBySession({sessionId: contact.sessionId}).then((response) => {
-        })
+        if(contact.sessionId){
+          readBySession({sessionId: contact.sessionId}).then((response) => {
+          })
+        }
       },
       watchSocket(){
         const self= this;
@@ -232,17 +239,17 @@
                   }
               };
               self.playAudio();
+              let msgContent;
+              if(msg.type == 'image'){
+                msgContent = '[图片]';
+              }else if(msg.type == 'file'){
+                 msgContent = '[文件]';
+              }else{
+                msgContent = msg.content;
+              }
               if(!IMUI || !self.imDialog){
                 //未打开聊天窗口
                 self.totalUnReadNum++;
-                let msgContent;
-                if(msg.type == 'image'){
-                  msgContent = '[图片]';
-                }else if(msg.type == 'file'){
-                   msgContent = '[文件]';
-                }else{
-                  msgContent = msg.content;
-                }
                 self.$notify({
                   title: '',
                   dangerouslyUseHTMLString: true,
@@ -261,10 +268,10 @@
                   offset: 100
                 });
               }else{
-                IMUI.setLastContentRender(item.msgType, message => {
-                  return item.msgContent;
-                });
                 IMUI.appendMessage(msg, true);
+                IMUI.setLastContentRender(msg.type, msg => {
+                  return msgContent;
+                });
               }
              }
            }

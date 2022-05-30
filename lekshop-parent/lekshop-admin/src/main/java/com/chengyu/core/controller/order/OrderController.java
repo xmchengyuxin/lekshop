@@ -10,6 +10,8 @@ import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.model.OmsOrderPriceLog;
+import com.chengyu.core.service.order.OrderPriceLogService;
 import com.chengyu.core.service.order.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +38,8 @@ public class OrderController extends AdminBaseController {
 	
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private OrderPriceLogService orderPriceLogService;
 	
 	@ApiOperation(value = "订单列表")
 	@ResponseBody
@@ -71,5 +75,13 @@ public class OrderController extends AdminBaseController {
 		List<Integer> idList = getIdList(ids);
 		orderService.deleteOrderByAdmin(idList);
 		return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "价格修改记录")
+	@ResponseBody
+	@RequestMapping(value="/order/getPriceLog", method=RequestMethod.GET)
+	public CommonResult<List<OmsOrderPriceLog>> getPriceLog(Integer orderId) {
+		List<OmsOrderPriceLog> list= orderPriceLogService.getOrderPriceLogByOrderId(orderId);
+		return CommonResult.success(list);
 	}
 }

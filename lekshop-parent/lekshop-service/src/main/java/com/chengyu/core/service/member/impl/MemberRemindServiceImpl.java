@@ -64,7 +64,7 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 		extras.put("rid", "member-"+member.getId().toString());
 		extras.put("type", type.getType().toString());
 		extras.put("content", content);
-		extras.put("addTime", DateUtil.current(false)+"");
+		extras.put("addTime", DateUtil.current()+"");
 		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
 	}
 
@@ -99,7 +99,7 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 				extras.put("rid", "admin-"+admin.getId());
 				extras.put("type", type.getType().toString());
 				extras.put("content", content);
-				extras.put("addTime", DateUtil.current(false)+"");
+				extras.put("addTime", DateUtil.current()+"");
 				nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
 			}
 		}
@@ -134,6 +134,6 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(DateUtil.current(false)+"");
+		System.out.println(DateUtil.current()+"");
 	}
 }

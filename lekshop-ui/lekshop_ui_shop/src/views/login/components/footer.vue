@@ -10,9 +10,9 @@
     left: 0;
     right: 0;
     z-index: 111;
-    line-height: 250px;
+    line-height: 50px;
     text-align: center;
-    background: #f4f6f8;
+    background: #FFFFFF;
     color: #aaa;
     border-top: 1px solid rgba(208,2,27,0.5);cursor:default;
   }

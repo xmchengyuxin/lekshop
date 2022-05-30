@@ -1,13 +1,16 @@
 package com.chengyu.core.controller.order;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.OmsOrderComment;
+import com.chengyu.core.model.OmsOrderCommentLeft;
 import com.chengyu.core.service.order.OrderCommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,8 +43,17 @@ public class OrderCommentController extends AdminBaseController {
 	public CommonResult<CommonPage<OmsOrderComment>> getList(OrderCommentSearchForm form,
 															@RequestParam(value = "page", defaultValue = "1") Integer page,
 															@RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws ServiceException {
+		form.setStatusList(CollectionUtil.newArrayList(OrderEnums.CommentStatus.COMMENTED.getValue(), OrderEnums.CommentStatus.ADD_COMMENTED.getValue()));
 		List<OmsOrderComment> list = orderCommentService.getCommentList(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
+	}
+
+	@ApiOperation(value = "获取子评论列表")
+	@ResponseBody
+	@RequestMapping(value="/comment/getLeftList", method=RequestMethod.GET)
+	public CommonResult<List<OmsOrderCommentLeft>> getLeftList(Integer commentId) {
+		List<OmsOrderCommentLeft> list = orderCommentService.getLeftCommentList(commentId);
+		return CommonResult.success(list);
 	}
 
 	@OperationLog

@@ -7,6 +7,7 @@ import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.ImChatLog;
 import com.chengyu.core.model.ImChatSession;
+import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.service.im.ChatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,8 +30,12 @@ public class ChatController extends ShopBaseController {
 	@ApiOperation(value = "会话列表")
 	@ResponseBody
 	@RequestMapping(value="/chatSession/getList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<ImChatSession>> getSessionList(Integer page, Integer pageSize) throws ServiceException {
-		List<ImChatSession> list = chatService.getChatSessionList(getCurrentMemberId(), page, pageSize);
+	public CommonResult<CommonPage<ImChatSession>> getSessionList(Integer targetMemberId, Integer page, Integer pageSize) throws ServiceException {
+		UmsMember member = getCurrentMember();
+		if(targetMemberId != null){
+			chatService.initChatSession(member, memberService.getMemberById(targetMemberId));
+		}
+		List<ImChatSession> list = chatService.getChatSessionList(member.getId(), page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 
@@ -45,7 +50,7 @@ public class ChatController extends ShopBaseController {
 	@ApiOperation(value = "获取聊天记录")
 	@ResponseBody
 	@RequestMapping(value="/chat/getList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<ImChatLog>> getSessionList(Integer targetMemberId, Integer page, Integer pageSize) throws ServiceException {
+	public CommonResult<CommonPage<ImChatLog>> getCahtList(Integer targetMemberId, Integer page, Integer pageSize) throws ServiceException {
 		List<ImChatLog> list = chatService.getChatLogList(getCurrentMemberId(), targetMemberId, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(CollectionUtil.reverse(list)));
 	}

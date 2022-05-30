@@ -39,6 +39,7 @@ public class OrderGroupController extends ShopBaseController {
 	@ResponseBody
 	@RequestMapping(value="/assemble/getList", method=RequestMethod.GET)
 	public CommonResult<CommonPage<Map<String,Object>>> getList(OrderGroupSearchForm form, Integer page, Integer pageSize) throws Exception {
+		form.setShopId(getCurrentShop().getId());
 		List<OmsOrderGroup> assemblePage = assembleService.getOrderGroupList(form, page, pageSize);
 		List<Map<String,Object>> list = Convert.convert(new TypeReference<List<Map<String,Object>>>() {}, assemblePage);
 		if(list != null && !list.isEmpty()){

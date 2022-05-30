@@ -19,7 +19,7 @@ public class CommonResult<T> {
         this.code = code;
         this.message = message;
         this.data = data;
-        this.now = DateUtil.current(false);
+        this.now = DateUtil.current();
     }
     
     /**

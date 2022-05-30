@@ -1,5 +1,6 @@
 package com.chengyu.core.controller.common;
 
+import cn.hutool.core.util.DesensitizedUtil;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.UmsMemberRegParam;
@@ -53,7 +54,7 @@ public class RegisterController extends UserBaseController {
 		UmsMember member = new UmsMember();
 		member.setType(regParam.getType());
 		member.setCode(regParam.getUsername().trim());
-		member.setNickname(regParam.getUsername().trim());
+		member.setNickname(DesensitizedUtil.mobilePhone(regParam.getUsername()));
 		member.setPhone(regParam.getPhone());
 		member.setPassword(regParam.getPassword());
 		member.setQq(regParam.getQq());

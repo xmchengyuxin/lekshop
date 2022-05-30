@@ -53,9 +53,6 @@ public class ReportController extends AdminBaseController {
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
 		
 		form.validateMonthRange();
-		if(form.getDateTo() != null){
-			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
-		}
 		List<RepShopMonth> list = reportLogService.getRepShopMonth(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
@@ -80,9 +77,6 @@ public class ReportController extends AdminBaseController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
 		form.validateMonthRange();
-		if(form.getDateTo() != null){
-			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
-		}
 		List<RepPlatformMonth> list = reportLogService.getRepPlatformMonth(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
@@ -115,9 +109,6 @@ public class ReportController extends AdminBaseController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
 		form.validateMonthRange();
-		if(form.getDateTo() != null){
-			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
-		}
 		if(form.getShopId() == null){
 			List<RepPlatformGoodsMonth> list = reportLogService.getRepPlatformGoodsMonth(form, page, pageSize);
 			return CommonResult.success(CommonPage.restPage(list));
@@ -148,9 +139,6 @@ public class ReportController extends AdminBaseController {
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws Exception {
 		
 		form.validateMonthRange();
-		if(form.getDateTo() != null){
-			form.setDateTo(DateUtil.endOfMonth(form.getDateTo()));
-		}
 		List<RepMemberMonth> list = reportLogService.getRepMemberMonth(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}

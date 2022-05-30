@@ -1,5 +1,13 @@
 <template>
   <div class="app-container">
+    <el-alert
+        class="warn-content"
+        title="系统收款账户说明"
+        type="success"
+        :closable="false">
+       一般用户充值都是使用微信支付宝充值，如果想使用线下充值可配置线下充值通道
+      </el-alert>
+      <br/>
 	  <el-tabs v-model="activeName" @tab-click="handleClickTab">
 	  		<el-tab-pane label="网银" name="four"></el-tab-pane>
 	      <el-tab-pane label="支付宝" name="first"></el-tab-pane>

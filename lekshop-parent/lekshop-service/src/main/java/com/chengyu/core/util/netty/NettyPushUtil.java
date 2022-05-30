@@ -34,7 +34,7 @@ public class NettyPushUtil {
 	private String URL;
 
 	public void sendMsg(String msg){
-		ThreadUtil.excAsync(() -> {
+		ThreadUtil.execAsync(() -> {
 			try {
 				MessageBase message = new MessageBase(null, Command.CommandType.PUSH_DATA, msg);
 				Map<String,Object> params = BeanUtil.beanToMap(message);
@@ -57,7 +57,7 @@ public class NettyPushUtil {
 				extras.put("rid", "member-4");
 				extras.put("type", "1");
 				extras.put("content", "「13666011848」申请了实名认证, 请尽快审批");
-				extras.put("addTime", DateUtil.current(false)+"");
+				extras.put("addTime", DateUtil.current()+"");
 
 				MessageBase message = new MessageBase(null, Command.CommandType.PUSH_DATA, JSONUtil.toJsonStr(extras));
 				Map<String,Object> params = BeanUtil.beanToMap(message);
@@ -70,7 +70,7 @@ public class NettyPushUtil {
 	public static void main(String[] args) throws UnsupportedEncodingException {
 		ImChatLog targetLog = new ImChatLog();
 		targetLog.setSessionId(1L);
-		targetLog.setMemberId(4);
+		targetLog.setMemberId(1);
 		targetLog.setMemberNickname("LEKSHOP旗舰店");
 		targetLog.setMemberHeadImg("https://qiniu.chengyuwb.com/1652321436403.png");
 		targetLog.setTargetId(8);
@@ -91,7 +91,7 @@ public class NettyPushUtil {
 		extras.put("rid", "member-"+targetLog.getMemberId().toString());
 		extras.put("type", MemberRemindEnums.MemberRemindTypes.CHAT.getType().toString());
 		extras.put("content", JSONUtil.toJsonStr(targetLog));
-		extras.put("addTime", DateUtil.current(false)+"");
+		extras.put("addTime", DateUtil.current()+"");
 		MessageBase message = new MessageBase(null, Command.CommandType.PUSH_DATA, JSONUtil.toJsonStr(extras));
 		Map<String,Object> params = BeanUtil.beanToMap(message);
 		for(int i = 0; i <5; i++){

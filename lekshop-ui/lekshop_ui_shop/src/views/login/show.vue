@@ -1,6 +1,6 @@
 <template>
   <div class="h100 wrap-page">
-    <Nav></Nav>
+    <!-- <Nav></Nav> -->
     <div id="video_wrapper">
       <!-- <video autoplay="" muted="" loop="">
         <source src="./img/company.mp4" type="video/mp4">
@@ -32,7 +32,7 @@
 </template>
 <script>
   import Nav from './components/nav.vue'
-  import Footer from './components/footer.vue'
+  import Footer from './components/ifooter.vue'
   export default {
     name: 'Show',
     components: {

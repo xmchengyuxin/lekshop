@@ -51,10 +51,10 @@
               </span>
               <div style="float: right; padding: 3px 10px">
                 <el-button-group>
-                   <!-- <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                      <el-button v-if="[0,4].indexOf(scope.row.order.status) > 0"  type="danger" icon="el-icon-delete" size="mini" @click="handleDelete(scope.row.order)">
+                   <el-tooltip class="item" effect="dark" content="联系买家" placement="top">
+                      <el-button  type="danger" icon="el-icon-s-comment" size="mini" @click="handleContact(scope.row.order.memberId)">
                       </el-button>
-                   </el-tooltip> -->
+                   </el-tooltip>
                   <el-tooltip class="item" effect="dark" content="发货" placement="top">
                     <el-button v-if="scope.row.order.status == 1" type="primary" size="mini" @click="handlDelivery(scope.row)">
                        <svg-icon icon-class="logistic" />
@@ -707,6 +707,9 @@ export default {
           }
         })
       }
+    },
+    handleContact(memberId){
+      this.socket.dom.handleIm(memberId);
     },
 		handleClickTab(tab, event) {
 			this.listQuery = {

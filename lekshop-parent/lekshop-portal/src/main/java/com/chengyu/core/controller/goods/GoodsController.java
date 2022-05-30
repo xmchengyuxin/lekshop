@@ -127,7 +127,7 @@ public class GoodsController extends UserBaseController {
 		return CommonResult.success(result);
 	}
 
-	@ApiOperation(value = "商品拼团列表")
+	@ApiOperation(value = "商品拼团成员列表")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "goodsId", value = "商品ID"),
 	})

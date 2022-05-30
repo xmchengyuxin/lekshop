@@ -31,3 +31,59 @@ export function deleteGoodsCate(data) {
     params: {ids:data}
   })
 }
+
+export function getGoodsList(data) {
+  return request({
+    url: 'system/goods/getList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getGoods(data) {
+  return request({
+    url: 'system/goods/get',
+    method: 'get',
+		params: data
+  })
+}
+
+export function updateGoods(data) {
+  return request({
+    url: 'system/goods/editSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function shangjiaGoods(data) {
+  return request({
+    url: 'system/goods/shangjia',
+    method: 'post',
+    params: {ids:data}
+  })
+}
+
+export function xiajiaGoods(data) {
+  return request({
+    url: 'system/goods/xiajia',
+    method: 'post',
+    params: {ids:data}
+  })
+}
+
+export function deleteGoods(data) {
+  return request({
+    url: 'system/goods/delete',
+    method: 'post',
+    params: {ids:data}
+  })
+}
+
+export function getGoodsQualityList(data) {
+  return request({
+    url: 'system/goodsQuality/query',
+    method: 'get',
+		params: {goodsId : data}
+  })
+}

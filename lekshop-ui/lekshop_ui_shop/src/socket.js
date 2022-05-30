@@ -9,7 +9,11 @@ let keepAliveTimer;
    limitCount: 9999, //重来最多次数
    isAuth: false,
    uid: '',
+   dom: '',
    socketUrl: process.env.VUE_APP_SOCKET_API,
+   setDom: function(dom) {
+      this.dom = dom;
+    },
    //设置websocket对象方法
    setWs: function(newWs) {
      this.ws = newWs

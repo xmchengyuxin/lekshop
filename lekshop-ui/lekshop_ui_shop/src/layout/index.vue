@@ -1,6 +1,6 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"> </div>
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
@@ -11,7 +11,7 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
-      <message/>
+      <message ref="immessage"/>
     </div>
   </div>
 
@@ -60,6 +60,9 @@ export default {
   created(){
     const self = this;
     self.socket.creatSocket();
+    self.$nextTick(() => {
+      self.socket.setDom(self.$refs.immessage);
+    })
   }
 }
 </script>

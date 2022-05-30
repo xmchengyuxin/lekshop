@@ -20,7 +20,7 @@ const goodsRouter = {
     },
     {
       path: 'list',
-      component: () => import('@/views/member/group/index'),
+      component: () => import('@/views/goods/index/index'),
       name: 'goodsList',
       meta: { title: '商品列表', icon:'list', role: ['admin'] }
     },

@@ -17,6 +17,8 @@ import logRouter from './modules/log'
 import shopRouter from './modules/shop'
 import goodsRouter from './modules/goods'
 import orderRouter from './modules/order'
+import trendsRouter from './modules/trends'
+import reportRouter from './modules/report'
 
 
 
@@ -93,9 +95,11 @@ export const asyncRoutes = [
   goodsRouter,
   orderRouter,
   fundRouter,
+  trendsRouter,
   configRouter,
 	contentRouter,
 	systemRouter,
+  reportRouter,
   logRouter,
 	thirdRouter,
 	 { path: '*', redirect: '/404', hidden: true }

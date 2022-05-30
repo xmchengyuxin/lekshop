@@ -172,7 +172,7 @@ public class ChatServiceImpl implements ChatService {
 		extras.put("rid", "member-"+targetMember.getId().toString());
 		extras.put("type", MemberRemindEnums.MemberRemindTypes.CHAT.getType().toString());
 		extras.put("content", JSONUtil.toJsonStr(targetLog));
-		extras.put("addTime", DateUtil.current(false)+"");
+		extras.put("addTime", DateUtil.current()+"");
 		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
 		return chatLog;
 	}
@@ -210,7 +210,7 @@ public class ChatServiceImpl implements ChatService {
 		extras.put("rid", "member-"+member.getId().toString());
 		extras.put("type", MemberRemindEnums.MemberRemindTypes.CHAT.getType().toString());
 		extras.put("content", JSONUtil.toJsonStr(targetLog));
-		extras.put("addTime", DateUtil.current(false)+"");
+		extras.put("addTime", DateUtil.current()+"");
 		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
 	}
 
@@ -254,6 +254,9 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public void readBySessionId(UmsMember member, Long sessionId) {
+		if(sessionId == null){
+			return;
+		}
 		ImChatSessionExample sessionExample = new ImChatSessionExample();
 		sessionExample.createCriteria().andMemberIdEqualTo(member.getId()).andIdEqualTo(sessionId);
 		ImChatSession updateSession = new ImChatSession();

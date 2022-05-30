@@ -44,7 +44,7 @@
       <el-table-column label="店铺类型"  align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.type == 2" style="color: red;">{{ scope.row.type | typeFilter }}</span>
-          <span v-if="scope.row.type == 3" style="color: green;">{{ scope.row.type | typeFilter }}</span>
+          <span v-else-if="scope.row.type == 3" style="color: green;">{{ scope.row.type | typeFilter }}</span>
           <span v-else>{{ scope.row.type | typeFilter }}</span>
         </template>
       </el-table-column>

@@ -36,6 +36,8 @@ public class ReportSearchForm {
 		if(DateUtil.betweenDay(dateFrom, dateTo, true) > 31){
 			throw new ServiceException("查询日期跨度不能超过31天");
 		}
+		this.dateFrom = DateUtil.beginOfDay(dateFrom);
+		this.dateTo = DateUtil.endOfDay(dateTo);
 	} 
 	
 	public void validateMonthRange() throws ServiceException{
@@ -48,5 +50,7 @@ public class ReportSearchForm {
 		if(DateUtil.betweenMonth(dateFrom, dateTo, true) > 12){
 			throw new ServiceException("查询月份跨度不能超过12个月");
 		}
-	} 
+		this.dateFrom = DateUtil.beginOfMonth(dateFrom);
+		this.dateTo = DateUtil.endOfMonth(dateTo);
+	}
 }
