@@ -48,28 +48,6 @@ public class AdminIndexCountResult {
     }
 
     @Getter
-    public enum IndexTakeCountEnums{
-        /**
-         * 后台首页已放单未接情况统计参数
-         * 淘宝已放单未接数量, 京东已放单未接数量, 拼多多已放单未接数量, 抖音已放单未接数量, 阿里巴巴已放单未接数量
-         */
-        UNTAKE_NUM("untakeNum", "总未接单"),
-        TB_UNTAKE_NUM("tbUntakeNum", "淘宝未接单"),
-        JD_UNTAKE_NUM("jdUntakeNum", "京东未接单"),
-        PDD_UNTAKE_NUM("pddUntakeNum","拼多多未接单"),
-        DY_UNTAKE_NUM("dyUntakeNum","抖音未接单"),
-        ALIBABA_UNTAKE_NUM("alibabaUntakeNum","阿里巴巴未接单");
-
-        private final String key;
-        private final String name;
-
-        IndexTakeCountEnums(String key, String name){
-            this.key = key;
-            this.name = name;
-        }
-    }
-
-    @Getter
     public enum IndexAmountEnums{
         /**
          * 后台首页统计参数

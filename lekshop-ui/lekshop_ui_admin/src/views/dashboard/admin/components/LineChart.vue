@@ -108,10 +108,10 @@ export default {
           }
         },
         legend: {
-          data: ['注册数量']
+          data: ['用户注册数量']
         },
         series: [{
-          name: '注册数量', itemStyle: {
+          name: '用户注册数量', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {

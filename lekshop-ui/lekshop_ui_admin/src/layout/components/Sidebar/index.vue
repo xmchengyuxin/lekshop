@@ -43,12 +43,12 @@ export default {
     },
     openPath(){
       let data = this.$store.state.user.menus;
-      var list = data.map(function (item) {
+      /* var list = data.map(function (item) {
           if(item.url == '/buyVerify' || item.url == '/sellerVerify' || item.url == '/member' || item.url == '/taskAdvances'){
             return item.url;
           }
-      });
-      return list
+      }); */
+      return data
       },
     },
     data() {

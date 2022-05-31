@@ -11,6 +11,9 @@
           &nbsp;&nbsp;&nbsp;&nbsp;上次登录IP：<span v-if="loginData.lastLoginIp">{{loginData.lastLoginIp}}</span>
           &nbsp;&nbsp;&nbsp;&nbsp;上次登录时间：<span v-if="loginData.lastLoginTime">{{loginData.lastLoginTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
           </span>
+          <p style="margin-top: 10px;">
+          温馨提示：后台订单列表仅供查看，如需发货、修改订单信息，或需要添加新商家，请注册账户登录 商家后台 操作
+          </p>
       </el-alert>
 
     <panel-group :panel-data="panelData"/>
@@ -28,33 +31,6 @@
         </div>
       </el-col>
     </el-row>
-
-    <!-- <el-row :gutter="12" >
-      <h3>平台利润
-        <el-tooltip class="item" effect="dark" content="利润=商家佣金-买手佣金-推广佣金-分站抽成" placement="top-start">
-          <i class="el-icon-question"></i>
-        </el-tooltip>
-      </h3>
-      <el-col style="margin-bottom:5px;">
-            <el-date-picker
-                  v-model="queryTime"
-                  type="daterange"
-                  align="right"
-                  unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  :picker-options="pickerOptions">
-                </el-date-picker>
-                <el-button class="filter-item" type="primary" icon="el-icon-search" circle @click="countPlatformIncome"></el-button>
-                <br>
-          <el-card shadow="hover" >
-              <div class="card-panel-text" >
-                <span style="color: red;font-size: 20px; font-weight: 600;">￥ {{platformIncome | moneyFormat}}</span>
-              </div>
-          </el-card>
-      </el-col>
-    </el-row> -->
 
     <el-row :gutter="12" >
       <h3>统计数据</h3>
@@ -75,21 +51,114 @@
       </el-col>
     </el-row>
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:10px;">
-      <line-chart :chart-data="lineChartData"/>
+    <el-row :gutter="12">
+      <el-col :xs="24" :sm="24" :lg="12">
+        <div class="chart-wrapper">
+          <line-chart :chart-data="lineChartData"/>
+        </div>
+      </el-col>
+      <el-col :span="4" v-for="item in numData" style="margin-bottom:5px;">
+        <div @click="$router.push(item.router)">
+          <el-card shadow="hover" >
+            <div class="card-panel-text" >
+              {{item.name}}
+            </div>
+            <br>
+            <count-to style="font-weight: 500;font-size: 20px;" :start-val="0" :end-val="item.num" :duration="2600" class="card-panel-num" />
+          </el-card>
+        </div>
+      </el-col>
     </el-row>
 
-    <!-- <el-row :gutter="12">
-      <el-col :xs="24" :sm="24" :lg="12">
-        <div class="chart-wrapper">
-          <pie-chart :pie-data="pieData"/>
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="12">
-        <div class="chart-wrapper">
-          <bar-chart :bar-data="barData"/>
-        </div>
-      </el-col>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:5px;">
+        <h4>本月门店销售排行</h4>
+    		<template>
+    			<el-table
+    				ref="shopTable"
+    				:data="shopData"
+    				highlight-current-row
+    				style="width: 100%">
+    				<el-table-column
+    					type="index"
+    					width="200"
+    					label="排行"
+    					align="center">
+    				</el-table-column>
+    				<el-table-column label="门店信息" prop="info" align="center">
+    				  <template slot-scope="scope">
+                 <el-popover trigger="hover" placement="top">
+                    <p>{{ scope.row.shopAddress }}</p>
+                    <div slot="reference" class="name-wrapper">
+                      <span class="link-type" size="medium">{{ scope.row.shopName }}</span>
+                    </div>
+                  </el-popover>
+    				  </template>
+    				</el-table-column>
+    				<el-table-column
+    					property="num"
+    					label="月销订单"
+    					align="center"
+    					>
+    					<template slot-scope="scope">
+    						<span style="color:red">{{ scope.row.num}}</span>
+    					</template>
+    				</el-table-column>
+    				<el-table-column
+    					property="totalAmount"
+    					label="月销金额"
+    					 align="center"
+    					>
+    					<template slot-scope="scope">
+    						<span style="color:red">¥{{ scope.row.totalAmount | moneyFormat}}</span>
+    					</template>
+    				</el-table-column>
+    			</el-table>
+    		</template>
+    </el-row>
+
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:5px;">
+      <h4>本月商品销售排行</h4>
+    		<template>
+    			<el-table
+    				ref="foodTable"
+    				:data="foodData"
+    				highlight-current-row
+    				style="width: 100%">
+    				<el-table-column
+    					type="index"
+    					width="200"
+    					label="排行"
+    					align="center">
+    				</el-table-column>
+    				<el-table-column label="商品信息" prop="info" align="center">
+    				  <template slot-scope="scope">
+                <el-image
+                     style="width: 50px; height: 50px; border-radius: 10%;"
+                     fit="cover"
+                     :src="scope.row.foodMainFile"></el-image>
+                <p>{{ scope.row.foodName }}</p>
+    				  </template>
+    				</el-table-column>
+    				<el-table-column
+    					property="num"
+    					label="月销"
+    					align="center"
+    					>
+    					<template slot-scope="scope">
+    						<span style="color:red">{{ scope.row.num}}</span>
+    					</template>
+    				</el-table-column>
+    				<el-table-column
+    					property="totalAmount"
+    					label="月销金额"
+    					 align="center"
+    					>
+    					<template slot-scope="scope">
+    						<span style="color:red">¥{{ scope.row.buyTotalPrice | moneyFormat}}</span>
+    					</template>
+    				</el-table-column>
+    			</el-table>
+    		</template>
     </el-row>
 
     <el-row :gutter="12">
@@ -98,7 +167,8 @@
           <chart :mix-data="mixData"/>
         </div>
       </el-col>
-    </el-row> -->
+    </el-row>
+
   </div>
 </template>
 

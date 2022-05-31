@@ -4,13 +4,16 @@ import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.enums.GoodsEnums;
 import com.chengyu.core.domain.form.OrderSearchForm;
+import com.chengyu.core.domain.result.OrderFreightResult;
 import com.chengyu.core.domain.result.OrderGroupResult;
 import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.service.order.OrderFreightService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.order.OrderService;
+import com.chengyu.core.service.shop.ShopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -30,6 +33,10 @@ public class MemberOrderController extends UserBaseController {
 	private OrderService orderService;
 	@Autowired
 	private OrderGroupService orderGroupService;
+	@Autowired
+	private ShopService shopService;
+	@Autowired
+	private OrderFreightService orderFreightService;
 
 	@ApiOperation(value = "获取订单列表")
 	@ResponseBody
@@ -48,12 +55,24 @@ public class MemberOrderController extends UserBaseController {
 	@RequestMapping(value={"/order/get"}, method=RequestMethod.GET)
 	public CommonResult<OrderResult> get(Integer orderId) throws ServiceException {
 		OrderResult result = orderService.getOrder(orderId);
+		result.setShopMemberId(shopService.getMemberByShopId(result.getOrder().getShopId()).getId());
 		if(result.getOrder().getType() == GoodsEnums.GoodsType.GROUP_GOODS.getValue()){
 			//团购商品查询团购人员
 			OrderGroupResult groupResult = orderGroupService.getOrderGroupByOrderNo(result.getOrder().getOrderNo());
 			result.setOrderGroup(groupResult.getOrderGroup());
 			result.setGroupMemberList(groupResult.getGroupMemberList());
 		}
+		return CommonResult.success(result);
+	}
+
+	@ApiOperation(value = "物流详情")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "orderId", value = "订单ID"),
+	})
+	@ResponseBody
+	@RequestMapping(value="/order/getFreightList", method=RequestMethod.GET)
+	public CommonResult<OrderFreightResult> getDeliveryList(Integer orderId) {
+		OrderFreightResult result = orderFreightService.getOrderFreight(orderId);
 		return CommonResult.success(result);
 	}
 

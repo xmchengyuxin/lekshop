@@ -68,8 +68,10 @@ public class IndexController extends AdminBaseController {
     @RequestMapping(value = "/countMember", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<Map<String, Object>> countMember() {
-        //会员数量,今日注册,接手数量,商家数量
+        //会员数量,今日注册,店铺数量, 商品数量
         Map<String,Object> result = adminIndexMapper.countMember();
+        Map<String,Object> goodsMap = adminIndexMapper.CountGoods();
+        result.putAll(goodsMap);
         return CommonResult.success(result);
     }
 
@@ -181,18 +183,6 @@ public class IndexController extends AdminBaseController {
         //身份证审核数量
         map.putAll(adminIndexMapper.countVerifyIdCardNum());
         return CommonResult.success(map);
-    }
-
-    @ApiOperation(value = "获取平台利润")
-    @RequestMapping(value = "/countPlatformIncome", method = RequestMethod.GET)
-    @ResponseBody
-    public CommonResult<BigDecimal> countPlatformIncome(Date dateFrom, Date dateTo) {
-        //利润=商家佣金-买手佣金-推广佣金-分站抽成
-        if(dateFrom == null || dateTo == null){
-            return CommonResult.failed("请选择开始时间和结束时间");
-        }
-        BigDecimal mission = BigDecimal.ZERO;
-        return CommonResult.success(mission);
     }
 
 }

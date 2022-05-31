@@ -33,4 +33,6 @@ public interface CustomAdminIndexMapper {
 	Map<String, Object> countWithdrawAmount();
 
 	Map<String, Object> countMemberAccount();
+
+	Map<String, Object> CountGoods();
 }

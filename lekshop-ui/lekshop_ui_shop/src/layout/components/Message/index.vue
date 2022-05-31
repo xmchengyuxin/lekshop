@@ -37,6 +37,11 @@
   import {getChatSessionList, deleteChatSession, getChatList, sendMsg, readBySession, countUnReadNum} from '@/api/chat'
   import {upload} from '@/api/system'
   import axios from 'axios'
+  import Vue from 'vue';
+  import LemonMessageGoods from './lemon-message-goods';
+  import LemonMessageOrder from './lemon-message-order';
+  Vue.component(LemonMessageGoods.name,LemonMessageGoods);
+  Vue.component(LemonMessageOrder.name,LemonMessageOrder);
 
   let IMUI;
   export default {
@@ -125,7 +130,7 @@
                   unread: item.unReadNum,
                   //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
                   //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
-                  lastContent: IMUI.lastContentRender({type:item.msgType, content:item.lastMsg}),
+                  lastContent: (item.msgType == 'goods' ||  item.msgType == 'order') ? '[自定义内容]' : IMUI.lastContentRender({type:item.msgType, content:item.lastMsg}),
                   //最近一条消息的发送时间
                   lastSendTime: item.updTime,
                 })
@@ -243,7 +248,11 @@
               if(msg.type == 'image'){
                 msgContent = '[图片]';
               }else if(msg.type == 'file'){
-                 msgContent = '[文件]';
+                msgContent = '[文件]';
+              }else if(msg.type == 'goods'){
+                msgContent = '[咨询商品]';
+              }else if(msg.type == 'order'){
+                msgContent = '[咨询订单]';
               }else{
                 msgContent = msg.content;
               }
@@ -267,6 +276,7 @@
                   duration: 5000,
                   offset: 100
                 });
+                IMUI.appendMessage(msg, true);
               }else{
                 IMUI.appendMessage(msg, true);
                 IMUI.setLastContentRender(msg.type, msg => {

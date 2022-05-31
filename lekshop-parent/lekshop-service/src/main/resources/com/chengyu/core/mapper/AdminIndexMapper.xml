@@ -7,10 +7,17 @@
 	    select
 	      	count(*) totalNum,
 	      	count((to_days(add_time) = to_days(now())) or null) todayMemberNum,
-	      	count((type = 1) or null) buyerNum,
 	      	count((type = 2) or null) sellerNum
       	from ums_member
       	where status = '1'
+	</select>
+
+	<!-- 总商品数 -->
+	<select id="countGoods" resultType="java.util.Map">
+		select
+		count(id) goodsNum
+		from pms_goods
+		where status in(1,2)
 	</select>
 
 	<!-- 统计最近10天的数据 -->

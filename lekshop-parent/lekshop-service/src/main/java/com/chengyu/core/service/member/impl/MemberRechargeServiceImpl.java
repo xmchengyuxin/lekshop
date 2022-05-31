@@ -212,6 +212,7 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 		recharge.setStatus(CommonConstant.WAIT);
 		rechargeMapper.insertSelective(recharge);
 
+		this.rechargSusByCallback(recharge);
 		return null;
 	}
 

@@ -254,17 +254,22 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public void readBySessionId(UmsMember member, Long sessionId) {
-		if(sessionId == null){
-			return;
-		}
 		ImChatSessionExample sessionExample = new ImChatSessionExample();
-		sessionExample.createCriteria().andMemberIdEqualTo(member.getId()).andIdEqualTo(sessionId);
+		ImChatSessionExample.Criteria criteria = sessionExample.createCriteria();
+		criteria.andMemberIdEqualTo(member.getId());
+		if(sessionId != null){
+			criteria.andIdEqualTo(sessionId);
+		}
 		ImChatSession updateSession = new ImChatSession();
 		updateSession.setUnReadNum(0);
 		chatSessionMapper.updateByExampleSelective(updateSession, sessionExample);
 
 		ImChatLogExample logExample = new ImChatLogExample();
-		logExample.createCriteria().andMemberIdEqualTo(member.getId()).andSessionIdEqualTo(sessionId).andReadStatusEqualTo(CommonConstant.NO_INT);
+		ImChatLogExample.Criteria logCriteria = logExample.createCriteria();
+		logCriteria.andMemberIdEqualTo(member.getId()).andReadStatusEqualTo(CommonConstant.NO_INT);
+		if(sessionId != null){
+			logCriteria.andIdEqualTo(sessionId);
+		}
 		ImChatLog updateLog = new ImChatLog();
 		updateLog.setReadStatus(CommonConstant.YES_INT);
 		chatLogMapper.updateByExampleSelective(updateLog, logExample);

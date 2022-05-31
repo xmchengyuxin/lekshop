@@ -35,4 +35,6 @@ public class GoodsSearchForm {
 
 	private Integer status;
 
+	private Integer spreadStatus;
+
 }

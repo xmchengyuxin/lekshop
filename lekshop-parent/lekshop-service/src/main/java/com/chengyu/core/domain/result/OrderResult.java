@@ -20,4 +20,7 @@ public class OrderResult {
 	private OmsOrderGroup orderGroup;
 
 	private List<OmsOrderGroupMember> groupMemberList;
+
+	//用于聊天
+	private Integer shopMemberId;
 }
