@@ -1,7 +1,6 @@
 package com.chengyu.core.controller.common;
 
 import com.chengyu.core.controller.ShopBaseController;
-import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;

@@ -11,7 +11,7 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
-        <message />
+       <message ref="immessage"/>
     </div>
   </div>
 </template>
@@ -55,6 +55,13 @@ export default {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
+  },
+  created(){
+    const self = this;
+    self.socket.creatSocket();
+    self.$nextTick(() => {
+      self.socket.setDom(self.$refs.immessage);
+    })
   }
 }
 </script>

@@ -28,13 +28,17 @@ public class AdminIndexCountResult {
     public enum IndexCountEnums{
         /**
          * 后台首页统计参数
-         * 身份证待审核, 待审核银行, 待审核充值, 待审核提现, 待处理申诉, 待审核买号, 待审核店铺, 总任务数量, 已完成任务
-         * 淘宝未接数量, 淘宝已完成数量, 淘宝总任务, 京东未接数量, 京东已完成, 京东总任务, 拼多多未接, 拼多多已完成, 拼多多总任务
+         * 待处理提现, 待付款， 待发货， 待收货， 售后订单， 总订单数，总订单金额， 商品总访问数，在售SKU总量
          */
-        IDCARD_VERIFY("idcardVerifyNum", "待审核身份证", "/member/realname"),
-        BANK_VERIFY("bankVerifyNum", "待审核银行", "/member/bank"),
-        RECHARGE_VERIFY("rechargeVerifyNum","待审核充值", "/fund/recharge"),
-        WITHDRAW_VERIFY("withdrawVerifyNum","待审核提现", "/fund/withdraw");
+        WITHDRAW_VERIFY("withdrawVerifyNum","待处理提现", "/fund/withdraw"),
+        WAIT_PAY("waitPayNum","待付款", "/order/list"),
+        WAIT_DELIVERY("waitDeliveryNum","待发货", "/order/list"),
+        WAIT_RECEIVE("waitReceiveNum","待收货", "/order/list"),
+        REFUND_ORDER("refundNum","售后订单", "/order/refund"),
+        TOTAL_ORDER("totalOrderNum","总订单数", "/order/list"),
+        ORDER_AMOUNT("orderAmount","总订单金额", "/order/list"),
+        GOODS_VIEW_NUM("goodsViewNum","商品总访问数", "/goods/list"),
+        SKU_NUM("skuNum","在售SKU总量", "/goods/list");
 
         private final String key;
         private final String name;
@@ -51,17 +55,14 @@ public class AdminIndexCountResult {
     public enum IndexAmountEnums{
         /**
          * 后台首页统计参数
-         * 充值总额, 提现总额, 所有用户账号总余额, 所有用户账号总发布点, 所有用户账号总佣金, 所有任务总金额, 所有任务服务费
-         * 未完成任务发布点共计, 所有任务发布点共计, 所有任务实付金额, 未完成任务实付金额共计, 所有加入商保服务, 未收货评价审核任务金额
-         * 未接手和未付款任务金额, 未接手和未付款任务发布点
          */
         TODAY_WITHDRAW_AMOUNT("todayWithdrawAmount", "今日审核提现", "已提现"),
-        YESTODAY_WITHDRAW_AMOUNT("yestodayWithdrawAmount", "昨日审核提现", "已提现"),
-        RECHARGE_AMOUNT("rechargeAmount", "充值总额", "总收入"),
+        /*YESTODAY_WITHDRAW_AMOUNT("yestodayWithdrawAmount", "昨日审核提现", "已提现"),*/
+        RECHARGE_AMOUNT("rechargeAmount", "充值总额", "已充值"),
         WITHDRAW_AMOUNT("withdrawAmount", "提现总额", "已提现"),
-        TOTAL_BALANCE("totalBalance","总余额", "未提现"),
-        TOTAL_MISSION("totalMission","总佣金", "未提现"),
-        TOTAL_SPMISSION("totalSpmission","总推广佣金", "未提现");
+        TOTAL_BALANCE("totalBalance","总余额", "未提现");
+        /*TOTAL_MISSION("totalMission","总佣金", "未提现"),
+        TOTAL_SPMISSION("totalSpmission","总推广佣金", "未提现");*/
 
         private final String key;
         private final String name;

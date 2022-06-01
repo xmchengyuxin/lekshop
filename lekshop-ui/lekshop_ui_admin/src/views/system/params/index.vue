@@ -32,12 +32,12 @@
             <el-input v-model="config.kefu_tel"></el-input>
         </el-descriptions-item>
 
-        <el-descriptions-item>
+        <!-- <el-descriptions-item>
           <template slot="label">
            在线客服网址
           </template>
             <el-input v-model="config.kefu_url"></el-input>
-        </el-descriptions-item>
+        </el-descriptions-item> -->
 
         <el-descriptions-item>
           <template slot="label">
@@ -80,6 +80,22 @@
 
         <el-descriptions-item>
           <template slot="label">
+           国际语言
+          </template>
+          <el-select v-model="config.language" placeholder="请选择">
+              <el-option
+                v-for="item in languageOptions"
+                :key="item.key"
+                :label="item.text"
+                :value="item.key">
+              </el-option>
+            </el-select>
+            <span class="tips">*修改语言设置仅能修改用户小程序，H5，App端的语言，后台和商家后台仅支持中文</span>
+        </el-descriptions-item>
+
+
+        <el-descriptions-item>
+          <template slot="label">
            操作
           </template>
             <el-button type="primary" @click="confirm">保存</el-button>
@@ -103,6 +119,14 @@ import { parseTime, renderTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import ImageSource from '@/components/Upload/imageSource'
 
+const languageOptions = [
+  { key: 'all', text: '用户自主选择' },
+  { key: 'folowSystem', text: '跟随手机系统' },
+  { key: 'zh_CN', text: '简体中文' },
+  { key: 'zh_TW', text: '繁体中文' },
+  { key: 'en_US', text: '英文' },
+]
+
 export default {
   name: 'configTable',
   components: { Pagination, Upload, ImageSource },
@@ -123,7 +147,8 @@ export default {
 			multipleSelection: [],
 			dialogImageUrl:'',
 			dialogVisible:false,
-      uploadUrl:process.env.VUE_APP_BASE_API+"/system/uploadSyjapk"
+      uploadUrl:process.env.VUE_APP_BASE_API+"/system/uploadSyjapk",
+      languageOptions
     }
   },
   created() {

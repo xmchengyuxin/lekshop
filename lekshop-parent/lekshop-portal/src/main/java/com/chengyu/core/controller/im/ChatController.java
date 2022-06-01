@@ -2,6 +2,7 @@ package com.chengyu.core.controller.im;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.domain.result.CustomerConstatnt;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "聊天")
 @Controller
@@ -28,6 +31,16 @@ public class ChatController extends UserBaseController {
 	
 	@Autowired
 	private ChatService chatService;
+
+	@ApiOperation(value = "获取人工客服和智能客服的ID")
+	@ResponseBody
+	@RequestMapping(value="/chat/getCustomerId", method=RequestMethod.GET)
+	public CommonResult<Map<String,Object>> getCustomerId() {
+		Map<String,Object> result = new HashMap<>();
+		result.put("customerMemberId", CustomerConstatnt.MEMBER_ID);
+		result.put("customerAdminId", CustomerConstatnt.ADMIN_MEMBER_ID);
+		return CommonResult.success(result);
+	}
 
 	@ApiOperation(value = "初始化聊天")
 	@ResponseBody

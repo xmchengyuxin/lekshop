@@ -53,3 +53,26 @@ export function countPlatformIncome(data) {
 		params: data
   })
 }
+
+export function getShopSellList(data) {
+  return request({
+    url: 'system/getShopSellList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getGoodsSellList(data) {
+  return request({
+    url: 'system/getGoodsSellList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getConversionReport() {
+  return request({
+    url: 'system/getConversionReport',
+    method: 'get'
+  })
+}

@@ -9,6 +9,7 @@ const state = {
   introduction: '',
   roles: [],
 	menus: [],
+   wsId: ''
 }
 
 const mutations = {
@@ -35,6 +36,9 @@ const mutations = {
   },
   SET_BRAND_LOGO: (state, brandLogo) => {
     state.brandLogo = brandLogo
+  },
+  SET_WS_ID: (state, wsId) => {
+    state.wsId = wsId
   },
 }
 
@@ -74,8 +78,7 @@ const mutations = {
           commit('SET_NAME', data.admin.name)
           commit('SET_AVATAR', data.admin.headImg )
           commit('SET_MENUS', data.menus )
-          commit('SET_BRAND_NAME', data.brandName )
-          commit('SET_BRAND_LOGO', data.brandLogo )
+          commit('SET_WS_ID', 'member-'+data.memberId )
           //commit('SET_INTRODUCTION', data.introduction)
           resolve(data)
         }).catch(error => {

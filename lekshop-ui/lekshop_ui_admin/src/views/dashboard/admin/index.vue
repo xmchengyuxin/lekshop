@@ -15,10 +15,9 @@
           温馨提示：后台订单列表仅供查看，如需发货、修改订单信息，或需要添加新商家，请注册账户登录 商家后台 操作
           </p>
       </el-alert>
-
     <panel-group :panel-data="panelData"/>
 
-    <el-row :gutter="12" >
+    <!-- <el-row :gutter="12" >
       <el-col :span="4" v-for="item in numData" style="margin-bottom:5px;">
         <div @click="$router.push(item.router)">
           <el-card shadow="hover" >
@@ -30,11 +29,11 @@
           </el-card>
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <el-row :gutter="12" >
-      <h3>统计数据</h3>
-      <el-col :span="6" v-for="item in amountData" style="margin-bottom:5px;">
+      <!-- <h3>统计数据</h3> -->
+      <el-col :span="6" v-for="item in amountData" style="margin-bottom:10px;">
           <el-card shadow="hover" >
               <div class="card-panel-text" >
             <span style="color: red;font-size: 20px; font-weight: 600;">￥ {{item.amount | moneyFormat}}</span>
@@ -57,10 +56,11 @@
           <line-chart :chart-data="lineChartData"/>
         </div>
       </el-col>
-      <el-col :span="4" v-for="item in numData" style="margin-bottom:5px;">
+      <el-col :span="4" v-for="item in numData" style="margin-bottom:10px;">
         <div @click="$router.push(item.router)">
-          <el-card shadow="hover" >
-            <div class="card-panel-text" >
+          <el-card shadow="hover" style="padding: 10px; background-image: linear-gradient(180deg,#f5f8ff,#fff);
+          box-shadow: inset 0 1px 3px 0 hsl(0deg 0% 100% / 50%) " >
+            <div class="card-panel-text">
               {{item.name}}
             </div>
             <br>
@@ -70,8 +70,9 @@
       </el-col>
     </el-row>
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:5px;">
-        <h4>本月门店销售排行</h4>
+    <el-row style="margin-bottom:5px;" :gutter="12">
+       <el-col style="width: 50%;">
+        <h4>本月店铺销售排行</h4>
     		<template>
     			<el-table
     				ref="shopTable"
@@ -80,11 +81,11 @@
     				style="width: 100%">
     				<el-table-column
     					type="index"
-    					width="200"
+    					width="50"
     					label="排行"
     					align="center">
     				</el-table-column>
-    				<el-table-column label="门店信息" prop="info" align="center">
+    				<el-table-column label="店铺信息" prop="info">
     				  <template slot-scope="scope">
                  <el-popover trigger="hover" placement="top">
                     <p>{{ scope.row.shopAddress }}</p>
@@ -98,6 +99,7 @@
     					property="num"
     					label="月销订单"
     					align="center"
+              width="100"
     					>
     					<template slot-scope="scope">
     						<span style="color:red">{{ scope.row.num}}</span>
@@ -107,58 +109,58 @@
     					property="totalAmount"
     					label="月销金额"
     					 align="center"
+               width="100"
     					>
     					<template slot-scope="scope">
-    						<span style="color:red">¥{{ scope.row.totalAmount | moneyFormat}}</span>
+    						<span style="color:red">{{ scope.row.totalAmount | moneyFormat}}</span>
     					</template>
     				</el-table-column>
     			</el-table>
     		</template>
-    </el-row>
+        </el-col>
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:5px;">
-      <h4>本月商品销售排行</h4>
-    		<template>
-    			<el-table
-    				ref="foodTable"
-    				:data="foodData"
-    				highlight-current-row
-    				style="width: 100%">
-    				<el-table-column
-    					type="index"
-    					width="200"
-    					label="排行"
-    					align="center">
-    				</el-table-column>
-    				<el-table-column label="商品信息" prop="info" align="center">
-    				  <template slot-scope="scope">
-                <el-image
-                     style="width: 50px; height: 50px; border-radius: 10%;"
-                     fit="cover"
-                     :src="scope.row.foodMainFile"></el-image>
-                <p>{{ scope.row.foodName }}</p>
-    				  </template>
-    				</el-table-column>
-    				<el-table-column
-    					property="num"
-    					label="月销"
-    					align="center"
-    					>
-    					<template slot-scope="scope">
-    						<span style="color:red">{{ scope.row.num}}</span>
-    					</template>
-    				</el-table-column>
-    				<el-table-column
-    					property="totalAmount"
-    					label="月销金额"
-    					 align="center"
-    					>
-    					<template slot-scope="scope">
-    						<span style="color:red">¥{{ scope.row.buyTotalPrice | moneyFormat}}</span>
-    					</template>
-    				</el-table-column>
-    			</el-table>
-    		</template>
+        <el-col style="width: 50%;">
+          <h4>本月商品销售排行</h4>
+          	<template>
+          		<el-table
+          			ref="foodTable"
+          			:data="goodsData"
+          			highlight-current-row
+          			style="width: 100%">
+          			<el-table-column
+          				type="index"
+          				width="50"
+          				label="排行"
+          				align="center">
+          			</el-table-column>
+          			<el-table-column label="商品信息" prop="info">
+          			  <template slot-scope="scope">
+                    <p class="line1">{{ scope.row.goodsName }}</p>
+          			  </template>
+          			</el-table-column>
+          			<el-table-column
+          				property="num"
+          				label="月销"
+          				align="center"
+                  width="100"
+          				>
+          				<template slot-scope="scope">
+          					<span style="color:red">{{ scope.row.num}}</span>
+          				</template>
+          			</el-table-column>
+          			<el-table-column
+          				property="totalAmount"
+          				label="月销金额"
+          				 align="center"
+                   width="100"
+          				>
+          				<template slot-scope="scope">
+          					<span style="color:red">{{ scope.row.buyTotalPrice | moneyFormat}}</span>
+          				</template>
+          			</el-table-column>
+          		</el-table>
+          	</template>
+        </el-col>
     </el-row>
 
     <el-row :gutter="12">
@@ -173,7 +175,7 @@
 </template>
 
 <script>
-import {countMember, getOrderAddList, countNumber, countAmount, getLoginInfo, countPlatformIncome} from '@/api/index'
+import {countMember, getOrderAddList, countNumber, countAmount, getLoginInfo, getShopSellList, getGoodsSellList, getConversionReport} from '@/api/index'
 import PanThumb from '@/components/PanThumb'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
@@ -239,7 +241,9 @@ export default {
       barData:{},
       mixData:[],
       loginData:{},
-      platformIncome: 0
+      platformIncome: 0,
+      shopData: [],
+      goodsData: []
     }
   },
 	created() {
@@ -275,80 +279,25 @@ export default {
         this.amountData = result
       })
 
-      // this.countPlatformIncome();
-		},
-    countPlatformIncome(){
-      if(!this.queryTime || this.queryTime.length != 2){
-        this.$notify({
-          title: '失败',
-          message: '请先选择查询时间',
-          type: 'error',
-          duration: 2000
-        })
-        return;
-      }
-      let formData = {
-        dateFrom : renderTime(this.queryTime[0]),
-        dateTo : renderTime(this.queryTime[1]),
-      }
-      countPlatformIncome(formData).then(response => {
+      getConversionReport().then(response => {
       	const result = response.data
-        this.platformIncome = result
+        this.mixData = result
       })
-    }
-    /* audioPlay() {
-        const self = this;
-        let audio = document.getElementById('audio-tip');
-        let num = 0;
-        audio.addEventListener("canplay", function() { //监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
-        clearInterval(interval)
-          interval = setInterval(function() {
-            num++;
-            countOrder().then(response => {
-                self.orderData = Object.assign({}, response.data)
-                if (self.orderData.waitDisNum > 0) {
-                  audio.pause();
-                  audio.play();
-                  document.getElementById('message-icon').classList.add('show-animate');
-                }else{
-                  document.getElementById('message-icon').classList.remove('show-animate');
-                }
-            });
-          }, 30000);
-        });
 
-      },
-  audioExceptionPlay() {
-        const self = this;
-        let audio = document.getElementById('audio-exception');
-        let num = 0;
-        audio.addEventListener("canplay", function() { //监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
-        clearInterval(exceptionInterval)
-          exceptionInterval = setInterval(function() {
-            num++;
-            countException().then(response => {
-                let exceptionData = Object.assign({}, response.data)
-                if (exceptionData.exceptionNum > 0) {
-                  audio.pause();
-                  audio.play();
-                  document.getElementById('exception-icon').classList.add('show-animate');
-                }else{
-                  document.getElementById('exception-icon').classList.remove('show-animate');
-                }
-            });
-          }, 60000);
-        });
+      getShopSellList().then(response => {
+      	const result = response.data
+        this.shopData = result
+      })
 
-      }, */
+      getGoodsSellList().then(response => {
+      	const result = response.data
+        this.goodsData = result
+      })
+
+		},
 
   },
   mounted() {
-    const self = this;
-    this.$nextTick(function() {
-      // self.audioPlay();
-      // self.audioExceptionPlay();
-    })
-
   },
 }
 </script>

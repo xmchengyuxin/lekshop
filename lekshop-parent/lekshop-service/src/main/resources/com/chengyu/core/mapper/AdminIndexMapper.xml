@@ -87,4 +87,61 @@
       	from ums_member_account
 	</select>
 
+	<!-- 统计订单 待付款， 待发货， 待收货， 总订单数，总订单金额-->
+	<select id="countOrder" resultType="java.util.Map">
+		select
+			count(status = 0 or null) as waitPayNum,
+			count(status = 1 or null) as waitDeliveryNum,
+			count(status = 2 or null) as waitReceiveNum,
+			count(status in(1,2,3) or null) as totalOrderNum,
+			ifnull(sum(if(status in(1,2,3), pay_price,0)),0) as orderAmount
+		from oms_order
+		where del_ind = 0
+	</select>
+
+	<!-- 统计售后订单-->
+	<select id="countRefund" resultType="java.util.Map">
+		select
+			count(id) as refundNum
+		from oms_order_refund
+		where status != 6
+	</select>
+
+	<!-- 统计商品访问次数-->
+	<select id="countViewGoods" resultType="java.util.Map">
+		select
+			count(id) as goodsViewNum
+		from ums_member_view_goods
+	</select>
+
+	<!--在售SKU总量-->
+	<select id="countSku" resultType="java.util.Map">
+		select
+			count(id) as skuNum
+		from pms_goods_sku
+	</select>
+
+	<!-- 统计本月门店销售排行 -->
+	<select id="getShopSellRankList" resultType="java.util.Map">
+		select
+			shop_id as shopId, shop_name as shopName,
+			sum(total_price) totalAmount,
+			count(*) num
+		from oms_order
+		where status in (1,2,3) and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+		group by shop_id order by sum(total_price) desc limit 10
+	</select>
+
+	<!-- 统计本月商品销售排行 -->
+	<select id="getGoodsSellRankList" resultType="java.util.Map">
+		select
+			goods_name as goodsName, goods_main_img as goodsMainImg,
+			sum(buy_total_price) buyTotalPrice,
+			sum(buy_num) num
+		from oms_order_detail
+		where status in (1,2,3) and add_time &gt;= #{beginTime} and add_time &lt;= #{endTime}
+		group by goods_id order by sum(buy_num) desc limit 10
+	</select>
+
+
 </mapper>

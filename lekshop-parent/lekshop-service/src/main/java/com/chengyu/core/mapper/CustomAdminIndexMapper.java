@@ -1,5 +1,8 @@
 package com.chengyu.core.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,5 +37,21 @@ public interface CustomAdminIndexMapper {
 
 	Map<String, Object> countMemberAccount();
 
-	Map<String, Object> CountGoods();
+	Map<String, Object> countGoods();
+
+	Map<String, Object> countOrder();
+
+	Map<String, Object> countRefund();
+
+	Map<String, Object> countSku();
+
+	Map<String, Object> countViewGoods();
+
+	List<Map<String,Object>> getShopSellRankList(
+			@Param("beginTime") Date beginTime,
+			@Param("endTime") Date endTime);
+
+	List<Map<String,Object>> getGoodsSellRankList(
+			@Param("beginTime") Date beginTime,
+			@Param("endTime") Date endTime);
 }

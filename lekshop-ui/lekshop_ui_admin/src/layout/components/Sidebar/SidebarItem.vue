@@ -3,8 +3,7 @@
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item ref="leftMenu" :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item v-if="verifyData && onlyOneChild != '' && verifyData[onlyOneChild.name]" :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="generateTitle(onlyOneChild.meta.title)" :num="verifyData[onlyOneChild.name]"  />
-          <item v-else :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="generateTitle(onlyOneChild.meta.title)" :num="verifyData[onlyOneChild.name]"  />
+          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="generateTitle(onlyOneChild.meta.title)" />
         </el-menu-item>
       </app-link>
     </template>
@@ -20,7 +19,6 @@
         :item="child"
         :base-path="resolvePath(child.path)"
         class="nest-menu"
-        :verify-data="verifyData"
       />
     </el-submenu>
   </div>
@@ -53,7 +51,6 @@ export default {
       type: String,
       default: ''
     },
-    verifyData: '',
   },
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237

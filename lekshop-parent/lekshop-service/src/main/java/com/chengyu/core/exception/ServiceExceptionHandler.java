@@ -2,8 +2,10 @@ package com.chengyu.core.exception;
 
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.entity.CommonResult;
+import com.chengyu.core.i18n.LocaleMessageSourceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ServiceExceptionHandler{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServiceExceptionHandler.class);
+
+	@Autowired
+	private LocaleMessageSourceUtil messageSourceUtil;
 	
 	@SuppressWarnings("rawtypes")
 	@ExceptionHandler(Exception.class)
@@ -27,17 +32,18 @@ public class ServiceExceptionHandler{
 				if(CommonConstant.LOGIN_EXPIRED.equals(e.getMessage())){
 					return CommonResult.unauthorized(null);
 				}else if(e.getMessage().contains(CommonConstant.WARN_MSG)){
-					return CommonResult.weakMessage(e.getMessage().replace(CommonConstant.WARN_MSG, ""));
+					String msg = e.getMessage().replace(CommonConstant.WARN_MSG, "");
+					return CommonResult.weakMessage(messageSourceUtil.getMessage(msg, ((ServiceException) e).getParams()));
 				}else{
-					return CommonResult.failed(e.getMessage());
+					return CommonResult.failed(messageSourceUtil.getMessage(e.getMessage(), ((ServiceException) e).getParams()));
 				}
 			}
 		}else if(e instanceof UsernameNotFoundException){
 			LOGGER.info("全局异常捕获>>找不到用户名");
-			return CommonResult.failed("用户名密码错误");
+			return CommonResult.failed(messageSourceUtil.getMessage("username.notfound"));
 		}
 		LOGGER.error(e.getMessage(),e);
 
-		return CommonResult.failed("网络开小差~");
+		return CommonResult.failed(messageSourceUtil.getMessage("network.error"));
     }
 }

@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,6 @@ public class MemberAccountLogServiceImpl implements MemberAccountLogService {
 	@Override
 	public List<UmsMemberAccountLog> getAccountLog(AccountSearchForm form, Integer page, Integer pageSize){
 		PageHelper.startPage(page, pageSize);
-		
 		UmsMemberAccountLogExample example = new UmsMemberAccountLogExample();
 		example.setOrderByClause("add_time desc, id desc");
 		UmsMemberAccountLogExample.Criteria criteria = example.createCriteria();
