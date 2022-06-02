@@ -55,7 +55,7 @@ public class RegisterController extends UserBaseController {
 		member.setType(regParam.getType());
 		member.setCode(regParam.getUsername().trim());
 		member.setNickname(DesensitizedUtil.mobilePhone(regParam.getUsername()));
-		member.setPhone(regParam.getPhone());
+		member.setPhone(regParam.getUsername());
 		member.setPassword(regParam.getPassword());
 		member.setQq(regParam.getQq());
 		if(StringUtils.isNotBlank(regParam.getInviteCode())){

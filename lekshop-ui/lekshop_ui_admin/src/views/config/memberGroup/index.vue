@@ -86,7 +86,7 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane label="实名认证设置" name="fourth">
+        <!-- <el-tab-pane label="实名认证设置" name="fourth">
           <el-form ref="realnameForm" :model="realnameConfig" label-width="210px" label-position="right">
             <el-form-item label="是否开启实名认证" prop="realnameStatus" :rules="[{ required: true, message: '请选择是否开启', trigger: 'change' }]">
                 <el-switch :active-value="1" :inactive-value="0" v-model="realnameConfig.realnameStatus"></el-switch>
@@ -123,7 +123,7 @@
             <!-- <el-form-item label="是否验证银行预留手机号" prop="bankPhoneStatus" :rules="[{ required: true, message: '请选择是否开启', trigger: 'change' }]">
                 <el-switch :active-value="1" :inactive-value="0" v-model="realnameConfig.bankPhoneStatus"></el-switch>
                 <span class="tips">*开启后，认证的手机号码必需是银行预留的手机号，并且要接收短信验证码认证，如果关闭则不验证银行预留手机号</span>
-            </el-form-item> -->
+            </el-form-item> 
             <el-form-item label="第三方接口实时认证收费" prop="chargeNum" :rules="[{ required: true, message: '请填写第三方接口实时认证收费', trigger: 'blur' }]">
                 第 <el-input v-model="realnameConfig.chargeNum" style="width: 100px;"></el-input> 次起收费
                 &nbsp;&nbsp; <el-input v-model="realnameConfig.chargeFee" style="width: 100px;"></el-input> 元/次
@@ -133,7 +133,7 @@
               <el-button type="primary" @click="updateConfig">保存</el-button>
             </el-form-item>
           </el-form>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane label="邀请注册设置" name="five">
 
           <el-form ref="inviteCodeForm" :model="inviteCodeConfig" label-width="210px" label-position="right">

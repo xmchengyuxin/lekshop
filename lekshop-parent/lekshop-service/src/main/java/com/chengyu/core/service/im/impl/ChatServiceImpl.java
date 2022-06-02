@@ -15,6 +15,9 @@ import com.chengyu.core.mapper.ImChatSessionMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberService;
+import com.chengyu.core.service.schedule.ScheduleService;
+import com.chengyu.core.service.schedule.job.RobotAnswerJob;
+import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.util.RedisUtil;
 import com.chengyu.core.util.netty.NettyPushUtil;
 import com.chengyu.core.utils.StringUtils;
@@ -44,6 +47,8 @@ public class ChatServiceImpl implements ChatService {
 	private BaseMapper baseMapper;
 	@Autowired
 	private CustomChatMapper customChatMapper;
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@Override
 	public Long initChatSession(UmsMember member, UmsMember targetMember) {
@@ -132,7 +137,7 @@ public class ChatServiceImpl implements ChatService {
 		chatLog.setMsgContent(content);
 		chatLog.setReadStatus(CommonConstant.YES_INT);
 		chatLog.setSendStatus(CommonConstant.NO_INT);
-		chatLog.setSendTime(DateUtil.date());
+		chatLog.setSendTime(DateUtil.offsetSecond(DateUtil.date(),5));
 		chatLog.setUpdTime(chatLog.getSendTime());
 		chatLog.setSessionId(sessionId);
 		chatLog.setMemberId(member.getId());
@@ -211,7 +216,7 @@ public class ChatServiceImpl implements ChatService {
 		extras.put("type", MemberRemindEnums.MemberRemindTypes.CHAT.getType().toString());
 		extras.put("content", JSONUtil.toJsonStr(targetLog));
 		extras.put("addTime", DateUtil.current()+"");
-		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
+		scheduleService.scheduleFixTimeJob(RobotAnswerJob.class, DateUtil.offsetSecond(targetLog.getSendTime(), 5), JSONUtil.toJsonStr(extras));
 	}
 
 	private UmsMember getMemberByRds(Integer memberId){

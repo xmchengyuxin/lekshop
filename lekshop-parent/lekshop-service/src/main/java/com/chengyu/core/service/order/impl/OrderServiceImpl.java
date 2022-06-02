@@ -2,6 +2,7 @@ package com.chengyu.core.service.order.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.NumberUtil;
@@ -16,12 +17,14 @@ import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.*;
 import com.chengyu.core.model.*;
+import com.chengyu.core.service.config.ConfigMissionService;
 import com.chengyu.core.service.config.ConfigOrderService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.member.*;
 import com.chengyu.core.service.order.*;
 import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
+import com.chengyu.core.service.schedule.job.OrderAutoCommentJob;
 import com.chengyu.core.service.shop.ShopConfigService;
 import com.chengyu.core.service.shop.ShopFreightService;
 import com.chengyu.core.service.shop.ShopService;
@@ -35,9 +38,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -92,6 +93,12 @@ public class OrderServiceImpl implements OrderService {
 	private MemberNewsService memberNewsService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private OmsOrderCommentMapper orderCommentMapper;
+	@Autowired
+	private OmsOrderRefundMapper orderRefundMapper;
+	@Autowired
+	private ConfigMissionService configMissionService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -543,12 +550,14 @@ public class OrderServiceImpl implements OrderService {
 		memberAccountLogService.inAccount(shopMember, AccountEnums.MemberAccountTypes.ACCOUNT_TRADE_IN, order.getOrderNo(), order.getPayPrice(),
 				"商品交易收款", null);
 
+		//分销收益
+		UmsMember member = memberService.getMemberById(order.getMemberId());
+		this.settleDistribution(member, order.getOrderNo(), order.getPayPrice());
 		//添加自动评价定时器
 		orderCommentService.initComment(detailList);
-		taskTriggerService.addTrigger(OrderAutoCancelJob.class, updateOrder.getCommentExpiredTime(), order.getOrderNo());
+		taskTriggerService.addTrigger(OrderAutoCommentJob.class, updateOrder.getCommentExpiredTime(), order.getOrderNo());
 
 		//订单评价提醒
-		UmsMember member = memberService.getMemberById(order.getMemberId());
 		UmsShop shop = shopService.getShopById(order.getShopId());
 		OmsOrderDetail firstGoods = detailList.get(0);
 		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_COMMENT_REMIND);
@@ -565,6 +574,48 @@ public class OrderServiceImpl implements OrderService {
 		newsForm.replace("#goodsName#", firstGoods.getGoodsName());
 		newsForm.setImg(firstGoods.getGoodsMainImg());
 		memberNewsService.addMemberNews(member, newsForm);
+	}
+
+	private void settleDistribution(UmsMember member, String orderNo, BigDecimal payPrice) throws ServiceException {
+		if(member.getTjrId() != null) {
+			UmsMember tjMember1 = memberService.getMemberById(member.getTjrId());
+			ConfigMissionDetail buyerConfigMissionDetail = configMissionService.getConfigMissionDetail(tjMember1.getMissionConfigId(), tjMember1.getGroupId());
+			if (buyerConfigMissionDetail != null && DateUtil.between(member.getAddTime(), DateUtil.date(), DateUnit.DAY) <= buyerConfigMissionDetail.getBuyerValidDay()) {
+				BigDecimal reward = (buyerConfigMissionDetail.getMissionType() == null || buyerConfigMissionDetail.getMissionType() == 1) ?
+						NumberUtil.mul(payPrice, buyerConfigMissionDetail.getBuyerFinishRateOne().divide(new BigDecimal(100)))
+						: buyerConfigMissionDetail.getBuyerFinishRateOne();
+				if (reward.compareTo(BigDecimal.ZERO) > 0) {
+					memberAccountLogService.inAccount(tjMember1, AccountEnums.MemberAccountTypes.ACCOUNT_SPREAD, orderNo,
+							reward,"下级消费获得佣金", null);
+				}
+				if (tjMember1.getTjrId() != null) {
+					UmsMember tjMember2 = memberService.getMemberById(tjMember1.getTjrId());
+					ConfigMissionDetail buyerConfigMissionDetail2 = configMissionService.getConfigMissionDetail(tjMember2.getMissionConfigId(), tjMember2.getGroupId());
+					if (buyerConfigMissionDetail2 != null) {
+						reward = (buyerConfigMissionDetail2.getMissionType() == null || buyerConfigMissionDetail2.getMissionType() == 1) ?
+								NumberUtil.mul(reward, buyerConfigMissionDetail2.getBuyerFinishRateTwo().divide(new BigDecimal(100)))
+								: buyerConfigMissionDetail2.getBuyerFinishRateTwo();
+						if (reward.compareTo(BigDecimal.ZERO) > 0) {
+							memberAccountLogService.inAccount(tjMember2, AccountEnums.MemberAccountTypes.ACCOUNT_SPREAD, orderNo,
+									reward,"二级消费获得佣金", null);
+						}
+					}
+					if (tjMember2.getTjrId() != null) {
+						UmsMember tjMember3 = memberService.getMemberById(tjMember2.getTjrId());
+						ConfigMissionDetail buyerConfigMissionDetail3 = configMissionService.getConfigMissionDetail(tjMember3.getMissionConfigId(), tjMember3.getGroupId());
+						if (buyerConfigMissionDetail3 != null) {
+							reward = (buyerConfigMissionDetail3.getMissionType() == null || buyerConfigMissionDetail3.getMissionType() == 1) ?
+									NumberUtil.mul(reward, buyerConfigMissionDetail3.getBuyerFinishRateThree().divide(new BigDecimal(100)))
+									: buyerConfigMissionDetail3.getBuyerFinishRateThree();
+							if (reward.compareTo(BigDecimal.ZERO) > 0) {
+								memberAccountLogService.inAccount(tjMember2, AccountEnums.MemberAccountTypes.ACCOUNT_SPREAD, orderNo,
+										reward,"三级消费获得佣金", null);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -699,6 +750,31 @@ public class OrderServiceImpl implements OrderService {
 			criteria.andGoodsNameLike("%"+goodsName+"%");
 		}
 		return orderDetailMapper.selectByExample(example);
+	}
+
+	@Override
+	public Map<String, Object> count(Integer memberId) {
+		Map<String, Object> result = new HashMap<>();
+		//统计待发货，待收货，待评价，退款数量
+		OmsOrderExample example = new OmsOrderExample();
+		example.createCriteria().andMemberIdEqualTo(memberId).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_DELIVERY.getValue());
+		result.put("waitDeliveryNum", orderMapper.countByExample(example));
+		example = new OmsOrderExample();
+		example.createCriteria().andMemberIdEqualTo(memberId).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_RECEIVE.getValue());
+		result.put("waitReceiveNum", orderMapper.countByExample(example));
+
+		OmsOrderCommentExample commentExample = new OmsOrderCommentExample();
+		commentExample.createCriteria().andMemberIdEqualTo(memberId).andStatusEqualTo(CommonConstant.NO_INT);
+		result.put("waitCommentNum", orderCommentMapper.countByExample(commentExample));
+
+		OmsOrderRefundExample refundExample = new OmsOrderRefundExample();
+		refundExample.createCriteria().andMemberIdEqualTo(memberId).andStatusIn(CollectionUtil.newArrayList(
+				OrderEnums.RefundDetailStatus.APPLY.getValue(),
+				OrderEnums.RefundDetailStatus.WAIT_BUYER_RETURN.getValue(),
+				OrderEnums.RefundDetailStatus.BUYER_RETURNED.getValue(),
+				OrderEnums.RefundDetailStatus.SERVICE_IN.getValue()));
+		result.put("refundNum", orderRefundMapper.countByExample(refundExample));
+		return result;
 	}
 
 	/**

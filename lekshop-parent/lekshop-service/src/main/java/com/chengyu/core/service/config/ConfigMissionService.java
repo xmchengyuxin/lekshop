@@ -60,7 +60,6 @@ public interface ConfigMissionService {
 	 * @date   2021/1/6
 	 * @param  missionConfigId
 	 * @param  groupId
-	 * @param  shopCateId
 	 * @return com.chengyu.core.model.ConfigMissionDetail
 	 */
 	ConfigMissionDetail getConfigMissionDetail(Integer missionConfigId, Integer groupId);

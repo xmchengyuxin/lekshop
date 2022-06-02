@@ -9,6 +9,8 @@ import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberAccount;
 import com.chengyu.core.service.config.ConfigGzhService;
 import com.chengyu.core.service.member.MemberAccountService;
+import com.chengyu.core.service.order.OrderRefundService;
+import com.chengyu.core.service.order.OrderService;
 import com.chengyu.core.service.system.QiniuService;
 import com.chengyu.core.service.system.VerifyCodeService;
 import io.swagger.annotations.Api;
@@ -46,6 +48,8 @@ public class MemberController extends UserBaseController {
 	private MemberAccountService accountService;
 	@Autowired
 	private VerifyCodeService verifyCodeService;
+	@Autowired
+	private OrderService orderService;
 
 	@ApiOperation(value = "获取当前登录用户")
 	@ResponseBody
@@ -66,6 +70,16 @@ public class MemberController extends UserBaseController {
 	@RequestMapping(value={"/getAccount"}, method=RequestMethod.GET)
 	public CommonResult<UmsMemberAccount> getAccount() throws ServiceException {
 		return CommonResult.success(accountService.getMemberAccount(getCurrentMemberId()));
+	}
+
+	@ApiOperation(value = "获取用户数字统计")
+	@ResponseBody
+	@RequestMapping(value={"/center/count"}, method=RequestMethod.GET)
+	public CommonResult<Map<String,Object>> count() throws ServiceException {
+		//待发货，待收货，待评价，退款数量
+		Integer memberId = getCurrentMemberId();
+		Map<String,Object> result = orderService.count(memberId);
+		return CommonResult.success(result);
 	}
 
 	@OperationLog

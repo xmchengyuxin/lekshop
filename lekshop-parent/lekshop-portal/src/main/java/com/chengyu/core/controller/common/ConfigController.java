@@ -5,6 +5,7 @@ import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.MemberTypes;
 import com.chengyu.core.domain.enums.SecretEnum;
 import com.chengyu.core.domain.enums.ThirdEnums;
+import com.chengyu.core.domain.result.CustomerConstatnt;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.*;
@@ -261,5 +262,15 @@ public class ConfigController extends UserBaseController {
 		//校验短信验证码
     	verifyCodeService.validateCode(phone, code);
     	return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "获取人工客服和智能客服的ID")
+	@ResponseBody
+	@RequestMapping(value="/chat/getCustomerId", method=RequestMethod.GET)
+	public CommonResult<Map<String,Object>> getCustomerId() {
+		Map<String,Object> result = new HashMap<>();
+		result.put("customerMemberId", CustomerConstatnt.MEMBER_ID);
+		result.put("customerAdminId", CustomerConstatnt.ADMIN_MEMBER_ID);
+		return CommonResult.success(result);
 	}
 }

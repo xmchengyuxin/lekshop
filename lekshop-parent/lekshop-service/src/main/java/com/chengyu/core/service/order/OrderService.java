@@ -15,6 +15,7 @@ import com.chengyu.core.model.UmsShop;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @title  订单
@@ -157,4 +158,14 @@ public interface OrderService {
      * @return List<OmsOrderDetail>
      */
     List<OmsOrderDetail> getBuyGoodsList(Integer memberId, String goodsName);
+
+    /**
+     * 统计待发货，待收货，待评价，退款数量
+     * @author LeGreen
+     * @date   2022/6/2
+     * @param  memberId
+     * @return Map<String,Object>
+     * @throws ServiceException 业务异常
+     */
+    Map<String, Object> count(Integer memberId);
 }
