@@ -14,4 +14,10 @@ export function getBankSelector() {
   })
 }
 
-
+export function upload(data) {
+  return request({
+    url: '/system/upload',
+    method: 'post',
+    data
+  })
+}

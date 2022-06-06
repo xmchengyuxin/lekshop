@@ -31,6 +31,7 @@ public class RobotAnswerJob extends QuartzJobBean {
         JobDetail jobDetail = jobExecutionContext.getJobDetail();
         JobDataMap jobDataMap = jobDetail.getJobDataMap();
         String data = jobDataMap.getString("data");
+        log.info("机器人：{}",data);
         //执行业务操作
         try {
             nettyPushUtil.sendMsg(data);

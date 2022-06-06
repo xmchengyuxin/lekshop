@@ -49,6 +49,12 @@ const thirdRouter = {
       name: 'realnameApi',
       meta: { title: '实名认证接口', icon:'list', role: ['admin'] }
     },
+    {
+      path: 'interface',
+      component: () => import('@/views/third/interface/index'),
+      name: 'interface',
+      meta: { title: '第三方接口', icon:'list', role: ['admin'] }
+    },
   ]
 }
 export default thirdRouter

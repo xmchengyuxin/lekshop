@@ -103,6 +103,8 @@ public class SystemController extends AdminBaseController {
 			data.put("menus", menuService.getMenuListByTypeId(admin.getTypeId()));
 			data.put("roles", new String[]{String.valueOf(admin.getTypeId()), "1".equals(admin.getIsAdmin()) ? "admin" : "editor"});
             data.put("memberId", CustomerConstatnt.ADMIN_MEMBER_ID);
+            data.put("memberNickname", CustomerConstatnt.ADMIN_NICKNAME);
+            data.put("memberAvatar", CustomerConstatnt.ADMIN_AVATAR);
 			
 			super.setSessionAdmin(admin);
 		}

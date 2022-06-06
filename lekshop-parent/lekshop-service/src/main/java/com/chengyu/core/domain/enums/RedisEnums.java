@@ -92,7 +92,15 @@ public enum RedisEnums {
 	/**
 	 * IM用户
 	 */
-	CHAT_MEMBER("rds-chatMember");
+	CHAT_MEMBER("rds-chatMember"),
+	/**
+	 * 淘发客缓存key
+	 */
+	TAOFAKE_CONFIG_KEY("rds-sys-taofakeConfig"),
+	/**
+	 * 第三方接口缓存key
+	 */
+	INTERFACE_CONFIG_KEY("rds-sys-interfaceConfig");
 
 	private final String key;
 

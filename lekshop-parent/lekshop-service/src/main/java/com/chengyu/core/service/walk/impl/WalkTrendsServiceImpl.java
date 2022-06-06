@@ -160,7 +160,10 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		for(WalkTrends walkTrends : list){
 			WalkTrendsResult walkTrendsResult = new WalkTrendsResult();
 			walkTrendsResult.setWalkTrends(walkTrends);
-			walkTrendsResult.setCollectTrends(this.isCollection(form.getWalkMember(), form.getFirstTrendsId()));
+			walkTrendsResult.setCollectTrends(this.isCollection(form.getWalkMember(), walkTrends.getId()
+
+
+			));
 			walkTrendsResult.setCollectWalkMember(walkMemberCollectService.isCollectWalkMember(form.getWalkMember(), walkTrends.getWalkMemberId()));
 
 			WalkTrendsGoodsExample goodsExample = new WalkTrendsGoodsExample();

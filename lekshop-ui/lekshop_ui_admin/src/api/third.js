@@ -231,3 +231,19 @@ export function getTbAssistantLeft() {
     method: 'get'
   })
 }
+
+export function getInterfaceConfig(data) {
+  return request({
+    url: '/system/interface/get',
+    method: 'get',
+    params: data
+  })
+}
+
+export function updateInterfaceConfig(data) {
+  return request({
+    url: '/system/interface/editSubmit',
+    method: 'post',
+		data
+  })
+}

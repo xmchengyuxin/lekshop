@@ -1,5 +1,6 @@
 package com.chengyu.core.i18n;
 
+import com.chengyu.core.utils.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,11 @@ public class LocaleMessageSourceUtil {
     public String getMessage(String code,Object[] args,String defaultMessage){
         //这里使用比较方便的方法，不依赖request.
         Locale locale = LocaleContextHolder.getLocale();
-        return messageSource.getMessage(code, args, defaultMessage, locale);
+        String msg = messageSource.getMessage(code, args, defaultMessage, locale);
+        if(StringUtils.isNotBlank(msg)){
+            return msg;
+        }else{
+            return code;
+        }
     }
 }

@@ -216,7 +216,8 @@ public class ChatServiceImpl implements ChatService {
 		extras.put("type", MemberRemindEnums.MemberRemindTypes.CHAT.getType().toString());
 		extras.put("content", JSONUtil.toJsonStr(targetLog));
 		extras.put("addTime", DateUtil.current()+"");
-		scheduleService.scheduleFixTimeJob(RobotAnswerJob.class, DateUtil.offsetSecond(targetLog.getSendTime(), 5), JSONUtil.toJsonStr(extras));
+		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
+//		scheduleService.scheduleFixTimeJob(RobotAnswerJob.class, DateUtil.offsetSecond(targetLog.getSendTime(), 5), JSONUtil.toJsonStr(extras));
 	}
 
 	private UmsMember getMemberByRds(Integer memberId){
@@ -230,6 +231,12 @@ public class ChatServiceImpl implements ChatService {
 			member.setNickname(CustomerConstatnt.NICKNAME);
 			member.setHeadImg(CustomerConstatnt.AVATAR);
 			member.setUid(CustomerConstatnt.UID);
+		}else if(memberId == CustomerConstatnt.ADMIN_MEMBER_ID){
+			member = new UmsMember();
+			member.setId(CustomerConstatnt.ADMIN_MEMBER_ID);
+			member.setNickname(CustomerConstatnt.ADMIN_NICKNAME);
+			member.setHeadImg(CustomerConstatnt.ADMIN_AVATAR);
+			member.setUid(CustomerConstatnt.ADMIN_UID);
 		}else{
 			member = memberService.getMemberById(memberId);
 		}

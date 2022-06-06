@@ -6,6 +6,7 @@
     <br /> -->
 
     <el-tabs v-model="activeName" tab-position="left" class="flex f-s-0 f-c" @tab-click="handleClickTab">
+      <el-tab-pane label="快速录入" name="kuaisu"></el-tab-pane>
       <el-tab-pane label="基础信息" name="jichu"></el-tab-pane>
       <el-tab-pane label="秒杀拼团" name="miaosha"></el-tab-pane>
       <el-tab-pane label="销售信息" name="xiaoshou"></el-tab-pane>
@@ -16,6 +17,19 @@
     </el-tabs>
     <div id="wrap-form" style="height:84vh;overflow-y: scroll;" class="flex flex-1 f-c">
     <el-form class="flex flex-1 f-c" ref="postForm" :model="postForm"  label-position="right" style="width: 90%;">
+      <el-card id="kuaisu" class="box-card" shadow="hover">
+        <div slot="header" class="clearfix">
+          <span>快速录入</span>
+        </div>
+        <el-form-item label="商品链接" prop="thirdGoodsUrl">
+          <el-input v-model="thirdGoodsUrl" style="width: 60%;" placeholder="第三方电商平台商品链接" />
+          <el-button @click="getThirdDetail()" size="mini" type="primary">自动识别</el-button>
+        </el-form-item>
+        <el-form-item label="温馨提醒" prop="thirdGoodsUrl">
+          <p class="tips" style="color: #468847;">*目前仅支持识别淘宝，京东，拼多多商品详情，其他电商平台后续会升级更新, 该接口为付费接口, 普遍价格为0.01~0.02/次</p>
+        </el-form-item>
+      </el-card>
+      <br>
       <el-card id="jichu" class="box-card" shadow="hover">
         <div slot="header" class="clearfix">
           <span>基础信息</span>
@@ -317,7 +331,7 @@
     getShopFreightList
   } from '@/api/shop'
   import {
-    getGoodsCateList, getGoods, updateGoods
+    getGoodsCateList, getGoods, updateGoods, getThirdDetail
   } from '@/api/goods'
   import {
     renderTime
@@ -369,7 +383,8 @@
         skuList:[],
         batchSet: false,
         temp: {},
-        attrLength: 0
+        attrLength: 0,
+        thirdGoodsUrl: ''
       }
     },
     created() {
@@ -605,7 +620,15 @@
       },
       selectChange(val){
         this.$forceUpdate();
-      }
+      },
+      getThirdDetail(){
+        getThirdDetail({url:this.thirdGoodsUrl}).then(response => {
+          let goodsResult = response.data
+          console.log(goodsResult)
+        }).catch(err => {
+          console.log(err)
+        })
+      },
 
     }
   }

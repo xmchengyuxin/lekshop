@@ -23,7 +23,7 @@ public class CustomerConstatnt {
 
     public static String ADMIN_NICKNAME = "人工客服";
 
-    public static String ADMIN_AVATAR = "https://qiniu.chengyuwb.com/1653561597606.png";
+    public static String ADMIN_AVATAR = "https://qiniu.chengyuwb.com/1654512591169.png";
 
     public static String ADMIN_WELCOME = "您好,有什么可以帮助您的吗？";
 }

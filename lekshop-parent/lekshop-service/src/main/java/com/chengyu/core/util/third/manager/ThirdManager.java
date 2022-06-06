@@ -1,9 +1,6 @@
 package com.chengyu.core.util.third.manager;
 
-import com.chengyu.core.util.third.logic.AliLogic;
-import com.chengyu.core.util.third.logic.LocalLogic;
-import com.chengyu.core.util.third.logic.QiniuLogic;
-import com.chengyu.core.util.third.logic.WwywLogic;
+import com.chengyu.core.util.third.logic.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +16,14 @@ public class ThirdManager {
 	public static final String ALI = "ali";
 	public static final String LOCAL = "local";
 	public static final String QINIU = "qiniu";
+	public static final String TFK = "tfk";
+	public static final String JDWX = "jdwx";
 
 	public static final String DXB = "dxb";
 
 
+	@Autowired
+	private TaofakeLogic taofakeLogic;
 	@Autowired
 	private WwywLogic wwywLogic;
 	@Autowired
@@ -31,9 +32,15 @@ public class ThirdManager {
 	private LocalLogic localLogic;
 	@Autowired
 	private QiniuLogic qiniuLogic;
+	@Autowired
+	private JdwxLogic jdwxLogic;
 
 	public ThirdUtilFactory getThidFactory(String mode) {
 		switch (mode) {
+		case TFK:
+			return taofakeLogic;
+		case JDWX:
+			return jdwxLogic;
 		case WWYW:
 			return wwywLogic;
 		case ALI:

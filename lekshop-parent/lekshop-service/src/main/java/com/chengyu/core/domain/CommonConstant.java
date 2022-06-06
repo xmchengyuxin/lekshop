@@ -144,4 +144,19 @@ public class CommonConstant {
      * 视频
      */
     public static final int VIDEO = 2;
+
+    /**
+     * 淘宝
+     */
+    public static final String TAOBAO = "tb";
+
+    /**
+     * 京东
+     */
+    public static final String JINGDONG = "jd";
+
+    /**
+     * 拼多多
+     */
+    public static final String PINDUODUO = "pdd";
 }

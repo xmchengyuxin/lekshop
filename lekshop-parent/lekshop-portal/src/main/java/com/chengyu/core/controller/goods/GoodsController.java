@@ -1,7 +1,9 @@
 package com.chengyu.core.controller.goods;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.enums.GoodsEnums;
+import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.domain.form.OrderGroupSearchForm;
@@ -152,6 +154,7 @@ public class GoodsController extends UserBaseController {
 		OrderCommentSearchForm form = new OrderCommentSearchForm();
 		form.setGoodsId(goodsId);
 		form.setGoodsComment(goodsComment);
+		form.setStatusList(CollectionUtil.newArrayList(OrderEnums.CommentStatus.COMMENTED.getValue(), OrderEnums.CommentStatus.ADD_COMMENTED.getValue()));
 		List<OmsOrderComment> list = orderCommentService.getCommentList(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}

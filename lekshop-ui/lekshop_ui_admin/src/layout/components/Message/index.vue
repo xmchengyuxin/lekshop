@@ -83,9 +83,9 @@
         chatSessionList: [],
         chatList: [],
         user: {
-          id: this.$store.state.user.id,
-          displayName: this.$store.state.user.name,
-          avatar: this.$store.state.user.avatar,
+          id: this.$store.state.user.wsId.replace("member-", ""),
+          displayName: this.$store.state.user.wsNickname,
+          avatar: this.$store.state.user.wsAvatar,
         },
         page: 1,
         totalUnReadNum: 0
@@ -122,6 +122,18 @@
                 if(!item.lastMsg){
                   item.lastMsg = '   ';
                 }
+                let lastMsg ='';
+                if(item.msgType == 'text'){
+                  lastMsg = item.lastMsg
+                }else if(item.msgType == 'image'){
+                  lastMsg = '[图片]'
+                }else if(item.msgType == 'file'){
+                  lastMsg = '[文件]'
+                }else if(item.msgType == 'goods'){
+                  lastMsg = '[咨询商品]';
+                }else if(item.msgType == 'order'){
+                  lastMsg = '[咨询订单]';
+                }
                 contacts.push({
                   sessionId: item.id,
                   id: item.targetId,
@@ -130,7 +142,7 @@
                   unread: item.unReadNum,
                   //最近一条消息的内容，如果值为空，不会出现在“聊天”列表里面。
                   //lastContentRender 函数会将 file 消息转换为 '[文件]', image 消息转换为 '[图片]'，对 text 会将文字里的表情标识替换为img标签,
-                  lastContent: (item.msgType == 'goods' ||  item.msgType == 'order') ? '[自定义内容]' : IMUI.lastContentRender({type:item.msgType, content:item.lastMsg}),
+                  lastContent: lastMsg,
                   //最近一条消息的发送时间
                   lastSendTime: item.updTime,
                 })
@@ -276,8 +288,8 @@
                   duration: 5000,
                   offset: 100
                 });
-                IMUI.appendMessage(msg, true);
-              }else{
+              }
+              if(IMUI){
                 IMUI.appendMessage(msg, true);
                 IMUI.setLastContentRender(msg.type, msg => {
                   return msgContent;
@@ -309,7 +321,7 @@
         var formdata = new FormData();
         formdata.append("file", options.file);
         var postData = {  // 设置axios的参数
-           url: process.env.VUE_APP_BASE_API+'common/upload',
+           url: process.env.VUE_APP_BASE_API+'system/upload',
            data: formdata,
            method: 'post',
            headers: {

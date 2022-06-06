@@ -49,7 +49,7 @@
           <span>{{ scope.row.paymethod | typeFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="付款截图" width="120" align="center" prop="img">
+      <!-- <el-table-column label="付款截图" width="120" align="center" prop="img">
         <template slot-scope="scope">
           <el-image
              style="width: 100px; "
@@ -58,13 +58,13 @@
             >
             </el-image>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 			<el-table-column label="充值金额" width="70" align="center"  prop="amount">
 			  <template slot-scope="scope">
 			    <p style="color:red;">{{ scope.row.amount  | moneyFormat }}</p>
 			  </template>
 			</el-table-column>
-      <el-table-column label="银行卡号" width="120" align="center" prop="remitAccount">
+      <!-- <el-table-column label="银行卡号" width="120" align="center" prop="remitAccount">
         <template slot-scope="scope">
           <span><span  style="color:red;">{{scope.row.remitAccount}}</span></span>
         </template>
@@ -78,7 +78,7 @@
         <template slot-scope="scope">
           <span>{{scope.row.remitBank}}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="充值时间" width="150" align="center" prop="addTime" >
         <template slot-scope="scope">
           <span v-if="scope.row.addTime">{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -180,10 +180,9 @@ const statusOptions = [
 ]
 
 const typeOptions = [
-  { key: 1, text: '支付宝' },
-  { key: 2, text: '微信' },
-  { key: 3, text: '财付通' },
-  { key: 4, text: '网银' }
+  { key: 'zfbPay', text: '支付宝' },
+  { key: 'wxPay', text: '微信' },
+  { key: 'wyPay‘', text: '网银' }
 ]
 // arr to obj ,such as { CN : "China", US : "USA" }
 const statusKeyValue = statusOptions.reduce((acc, cur) => {

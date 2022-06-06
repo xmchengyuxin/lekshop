@@ -14,7 +14,8 @@ public enum ThirdEnums {
 	 */
 	UPLOAD("upload"),
 	IDCARD("idcard"),
-	BANK("bank");
+	BANK("bank"),
+	GOODS("goods");
 
 	private final String key;
 

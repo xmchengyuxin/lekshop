@@ -2,6 +2,7 @@ package com.chengyu.core.util.third.logic;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.chengyu.core.domain.result.GoodsThirdResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.SysApproveConfig;
 import com.chengyu.core.service.system.ApproveConfigService;
@@ -129,6 +130,11 @@ public class WwywLogic extends ThirdUtilFactory {
 
     @Override
     public String upload(MultipartFile file, String fileName, int type) throws ServiceException {
+        throw new ServiceException("接口调用错误");
+    }
+
+    @Override
+    public GoodsThirdResult getGoodsDetail(String url) throws ServiceException {
         throw new ServiceException("接口调用错误");
     }
 

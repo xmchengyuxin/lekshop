@@ -6,15 +6,18 @@ import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.GoodsResult;
+import com.chengyu.core.domain.result.GoodsThirdResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoods;
 import com.chengyu.core.model.PmsGoodsGroup;
 import com.chengyu.core.service.goods.GoodsService;
+import com.chengyu.core.util.third.logic.TaofakeLogic;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +43,8 @@ public class GoodsController extends ShopBaseController {
 	
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private TaofakeLogic taofakeLogic;
 	
 	@ApiOperation(value = "商品列表")
 	@ResponseBody
@@ -115,4 +120,13 @@ public class GoodsController extends ShopBaseController {
 		goodsService.deleteGoods(goodsIdList);
 		return CommonResult.success(null);
 	}
+
+	@ApiOperation(value = "识别第三方商品详情")
+	@ResponseBody
+	@RequestMapping(value="/goods/getThirdDetail", method=RequestMethod.GET)
+	public CommonResult<GoodsThirdResult> getThirdDetail(String url) throws ServiceException {
+		GoodsThirdResult goods = thirdManager.getThidFactory(this.getThirdMod(ThirdEnums.GOODS.getKey())).getGoodsDetail(url);
+		return CommonResult.success(goods);
+	}
+
 }

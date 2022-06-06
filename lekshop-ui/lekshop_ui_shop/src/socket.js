@@ -100,10 +100,7 @@ let keepAliveTimer;
            "cmd": '1',
            "clientId": self.uid
          })
-         /* self.isAuth = true;
-         if (options && options.onopen) {
-           options.onopen();
-         } */
+         self.isAuth = true;
        } else {
          //调用发送方法
          self.sendMsg({

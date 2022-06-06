@@ -24,6 +24,15 @@ export function getGoods(data) {
   })
 }
 
+export function getThirdDetail(data) {
+  return request({
+    url: 'member/goods/getThirdDetail',
+    method: 'get',
+		params: data
+  })
+}
+
+
 export function updateGoods(data) {
   return request({
     url: 'member/goods/editSubmit',

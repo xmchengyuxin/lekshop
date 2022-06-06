@@ -36,7 +36,6 @@ public class MemberCommentController extends UserBaseController {
 	@RequestMapping(value={"/comment/getList"}, method=RequestMethod.GET)
 	public CommonResult<CommonPage<OmsOrderComment>> getList(OrderCommentSearchForm form, Integer page, Integer pageSize) throws ServiceException {
 		form.setMemberId(getCurrentMemberId());
-		form.setStatusList(CollectionUtil.newArrayList(OrderEnums.CommentStatus.COMMENTED.getValue(), OrderEnums.CommentStatus.ADD_COMMENTED.getValue()));
 		List<OmsOrderComment> list = orderCommentService.getCommentList(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}

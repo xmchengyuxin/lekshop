@@ -1,5 +1,6 @@
 package com.chengyu.core.util.third.logic;
 
+import com.chengyu.core.domain.result.GoodsThirdResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.util.third.manager.ThirdUtilFactory;
@@ -61,6 +62,11 @@ public class LocalLogic extends ThirdUtilFactory {
         } catch (Exception e) {
             throw new ServiceException("上传失败");
         }
+    }
+
+    @Override
+    public GoodsThirdResult getGoodsDetail(String url) throws ServiceException {
+        throw new ServiceException("接口调用错误");
     }
 
 }

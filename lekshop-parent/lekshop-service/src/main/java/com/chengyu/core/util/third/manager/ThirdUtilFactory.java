@@ -1,6 +1,7 @@
 package com.chengyu.core.util.third.manager;
 
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.result.GoodsThirdResult;
 import com.chengyu.core.exception.ServiceException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,4 +48,13 @@ public abstract class ThirdUtilFactory {
 	 */
 	public abstract String upload(MultipartFile file, String fileName, int type) throws ServiceException;
 
+	/**
+	 * 获取商品详情
+	 * @author LeGreen
+	 * @date   2022/6/6
+	 * @param  url
+	 * @return GoodsThirdResult
+	 * @throws ServiceException 业务异常
+	 */
+    public abstract GoodsThirdResult getGoodsDetail(String url) throws ServiceException;
 }
