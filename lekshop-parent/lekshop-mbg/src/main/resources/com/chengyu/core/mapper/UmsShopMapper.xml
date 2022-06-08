@@ -13,6 +13,7 @@
     <result column="service" jdbcType="VARCHAR" property="service" />
     <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
     <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="banner" jdbcType="VARCHAR" property="banner" />
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="province_code" jdbcType="VARCHAR" property="provinceCode" />
     <result column="city" jdbcType="VARCHAR" property="city" />
@@ -95,8 +96,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, member_id, member_name, type, level, name, keyword, produce, service, service_name, 
-    logo, province, province_code, city, city_code, area, area_code, address, like_num, 
-    goods_star, seller_star, logistic_star, weight, sort, status, remark, self_status, 
+    logo, banner, province, province_code, city, city_code, area, area_code, address, 
+    like_num, goods_star, seller_star, logistic_star, weight, sort, status, remark, self_status, 
     live_status, add_time, add_by, upd_time, upd_by
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.UmsShopExample" resultMap="BaseResultMap">
@@ -136,25 +137,25 @@
     insert into ums_shop (member_id, member_name, type, 
       level, name, keyword, 
       produce, service, service_name, 
-      logo, province, province_code, 
-      city, city_code, area, 
-      area_code, address, like_num, 
-      goods_star, seller_star, logistic_star, 
-      weight, sort, status, 
-      remark, self_status, live_status, 
-      add_time, add_by, upd_time, 
-      upd_by)
+      logo, banner, province, 
+      province_code, city, city_code, 
+      area, area_code, address, 
+      like_num, goods_star, seller_star, 
+      logistic_star, weight, sort, 
+      status, remark, self_status, 
+      live_status, add_time, add_by, 
+      upd_time, upd_by)
     values (#{memberId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{level,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, 
       #{produce,jdbcType=VARCHAR}, #{service,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR}, 
-      #{logo,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
-      #{areaCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER}, 
-      #{goodsStar,jdbcType=DECIMAL}, #{sellerStar,jdbcType=DECIMAL}, #{logisticStar,jdbcType=DECIMAL}, 
-      #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{remark,jdbcType=VARCHAR}, #{selfStatus,jdbcType=INTEGER}, #{liveStatus,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, 
-      #{updBy,jdbcType=VARCHAR})
+      #{logo,jdbcType=VARCHAR}, #{banner,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{likeNum,jdbcType=INTEGER}, #{goodsStar,jdbcType=DECIMAL}, #{sellerStar,jdbcType=DECIMAL}, 
+      #{logisticStar,jdbcType=DECIMAL}, #{weight,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{selfStatus,jdbcType=INTEGER}, 
+      #{liveStatus,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsShop">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -191,6 +192,9 @@
       </if>
       <if test="logo != null">
         logo,
+      </if>
+      <if test="banner != null">
+        banner,
       </if>
       <if test="province != null">
         province,
@@ -286,6 +290,9 @@
       </if>
       <if test="logo != null">
         #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="banner != null">
+        #{banner,jdbcType=VARCHAR},
       </if>
       <if test="province != null">
         #{province,jdbcType=VARCHAR},
@@ -394,6 +401,9 @@
       <if test="record.logo != null">
         logo = #{record.logo,jdbcType=VARCHAR},
       </if>
+      <if test="record.banner != null">
+        banner = #{record.banner,jdbcType=VARCHAR},
+      </if>
       <if test="record.province != null">
         province = #{record.province,jdbcType=VARCHAR},
       </if>
@@ -475,6 +485,7 @@
       service = #{record.service,jdbcType=VARCHAR},
       service_name = #{record.serviceName,jdbcType=VARCHAR},
       logo = #{record.logo,jdbcType=VARCHAR},
+      banner = #{record.banner,jdbcType=VARCHAR},
       province = #{record.province,jdbcType=VARCHAR},
       province_code = #{record.provinceCode,jdbcType=VARCHAR},
       city = #{record.city,jdbcType=VARCHAR},
@@ -532,6 +543,9 @@
       </if>
       <if test="logo != null">
         logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="banner != null">
+        banner = #{banner,jdbcType=VARCHAR},
       </if>
       <if test="province != null">
         province = #{province,jdbcType=VARCHAR},
@@ -611,6 +625,7 @@
       service = #{service,jdbcType=VARCHAR},
       service_name = #{serviceName,jdbcType=VARCHAR},
       logo = #{logo,jdbcType=VARCHAR},
+      banner = #{banner,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
       province_code = #{provinceCode,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},

@@ -79,7 +79,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
 		
 		Date lastSendTime = (Date) redisUtil.getRedisValue(RedisEnums.VERIFY_CODE_KEY.getKey() +"-"+username);
 		if(lastSendTime != null && (sendTime.getTime() - lastSendTime.getTime()) <= 60000){
-			throw new ServiceException("您发送频率过高,请稍后再发送!");
+			throw new ServiceException("sms.code.tomuch");
 		}
 		
 		//生成短信验证码
@@ -105,7 +105,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			message.setSendStatus(CommonConstant.FAIL);
-			throw new ServiceException("短信发送失败,请稍后重试!");
+			throw new ServiceException("sms.code.error");
 		}finally {
 			message.setId(id);
 			verifycodeMapper.updateByPrimaryKeySelective(message);
@@ -124,13 +124,13 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     	criteria.andSendTimeGreaterThanOrEqualTo(DateUtil.addSeconds(new Date(), -300));
     	List<SysVerifycode> list = verifycodeMapper.selectByExample(example);
 		if(list == null || list.isEmpty()) {
-			throw new ServiceException("验证码错误,请重新输入!");
+			throw new ServiceException("sms.code.validate");
 		}
 		
 		String verifyCode = list.get(0).getCode();
 		if(!CommonConstant.COMMON_CODE.equals(code)){
 			if(StringUtils.isBlank(verifyCode) || !verifyCode.equals(code) ){
-				throw new ServiceException("验证码错误,请重新输入!");
+				throw new ServiceException("sms.code.validate");
 			}
 		}
 	}

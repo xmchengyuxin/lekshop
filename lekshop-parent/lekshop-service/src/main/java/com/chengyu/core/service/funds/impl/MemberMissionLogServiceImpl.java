@@ -98,7 +98,7 @@ public class MemberMissionLogServiceImpl implements MemberMissionLogService {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getMission();
 		if(beforeAmount.compareTo(amount) < 0){
-			throw new ServiceException("佣金不足,扣款失败!");
+			throw new ServiceException("member.mission.noenough");
 		}
 		BigDecimal afterAmount = NumberUtil.sub(beforeAmount, amount);
 
@@ -119,7 +119,7 @@ public class MemberMissionLogServiceImpl implements MemberMissionLogService {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getMission();
 		if(beforeAmount.compareTo(amount) < 0){
-			throw new ServiceException("佣金不足,冻结失败!");
+			throw new ServiceException("member.mission.noenough");
 		}
 		BigDecimal afterAmount = NumberUtil.sub(beforeAmount, amount);
 
@@ -132,7 +132,7 @@ public class MemberMissionLogServiceImpl implements MemberMissionLogService {
 	public void unfreezeAccount(UmsMember member, AccountEnums.MemberMissionTypes accountType, String orderNo, BigDecimal amount, String remark, String ip) throws ServiceException {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		if(memberAccount.getFreezeMission().compareTo(amount) < 0){
-			throw new ServiceException("佣金不足,解冻失败!");
+			throw new ServiceException("member.mission.noenough");
 		}
 		BigDecimal beforeAmount = memberAccount.getAmount();
 		BigDecimal afterAmount = NumberUtil.add(beforeAmount, amount);

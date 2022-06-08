@@ -98,12 +98,12 @@ public class MemberController extends UserBaseController {
 		super.validateCaptcha(cToken, captcha);
 
 		if(!password.equals(comfirmPassword)) {
-			return CommonResult.failed("两次密码输入不一致");
+			throw new ServiceException("password.confirm.error");
 		}
 		UmsMember member = getCurrentMember();
 		UserDetails userDetails = memberService.loadUserByUsername(member.getCode());
 		if(!passwordEncoder.matches(oldPassword, userDetails.getPassword())){
-			return CommonResult.failed("旧密码不正确");
+			throw new ServiceException("password.old.error");
 		}
 
 		UmsMember updateMember = new UmsMember();
@@ -123,7 +123,7 @@ public class MemberController extends UserBaseController {
 	@RequestMapping(value={"/setPassword"}, method=RequestMethod.POST)
 	public CommonResult<Map<String, Object>> setPassword(String password, String comfirmPassword) throws Exception {
 		if(!password.equals(comfirmPassword)) {
-			return CommonResult.failed("两次密码输入不一致");
+			throw new ServiceException("password.confirm.error");
 		}
 		UmsMember member = getCurrentMember();
 
@@ -158,7 +158,7 @@ public class MemberController extends UserBaseController {
 		super.validateCaptcha(cToken, captcha);
 
 		if(!password.equals(comfirmPassword)) {
-			return CommonResult.failed("两次密码输入不一致");
+			throw new ServiceException("password.confirm.error");
 		}
 
 		//校验短信验证码
@@ -190,7 +190,7 @@ public class MemberController extends UserBaseController {
 		//校验支付密码
 		UmsMember member = getCurrentMember();
 		if(!SecureUtil.md5(payPassword).equals(member.getPayPassword())){
-			return CommonResult.failed("二级密码不正确");
+			throw new ServiceException("password.pay.error");
 		}
 
 		UmsMember updateMember = new UmsMember();
@@ -211,7 +211,7 @@ public class MemberController extends UserBaseController {
 		UmsMember member = getCurrentMember();
 		UserDetails userDetails = memberService.loadUserByUsername(member.getCode());
         if(!passwordEncoder.matches(password, userDetails.getPassword())){
-        	return CommonResult.failed("密码不正确");
+			throw new ServiceException("password.error");
         }
 		return CommonResult.success(null);
 	}
@@ -235,41 +235,22 @@ public class MemberController extends UserBaseController {
 	@OperationLog
 	@ApiOperation(value = "更新个人资料")
 	@ApiImplicitParams({
+			@ApiImplicitParam(name = "nickname", value = "昵称"),
 			@ApiImplicitParam(name = "gender", value = "性别>>1男>>2女"),
-			@ApiImplicitParam(name = "remindVoice", value = "声音提醒>>1开>>0关"),
 			@ApiImplicitParam(name = "birthday", value = "生日"),
-			@ApiImplicitParam(name = "qq", value = "qq"),
-			@ApiImplicitParam(name = "email", value = "邮箱"),
-			@ApiImplicitParam(name = "province", value = "省份"),
-			@ApiImplicitParam(name = "city", value = "市"),
-			@ApiImplicitParam(name = "area", value = "区县"),
-			@ApiImplicitParam(name = "provinceCode", value = "省份代码"),
-			@ApiImplicitParam(name = "cityCode", value = "市代码"),
-			@ApiImplicitParam(name = "areaCode", value = "区县代码"),
-			@ApiImplicitParam(name = "address", value = "具体地址"),
 			@ApiImplicitParam(name = "personSign", value = "个性签名")
 	})
 	@ResponseBody
 	@RequestMapping(value={"/updateInfo"}, method=RequestMethod.POST)
 	public CommonResult<String> updateInfo(
-			String gender, Date birthday, String qq, String email,
-			String province, String city, String area, String provinceCode, String cityCode, String areaCode,
-			String address, String personSign, Integer remindVoice) throws Exception {
+			String nickname,
+			String gender, Date birthday, String personSign) throws Exception {
 		UmsMember updateMember = new UmsMember();
 		updateMember.setId(getCurrentMemberId());
+		updateMember.setNickname(nickname);
 		updateMember.setGender(gender);
 		updateMember.setBirthday(birthday);
-		updateMember.setQq(qq);
-		updateMember.setEmail(email);
-		updateMember.setProvince(province);
-		updateMember.setProvinceCode(provinceCode);
-		updateMember.setCity(city);
-		updateMember.setCityCode(cityCode);
-		updateMember.setArea(area);
-		updateMember.setAreaCode(areaCode);
-		updateMember.setAddress(address);
 		updateMember.setPersonSign(personSign);
-		updateMember.setRemindVoice(remindVoice);
 		memberService.updateMember(updateMember);
 		return CommonResult.success(null);
 	}

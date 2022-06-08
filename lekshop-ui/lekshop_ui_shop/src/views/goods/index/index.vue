@@ -26,8 +26,8 @@
       style="width: 100%;"
 			@selection-change="handleSelectionChange"
     >
-			<el-table-column type="selection" width="55" align="center"></el-table-column>
-      <el-table-column label="ID" prop="id" align="center" width="65">
+			<el-table-column type="selection" width="45" align="center"></el-table-column>
+      <el-table-column label="ID" prop="id" align="center" width="55">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -55,14 +55,16 @@
             </el-image>
 			  </template>
 			</el-table-column>
-      <el-table-column label="宝贝相册" width="150px">
+      <el-table-column label="宝贝相册" width="165px">
         <template slot-scope="scope">
-          <el-image
-              v-for="item in scope.row.goodsImg.split('|')"
-              style="height: 30px;margin-left: 5px;"
-              :src="item"
-              :preview-src-list="scope.row.goodsImg.split('|')">
-            </el-image>
+          <div class="line1">
+            <el-image
+                v-for="item in scope.row.goodsImg.split('|')"
+                style="height: 30px;margin-left: 5px;"
+                :src="item"
+                :preview-src-list="scope.row.goodsImg.split('|')">
+              </el-image>
+          </div>
         </template>
       </el-table-column>
 			<el-table-column label="店铺内类目" width="100px"  align="center">

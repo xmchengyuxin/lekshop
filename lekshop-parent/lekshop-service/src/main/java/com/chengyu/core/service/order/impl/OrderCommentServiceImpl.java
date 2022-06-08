@@ -4,11 +4,12 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
 import com.chengyu.core.domain.CommonConstant;
-import com.chengyu.core.domain.enums.MemberNewsEnums;
 import com.chengyu.core.domain.enums.OrderEnums;
-import com.chengyu.core.domain.form.MemberNewsForm;
 import com.chengyu.core.domain.form.OrderCommentForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
+import com.chengyu.core.domain.result.OrderCommentResult;
+import com.chengyu.core.domain.result.OrderResult;
+import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.OmsOrderCommentLeftMapper;
@@ -17,12 +18,14 @@ import com.chengyu.core.mapper.OmsOrderDetailMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.order.OrderCommentService;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,6 +86,26 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	}
 
 	@Override
+	public CommonPage<OrderCommentResult> getCommentListByGoods(OrderCommentSearchForm form, Integer page, Integer pageSize) {
+		List<OmsOrderComment> list = this.getCommentList(form, page, pageSize);
+		List<OrderCommentResult> commenList = new ArrayList<>();
+		for(OmsOrderComment comment : list){
+			OrderCommentResult result = new OrderCommentResult();
+			result.setComment(comment);
+
+			OmsOrderCommentLeftExample commentLeftExample = new OmsOrderCommentLeftExample();
+			commentLeftExample.setOrderByClause("add_time asc");
+			commentLeftExample.createCriteria().andCommentIdEqualTo(comment.getId());
+			result.setLeftCommentList(orderCommentLeftMapper.selectByExample(commentLeftExample));
+			commenList.add(result);
+		}
+
+		PageInfo pageInfo = new PageInfo<>(list);
+		pageInfo.setList(commenList);
+		return CommonPage.restPage(pageInfo);
+	}
+
+	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void initComment(List<OmsOrderDetail> detailList) {
 		Date now = DateUtil.date();
@@ -110,7 +133,7 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	public void addComment(UmsMember member, OrderCommentForm form) throws ServiceException {
 		OmsOrderComment comment = orderCommentMapper.selectByPrimaryKey(form.getId());
 		if(comment == null || comment.getStatus() != OrderEnums.CommentStatus.WAIT_COMMENT.getValue()){
-			throw new ServiceException("非待评价状态");
+			throw new ServiceException("order.comment.add");
 		}
 		this.comment(comment, form);
 	}
@@ -130,6 +153,12 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 		updateComment.setStatus(OrderEnums.CommentStatus.COMMENTED.getValue());
 		updateComment.setUpdTime(DateUtil.date());
 		orderCommentMapper.updateByPrimaryKeySelective(updateComment);
+
+		//更新订单详情页面的评价状态
+		OmsOrderDetail updateDetail = new OmsOrderDetail();
+		updateDetail.setId(comment.getDetailId());
+		updateDetail.setCommentStatus(CommonConstant.YES_INT);
+		orderDetailMapper.updateByPrimaryKeySelective(updateDetail);
 
 		//更新商品评价的数量
 		StringBuilder updateSql = new StringBuilder();
@@ -220,5 +249,31 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void deleteLeftComment(Integer leftCommentId) {
 		orderCommentLeftMapper.deleteByPrimaryKey(leftCommentId);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void continuteAddComment(UmsMember member, OrderCommentForm form) throws ServiceException {
+		OmsOrderComment comment = orderCommentMapper.selectByPrimaryKey(form.getId());
+		if(comment.getStatus() != OrderEnums.CommentStatus.COMMENTED.getValue()){
+			throw new ServiceException("order.comment.continute.add");
+		}
+		OmsOrderCommentLeft commentLeft = new OmsOrderCommentLeft();
+		commentLeft.setCommentId(form.getId());
+		commentLeft.setType(2);
+		commentLeft.setContent(form.getContent());
+		commentLeft.setImg(form.getImg());
+		commentLeft.setAnonymousStatus(form.getAnonymousStatus());
+		commentLeft.setMemberId(member.getId());
+		commentLeft.setMemberName(member.getNickname());
+		commentLeft.setMemberHeadImg(member.getHeadImg());
+		commentLeft.setAddTime(DateUtil.date());
+		commentLeft.setUpdTime(commentLeft.getAddTime());
+		orderCommentLeftMapper.insertSelective(commentLeft);
+
+		OmsOrderComment updateComment = new OmsOrderComment();
+		updateComment.setId(comment.getId());
+		updateComment.setStatus(OrderEnums.CommentStatus.ADD_COMMENTED.getValue());
+		orderCommentMapper.updateByPrimaryKeySelective(updateComment);
 	}
 }

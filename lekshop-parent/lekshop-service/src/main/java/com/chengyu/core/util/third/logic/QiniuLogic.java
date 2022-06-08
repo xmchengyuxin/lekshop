@@ -40,7 +40,7 @@ public class QiniuLogic extends ThirdUtilFactory {
                 return qiniuService.uploadByVideo(file.getBytes(), fileName);
             }
         } catch (IOException e) {
-            throw new ServiceException("上传失败");
+            throw new ServiceException("system.upload.error");
         }
     }
 

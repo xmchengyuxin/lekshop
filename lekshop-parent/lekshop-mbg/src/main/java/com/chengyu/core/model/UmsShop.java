@@ -39,6 +39,8 @@ public class UmsShop implements Serializable {
     @ApiModelProperty(value = "LOGO")
     private String logo;
 
+    private String banner;
+
     @ApiModelProperty(value = "省")
     private String province;
 
@@ -187,6 +189,14 @@ public class UmsShop implements Serializable {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 
     public String getProvince() {
@@ -374,6 +384,7 @@ public class UmsShop implements Serializable {
         sb.append(", service=").append(service);
         sb.append(", serviceName=").append(serviceName);
         sb.append(", logo=").append(logo);
+        sb.append(", banner=").append(banner);
         sb.append(", province=").append(province);
         sb.append(", provinceCode=").append(provinceCode);
         sb.append(", city=").append(city);

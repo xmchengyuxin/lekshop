@@ -91,12 +91,15 @@ public class JdwxLogic extends ThirdUtilFactory {
 
                     JSONArray attrKeyArray = taobaoJson.getJSONArray("props_list");
                     List<Map> attrKeys = attrKeyArray.toList(Map.class);
+                    break;
                 case CommonConstant.JINGDONG:
                     goods.setTitle(bodyJson.getStr("skuName"));
                     goods.setMainImg(bodyJson.getStr("image"));
+                    break;
                 case CommonConstant.PINDUODUO:
                     goods.setTitle(bodyJson.getStr("goods_name"));
                     goods.setMainImg(bodyJson.getStr("thumb_url"));
+                    break;
                 default:
             }
             return goods;

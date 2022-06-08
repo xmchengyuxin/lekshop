@@ -42,14 +42,14 @@ public class CarServiceImpl implements CarService {
 		//拼团秒杀商品不能加入购物车
 		PmsGoods goods = goodsService.getGoods(goodsId);
 		if(goods.getType() != GoodsEnums.GoodsType.NORMAL_GOODS.getValue()){
-			throw new ServiceException("拼团秒杀商品不支持加入购物车");
+			throw new ServiceException("car.add.group");
 		}
 		//查询SKU是否存在
 		PmsGoodsSkuExample example = new PmsGoodsSkuExample();
 		example.createCriteria().andGoodsIdEqualTo(goodsId).andAttrSymbolPathEqualTo(attrSymbolPath);
 		List<PmsGoodsSku> skuList = goodsSkuMapper.selectByExample(example);
 		if(CollectionUtil.isEmpty(skuList)){
-			throw new ServiceException("请选择正确的规格");
+			throw new ServiceException("car.add.sku");
 		}
 		//判断是否已在购物车
 		PmsGoodsSku sku = skuList.get(0);

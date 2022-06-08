@@ -247,3 +247,19 @@ export function updateInterfaceConfig(data) {
 		data
   })
 }
+
+export function getThirdConfigList(data) {
+  return request({
+    url: '/system/thirdConfig/getList',
+    method: 'get',
+    params: data
+  })
+}
+
+export function updateThirdConfig(data) {
+  return request({
+    url: '/system/thirdConfig/editSubmit',
+    method: 'post',
+		data
+  })
+}

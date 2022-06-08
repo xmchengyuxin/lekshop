@@ -145,7 +145,7 @@ public class ConfigServiceImpl implements ConfigService {
 	public void validateWeihuOnlyLogin() throws ServiceException {
 		String value = this.getValueByNid("weihu_no_login");
 		if(StringUtils.isNotBlank(value) && CommonConstant.YES.equals(value)){
-			throw new ServiceException("网站维护中, 暂无法进行其他操作");
+			throw new ServiceException("platform.nologin");
 		}
 	}
 
@@ -153,7 +153,7 @@ public class ConfigServiceImpl implements ConfigService {
 	public void validateWeihuNoTakeTask() throws ServiceException {
 		String value = this.getValueByNid("weihu_no_take_task");
 		if(StringUtils.isNotBlank(value) && CommonConstant.YES.equals(value)){
-			throw new ServiceException("网站维护中, 暂无法进行接单");
+			throw new ServiceException("platform.noorder");
 		}
 	}
 

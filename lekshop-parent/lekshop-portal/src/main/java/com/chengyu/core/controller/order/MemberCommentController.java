@@ -1,9 +1,7 @@
 package com.chengyu.core.controller.order;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
-import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.OrderCommentForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.entity.CommonPage;
@@ -42,15 +40,31 @@ public class MemberCommentController extends UserBaseController {
 
 	@OperationLog
 	@ApiOperation(value = "评价")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "id", value = "ID"),
-	})
 	@ResponseBody
 	@RequestMapping(value={"/comment/comment"}, method=RequestMethod.POST)
-	public CommonResult<String> cancel(OrderCommentForm form) throws ServiceException {
+	public CommonResult<String> comment(OrderCommentForm form) throws ServiceException {
 		orderCommentService.addComment(getCurrentMember(), form);
 		return CommonResult.success(null);
 	}
 
+	@OperationLog
+	@ApiOperation(value = "发表追评")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "id", value = "ID"),
+		@ApiImplicitParam(name = "content", value = "追评内容"),
+		@ApiImplicitParam(name = "img", value = "追评图片或视频"),
+		@ApiImplicitParam(name = "anonymousStatus", value = "是否匿名"),
+	})
+	@ResponseBody
+	@RequestMapping(value={"/comment/continuteAdd"}, method=RequestMethod.POST)
+	public CommonResult<String> continuteAdd(Integer id, String content, String img, Integer anonymousStatus) throws ServiceException {
+		OrderCommentForm form = new OrderCommentForm();
+		form.setId(id);
+		form.setContent(content);
+		form.setImg(img);
+		form.setAnonymousStatus(anonymousStatus);
+		orderCommentService.continuteAddComment(getCurrentMember(), form);
+		return CommonResult.success(null);
+	}
 
 }

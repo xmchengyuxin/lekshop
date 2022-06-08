@@ -1,6 +1,8 @@
 package com.chengyu.core.util.third.logic;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.net.URLEncoder;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
@@ -8,6 +10,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.InterfaceEnums;
+import com.chengyu.core.domain.result.GoodsAttrKeyResult;
 import com.chengyu.core.domain.result.GoodsThirdResult;
 import com.chengyu.core.domain.result.InterfaceConfig;
 import com.chengyu.core.exception.ServiceException;
@@ -22,10 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -55,14 +57,15 @@ public class TaofakeLogic extends ThirdUtilFactory {
     }
 
     private GoodsThirdResult parseGoodsDetail(String message, String type) throws ServiceException {
+        log.info(message);
         JSONObject jsonObject = JSONUtil.parseObj(message);
         int code = jsonObject.getInt("code");
         if(code == 0){
             String data = jsonObject.getStr("data");
+            JSONObject json = JSONUtil.parseObj(data);
             GoodsThirdResult goods = new GoodsThirdResult();
             switch (type) {
                 case CommonConstant.TAOBAO:
-                    JSONObject json = JSONUtil.parseObj(data);
                     JSONObject taobaoJson = JSONUtil.parseObj(json.getStr("item"));
                     goods.setTitle(taobaoJson.getStr("title"));
                     JSONArray jsonArray = taobaoJson.getJSONArray("item_imgs");
@@ -73,20 +76,109 @@ public class TaofakeLogic extends ThirdUtilFactory {
 
                     JSONArray attrKeyArray = taobaoJson.getJSONArray("props_list");
                     List<Map> attrKeys = attrKeyArray.toList(Map.class);
+                    break;
                 case CommonConstant.JINGDONG:
-                    JSONObject jingdongJson = JSONUtil.parseObj(data);
-                    Map<String,Object> map = new HashMap<>();
-                    goods.setTitle(jingdongJson.getStr("skuName"));
-                    goods.setMainImg(jingdongJson.getStr("image"));
+                    if(StringUtils.isNotBlank(json.getStr("errCode"))){
+                        break;
+                    }
+                    JSONObject jingdongJson = JSONUtil.parseObj(json.getStr("item"));
+                    goods.setTitle(jingdongJson.getStr("pName"));
+                    goods.setMainImg(json.getStr("image"));
+                    goods.setGoodsImg(jingdongJson.getJSONArray("image").join("|"));
+
+                    JSONObject saleProp = jingdongJson.getJSONObject("saleProp");
+                    JSONObject salePropSeq = jingdongJson.getJSONObject("salePropSeq");
+                    //attrKeyList: [{"attrKey":"颜色","attrValue":"","attrValueList":["黑","白"]},{"attrKey":"尺寸","attrValue":"","attrValueList":["大","小"]}]
+                    List<GoodsAttrKeyResult> keyResultList = new ArrayList<>();
+                    for(String key : saleProp.keySet()){
+                        String attrKey = saleProp.getStr(key);
+                        if(StringUtils.isNotBlank(attrKey)) {
+                            GoodsAttrKeyResult keyResult = new GoodsAttrKeyResult();
+                            keyResult.setAttrKey(attrKey);
+                            JSONArray jsonArry = salePropSeq.getJSONArray(key);
+                            String value = com.alibaba.fastjson.JSONArray.toJSONString(jsonArry);
+                            if(StringUtils.isNotBlank(value)){
+                                keyResult.setAttrValueList(value);
+                            }
+                            keyResultList.add(keyResult);
+                        }
+                    }
+                    goods.setAttrKeyList(com.alibaba.fastjson.JSONArray.toJSONString(keyResultList));
+                    break;
                 case CommonConstant.PINDUODUO:
                     JSONObject pddJson = JSONUtil.parseObj(data);
                     goods.setTitle(pddJson.getStr("goods_name"));
                     goods.setMainImg(pddJson.getStr("thumb_url"));
+                    JSONArray imgArray = pddJson.getJSONArray("gallery");
+                    if(CollectionUtil.isNotEmpty(imgArray)){
+                        List<ItemImgsUrl> ppdImgs = imgArray.toList(ItemImgsUrl.class);
+                        goods.setGoodsImg(ppdImgs.stream().filter(item->item.getType() == 1).map(ItemImgsUrl::getUrl).collect(Collectors.joining("|")));
+                        List<String> detailImgs = ppdImgs.stream().filter(item->item.getType() == 2).map(ItemImgsUrl::getUrl).collect(Collectors.toList());
+                        if(CollectionUtil.isNotEmpty(detailImgs)){
+                            StringBuilder details = new StringBuilder();
+                            for(String img : detailImgs){
+                                details.append("<p>");
+                                details.append("<img src=\"");
+                                details.append(img+"\"/>");
+                                details.append("</p>");
+                            }
+                            goods.setDetail(details.toString());
+                        }
+                    }
+                    goods.setDescription(pddJson.getStr("goods_desc"));
+
+                    JSONArray skuArray = pddJson.getJSONArray("sku");
+                    if(CollectionUtil.isNotEmpty(skuArray)){
+                        List<PddSku> pddSkus = skuArray.toList(PddSku.class);
+                        List<List<String>> skuListArray = new ArrayList<>();
+                        //skuList: [["黑","大","","222","999","888","",""],["黑","小","","222","999","888","",""],["白","大","","222","999","888","",""],["白","小","","222","999","888","",""]]
+                        //attrKeyList: [{"attrKey":"颜色","attrValue":"","attrValueList":["黑","白"]},{"attrKey":"尺寸","attrValue":"","attrValueList":["大","小"]}]
+                        List<GoodsAttrKeyResult> pddKeyResultList = new ArrayList<>();
+                        Map<String, List<String>> pddKeyValList = new LinkedHashMap<>();
+                        for(PddSku sku : pddSkus){
+                            List<String> skuList = new ArrayList<>();
+                            JSONArray specsArray = JSONUtil.parseArray(sku.getSpecs());
+                            List<PddSkuSpecs> specsList = specsArray.toList(PddSkuSpecs.class);
+                            for(PddSkuSpecs specs : specsList){
+                                List<String> pddVal = pddKeyValList.get(specs.getSpec_key());
+                                if(CollectionUtil.isEmpty(pddVal)){
+                                    pddVal = new ArrayList<>();
+                                }
+                                if(!pddVal.contains(specs.getSpec_value())){
+                                    pddVal.add(specs.getSpec_value());
+                                }
+                                pddKeyValList.put(specs.getSpec_key(), pddVal);
+                                skuList.add(specs.getSpec_value());
+                            }
+                            skuList.add(NumberUtil.div(new BigDecimal(sku.getNormal_price()), 100).toString());
+                            skuList.add(NumberUtil.div(new BigDecimal(sku.getGroup_price()), 100).toString());
+                            skuList.add(sku.getQuantity());
+                            skuList.add("0");
+                            skuList.add(sku.getSku_id());
+                            skuList.add(sku.getThumb_url());
+                            skuListArray.add(skuList);
+                        }
+                        goods.setSkuList(com.alibaba.fastjson.JSONArray.toJSONString(skuListArray));
+
+                        for(String key : pddKeyValList.keySet()){
+                            GoodsAttrKeyResult keyResult = new GoodsAttrKeyResult();
+                            keyResult.setAttrKey(key);
+                            List<String> pddVal = pddKeyValList.get(key);
+                            String value = com.alibaba.fastjson.JSONArray.toJSONString(pddVal);
+                            if(StringUtils.isNotBlank(value)){
+                                keyResult.setAttrValueList(value);
+                            }
+                            pddKeyResultList.add(keyResult);
+                        }
+                        goods.setAttrKeyList(com.alibaba.fastjson.JSONArray.toJSONString(pddKeyResultList));
+                    }
+                    break;
                 default:
+                    break;
             }
+            log.info("解析后的商品信息>>"+JSONUtil.toJsonStr(goods));
             return goods;
         }else{
-            log.info(message);
             throw new ServiceException("商品识别失败, 请手动填写");
         }
     }
@@ -95,6 +187,24 @@ public class TaofakeLogic extends ThirdUtilFactory {
     @Setter
     private class ItemImgsUrl{
         String url;
+        Integer type;
+    }
+
+    @Getter
+    @Setter
+    private class PddSku{
+        String specs;
+        String sku_id;
+        String thumb_url;
+        String normal_price;
+        String group_price;
+        String quantity;
+    }
+    @Getter
+    @Setter
+    private class PddSkuSpecs{
+        String spec_key;
+        String spec_value;
     }
 
     private String getGoodsGetUrl(String goodsUrl, String type) throws ServiceException {

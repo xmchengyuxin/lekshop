@@ -23,10 +23,10 @@
         </div>
         <el-form-item label="商品链接" prop="thirdGoodsUrl">
           <el-input v-model="thirdGoodsUrl" style="width: 60%;" placeholder="第三方电商平台商品链接" />
-          <el-button @click="getThirdDetail()" size="mini" type="primary">自动识别</el-button>
+          <el-button @click="getThirdDetail()" size="mini" type="primary" :loading="autoGetLoading">自动识别</el-button>
         </el-form-item>
         <el-form-item label="温馨提醒" prop="thirdGoodsUrl">
-          <p class="tips" style="color: #468847;">*目前仅支持识别淘宝，京东，拼多多商品详情，其他电商平台后续会升级更新, 该接口为付费接口, 普遍价格为0.01~0.02/次</p>
+          <p class="tips" style="color: #468847;">*目前仅支持识别淘宝，京东，拼多多商品详情，其他电商平台后续会升级更新</p>
         </el-form-item>
       </el-card>
       <br>
@@ -384,7 +384,8 @@
         batchSet: false,
         temp: {},
         attrLength: 0,
-        thirdGoodsUrl: ''
+        thirdGoodsUrl: '',
+        autoGetLoading: false
       }
     },
     created() {
@@ -622,11 +623,25 @@
         this.$forceUpdate();
       },
       getThirdDetail(){
+        this.autoGetLoading = true;
         getThirdDetail({url:this.thirdGoodsUrl}).then(response => {
           let goodsResult = response.data
           console.log(goodsResult)
+          this.postForm = goodsResult;
+          this.postForm.status = 1;
+          this.postForm.stockType =1;
+          this.attrKeyList = JSON.parse(this.postForm.attrKeyList);
+          this.attrKeyList.forEach(item =>{
+            item.attrValueList = JSON.parse(item.attrValueList);
+          })
+          if(this.postForm.skuList){
+            this.skuList = JSON.parse(this.postForm.skuList);
+          }
+          this.attrLength = this.attrKeyList.length
+          this.autoGetLoading = false;
         }).catch(err => {
           console.log(err)
+          this.autoGetLoading = false;
         })
       },
 

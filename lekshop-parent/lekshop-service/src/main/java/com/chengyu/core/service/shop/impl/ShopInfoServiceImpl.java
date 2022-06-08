@@ -171,6 +171,8 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 				WalkMember updateWalk = new WalkMember();
 				updateWalk.setId(walkMember.getId());
 				updateWalk.setType(CommonConstant.SELLER);
+				updateWalk.setNickname(shop.getName());
+				updateWalk.setHeadImg(shop.getLogo());
 				walkMemberService.updateWalkMember(updateWalk);
 			}
 

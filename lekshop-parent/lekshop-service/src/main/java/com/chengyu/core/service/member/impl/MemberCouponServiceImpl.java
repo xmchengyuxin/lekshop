@@ -65,30 +65,30 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 		List<UmsMemberCoupon> list = memberCouponMapper.selectByExample(example);
 		UmsMemberCoupon coupon = CollectionUtil.isNotEmpty(list) ? list.get(0) : null;
 		if(coupon == null || coupon.getStatus() != CommonConstant.NO_INT){
-			throw new ServiceException("优惠券不可用");
+			throw new ServiceException("member.coupon.nouse");
 		}
 		if(coupon.getFullAmount().compareTo(totalAmount) > 0){
-			throw new ServiceException("满"+ NumberUtils.format2(coupon.getFullAmount())+"元才能使用");
+			throw new ServiceException("member.coupon.full", new String[]{NumberUtils.format2(coupon.getFullAmount())});
 		}
 		Date now = DateUtil.date();
 		if(coupon.getValidityBeginTime() != null && coupon.getValidityBeginTime().after(now)){
-			throw new ServiceException("未到优惠券使用时间");
+			throw new ServiceException("member.coupon.untime");
 		}
 		if(coupon.getValidityEndTime() != null && coupon.getValidityEndTime().before(now)){
-			throw new ServiceException("优惠券已过期");
+			throw new ServiceException("member.coupon.expired");
 		}
 		if(coupon.getUseType() == ShopEnums.CouponUseType.SOME_GOODS.getValue()){
 			//指定商品
 			for(Integer goodsId : goodsIdList){
 				if(!coupon.getUseGoodsIds().contains(","+goodsId.toString()+",")){
-					throw new ServiceException("该优惠券仅限指定商品使用");
+					throw new ServiceException("member.coupon.limitgoods");
 				}
 			}
 		}else if(coupon.getUseType() == ShopEnums.CouponUseType.SOME_CATE.getValue()){
 			//指定商品分类
 			for(Integer goodsCateId : goodsCateIdList){
 				if(!coupon.getUseGoodsCateIds().contains(","+goodsCateId.toString()+",")){
-					throw new ServiceException("该优惠券仅限指定分类使用");
+					throw new ServiceException("member.coupon.limitcate");
 				}
 			}
 		}
@@ -100,7 +100,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 	public void useCoupon(Integer couponId) throws ServiceException {
 		UmsMemberCoupon coupon = memberCouponMapper.selectByPrimaryKey(couponId);
 		if(coupon == null || coupon.getStatus() != CommonConstant.WAIT_INT){
-			throw new ServiceException("该张优惠券无法使用");
+			throw new ServiceException("member.coupon.nouse");
 		}
 
 		//优惠券已使用

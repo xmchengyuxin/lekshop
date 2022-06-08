@@ -2,6 +2,10 @@ package com.chengyu.core.service.order;
 
 import com.chengyu.core.domain.form.OrderCommentForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
+import com.chengyu.core.domain.form.OrderSearchForm;
+import com.chengyu.core.domain.result.OrderCommentResult;
+import com.chengyu.core.domain.result.OrderResult;
+import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.OmsOrderComment;
 import com.chengyu.core.model.OmsOrderCommentLeft;
@@ -27,6 +31,17 @@ public interface OrderCommentService {
 	 * @return List<OmsOrderComment>
 	 */
 	List<OmsOrderComment> getCommentList(OrderCommentSearchForm form, Integer page, Integer pageSize);
+
+	/**
+	 * 商品的评价列表
+	 * @author LeGreen
+	 * @date   2022/6/8
+	 * @param  form
+	 * @param  page
+	 * @param  pageSize
+	 * @return CommonPage<OrderResult>
+	 */
+	CommonPage<OrderCommentResult> getCommentListByGoods(OrderCommentSearchForm form, Integer page, Integer pageSize);
 
 	/**
 	 * 订单完成后自动生成待评价订单
@@ -97,4 +112,13 @@ public interface OrderCommentService {
 	 * @param  leftCommentId
 	 */
 	void deleteLeftComment(Integer leftCommentId);
+
+	/**
+	 * 发表追评
+	 * @author LeGreen
+	 * @date   2022/6/8
+	 * @param  member
+	 * @param  form
+	 */
+	void continuteAddComment(UmsMember member, OrderCommentForm form) throws ServiceException;
 }

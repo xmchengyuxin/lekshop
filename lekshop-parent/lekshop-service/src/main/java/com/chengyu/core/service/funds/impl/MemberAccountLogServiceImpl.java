@@ -107,7 +107,7 @@ public class MemberAccountLogServiceImpl implements MemberAccountLogService {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getAmount();
 		if(beforeAmount.compareTo(amount) < 0){
-			throw new ServiceException("余额不足,扣款失败!");
+			throw new ServiceException("member.balance.noenough");
 		}
 		BigDecimal afterAmount = NumberUtil.sub(beforeAmount, amount);
 		
@@ -128,7 +128,7 @@ public class MemberAccountLogServiceImpl implements MemberAccountLogService {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getAmount();
 		if(beforeAmount.compareTo(amount) < 0){
-			throw new ServiceException("余额不足,冻结失败!");
+			throw new ServiceException("member.account.noenough");
 		}
 		BigDecimal afterAmount = NumberUtil.sub(beforeAmount, amount);
 		
@@ -141,7 +141,7 @@ public class MemberAccountLogServiceImpl implements MemberAccountLogService {
 	public void unfreezeAccount(UmsMember member, AccountEnums.MemberAccountTypes accountType, String orderNo, BigDecimal amount, String remark, String ip) throws ServiceException {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		if(memberAccount.getFreezeAmount().compareTo(amount) < 0){
-			throw new ServiceException("冻结金额不足,解冻失败!");
+			throw new ServiceException("member.freezeaccount.noenough");
 		}
 		BigDecimal beforeAmount = memberAccount.getAmount();
 		BigDecimal afterAmount = NumberUtil.add(beforeAmount, amount);
@@ -160,7 +160,7 @@ public class MemberAccountLogServiceImpl implements MemberAccountLogService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void transferAmount(Integer memberId, String uid, BigDecimal amount) throws ServiceException {
 		if(amount == null || amount.compareTo(BigDecimal.ZERO) <= 0){
-			throw new ServiceException("请输入正确的金额");
+			throw new ServiceException("member.amount.error");
 		}
 		UmsMember toMember = memberService.getMemberByParams(uid, MemberTypes.UID);
 		if(toMember == null){

@@ -19,6 +19,10 @@
             <Upload v-model="shop.logo" />
             <ImageSource :mul="false" v-model="shop.logo" />
           </el-form-item>
+          <el-form-item label="主页轮播" prop="banner">
+             <MultipleUpload :value="shop.banner" v-model="shop.banner" />
+            <ImageSource :mul="true" v-model="shop.banner" />
+          </el-form-item>
           <el-form-item label="关键字" prop="keyword" :rules="[{ required: true, message: '请填写关键字', trigger: 'blur' }]">
               <el-input v-model="shop.keyword" style="width: 60%"></el-input>
           </el-form-item>
@@ -72,6 +76,7 @@ import { getShop, updateShop, getShopServiceSelector } from '@/api/shop'
 import MDinput from '@/components/MDinput'
 import Upload from '@/components/Upload/singleImage'
 import ImageSource from '@/components/Upload/imageSource'
+import MultipleUpload from '@/components/Upload/multipleImage'
 import {
   provinceAndCityDataPlus, regionData, CodeToText
 } from 'element-china-area-data'
@@ -79,7 +84,7 @@ import {
 
 export default {
   name: 'shopInfo',
-  components: {MDinput, Upload, ImageSource},
+  components: {MDinput, Upload, ImageSource, MultipleUpload},
   data() {
     return {
       addressOptions: regionData,

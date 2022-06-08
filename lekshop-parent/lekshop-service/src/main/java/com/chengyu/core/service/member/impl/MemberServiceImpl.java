@@ -89,7 +89,7 @@ public class MemberServiceImpl implements MemberService {
 		//校验code是否已被注册
 		UmsMember haveMember = this.getMemberByParams(member.getCode(), MemberTypes.CODE);
 		if(haveMember != null) {
-			throw new ServiceException("该账号已被注册");
+			throw new ServiceException("member.register.error");
 		}
 		if(StringUtils.isBlank(member.getHeadImg())){
 			member.setHeadImg(configService.getValueByNid(ConfigEnums.ConfigTypes.HEADIMG.getNid()));
@@ -405,10 +405,10 @@ public class MemberServiceImpl implements MemberService {
 	public void updateInvite(Integer memberId, String inviteUid) throws ServiceException {
 		UmsMember member = this.getMemberByParams(inviteUid, MemberTypes.UID);
 		if(member == null){
-			throw new ServiceException("推荐人ID不存在");
+			throw new ServiceException("member.spread.id");
 		}
 		if(member.getId().equals(memberId)){
-			throw new ServiceException("推荐人不能是自己");
+			throw new ServiceException("member.spread.myself");
 		}
 
 		UmsMember updateMember = new UmsMember();

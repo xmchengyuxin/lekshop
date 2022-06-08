@@ -123,21 +123,21 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 				OrderEnums.OrderStatus.WAIT_RECEIVE.getValue(),
 				OrderEnums.OrderStatus.FINISHED.getValue()),
 				orderDetail.getStatus())){
-			throw new ServiceException("状态不正确无法申请售后");
+			throw new ServiceException("order.refund.status.error");
 		}
 		if(orderDetail.getRefundStatus() != OrderEnums.RefundStatus.UN_REFUND.getValue()
 		&& orderDetail.getRefundStatus() != OrderEnums.RefundStatus.REFUND_FAILED.getValue()){
-			throw new ServiceException("该商品已申请售后,请耐心等待处理");
+			throw new ServiceException("order.refund.haveapply");
 		}
 		OmsOrder order = orderMapper.selectByPrimaryKey(orderDetail.getOrderId());
 		if(orderDetail.getStatus() == OrderEnums.OrderStatus.FINISHED.getValue()){
 			//查询售后截止时间
 			if(order.getRefundExpiredTime() != null && order.getRefundExpiredTime().before(DateUtil.date())){
-				throw new ServiceException("订单已超过售后过期时间");
+				throw new ServiceException("order.refund.expired");
 			}
 		}
 		if(form.getRefundAmount().compareTo(orderDetail.getBuyTotalPrice()) > 0){
-			throw new ServiceException("最多只能退款"+ NumberUtils.format2(orderDetail.getBuyTotalPrice())+"元");
+			throw new ServiceException("order.refund.most",new String[]{NumberUtils.format2(orderDetail.getBuyTotalPrice())});
 		}
 		OmsOrderRefund refund = new OmsOrderRefund();
 		refund.setRefundNo("R"+StringUtils.genOrderNo(member.getId()));
@@ -205,7 +205,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	public void agreeRefund(UmsShop shop, Integer refundId) throws ServiceException {
 		OmsOrderRefund refund = this.getRefundByShop(shop, refundId);
 		if(refund.getStatus() != OrderEnums.RefundDetailStatus.APPLY.getValue()){
-			throw new ServiceException("申请退款中的订单才能同意");
+			throw new ServiceException("order.refund.agree.error");
 		}
 		//同意退款
 		this.agreeRefundOrSalesReturn(refund);
@@ -261,7 +261,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	public void refuseRefund(UmsShop shop, Integer refundId, String reason) throws ServiceException {
 		OmsOrderRefund refund = this.getRefundByShop(shop, refundId);
 		if(refund.getStatus() != OrderEnums.RefundDetailStatus.APPLY.getValue()){
-			throw new ServiceException("申请退款中的订单才能拒绝");
+			throw new ServiceException("order.refund.refuse.error");
 		}
 		OmsOrderRefund updateRefund = new OmsOrderRefund();
 		updateRefund.setId(refund.getId());
@@ -308,7 +308,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	public void applyCustomerServiceIn(UmsMember member, Integer refundId) throws ServiceException {
 		OmsOrderRefund refund = this.getRefundByMember(member, refundId);
 		if(refund.getStatus() != OrderEnums.RefundDetailStatus.SALES_REFUSE.getValue()){
-			throw new ServiceException("商家拒绝的退款单才能申请客服介入");
+			throw new ServiceException("order.refund.customer.error");
 		}
 		OmsOrderRefund updateRefund = new OmsOrderRefund();
 		updateRefund.setId(refund.getId());
@@ -343,7 +343,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	public void agreeRefundByCustomer(SysAdmin admin, Integer refundId) throws ServiceException {
 		OmsOrderRefund refund = orderRefundMapper.selectByPrimaryKey(refundId);
 		if(refund.getStatus() != OrderEnums.RefundDetailStatus.SERVICE_IN.getValue()){
-			throw new ServiceException("客服介入的退款单才能处理");
+			throw new ServiceException("order.refund.customer.join");
 		}
 		//同意退款
 		this.agreeRefundOrSalesReturn(refund);
@@ -380,7 +380,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 			updateRefund.setStatus(OrderEnums.RefundDetailStatus.WAIT_BUYER_RETURN.getValue());
 			UmsShopConfig config = shopConfigService.getShopConfig(refund.getShopId());
 			if(config == null || StringUtils.isBlank(config.getReturnName())){
-				throw new ServiceException("请先设置退货地址");
+				throw new ServiceException("order.refund.address");
 			}
 			updateRefund.setReturnName(config.getReturnName());
 			updateRefund.setReturnPhone(config.getReturnPhone());
@@ -409,7 +409,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	public void refuseRefundByCustomer(SysAdmin admin, Integer refundId, String reason) throws ServiceException {
 		OmsOrderRefund refund = orderRefundMapper.selectByPrimaryKey(refundId);
 		if(refund.getStatus() != OrderEnums.RefundDetailStatus.SERVICE_IN.getValue()){
-			throw new ServiceException("客服介入的退款单才能处理");
+			throw new ServiceException("order.refund.customer.join");
 		}
 		OmsOrderRefund updateRefund = new OmsOrderRefund();
 		updateRefund.setId(refund.getId());
@@ -444,7 +444,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	public void salesReturnByMember(UmsMember member, Integer refundId, String deliveryType, String deliveryNo) throws ServiceException {
 		OmsOrderRefund refund = this.getRefundByMember(member, refundId);
 		if(refund.getStatus() != OrderEnums.RefundDetailStatus.WAIT_BUYER_RETURN.getValue()){
-			throw new ServiceException("等待买家退货状态才能进行退货");
+			throw new ServiceException("order.refund.wait.delivery");
 		}
 		OmsOrderRefund updateRefund = new OmsOrderRefund();
 		updateRefund.setId(refund.getId());
@@ -479,7 +479,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	public void confirmReceiveByShop(UmsShop shop, Integer refundId) throws ServiceException {
 		OmsOrderRefund refund = this.getRefundByShop(shop, refundId);
 		if(refund.getStatus() != OrderEnums.RefundDetailStatus.BUYER_RETURNED.getValue()){
-			throw new ServiceException("买家退货后才能进行收货");
+			throw new ServiceException("order.refund.wait.receive");
 		}
 		OmsOrderRefund updateRefund = new OmsOrderRefund();
 		updateRefund.setId(refund.getId());
@@ -589,7 +589,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 				OrderEnums.RefundDetailStatus.BUYER_RETURNED.getValue(),
 				OrderEnums.RefundDetailStatus.SERVICE_IN.getValue()
 		).contains(refund.getStatus())){
-			throw new ServiceException("状态不正确");
+			throw new ServiceException("order.refund.status.error");
 		}
 		OmsOrderRefund updateRefund = new OmsOrderRefund();
 		updateRefund.setId(refund.getId());
@@ -644,7 +644,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		example.createCriteria().andShopIdEqualTo(shop.getId()).andIdEqualTo(refundId);
 		List<OmsOrderRefund> list = orderRefundMapper.selectByExample(example);
 		if(CollectionUtil.isEmpty(list)){
-			throw new ServiceException("售后申请不存在");
+			throw new ServiceException("order.refund.wait.noexist");
 		}
 		return list.get(0);
 	}
@@ -654,7 +654,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andIdEqualTo(refundId);
 		List<OmsOrderRefund> list = orderRefundMapper.selectByExample(example);
 		if(CollectionUtil.isEmpty(list)){
-			throw new ServiceException("售后申请不存在");
+			throw new ServiceException("order.refund.wait.noexist");
 		}
 		return list.get(0);
 	}

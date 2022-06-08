@@ -48,7 +48,7 @@ public class MemberImeIdServiceImpl implements MemberImeIdService {
 			if(config != null && config.getLimitImeid() != null && config.getLimitImeid() == CommonConstant.YES_INT){*/
 				UmsMemberImeid imeid = list.get(0);
 				if(!imeid.getMemberId().equals(member.getId())){
-					throw new ServiceException("同设备仅能登录一个账号");
+					throw new ServiceException("member.imeid.login");
 				}
 //			}
 		}

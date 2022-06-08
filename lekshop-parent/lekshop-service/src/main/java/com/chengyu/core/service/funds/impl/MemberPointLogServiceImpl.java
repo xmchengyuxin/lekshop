@@ -100,7 +100,7 @@ public class MemberPointLogServiceImpl implements MemberPointLogService {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getPoint();
 		if(beforeAmount.compareTo(amount) < 0){
-			throw new ServiceException("积分不足,扣款失败!");
+			throw new ServiceException("member.point.noenough");
 		}
 		BigDecimal afterAmount = NumberUtil.sub(beforeAmount, amount);
 		
@@ -121,7 +121,7 @@ public class MemberPointLogServiceImpl implements MemberPointLogService {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getPoint();
 		if(beforeAmount.compareTo(amount) < 0){
-			throw new ServiceException("积分不足,冻结失败!");
+			throw new ServiceException("member.point.noenough");
 		}
 		BigDecimal afterAmount = NumberUtil.sub(beforeAmount, amount);
 		
@@ -134,7 +134,7 @@ public class MemberPointLogServiceImpl implements MemberPointLogService {
 	public void unfreezeAccount(UmsMember member, AccountEnums.MemberPointTypes accountType, String orderNo, BigDecimal amount, String remark, String ip) throws ServiceException {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		if(memberAccount.getFreezePoint().compareTo(amount) < 0){
-			throw new ServiceException("积分不足,解冻失败!");
+			throw new ServiceException("member.point.noenough");
 		}
 		BigDecimal beforeAmount = memberAccount.getPoint();
 		BigDecimal afterAmount = NumberUtil.add(beforeAmount, amount);

@@ -23,6 +23,7 @@
 			<el-table-column label="登录IP" prop="ip" align="center">
 			  <template slot-scope="scope">
 			    <a class="link-type" :href="'https://www.ip.cn/?ip='+scope.row.ip" target="_blank">{{ scope.row.ip }}</a>
+          <span>{{ scope.row.address}}</span>
 			  </template>
 			</el-table-column>
 			<el-table-column label="登录时间" align="center">

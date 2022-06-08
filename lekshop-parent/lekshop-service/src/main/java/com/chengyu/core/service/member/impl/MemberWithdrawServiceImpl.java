@@ -176,12 +176,12 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public Integer withdraw(UmsMember member, Integer type, Integer method, BigDecimal amount, BankForm bankForm) throws ServiceException {
 		if(amount.compareTo(BigDecimal.ZERO) <= 0){
-			throw new ServiceException("请填写正确的金额");
+			throw new ServiceException("member.amount.error");
 		}
 		//网站维护校验
 		configService.validateWeihuOnlyLogin();
 		if(member.getWithdrawLimit() != null && member.getWithdrawLimit() == CommonConstant.YES_INT){
-			throw new ServiceException("您当前已被限制提现, 详询客服");
+			throw new ServiceException("member.withdraw.limit");
 		}
 		ConfigWithdraw config = configWithdrawService.getConfigWithdrawByGroupId(member.getGroupId());
 		BigDecimal fee = BigDecimal.ZERO;
@@ -212,13 +212,13 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 		UmsMemberAccount account = accountService.getMemberAccount(member.getId());
 		if(method.equals(AccountEnums.AccountMethod.BALANCE.getValue())){
 			if(account.getAmount().compareTo(amount) < 0){
-				throw new ServiceException("可用账户余额不足,无法提现");
+				throw new ServiceException("member.withdraw.account.noenough");
 			}
 			//冻结资金
 			memberAccountLogService.freezeAccount(member, AccountEnums.MemberAccountTypes.ACCOUNT_WITHDRAW_FREEZE, orderNo, amount, "申请提现,等待打款", null);
 		}else if(method.equals(AccountEnums.AccountMethod.MISSION.getValue())){
 			if(account.getSpmission().compareTo(amount) < 0){
-				throw new ServiceException("可用佣金余额不足,无法提现");
+				throw new ServiceException("member.withdraw.mission.noenough");
 			}
 			spmissionLogService.freezeAccount(member, AccountEnums.MemberSpmissionTypes.ACCOUNT_WITHDRAW_FREEZE, orderNo, amount, "申请提现,等待打款", null);
 		}
@@ -250,16 +250,16 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 	private void validateWithdraw(UmsMember member, BigDecimal amount, ConfigWithdraw config, Integer method) throws ServiceException {
 		//判断是否开启提现
 		if(config.getWithdrawStatus() != CommonConstant.YES_INT){
-			throw  new ServiceException("当前会员组暂未开启提现功能");
+			throw  new ServiceException("member.withdraw.unwithdraw");
 		}
 		//判断提现账户限制
 		if(config.getWithdrawType().equals(AccountEnums.AccountMethod.BALANCE.getValue())
 				&& method.equals(AccountEnums.AccountMethod.MISSION.getValue())){
-			throw  new ServiceException("当前会员组暂不支持佣金提现");
+			throw  new ServiceException("member.withdraw.unmission");
 		}
 		if(config.getWithdrawType().equals(AccountEnums.AccountMethod.MISSION.getValue())
 				&& method.equals(AccountEnums.AccountMethod.BALANCE.getValue())){
-			throw  new ServiceException("当前会员组暂不支持余额提现");
+			throw  new ServiceException("member.withdraw.unaccount");
 		}
 		//是否实名认证
 		/*if(config.getNeedRealname() == CommonConstant.YES_INT && member.getRealnameStatus() != CommonConstant.YES_INT){
@@ -272,27 +272,27 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 		//判断提现最低金额
 		if(method.equals(AccountEnums.AccountMethod.BALANCE.getValue())){
 			if(config.getMinBalanceWithdrawAmount().compareTo(amount) > 0){
-				throw new ServiceException("最低提现金额为"+NumberUtils.format2(config.getMinBalanceWithdrawAmount()));
+				throw new ServiceException("member.withdraw.lowestamount", new String[]{NumberUtils.format2(config.getMinBalanceWithdrawAmount())});
 			}
 			if(config.getMaxBalanceWithdrawAmount().compareTo(amount) < 0){
-				throw new ServiceException("最高提现金额为"+NumberUtils.format2(config.getMaxBalanceWithdrawAmount()));
+				throw new ServiceException("member.withdraw.highestamount", new String[]{NumberUtils.format2(config.getMaxBalanceWithdrawAmount())});
 			}
 		}else if(method.equals(AccountEnums.AccountMethod.MISSION.getValue())){
 			if(config.getMinMissionWithdrawAmount().compareTo(amount) > 0){
-				throw new ServiceException("最低提现金额为"+NumberUtils.format2(config.getMinMissionWithdrawAmount()));
+				throw new ServiceException("member.withdraw.lowestamount", new String[]{NumberUtils.format2(config.getMinMissionWithdrawAmount())});
 			}
 			if(config.getMaxMissionWithdrawAmount().compareTo(amount) < 0){
-				throw new ServiceException("最高提现金额为"+NumberUtils.format2(config.getMaxMissionWithdrawAmount()));
+				throw new ServiceException("member.withdraw.highestamount", new String[]{NumberUtils.format2(config.getMaxMissionWithdrawAmount())});
 			}
 		}
 		//判断每天允许提现次数
 		Date now = DateUtil.date();
 		if(this.countWithdrawNums(member.getId(), DateUtil.beginOfDay(now), DateUtil.endOfDay(now)) >= config.getWithdrawDayNum()){
-			throw new ServiceException("每天只能提现"+config.getWithdrawDayNum()+"次");
+			throw new ServiceException("member.withdraw.limittimes",new String[]{config.getWithdrawDayNum().toString()});
 		}
 		//是否有被处罚
 		if(memberPunishmentService.isPunishmenting(member.getId())){
-			throw new ServiceException("您当前正在处罚当中, 请等待处罚期后再进行提现");
+			throw new ServiceException("member.withdraw.punishment");
 		}
 		//判断是否有正在审核的提现
 		/*UmsMemberWithdrawExample example = new UmsMemberWithdrawExample();
@@ -384,13 +384,13 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 		UmsMemberAccount account = accountService.getMemberAccount(member.getId());
 		if(method.equals(AccountEnums.AccountMethod.BALANCE.getValue())){
 			if(account.getAmount().compareTo(amount) < 0){
-				throw new ServiceException("可用账户余额不足,无法提现");
+				throw new ServiceException("member.withdraw.account.noenough");
 			}
 			//冻结资金
 			memberAccountLogService.freezeAccount(member, AccountEnums.MemberAccountTypes.ACCOUNT_WITHDRAW_FREEZE, orderNo, amount, "申请提现,等待打款", null);
 		}else if(method.equals(AccountEnums.AccountMethod.MISSION.getValue())){
 			if(account.getSpmission().compareTo(amount) < 0){
-				throw new ServiceException("可用佣金余额不足,无法提现");
+				throw new ServiceException("member.withdraw.mission.noenough");
 			}
 			spmissionLogService.freezeAccount(member, AccountEnums.MemberSpmissionTypes.ACCOUNT_WITHDRAW_FREEZE, orderNo, amount, "申请提现,等待打款", null);
 		}

@@ -54,11 +54,11 @@ public class MemberRechargeController extends UserBaseController {
 	@RequestMapping(value="/recharge/save", method=RequestMethod.POST)
 	public CommonResult<Map<String,Object>> save(Integer accountId, String payMethod, BigDecimal amount, String remitBank, String remitRealname, String remitAccount, String img) throws Exception {
 		if(amount.compareTo(BigDecimal.ZERO) <= 0){
-			return CommonResult.failed("充值金额必须大于0!");
+			throw new ServiceException("member.recharge.amount");
 		}
 		
 		UmsMember member = getCurrentMember();
-		super.validateRepeat("do-recharge-time-between-" + member.getId(), 5000L, "请勿重复操作,5秒后再试!");
+		super.validateRepeat("do-recharge-time-between-" + member.getId(), 5000L, "platform.validate.repeat");
 		rechargeService.recharge(member, payMethod, amount, remitBank, remitRealname, remitAccount, img);
 
 		if(accountId != null){
@@ -78,11 +78,11 @@ public class MemberRechargeController extends UserBaseController {
 	@RequestMapping(value="/recharge/online", method=RequestMethod.POST)
 	public CommonResult<String> online(String payMethod, BigDecimal amount, String returnUrl) throws Exception {
 		if(amount.compareTo(BigDecimal.ZERO) <= 0){
-			return CommonResult.failed("充值金额必须大于0!");
+			throw new ServiceException("member.recharge.amount");
 		}
 
 		UmsMember member = getCurrentMember();
-		super.validateRepeat("do-recharge-time-between-" + member.getId(), 5000L, "请勿重复操作,5秒后再试!");
+		super.validateRepeat("do-recharge-time-between-" + member.getId(), 5000L, "platform.validate.repeat");
 		String url = rechargeService.rechargeOnline(member, payMethod, amount, returnUrl);
 		return CommonResult.success(url);
 	}

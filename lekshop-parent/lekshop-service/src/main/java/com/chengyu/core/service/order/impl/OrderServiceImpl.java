@@ -174,7 +174,7 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor=Exception.class)
 	public OrderPayResult addOrder(UmsMember member, UmsMemberAddress address, List<OrderAddForm> addFormList) throws ServiceException {
 		if(address == null){
-			throw new ServiceException("请选择收货地址");
+			throw new ServiceException("order.address");
 		}
 		//生成支付订单
 		ConfigOrder orderConfig = configOrderService.getConfigOrder();
@@ -182,7 +182,7 @@ public class OrderServiceImpl implements OrderService {
 		OmsPayOrder payOrder = new OmsPayOrder();
 		payOrder.setPayOrderNo(StringUtils.genTradeNo(member.getId()));
 		payOrder.setMemberId(member.getId());
-		payOrder.setMemberName(member.getCode());
+		payOrder.setMemberName(member.getNickname());
 		payOrder.setAddTime(now);
 		payOrder.setUpdTime(now);
 		payOrder.setPayEndTime(DateUtil.offsetMinute(now, orderConfig.getAutoCancelMinutes()));
@@ -193,7 +193,7 @@ public class OrderServiceImpl implements OrderService {
 		for(OrderAddForm form : addFormList){
 			List<OrderBuyDetailForm> buyDetailFormList = JSONArray.parseArray(form.getGoodsDetail(), OrderBuyDetailForm.class);
 			if(CollectionUtil.isEmpty(buyDetailFormList)){
-				throw new ServiceException("请选择购买的商品");
+				throw new ServiceException("order.goods");
 			}
 			List<OmsOrderDetail> detailList = new ArrayList<>();
 			List<Integer> goodsIdList = new ArrayList<>();
@@ -206,31 +206,31 @@ public class OrderServiceImpl implements OrderService {
 				type = goods.getType();
 				//校验库存
 				if(sku.getStock() < buyDetailForm.getNum()){
-					throw new ServiceException("「"+goods.getTitle()+"」库存不足");
+					throw new ServiceException("order.stock.noenough", new String[]{"「"+goods.getTitle()+"」"});
 				}
 				if(type == GoodsEnums.GoodsType.SECKILL_GOODS.getValue()){
 					//秒杀商品的校验
 					if(goods.getSeckillBeginTime().after(now)){
-						throw new ServiceException("未到秒杀时间");
+						throw new ServiceException("order.seckilltime");
 					}
 					if(goods.getSeckillEndTime().before(now)){
-						throw new ServiceException("秒杀已结束");
+						throw new ServiceException("order.seckilltime.end");
 					}
 					if(buyDetailForm.getNum() > goods.getSeckillLimitNum()){
-						throw new ServiceException("商品限购"+goods.getSeckillLimitNum()+"件");
+						throw new ServiceException("order.goods.limit",new String[]{goods.getSeckillLimitNum().toString()});
 					}
 				}else if(type == GoodsEnums.GoodsType.GROUP_GOODS.getValue()){
 					//团购商品的校验
 					if(goods.getGroupSingleBuy() == CommonConstant.NO_INT && form.getGroupId() == -1){
-						throw new ServiceException("该商品不支持单独购买");
+						throw new ServiceException("order.goods.nosingle");
 					}
 					if(buyDetailForm.getNum() > goods.getGroupLimitBuy()){
-						throw new ServiceException("商品限购"+goods.getGroupLimitBuy()+"件");
+						throw new ServiceException("order.goods.limit",new String[]{goods.getGroupLimitBuy().toString()});
 					}
 				}
 				OmsOrderDetail detail = new OmsOrderDetail();
 				detail.setMemberId(member.getId());
-				detail.setMemberName(member.getCode());
+				detail.setMemberName(member.getNickname());
 				detail.setMemberHeadImg(member.getHeadImg());
 				detail.setShopId(goods.getShopId());
 				detail.setShopName(goods.getShopName());
@@ -454,7 +454,7 @@ public class OrderServiceImpl implements OrderService {
 		ConfigOrder config = configOrderService.getConfigOrder();
 		for(OrderDeliveryForm form : list){
 			if(StringUtils.isBlank(form.getDeliveryType())){
-				throw new ServiceException("请选择快递公司");
+				throw new ServiceException("order.delivery.no");
 			}
 			OmsOrder order = orderMapper.selectByPrimaryKey(form.getOrderId());
 			if(order.getStatus() != OrderEnums.OrderStatus.WAIT_DELIVERY.getValue() || StringUtils.isBlank(form.getDeliveryNo())){
@@ -521,7 +521,7 @@ public class OrderServiceImpl implements OrderService {
 	public void confirmOrder(UmsMember member, Integer orderId) throws ServiceException {
 		OmsOrder order = this.getOrderByMember(member, orderId);
 		if(order.getStatus() != OrderEnums.OrderStatus.WAIT_RECEIVE.getValue()){
-			throw new ServiceException("待收货订单才能确认收货");
+			throw new ServiceException("order.confirm");
 		}
 		this.finishOrder(order);
 	}
@@ -623,7 +623,7 @@ public class OrderServiceImpl implements OrderService {
 	public void updateOrderAddress(UmsMember member, Integer orderId, Integer addressId) throws ServiceException {
 		OmsOrder order = this.getOrderByMember(member, orderId);
 		if(order.getStatus() != OrderEnums.OrderStatus.WAIT_DELIVERY.getValue()){
-			throw new ServiceException("待发货订单才能修改地址");
+			throw new ServiceException("order.edit.address");
 		}
 
 		UmsMemberAddress address = memberAddressService.getAddressById(addressId);
@@ -643,7 +643,7 @@ public class OrderServiceImpl implements OrderService {
 	public void cancelOrder(UmsMember member, Integer orderId) throws ServiceException {
 		OmsOrder order = this.getOrderByMember(member, orderId);
 		if(order.getStatus() != OrderEnums.OrderStatus.WAIT_PAY.getValue()){
-			throw new ServiceException("待支付订单才能取消");
+			throw new ServiceException("order.unpay.cancel");
 		}
 
 		OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
@@ -672,7 +672,7 @@ public class OrderServiceImpl implements OrderService {
 	public void deleteOrder(UmsMember member, Integer orderId) throws ServiceException {
 		OmsOrder order = this.getOrderByMember(member, orderId);
 		if(order.getStatus() != OrderEnums.OrderStatus.CANCEL.getValue()){
-			throw new ServiceException("已取消的订单才能删除");
+			throw new ServiceException("order.cancel.delete");
 		}
 		OmsOrder updateOrder = new OmsOrder();
 		updateOrder.setId(order.getId());
@@ -790,7 +790,7 @@ public class OrderServiceImpl implements OrderService {
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andIdEqualTo(orderId);
 		List<OmsOrder> list = orderMapper.selectByExample(example);
 		if(CollectionUtil.isEmpty(list)){
-			throw new ServiceException("订单不存在");
+			throw new ServiceException("order.notexist");
 		}
 		return list.get(0);
 	}

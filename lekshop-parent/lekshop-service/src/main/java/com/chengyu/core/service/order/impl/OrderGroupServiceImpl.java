@@ -96,7 +96,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		example.createCriteria().andOrderNoEqualTo(orderDetail.getOrderNo()).andMemberIdEqualTo(orderDetail.getMemberId());
 		long count = assembleMemberMapper.countByExample(example);
 		if(count > 0){
-			throw new ServiceException("一笔订单只能发起一笔拼团");
+			throw new ServiceException("order.group.launch");
 		}
 
 		OmsOrderGroup orderGroup = new OmsOrderGroup();
@@ -147,25 +147,25 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	public void joinGroup(Integer orderGroupId, OmsOrderDetail orderDetail) throws ServiceException {
 		OmsOrderGroup orderGroup = this.getOrderGroupById(orderGroupId);
 		if(orderGroup == null){
-			throw new ServiceException("拼团任务不存在");
+			throw new ServiceException("order.group.notexist");
 		}
 		
 		if(orderGroup.getStatus() == 2) {
-			throw new ServiceException("该拼团任务已拼购成功,无法参团");
+			throw new ServiceException("order.group.sus");
 		}
 		if(orderGroup.getStatus() == 3){
-			throw new ServiceException("该拼团任务已拼购失败,无法参团");
+			throw new ServiceException("order.group.fail");
 		}
 		if(orderGroup.getHaveGroupNum() >= orderGroup.getGroupNum()){
-			throw new ServiceException("该拼购任务已满员,无法参团");
+			throw new ServiceException("order.group.full");
 		}
 		if(orderGroup.getEndTime().before(new Date())) {
-			throw new ServiceException("该拼购任务已超时,无法参团");
+			throw new ServiceException("order.group.overtime");
 		}
 		
 		//判断用户不能再参加自己的团
 		if(orderGroup.getMemberId().equals(orderDetail.getMemberId())) {
-			throw new ServiceException("不能参加自己的团");
+			throw new ServiceException("order.group.myself");
 		}
 		
 		OmsOrderGroup updaGroup = new OmsOrderGroup();

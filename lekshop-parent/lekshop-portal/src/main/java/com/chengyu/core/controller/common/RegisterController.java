@@ -5,6 +5,7 @@ import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.UmsMemberRegParam;
 import com.chengyu.core.entity.CommonResult;
+import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.SysInviteCode;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.service.system.SysInviteCodeService;
@@ -45,11 +46,11 @@ public class RegisterController extends UserBaseController {
 	@RequestMapping(value={"/common/register"}, method=RequestMethod.POST)
 	public CommonResult<Map<String, Object>> regSubmit(@Valid UmsMemberRegParam regParam) throws Exception {
 		if(!regParam.getPassword().equals(regParam.getConfirmPassword())) {
-			return CommonResult.failed("两次密码输入不一致");
+			throw new ServiceException("password.confirm.error");
 		}
 		
 		//校验短信验证码
-		verifyCodeService.validateCode(regParam.getPhone(), regParam.getCode());
+		verifyCodeService.validateCode(regParam.getUsername(), regParam.getCode());
 
 		UmsMember member = new UmsMember();
 		member.setType(regParam.getType());
@@ -64,15 +65,12 @@ public class RegisterController extends UserBaseController {
 			}else{
 				SysInviteCode config = sysInviteCodeService.getConfigByInviteCode(regParam.getInviteCode());
 				if(config == null){
-					return CommonResult.failed("邀请码错误");
+					throw new ServiceException("invite.code.error");
 				}
 				if(config.getType() == CommonConstant.INVITE_CODE_MEMBER){
 					UmsMember tjr = memberService.getMemberById(config.getUserId());
 					if(tjr.getInviteStatus() != CommonConstant.YES_INT){
-						return CommonResult.failed("邀请码错误");
-					}
-					if(!tjr.getType().equals(member.getType())){
-						return CommonResult.failed("买家和商家无法互相邀请");
+						throw new ServiceException("invite.code.error");
 					}
 					member.setTjrId(tjr.getId());
 					member.setTjrUid(tjr.getUid());

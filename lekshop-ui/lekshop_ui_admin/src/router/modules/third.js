@@ -50,6 +50,12 @@ const thirdRouter = {
       meta: { title: '实名认证接口', icon:'list', role: ['admin'] }
     },
     {
+      path: 'thirdConfig',
+      component: () => import('@/views/third/config/index'),
+      name: 'thirdConfig',
+      meta: { title: '接口切换配置', icon:'list', role: ['admin'] }
+    },
+    {
       path: 'interface',
       component: () => import('@/views/third/interface/index'),
       name: 'interface',

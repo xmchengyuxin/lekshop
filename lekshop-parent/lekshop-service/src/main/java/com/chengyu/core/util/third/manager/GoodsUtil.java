@@ -65,7 +65,7 @@ public class GoodsUtil {
             return CommonConstant.TAOBAO;
         }else if(url.contains("jd.com")){
             return CommonConstant.JINGDONG;
-        }else if(url.contains("yangkeduo.com")){
+        }else if(url.contains("yangkeduo.com") || url.contains("pinduoduo.com")){
             return CommonConstant.PINDUODUO;
         }else{
             return CommonConstant.TAOBAO;

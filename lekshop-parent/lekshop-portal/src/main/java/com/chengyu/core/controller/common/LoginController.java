@@ -60,12 +60,12 @@ public class LoginController extends UserBaseController {
     @ResponseBody
     public CommonResult<Map<String, Object>> login(String username, String password, String imeId, String phoneType, Integer type, String registrationId, String cToken, String captcha) throws ServiceException{
 		//校验图形验证码
-		super.validateCaptcha(cToken, captcha);
+//		super.validateCaptcha(cToken, captcha);
 
 		//进行登录
 		String token = memberService.login(username, password, this.getRequestIp());
         if (token == null) {
-        	return CommonResult.validateFailed("用户名或密码错误");
+			throw new ServiceException("username.notfound");
         }
         
         Map<String, Object> tokenMap = new HashMap<>();
@@ -95,7 +95,7 @@ public class LoginController extends UserBaseController {
 		String token = memberService.loginByNoPassword(username);
 		//进行登录
 		if (token == null) {
-			return CommonResult.validateFailed("用户名或密码错误");
+			throw new ServiceException("username.notfound");
 		}
 
 		Map<String, Object> tokenMap = new HashMap<>(16);
@@ -109,11 +109,11 @@ public class LoginController extends UserBaseController {
 	@ApiOperation(value = "刷新token")
     @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<String> refreshToken(HttpServletRequest request) {
+    public CommonResult<String> refreshToken(HttpServletRequest request) throws ServiceException {
         String token = request.getHeader(tokenHeader);
         String refreshToken = jwtTokenUtil.refreshHeadToken(token);
         if (refreshToken == null) {
-            return CommonResult.unauthorized("token已经过期！");
+			throw new ServiceException("token expired");
         }
         return CommonResult.success(refreshToken);
     }

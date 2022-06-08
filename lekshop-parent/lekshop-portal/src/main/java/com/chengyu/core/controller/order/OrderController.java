@@ -61,9 +61,9 @@ public class OrderController extends UserBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value={"/order/place"}, method=RequestMethod.POST)
-	public CommonResult<List<ShopGoodsOrder>> confirm(String goodsParams, UmsMemberAddress address, Integer groupId) {
+	public CommonResult<List<ShopGoodsOrder>> confirm(String goodsParams, UmsMemberAddress address, Integer groupId) throws ServiceException {
 		if(StringUtils.isBlank(goodsParams)){
-			return CommonResult.failed("请选择商品");
+			throw new ServiceException("order.goods");
 		}
 		List<OrderBuyDetailForm> buyDetailFormList = JSONArray.parseArray(goodsParams, OrderBuyDetailForm.class);
 		List<Integer> shopIdList = buyDetailFormList.stream().map(OrderBuyDetailForm::getShopId).distinct().collect(Collectors.toList());
@@ -165,16 +165,16 @@ public class OrderController extends UserBaseController {
 		//判断参加的团是否是自己创建的团
 		OmsOrderGroup assemble = orderGroupService.getOrderGroupById(groupId);
 		if(assemble == null) {
-			return CommonResult.failed("该拼团不存在");
+			throw new ServiceException("order.group.notexist");
 		}
 		if(assemble.getStatus() != 1) {
-			return CommonResult.failed("该拼团已成功或失败,请选择别的团");
+			throw new ServiceException("order.group.unjoin");
 		}
 		if(new Date().after(assemble.getEndTime())) {
-			return CommonResult.failed("该拼团已结束,请选择别的团");
+			throw new ServiceException("order.group.end");
 		}
 		if(assemble.getMemberId().equals(getCurrentMember().getId())) {
-			return CommonResult.failed("不能参加自己的团");
+			throw new ServiceException("order.group.myself");
 		}
 		return CommonResult.success(null);
 	}

@@ -42,7 +42,7 @@ public class MemberSignServiceImpl implements MemberSignService {
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andAddTimeBetween(todayBegin, todayEnd);
 		long count = signMapper.countByExample(example);
 		if(count > 0){
-			throw new ServiceException("您今日已签到,明日再来,更多惊喜在等你!");
+			throw new ServiceException("member.sign.today");
 		}
 			
 		UmsMemberSign sign = new UmsMemberSign();

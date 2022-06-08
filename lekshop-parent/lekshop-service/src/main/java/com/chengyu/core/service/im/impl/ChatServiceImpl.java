@@ -3,6 +3,7 @@ package com.chengyu.core.service.im.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.MemberRemindEnums;
@@ -16,9 +17,8 @@ import com.chengyu.core.model.*;
 import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.schedule.ScheduleService;
-import com.chengyu.core.service.schedule.job.RobotAnswerJob;
-import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.util.RedisUtil;
+import com.chengyu.core.util.chat.QingyunkeUtil;
 import com.chengyu.core.util.netty.NettyPushUtil;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -137,7 +137,7 @@ public class ChatServiceImpl implements ChatService {
 		chatLog.setMsgContent(content);
 		chatLog.setReadStatus(CommonConstant.YES_INT);
 		chatLog.setSendStatus(CommonConstant.NO_INT);
-		chatLog.setSendTime(DateUtil.offsetSecond(DateUtil.date(),5));
+		chatLog.setSendTime(DateUtil.date());
 		chatLog.setUpdTime(chatLog.getSendTime());
 		chatLog.setSessionId(sessionId);
 		chatLog.setMemberId(member.getId());
@@ -149,7 +149,9 @@ public class ChatServiceImpl implements ChatService {
 		chatLog.setSendType(1);
 		chatLogMapper.insertSelective(chatLog);
 		if(targetMemberId == CustomerConstatnt.MEMBER_ID){
-			this.smartAnswer(member, chatLog);
+			ThreadUtil.execAsync(() -> {
+				this.smartAnswer(member, chatLog);
+			}, false);
 			return chatLog;
 		}
 
@@ -192,9 +194,9 @@ public class ChatServiceImpl implements ChatService {
 	private void smartAnswer(UmsMember member, ImChatLog chatLog) {
 		ImChatLog targetLog = new ImChatLog();
 		targetLog.setMsgType("text");
-		targetLog.setMsgContent(!"text".equals(chatLog.getMsgType()) ? "对不起，目前我只看得懂文字~" : "人工智能尚在开发中");
+		targetLog.setMsgContent(!"text".equals(chatLog.getMsgType()) ? "对不起，目前我只看得懂文字~" : QingyunkeUtil.getAnswer(chatLog.getMsgContent()));
 		targetLog.setSendStatus(CommonConstant.NO_INT);
-		targetLog.setSendTime(DateUtil.date());
+		targetLog.setSendTime(DateUtil.offsetSecond(DateUtil.date(),5));
 		targetLog.setUpdTime(targetLog.getSendTime());
 
 		targetLog.setSessionId(chatLog.getSessionId());
@@ -208,6 +210,9 @@ public class ChatServiceImpl implements ChatService {
 		targetLog.setSendType(2);
 		targetLog.setReadStatus(CommonConstant.NO_INT);
 		chatLogMapper.insertSelective(targetLog);
+
+		//更新最新消息
+		baseMapper.update("update im_chat_session set upd_time = now(), msg_type='"+targetLog.getMsgType()+"', last_msg='"+targetLog.getMsgContent()+"' where id="+chatLog.getSessionId());
 
 		//通过netty发送
 		Map<String,String> extras = new HashMap<>(16);

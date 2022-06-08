@@ -60,7 +60,7 @@ public class LocalLogic extends ThirdUtilFactory {
             file.transferTo(targetFile);
             return url + "/" +fileAdd+"/"+fileName;
         } catch (Exception e) {
-            throw new ServiceException("上传失败");
+            throw new ServiceException("system.upload.error");
         }
     }
 

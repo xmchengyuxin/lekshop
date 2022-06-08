@@ -281,7 +281,7 @@
       init() {
 
         getUser().then((res) => {
-           this.form.phone = res.code
+           this.form.phone = res.data.phone
         })
 
         getShopInfo().then((res) => {

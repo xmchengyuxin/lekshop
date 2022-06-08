@@ -7,9 +7,13 @@ import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.form.OrderCommentSearchForm;
 import com.chengyu.core.domain.form.OrderGroupSearchForm;
+import com.chengyu.core.domain.result.OrderCommentResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
-import com.chengyu.core.model.*;
+import com.chengyu.core.model.OmsOrderGroup;
+import com.chengyu.core.model.PmsGoods;
+import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.service.goods.GoodsParamsService;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.member.MemberCollectGoodsService;
@@ -150,13 +154,13 @@ public class GoodsController extends UserBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value="/goods/getCommentList", method=RequestMethod.GET)
-	public CommonResult<CommonPage<OmsOrderComment>> search(Integer goodsId, Integer goodsComment, Integer page, Integer pageSize) {
+	public CommonResult<CommonPage<OrderCommentResult>> search(Integer goodsId, Integer goodsComment, Integer page, Integer pageSize) {
 		OrderCommentSearchForm form = new OrderCommentSearchForm();
 		form.setGoodsId(goodsId);
 		form.setGoodsComment(goodsComment);
 		form.setStatusList(CollectionUtil.newArrayList(OrderEnums.CommentStatus.COMMENTED.getValue(), OrderEnums.CommentStatus.ADD_COMMENTED.getValue()));
-		List<OmsOrderComment> list = orderCommentService.getCommentList(form, page, pageSize);
-		return CommonResult.success(CommonPage.restPage(list));
+		CommonPage<OrderCommentResult> list = orderCommentService.getCommentListByGoods(form, page, pageSize);
+		return CommonResult.success(list);
 	}
 
 	@ApiOperation(value = "猜你喜欢的商品")

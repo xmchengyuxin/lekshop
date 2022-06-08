@@ -836,6 +836,76 @@ public class UmsShopExample {
             return (Criteria) this;
         }
 
+        public Criteria andBannerIsNull() {
+            addCriterion("banner is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerIsNotNull() {
+            addCriterion("banner is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerEqualTo(String value) {
+            addCriterion("banner =", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerNotEqualTo(String value) {
+            addCriterion("banner <>", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerGreaterThan(String value) {
+            addCriterion("banner >", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerGreaterThanOrEqualTo(String value) {
+            addCriterion("banner >=", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerLessThan(String value) {
+            addCriterion("banner <", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerLessThanOrEqualTo(String value) {
+            addCriterion("banner <=", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerLike(String value) {
+            addCriterion("banner like", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerNotLike(String value) {
+            addCriterion("banner not like", value, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerIn(List<String> values) {
+            addCriterion("banner in", values, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerNotIn(List<String> values) {
+            addCriterion("banner not in", values, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerBetween(String value1, String value2) {
+            addCriterion("banner between", value1, value2, "banner");
+            return (Criteria) this;
+        }
+
+        public Criteria andBannerNotBetween(String value1, String value2) {
+            addCriterion("banner not between", value1, value2, "banner");
+            return (Criteria) this;
+        }
+
         public Criteria andProvinceIsNull() {
             addCriterion("province is null");
             return (Criteria) this;
