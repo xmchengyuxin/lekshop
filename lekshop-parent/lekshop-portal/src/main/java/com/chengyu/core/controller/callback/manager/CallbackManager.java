@@ -1,6 +1,8 @@
 package com.chengyu.core.controller.callback.manager;
 
 import com.chengyu.core.controller.callback.logic.OrderLogic;
+import com.chengyu.core.controller.callback.logic.RechargeLogic;
+import com.chengyu.core.controller.callback.logic.RefundLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,14 +23,24 @@ import org.springframework.stereotype.Component;
 public class CallbackManager{
 	
 	public static final String CALLBACK_ORDER = "order";
+	public static final String CALLBACK_RECHARGE = "recharge";
+	public static final String CALLBACK_REFUND = "refund";
 
 	@Autowired
 	private OrderLogic orderLogic;
+	@Autowired
+	private RechargeLogic rechargeLogic;
+	@Autowired
+	private RefundLogic refundLogic;
 
 	public CallbackFactory getPaySusFactory(String mode) {
 		switch (mode) {
 		case CALLBACK_ORDER:
 			return orderLogic;
+		case CALLBACK_RECHARGE:
+			return rechargeLogic;
+		case CALLBACK_REFUND:
+			return refundLogic;
 		default:
 			return null;
 		}

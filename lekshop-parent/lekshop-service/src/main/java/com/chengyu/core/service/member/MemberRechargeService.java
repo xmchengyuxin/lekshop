@@ -92,7 +92,7 @@ public interface MemberRechargeService {
      * @return java.lang.String
      * @throws ServiceException 业务异常
      */
-    String rechargeOnline(UmsMember member, String payMethod, BigDecimal amount, String returnUrl) throws ServiceException;
+    String rechargeOnline(UmsMember member, String payMethod, BigDecimal amount) throws ServiceException;
 
     /**
      * 获取充值记录

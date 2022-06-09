@@ -20,4 +20,6 @@ import org.springframework.stereotype.Component;
 public abstract class CallbackFactory{
 	
 	public abstract void paySus(String orderNo) throws ServiceException;
+
+	public abstract void refundSus(String orderNo) throws ServiceException;
 }

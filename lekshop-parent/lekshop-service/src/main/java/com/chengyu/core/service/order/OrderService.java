@@ -8,10 +8,7 @@ import com.chengyu.core.domain.result.OrderPayResult;
 import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.exception.ServiceException;
-import com.chengyu.core.model.OmsOrderDetail;
-import com.chengyu.core.model.UmsMember;
-import com.chengyu.core.model.UmsMemberAddress;
-import com.chengyu.core.model.UmsShop;
+import com.chengyu.core.model.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -168,4 +165,50 @@ public interface OrderService {
      * @throws ServiceException 业务异常
      */
     Map<String, Object> count(Integer memberId);
+
+    /**
+     * 获取支付订单
+     * @author LeGreen
+     * @date   2022/6/9
+     * @param  payOrderNo
+     * @return OmsPayOrder
+     */
+    OmsPayOrder getPayOrder(String payOrderNo);
+
+    /**
+     * 更新订单的支付方式和支付渠道
+     * @author LeGreen
+     * @date   2022/6/9
+     * @param  payOrderNo
+     * @param  payMethod
+     * @param  applicationType
+     */
+    void updateOrderPaymethod(String payOrderNo, String payMethod, String applicationType);
+
+    /**
+     * 查询订单
+     * @author LeGreen
+     * @date   2022/6/9
+     * @param  orderId
+     * @return OmsOrder
+     */
+    OmsOrder getOrderById(Integer orderId);
+
+    /**
+     * 根据订单号查询订单
+     * @author LeGreen
+     * @date   2022/6/9
+     * @param  orderNo
+     * @return OmsOrder
+     */
+    OmsOrder getOrderByOrderNo(String orderNo);
+
+    /**
+     * 取消订单成功
+     * @author LeGreen
+     * @date   2022/6/9
+     * @param  order
+     * @throws ServiceException 业务异常
+     */
+    void cancelAndRefundOrderSus(OmsOrder order);
 }

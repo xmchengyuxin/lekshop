@@ -21,6 +21,7 @@ import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberRemindService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderRefundService;
+import com.chengyu.core.service.pay.PayService;
 import com.chengyu.core.service.schedule.job.RefundAutoAgreeJob;
 import com.chengyu.core.service.schedule.job.RefundAutoCancelJob;
 import com.chengyu.core.service.schedule.job.RefundAutoConfirmJob;
@@ -67,6 +68,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	private MemberNewsService memberNewsService;
 	@Autowired
 	private ShopService shopService;
+	@Autowired
+	private PayService payService;
 
 	@Override
 	public List<OmsOrderRefund> getRefundList(OrderRefundSearchForm form, Integer page, Integer pageSize) {
@@ -368,14 +371,12 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	 * @throws ServiceException 业务异常
 	 */
 	private void agreeRefundOrSalesReturn(OmsOrderRefund refund) throws ServiceException {
-		OmsOrderRefund updateRefund = new OmsOrderRefund();
-		updateRefund.setId(refund.getId());
 		if(refund.getRefundInd() == OrderEnums.RefundInd.ONLY_REFUND.getValue()){
 			//仅退款，直接原路退款到账户
-			updateRefund.setStatus(OrderEnums.RefundDetailStatus.REFUND_SUS.getValue());
-
-			this.refundSusForUpdateOrder(refund);
+			payService.refund(refund.getRefundNo());
 		}else{
+			OmsOrderRefund updateRefund = new OmsOrderRefund();
+			updateRefund.setId(refund.getId());
 			//退款退货,退货地址
 			updateRefund.setStatus(OrderEnums.RefundDetailStatus.WAIT_BUYER_RETURN.getValue());
 			UmsShopConfig config = shopConfigService.getShopConfig(refund.getShopId());
@@ -391,8 +392,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 			updateRefund.setBuyerSendGoodsTime(DateUtil.offsetDay(DateUtil.date(), orderConfig.getBuyerRefundDay()));
 			//自动同意定时器
 			taskTriggerService.addTrigger(RefundAutoCancelJob.class, updateRefund.getBuyerSendGoodsTime(), refund.getRefundNo());
+			orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
 		}
-		orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
 
 		//同意售后消息
 		UmsMember member = memberService.getMemberById(refund.getMemberId());
@@ -581,6 +582,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void cancelRefund(UmsMember member, Integer refundId) throws ServiceException {
 		OmsOrderRefund refund = this.getRefundByMember(member, refundId);
 		if(!CollectionUtil.newArrayList(
@@ -637,6 +639,25 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		logExample.createCriteria().andRefundIdEqualTo(refundList.get(0).getId());
 		result.setRefundLogList(orderRefundLogMapper.selectByExample(logExample));
 		return result;
+	}
+
+	@Override
+	public OmsOrderRefund getOrderRefundByRefundNo(String refundNo) {
+		OmsOrderRefundExample example = new OmsOrderRefundExample();
+		example.createCriteria().andRefundNoEqualTo(refundNo);
+		List<OmsOrderRefund> refundList = orderRefundMapper.selectByExample(example);
+		return CollectionUtil.isNotEmpty(refundList) ? refundList.get(0) : null;
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void refundSusCallback(OmsOrderRefund refund) {
+		OmsOrderRefund updateRefund = new OmsOrderRefund();
+		updateRefund.setId(refund.getId());
+		updateRefund.setStatus(OrderEnums.RefundDetailStatus.REFUND_SUS.getValue());
+		orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
+
+		this.refundSusForUpdateOrder(refund);
 	}
 
 	private OmsOrderRefund getRefundByShop(UmsShop shop, Integer refundId) throws ServiceException {

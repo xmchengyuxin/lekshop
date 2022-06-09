@@ -84,7 +84,8 @@ public class AccountEnums {
 		ACCOUNT_TRANSFER_OUT("本金转出", 11),
 		ACCOUNT_TRANSFER_IN("本金转入", 12),
 		ACCOUNT_RECHARGE("充值", 13),
-		ACCOUNT_SPREAD("推广佣金", 14);
+		ACCOUNT_SPREAD("推广佣金", 14),
+		ACCOUNT_REFUND("退款", 15);
 
 
 		private final String name;

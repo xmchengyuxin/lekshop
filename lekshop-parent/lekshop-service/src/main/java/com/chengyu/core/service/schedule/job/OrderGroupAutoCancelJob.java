@@ -35,7 +35,7 @@ public class OrderGroupAutoCancelJob extends QuartzJobBean {
         JobDetail jobDetail = jobExecutionContext.getJobDetail();
         JobDataMap jobDataMap = jobDetail.getJobDataMap();
         String data = jobDataMap.getString("data");
-        log.info("订单超时未支付自动取消：{}",data);
+        log.info("拼团失败自动取消：{}",data);
         //执行业务操作
         try {
             orderGroupService.autoCancel(Integer.parseInt(data));

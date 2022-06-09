@@ -68,8 +68,6 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 	@Autowired
 	private ConfigService configService;
 	@Autowired
-	private AliPay aliPay;
-	@Autowired
 	private MemberRemindService memberRemindService;
 
 	@Override
@@ -469,7 +467,7 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 			}
 			String message;
 			try {
-				message = aliPay.transferToUser(withdraw.getOrderNo(), withdraw.getAmount(), withdraw.getBankAccount(), withdraw.getRealname());
+				message = new AliPay().transferToUser(withdraw.getOrderNo(), withdraw.getAmount(), withdraw.getBankAccount(), withdraw.getRealname());
 			} catch (AlipayApiException e) {
 				errorNum++;
 				continue;
@@ -493,7 +491,7 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 
 	@Override
 	public String queryZfbBalance() throws Exception {
-		return aliPay.queryBalance();
+		return new AliPay().queryBalance();
 	}
 
 }

@@ -4,7 +4,6 @@ import cn.hutool.core.util.NumberUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
-import com.chengyu.core.controller.callback.manager.CallbackManager;
 import com.chengyu.core.domain.form.CaculateFreightFeeForm;
 import com.chengyu.core.domain.form.OrderAddForm;
 import com.chengyu.core.domain.form.OrderBuyDetailForm;
@@ -32,10 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Api(tags = "订单")
@@ -48,11 +44,11 @@ public class OrderController extends UserBaseController {
 	@Autowired
 	private GoodsService goodsService;
 	@Autowired
-	private CallbackManager paySusManager;
-	@Autowired
 	private OrderGroupService orderGroupService;
 	@Autowired
 	private MemberCouponService memberCouponService;
+	@Autowired
+	private PayService payService;
 
 	@ApiOperation(value = "确认订单查询")
 	@ApiImplicitParams({
@@ -151,8 +147,25 @@ public class OrderController extends UserBaseController {
 	public CommonResult<Map<String,Object>> payOrder(String payOrderNo, PayBaseForm payBaseForm) throws Exception{
 		UmsMember member = getCurrentMember();
 		super.validateRepeat("payOrder-"+member.getId(), 5000L, "点太快了~");
-		paySusManager.getPaySusFactory(CallbackManager.CALLBACK_ORDER).paySus(payOrderNo);
-		return CommonResult.success(null);
+		//调用支付接口
+		payBaseForm.setIp(this.getRequestIp());
+		String message = payService.orderPay(member, payOrderNo, payBaseForm);
+
+		Map<String,Object> result = new HashMap<>();
+		result.put("payOrderNo", payOrderNo);
+		result.put("message", message);
+		return CommonResult.success(result);
+	}
+
+	@ApiOperation(value = "支付详情")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "payOrderNo", value = "支付订单号"),
+	})
+	@ResponseBody
+	@RequestMapping(value="/order/payDetail", method=RequestMethod.GET)
+	public CommonResult<OmsPayOrder> payDetail(String payOrderNo) throws Exception{
+		OmsPayOrder payOrder = orderService.getPayOrder(payOrderNo);
+		return CommonResult.success(payOrder);
 	}
 
 	@ApiOperation(value = "校验是否可参团")

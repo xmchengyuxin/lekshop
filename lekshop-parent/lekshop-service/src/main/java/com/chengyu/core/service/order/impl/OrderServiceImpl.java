@@ -646,8 +646,13 @@ public class OrderServiceImpl implements OrderService {
 			throw new ServiceException("order.unpay.cancel");
 		}
 
+		//取消订单并恢复库存
+		this.cancelOrderAndAddStock(orderId);
+	}
+
+	private void cancelOrderAndAddStock(Integer orderId){
 		OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
-		detailExample.createCriteria().andMemberIdEqualTo(member.getId()).andOrderIdEqualTo(order.getId()).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
+		detailExample.createCriteria().andOrderIdEqualTo(orderId).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
 		List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(detailExample);
 
 		for(OmsOrderDetail detail : detailList){
@@ -775,6 +780,57 @@ public class OrderServiceImpl implements OrderService {
 				OrderEnums.RefundDetailStatus.SERVICE_IN.getValue()));
 		result.put("refundNum", orderRefundMapper.countByExample(refundExample));
 		return result;
+	}
+
+	@Override
+	public OmsPayOrder getPayOrder(String payOrderNo) {
+		OmsPayOrderExample example = new OmsPayOrderExample();
+		example.createCriteria().andPayOrderNoEqualTo(payOrderNo);
+		List<OmsPayOrder> list = payOrderMapper.selectByExample(example);
+		return CollectionUtil.isNotEmpty(list) ? list.get(0) : null;
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void updateOrderPaymethod(String payOrderNo, String payMethod, String payChannel) {
+		OmsPayOrderExample example = new OmsPayOrderExample();
+		example.createCriteria().andPayOrderNoEqualTo(payOrderNo);
+		OmsPayOrder updatePayOrder = new OmsPayOrder();
+		updatePayOrder.setPayMethod(payMethod);
+		updatePayOrder.setPayChannel(payChannel);
+		payOrderMapper.updateByExampleSelective(updatePayOrder, example);
+
+		OmsOrderExample orderExample = new OmsOrderExample();
+		orderExample.createCriteria().andPayOrderNoEqualTo(payOrderNo);
+		OmsOrder updateOrder = new OmsOrder();
+		updateOrder.setPayMethod(payMethod);
+		updateOrder.setPayChannel(payChannel);
+		orderMapper.updateByExampleSelective(updateOrder, orderExample);
+	}
+
+	@Override
+	public OmsOrder getOrderById(Integer orderId) {
+		return orderMapper.selectByPrimaryKey(orderId);
+	}
+
+	@Override
+	public OmsOrder getOrderByOrderNo(String orderNo) {
+		OmsOrderExample example = new OmsOrderExample();
+		example.createCriteria().andOrderNoEqualTo(orderNo);
+		List<OmsOrder> list = orderMapper.selectByExample(example);
+		return CollectionUtil.isNotEmpty(list) ? list.get(0) : null;
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void cancelAndRefundOrderSus(OmsOrder order) {
+		if(CollectionUtil.contains(CollectionUtil.newArrayList(
+				OrderEnums.OrderStatus.WAIT_DELIVERY.getValue(),
+				OrderEnums.OrderStatus.WAIT_RECEIVE.getValue(),
+				OrderEnums.OrderStatus.FINISHED.getValue()
+				), order.getStatus())){
+			this.cancelOrderAndAddStock(order.getId());
+		}
 	}
 
 	/**

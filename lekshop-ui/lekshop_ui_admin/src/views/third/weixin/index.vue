@@ -19,6 +19,12 @@
          <el-form-item label="公众号Secret" prop="gzhSecret">
            <el-input type="password" autocomplete="off" v-model="config.gzhSecret"></el-input>
          </el-form-item>
+         <el-form-item label="小程序AppId" prop="xcxAppId">
+            <el-input v-model="config.xcxAppId"></el-input>
+          </el-form-item>
+          <el-form-item label="小程序Secret" prop="xcxSecret">
+            <el-input type="password" autocomplete="off" v-model="config.xcxSecret"></el-input>
+          </el-form-item>
          <el-form-item label="微信商户号" prop="mchId">
            <el-input v-model="config.mchId"></el-input>
          </el-form-item>

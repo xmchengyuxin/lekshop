@@ -146,5 +146,5 @@ public interface OrderGroupService {
 	 * @date   2022/5/25
 	 * @param  orderGroupId
 	 */
-    void autoCancel(Integer orderGroupId);
+    void autoCancel(Integer orderGroupId) throws ServiceException;
 }

@@ -163,4 +163,21 @@ public interface OrderRefundService {
      * @return OrderRefundResult
      */
     OrderRefundResult getOrderRefundByDetailId(Integer detailId);
+
+    /**
+     * 根据退款单号获取退款
+     * @author LeGreen
+     * @date   2022/6/9
+     * @param  refundNo
+     * @return OmsOrderRefund
+     */
+    OmsOrderRefund getOrderRefundByRefundNo(String refundNo);
+
+    /**
+     * 退款成功回调
+     * @author LeGreen
+     * @date   2022/6/9
+     * @param  refund
+     */
+    void refundSusCallback(OmsOrderRefund refund);
 }

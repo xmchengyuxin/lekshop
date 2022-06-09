@@ -15,9 +15,8 @@ import com.chengyu.core.model.*;
 import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderGroupService;
-import com.chengyu.core.service.order.OrderService;
+import com.chengyu.core.service.pay.PayService;
 import com.chengyu.core.service.schedule.job.OrderGroupAutoCancelJob;
-import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -43,12 +42,8 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	private MemberService memberService;
 	@Autowired
 	private MemberNewsService memberNewsService;
-//	@Autowired
-//	private PayService payService;
 	@Autowired
-	private OrderService orderService;
-	@Autowired
-	private ShopService shopService;
+	private PayService payService;
 	@Autowired
 	private TaskTriggerService taskTriggerService;
 	
@@ -237,7 +232,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void doRefundForFailPintuan(OmsOrderGroup assemble) {
+	public void doRefundForFailPintuan(OmsOrderGroup assemble) throws ServiceException {
 		OmsOrderGroup updateGroup = new OmsOrderGroup();
 		updateGroup.setId(assemble.getId());
 		updateGroup.setStatus(OrderEnums.GroupStatus.FAIL.getValue());
@@ -246,7 +241,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		
 		List<OmsOrderGroupMember> list = this.getGroupMemberList(assemble.getId(), 9999);
 
-		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_GROUP_SUS);
+		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_GROUP_FAIL);
 		OmsOrderGroup orderGroup = this.getOrderGroupById(assemble.getId());
 		UmsShop shop = new UmsShop();
 		shop.setId(orderGroup.getShopId());
@@ -262,12 +257,12 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 			updateGroupMember.setUpdTime(new Date());
 			assembleMemberMapper.updateByPrimaryKeySelective(updateGroupMember);
 
+			payService.cancelAndRefundOrder(assembleMember.getOrderNo());
+
 			//拼团失败消息
 			UmsMember member = memberService.getMemberById(assembleMember.getMemberId());
 			memberNewsService.addMemberNews(member, newsForm);
 
-//			OmsOrder order = orderService.getOrderByOrderNo(assembleMember.getOrderNo());
-//			payService.cancelAndRefundOrder(order.getId());
 		}
 		
 	}
@@ -307,7 +302,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	}
 
 	@Override
-	public void autoCancel(Integer orderGroupId) {
+	public void autoCancel(Integer orderGroupId) throws ServiceException {
 		OmsOrderGroup orderGroup = this.getOrderGroupById(orderGroupId);
 		if(orderGroup != null && orderGroup.getStatus() != OrderEnums.GroupStatus.SUS.getValue()){
 			this.doRefundForFailPintuan(orderGroup);

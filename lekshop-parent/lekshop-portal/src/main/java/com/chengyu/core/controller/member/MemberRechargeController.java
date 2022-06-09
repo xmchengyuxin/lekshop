@@ -2,6 +2,7 @@ package com.chengyu.core.controller.member;
 
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.domain.form.PayBaseForm;
 import com.chengyu.core.domain.form.RechargeSearchForm;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
@@ -10,6 +11,7 @@ import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberRecharge;
 import com.chengyu.core.service.config.ConfigAccountService;
 import com.chengyu.core.service.member.MemberRechargeService;
+import com.chengyu.core.service.pay.PayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +41,8 @@ public class MemberRechargeController extends UserBaseController {
 	private MemberRechargeService rechargeService;
 	@Autowired
 	private ConfigAccountService configAccountService;
+	@Autowired
+	private PayService payService;
 
 	@OperationLog
 	@ApiOperation(value = "充值")
@@ -71,36 +76,26 @@ public class MemberRechargeController extends UserBaseController {
 	@ApiOperation(value = "在线充值")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "amount", value = "充值金额"),
-		@ApiImplicitParam(name = "payMethod", value = "支付方式>>1支付宝>>2微信>>3QQ钱包"),
-		@ApiImplicitParam(name = "returnUrl", value = "同步回调地址"),
 	})
 	@ResponseBody
 	@RequestMapping(value="/recharge/online", method=RequestMethod.POST)
-	public CommonResult<String> online(String payMethod, BigDecimal amount, String returnUrl) throws Exception {
+	public CommonResult<Map<String,Object>> online(PayBaseForm payBaseForm, BigDecimal amount) throws Exception {
 		if(amount.compareTo(BigDecimal.ZERO) <= 0){
 			throw new ServiceException("member.recharge.amount");
 		}
 
 		UmsMember member = getCurrentMember();
 		super.validateRepeat("do-recharge-time-between-" + member.getId(), 5000L, "platform.validate.repeat");
-		String url = rechargeService.rechargeOnline(member, payMethod, amount, returnUrl);
-		return CommonResult.success(url);
-	}
+		String orderNo = rechargeService.rechargeOnline(member, payBaseForm.getPayMethod(), amount);
 
-	@ApiOperation(value = "充值回调")
-	@ResponseBody
-	@RequestMapping(value="/recharge/callback", method=RequestMethod.GET)
-	public CommonResult<String> callback(String out_trade_no, String trade_no, String trade_status, String sign, String type) throws ServiceException {
-		/*if(StringUtils.isNotBlank(trade_status) && CodePay.SUCCESS.equals(trade_status)){
-			//校验签名
-			UmsMemberRecharge recharge = rechargeService.getRechargeLogByOrderNo(out_trade_no);
-			//codePay.checkSign(recharge.getRealAmount(), out_trade_no, trade_no, type, sign) &&
-			if(CommonConstant.WAIT.equals(recharge.getStatus())){
-				//充值成功
-				rechargeService.rechargSusByCallback(recharge);
-			}
-		}*/
-		return CommonResult.success(null);
+		//调用支付接口
+		payBaseForm.setIp(this.getRequestIp());
+		String message = payService.recharge(member, orderNo, payBaseForm);
+
+		Map<String,Object> result = new HashMap<>();
+		result.put("payOrderNo", orderNo);
+		result.put("message", message);
+		return CommonResult.success(result);
 	}
 
 	@ApiOperation(value = "充值列表")

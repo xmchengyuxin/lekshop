@@ -127,7 +127,10 @@ public class CommonConstant {
      * 密码
      */
     public static final String PASSWORD = "qwertyuiop";
-
+    /**
+     * 成功标识
+     */
+    public static final String SUCCESS = "SUCCESS";
     /**
      * 用户
      */

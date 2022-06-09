@@ -2,6 +2,7 @@ package com.chengyu.core.controller.callback;
 
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.controller.callback.manager.CallbackManager;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.util.weixin.WechatUtil;
 import com.chengyu.core.util.weixin.WeixinResponse;
@@ -90,8 +91,8 @@ public class PayCallbackController extends UserBaseController {
 			WeixinResponse response = WechatUtil.xmlToBean(result, WeixinResponse.class);
 			
 			//通知成功
-			if(StringUtils.isNotBlank(response.getReturn_code()) && "SUCCESS".equals(response.getReturn_code())){
-				if(StringUtils.isNotBlank(response.getResult_code()) && "SUCCESS".equals(response.getResult_code())){
+			if(StringUtils.isNotBlank(response.getReturn_code()) && CommonConstant.SUCCESS.equals(response.getReturn_code())){
+				if(StringUtils.isNotBlank(response.getResult_code()) && CommonConstant.SUCCESS.equals(response.getResult_code())){
 					//支付成功
 					paySusManager.getPaySusFactory(type).paySus(response.getOut_trade_no());
 				}

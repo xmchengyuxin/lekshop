@@ -199,7 +199,7 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public String rechargeOnline(UmsMember member, String payMethod, BigDecimal amount, String returnUrl) throws ServiceException {
+	public String rechargeOnline(UmsMember member, String payMethod, BigDecimal amount) throws ServiceException {
 		UmsMemberRecharge recharge = new UmsMemberRecharge();
 		recharge.setOrderNo("R"+StringUtils.genOrderNo(member.getId()));
 		recharge.setMemberId(member.getId());
@@ -211,9 +211,7 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 		recharge.setSaveTime(recharge.getAddTime());
 		recharge.setStatus(CommonConstant.WAIT);
 		rechargeMapper.insertSelective(recharge);
-
-		this.rechargSusByCallback(recharge);
-		return null;
+		return recharge.getOrderNo();
 	}
 
 	@Override
