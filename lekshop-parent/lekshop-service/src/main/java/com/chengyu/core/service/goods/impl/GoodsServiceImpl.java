@@ -99,6 +99,12 @@ public class GoodsServiceImpl implements GoodsService {
 		if(CollectionUtil.isNotEmpty(form.getCatePidList())){
 			criteria.andCatePidIn(form.getCatePidList());
 		}
+		if(form.getMinAmount() != null){
+			criteria.andPriceGreaterThanOrEqualTo(form.getMinAmount());
+		}
+		if(form.getMaxAmount() != null){
+			criteria.andPriceLessThanOrEqualTo(form.getMaxAmount());
+		}
 		return goodsMapper.selectByExample(example);
 	}
 

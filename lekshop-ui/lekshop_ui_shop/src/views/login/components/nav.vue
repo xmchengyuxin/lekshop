@@ -37,9 +37,10 @@
     right: 0;
     left: 0;
     z-index: 1030;
-    background-color: #e74c3c;
+    /* background-color: #e74c3c; */
     min-height: 50px;
     min-width: 1200px;
+    opacity: .8;
   }
 
   .nav-content {

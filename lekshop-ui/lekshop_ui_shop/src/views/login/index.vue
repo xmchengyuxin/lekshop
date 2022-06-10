@@ -1,17 +1,22 @@
 <template>
-  <div class="login-container flex f-a-s f-j-c" style="padding-bottom: 50px;">
+  <div class="login-container flex f-a-s f-j-c " style="padding-bottom: 50px;">
+    <div class="main-cover">
     <Nav></Nav>
-    <el-card :body-style="{padding:0}" shadow="never" style="width: 800px; height: 400px;">
+    <el-card :body-style="{padding:0}" shadow="never" class="elcard">
       <div class="flex f16-size">
-        <div @click="active=1;" class="flex f-a-c flex-1 f-j-c h-60 w-230 cursor" :class="active == 1 || active==3 ? '' : 'bg-color'">登 录</div>
-        <div @click="active=2;getCode();" class="flex f-a-c flex-1 f-j-c h-60  w-230 cursor" :class="active == 2 ? '' : 'bg-color'">注 册</div>
+        <div @click="active=1;" class="flex f-a-c flex-1 f-j-c h-60 w-230 cursor" >
+          <div :class="active == 1 || active==3 ? 'bg-color' : ''">登 录</div>
+        </div>
+        <div @click="active=2;getCode();" class="flex f-a-c flex-1 f-j-c h-60  w-230 cursor">
+          <div :class="active == 2 ? 'bg-color' : ''">注 册</div>
+        </div>
       </div>
-      <div class="padding-15">
+      <div class="padding-15" style="margin-left: 13px;">
       <div class="padding-10 flex">
         <template v-if="active==1">
         <div class="flex f-c">
         <div class="padding-15 login-tip ">
-          <p class="margin-t2">如果体验入驻流程请注册新会员后进入 [用户中心] - [商家控制台] 进入入驻流程</p>
+          <p class="margin-t1">如果体验入驻流程请注册新会员后进入 [用户中心] - [商家控制台] 进入入驻流程</p>
         </div>
         <div class="margin-t10"></div>
         <el-form ref="loginForm" size="medium" label-width="0px" style="width: 370px;" class="" :model="loginForm" :rules="loginRules"  auto-complete="on">
@@ -206,15 +211,16 @@
           </el-button>
         </el-form>
 
-        <div class="flex f-a-c flex-1 f-j-c">
+        <!-- <div class="flex f-a-c flex-1 f-j-c">
           <img style="height: 300px;margin-top: -30px;"  src="https://qiniu.chengyuwb.com/1653641700352.gif">
-        </div>
+        </div> -->
       </div>
       </div>
     </el-card>
     <div></div>
 		<!-- <p style="color:#eee;text-align: center; font-size: 12px;">厦门诚禹信信息科技提供技术支持</p> -->
     <Footer></Footer>
+    </div>
   </div>
 </template>
 
@@ -224,7 +230,7 @@ import { validUsername,validPhone } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
 import Nav from './components/nav.vue'
-import Footer from './components/footer.vue'
+import Footer from './components/ifooter.vue'
 let codeTimeOut;
 export default {
   name: 'Login',
@@ -442,9 +448,9 @@ $light_gray:#eee;
 }
 .login-tip {
   width: 370px;
-      background-color: #dff0d8;
-      border-color: #d1eac8;
-      color: #468847;
+  background-color: #dff0d8;
+  border-color: #d1eac8;
+  color: #468847;
 }
 .login-container {
   min-height: 100%;
@@ -453,6 +459,11 @@ $light_gray:#eee;
   padding-top: 120px;
   // background:url(img/background.jpg) center no-repeat;
   background-size: cover;
+
+  background-image: url(./img/banner.jpeg);
+  background-position-x: center;
+  background-repeat: no-repeat;
+
   overflow: hidden;
   .login-form {
     position: relative;
@@ -481,11 +492,37 @@ $light_gray:#eee;
     position: relative;
   }
   .bg-color {
-    background-color: #F7f7f7;
+    // background-color: #F7f7f7;
+    border-bottom: 3px solid #fe2c55;
+    color: #2f3035!important;
+    font-weight: 500;
   }
   .svg-container {
     color: #000!important;
   }
 
 }
+
+.main-cover {
+    background:rgba(0, 0, 0, 0.7);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .elcard{
+    width: 450px; height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff url(./img/login-bg.png) no-repeat;
+    background-size: 100% auto;
+  }
 </style>

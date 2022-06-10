@@ -107,7 +107,7 @@ public class MemberAccountLogServiceImpl implements MemberAccountLogService {
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getAmount();
 		if(beforeAmount.compareTo(amount) < 0){
-			throw new ServiceException("member.balance.noenough");
+			throw new ServiceException("member.account.noenough");
 		}
 		BigDecimal afterAmount = NumberUtil.sub(beforeAmount, amount);
 		

@@ -211,7 +211,7 @@
               <el-tag effect="plain" v-if="order.status == 3" type="success">{{ order.status | statusFilter }}</el-tag>
               <el-tag effect="plain" v-if="order.status == 4" type="danger">{{ order.status | statusFilter }}</el-tag>
             </p>
-            <p style="height: 30px;">支付方式： {{order.payMethod}}</p>
+            <p style="height: 30px;">支付方式： {{order.payMethod | payMethodFilter}}</p>
             <p style="height: 40px;">配送方式： {{order.deliveryType}}</p>
           </div>
       </el-card>
@@ -280,7 +280,7 @@
               <template slot="label">
                 支付方式
               </template>
-              {{order.payMethod}}
+              {{order.payMethod | payMethodFilter}}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
@@ -503,6 +503,18 @@ const orderTypeKeyValue = orderTypeOptions.reduce((acc, cur) => {
   return acc
 }, {})
 
+const payMethodOptions = [
+  { key: 'wxPay', text: '微信支付' },
+  { key: 'aliPay', text: '支付宝' },
+  { key: 'balance', text: '余额' },
+]
+
+// arr to obj ,such as { CN : "China", US : "USA" }
+const payMethodKeyValue = payMethodOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.text
+  return acc
+}, {})
+
 export default {
   name: 'orderList',
   components: { Pagination },
@@ -513,6 +525,9 @@ export default {
 	  },
     typeFilter(type) {
       return orderTypeKeyValue[type]
+    },
+    payMethodFilter(type) {
+      return payMethodKeyValue[type]
     }
 	},
   data() {

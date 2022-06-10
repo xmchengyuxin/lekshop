@@ -1,13 +1,17 @@
 package com.chengyu.core.controller.common;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.MemberTypes;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.model.SysInviteCode;
 import com.chengyu.core.model.SysWeixinConfig;
 import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.service.system.SysInviteCodeService;
 import com.chengyu.core.util.weixin.WechatUtil;
 import com.chengyu.core.util.weixin.XCXWeixin;
 import com.chengyu.core.utils.HttpUtil;
@@ -20,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +60,8 @@ public class LoginXcxController extends UserBaseController {
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+	@Autowired
+	private SysInviteCodeService inviteCodeService;
     
 	@SuppressWarnings("rawtypes")
 	@ApiOperation(value = "小程序授权登录")
@@ -87,39 +94,70 @@ public class LoginXcxController extends UserBaseController {
 		@ApiImplicitParam(name = "encryptedData", value = "小程序encryptedData"),
 		@ApiImplicitParam(name = "sessionKey", value = "小程序sessionKey"),
 		@ApiImplicitParam(name = "iv", value = "小程序iv"),
-		@ApiImplicitParam(name = "tjrId", value = "推荐人ID"),
+		@ApiImplicitParam(name = "inviteCode", value = "邀请码"),
+		@ApiImplicitParam(name = "applicationType", value = "xcx:小程序,gzh：公众号,app:APP"),
+		@ApiImplicitParam(name = "openId", value = "openId"),
+		@ApiImplicitParam(name = "unionId", value = "unionId"),
+		@ApiImplicitParam(name = "phone", value = "手机")
 	})
 	@RequestMapping(value={"/xcx/regitser"}, method=RequestMethod.POST)
     @ResponseBody
-    public CommonResult regitser(String encryptedData, String sessionKey, String iv, Integer tjrId) throws ServiceException{
+    public CommonResult regitser(String encryptedData, String sessionKey, String iv, String inviteCode, String openId, String unionId, String phone) throws ServiceException{
+		logger.info("xcx register params>>encryptedData>>"+encryptedData+"sessionKey>>"+sessionKey+"iv>>"+iv);
 		XCXWeixin weixin = this.getUserInfo(encryptedData, sessionKey, iv);
-		UmsMember member = null;
-		if(weixin == null) return CommonResult.failed("微信授权失败");
-		
-		//member = memberService.getMemberByParams(weixin.getUnionId(), MemberTypes.UNIONID);
-		member = memberService.getMemberByParams(weixin.getOpenId(), MemberTypes.XCX_OPEN_ID);
+		logger.info("小程序注册>>"+JSONUtil.toJsonStr(weixin));
+		UmsMember member;
+		if(weixin == null){
+			return CommonResult.failed("微信授权失败");
+		}
+		if (StringUtils.isBlank(openId)) {
+		  openId = weixin.getOpenId();
+		}
+		if (StringUtils.isBlank(unionId)) {
+			unionId = weixin.getUnionId();
+		}
+		member = memberService.getMemberByParams(openId, MemberTypes.XCX_OPEN_ID);
 		if(member == null){
 			member = new UmsMember();
-			member.setXcxOpenId(weixin.getOpenId());
-			member.setUnionid(weixin.getUnionId());
+			member.setXcxOpenId(openId);
+			member.setUnionid(unionId);
 			member.setHeadImg(weixin.getAvatarUrl());
 			member.setWeixin(weixin.getNickName());
-			member.setCode(StringUtils.genenrateInd());
+			if(StringUtils.isNotBlank(phone)){
+				member.setPhone(phone);
+				member.setCode(phone);
+				member.setPhoneStatus(CommonConstant.SUS_INT);
+			}else{
+				member.setCode(weixin.getNickName()+StringUtils.getStringRandom(4));
+			}
 			member.setNickname(weixin.getNickName());
 			member.setGender(weixin.getGender());
 			member.setProvince(weixin.getProvince());
 			member.setCity(weixin.getCity());
 			member.setArea(weixin.getCountry());
-			member.setTjrId(tjrId);
-			member.setPassword("custom");
 			member.setMethod(1);
+			member.setType(CommonConstant.BUYER);
+			if (StringUtils.isNotBlank(inviteCode)) {
+				if ("8912058".equals(inviteCode)) {
+					member.setTjrId(0);
+				} else {
+					SysInviteCode config = inviteCodeService.getConfigByInviteCode(inviteCode);
+					if (config != null) {
+					 	member.setTjrId(config.getUserId());
+				    }
+				}
+		    }
+		    member.setPassword("123456");
 			memberService.register(member);
 		}else{
 			//登录
 			if(StringUtils.isBlank(member.getXcxOpenId())){
 				UmsMember updateMember = new UmsMember();
 				updateMember.setId(member.getId());
-				updateMember.setXcxOpenId(weixin.getOpenId());
+				updateMember.setXcxOpenId(openId);
+				updateMember.setUnionid(unionId);
+				updateMember.setNickname(weixin.getNickName());
+				updateMember.setHeadImg(weixin.getAvatarUrl());
 				memberService.updateMember(updateMember);
 			}
 		}
@@ -148,7 +186,7 @@ public class LoginXcxController extends UserBaseController {
 		XCXWeixin weixin = this.getUserInfo(encryptedData, sessionKey, iv);
 		return CommonResult.success(weixin != null ? weixin.getPhoneNumber() : null);
 	 }
-	
+
 	//javax.crypto.BadPaddingException: pad block corrupted出现该异常应该是转义\/字符失败，待核查
     public XCXWeixin getUserInfo(String encryptedData, String sessionKey, String iv){
     	// 被加密的数据

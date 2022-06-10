@@ -9,6 +9,7 @@ import cn.hutool.core.util.NumberUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.ShopEnums;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.i18n.LocaleMessageSourceUtil;
 import com.chengyu.core.mapper.UmsMemberCouponMapper;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberCoupon;
@@ -37,6 +38,8 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 	
 	@Autowired
 	private UmsMemberCouponMapper memberCouponMapper;
+	@Autowired
+	private LocaleMessageSourceUtil messageSourceUtil;
 
 	@Override
 	public List<UmsMemberCoupon> getMemberCouponList(Integer memberId, Integer status, Integer page, Integer pageSize) {
@@ -154,7 +157,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 				couponMap.put("discountAmount", discountAmount);
 				canUseList.add(couponMap);
 			}catch (ServiceException e){
-				couponMap.put("reason", e.getMessage());
+				couponMap.put("reason", messageSourceUtil.getMessage(e.getMessage()));
 				cannotUseList.add(couponMap);
 			}
 		}

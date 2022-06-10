@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -36,5 +37,13 @@ public class GoodsSearchForm {
 	private Integer status;
 
 	private Integer spreadStatus;
+
+	private BigDecimal minAmount;
+
+	private BigDecimal maxAmount;
+
+	private String provinceCode;
+
+	private String cityCode;
 
 }
