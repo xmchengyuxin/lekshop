@@ -7,9 +7,7 @@ import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberAccount;
-import com.chengyu.core.service.config.ConfigGzhService;
 import com.chengyu.core.service.member.MemberAccountService;
-import com.chengyu.core.service.order.OrderRefundService;
 import com.chengyu.core.service.order.OrderService;
 import com.chengyu.core.service.system.QiniuService;
 import com.chengyu.core.service.system.VerifyCodeService;
@@ -256,22 +254,24 @@ public class MemberController extends UserBaseController {
 	}
 
 	@OperationLog
-	@ApiOperation(value = "修改手机号码")
+	@ApiOperation(value = "绑定手机号码")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "phone", value = "新手机号码"),
-			@ApiImplicitParam(name = "code", value = "验证码"),
+		@ApiImplicitParam(name = "phone", value = "新手机号码"),
+		@ApiImplicitParam(name = "code", value = "验证码, 如果是免验证码则传102938"),
 	})
 	@ResponseBody
 	@RequestMapping(value={"/updatePhone"}, method=RequestMethod.POST)
-	public CommonResult<String> updatePhone(
-			String phone, String code) throws Exception {
+	public CommonResult<String> updatePhone(String phone, String code) throws Exception {
 		//校验短信验证码
 		UmsMember member = getCurrentMember();
-		verifyCodeService.validateCode(phone, code);
+		if(!"102938".equals(code)){
+			verifyCodeService.validateCode(phone, code);
+		}
 
 		UmsMember updateMember = new UmsMember();
 		updateMember.setId(member.getId());
 		updateMember.setPhone(phone);
+		updateMember.setCode(phone);
 		memberService.updateMember(updateMember);
 		return CommonResult.success(null);
 	}

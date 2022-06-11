@@ -15,34 +15,32 @@
       <div class="padding-10 flex">
         <template v-if="active==1">
         <div class="flex f-c">
-        <div class="padding-15 login-tip ">
-          <p class="margin-t1">如果体验入驻流程请注册新会员后进入 [用户中心] - [商家控制台] 进入入驻流程</p>
-        </div>
+          <el-alert
+              style="width: 370px;"
+              class="margin-t1"
+              title="如果体验入驻流程请注册新会员后进入 [用户中心] - [商家控制台] 进入入驻流程"
+              type="error"
+              effect="dark"
+              :closable="false">
+            </el-alert>
         <div class="margin-t10"></div>
-        <el-form ref="loginForm" size="medium" label-width="0px" style="width: 370px;" class="" :model="loginForm" :rules="loginRules"  auto-complete="on">
+        <el-form ref="loginForm" size="medium" label-width="0px" style="width: 370px;" class="" :model="loginForm" :rules="loginRules"  auto-complete="off">
           <el-form-item prop="username" label="">
-            <el-input
-              ref="username"
-              v-model="loginForm.username"
-              :placeholder="$t('login.username')"
-              name="username"
-              type="text"
-              auto-complete="off"
-              size="big"
-            />
+            <MDinput v-model="loginForm.username" :maxlength="20" name="username">
+              {{$t('login.username')}}
+            </MDinput>
           </el-form-item>
 
           <el-form-item prop="password"  label="">
-            <el-input
-              ref="password"
-              v-model="loginForm.password"
-              :type="passwordType"
-              :placeholder="$t('login.password')"
+            <MDinput ref="password" v-model="loginForm.password" :maxlength="20"
               name="password"
-              auto-complete="off"
-              @keyup.enter.native="handleLogin"
-              size="big"
-            />
+              auto-complete = "new-password"
+              :type="passwordType"
+              @focus="passwordType = 'password'"
+              @keyup.enter.native="handleLogin">
+              {{$t('login.password')}}
+            </MDinput>
+
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
@@ -61,78 +59,42 @@
         </template>
         <el-form ref="registerForm" v-if="active == 2"  size="big" label-width="0px" style="width: 370px;"  class="" :model="registerForm" :rules="registerRules"  auto-complete="on">
           <el-form-item prop="username" label="">
-            <el-input
-              ref="username"
-              v-model="registerForm.username"
-              placeholder="手机号"
-              name="username"
-              type="text"
-              size="big"
-            />
+            <MDinput v-model="registerForm.username" :maxlength="20" name="username">
+              手机号
+            </MDinput>
           </el-form-item>
 
           <el-form-item prop="password"  label="">
-            <el-input
-              ref="password1"
-              v-model="registerForm.password"
-              :type="passwordType"
-              :placeholder="$t('login.password')"
+            <MDinput ref="password1" v-model="registerForm.password" :maxlength="20"
               name="password"
-              size="big"
-            />
+              auto-complete = "new-password"
+              :type="passwordType"
+              @focus="passwordType = 'password'"
+              @keyup.enter.native="handleLogin">
+              {{$t('login.password')}}
+            </MDinput>
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
           <el-form-item prop="confirmPassword"  label="">
-            <el-input
-              ref="confirmPassword"
-              v-model="registerForm.confirmPassword"
-              :type="passwordType"
-              placeholder="确认密码"
+            <MDinput ref="confirmPassword" v-model="registerForm.confirmPassword" :maxlength="20"
               name="confirmPassword"
-              size="big"
-            />
+              auto-complete = "new-password"
+              :type="passwordType"
+              @focus="passwordType = 'password'"
+              @keyup.enter.native="handleLogin">
+              确认密码
+            </MDinput>
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-         <!-- <el-form-item prop="phone" label="手机号">
-            <div class="flex f-a-c">
-              <el-input
-                ref="phone"
-                v-model="registerForm.phone"
-                placeholder="手机号"
-                name="phone"
-                type="phone"
-              />
-            </div>
-          </el-form-item>
-          <el-form-item prop="imgCode" label="图形验证码">
-            <div class="flex">
-            <el-input
-              ref="imgCode"
-              v-model="registerForm.imgCode"
-              placeholder="图形验证码"
-              name="imgCode"
-              type="text"
-            />
-              <img @click="getCode()" v-if="code != ''" class="h-36" :src="'data:image/png;base64,'+code.img" alt="">
-            </div>
-          </el-form-item> -->
           <el-form-item prop="code" label="">
-            <div class="flex">
-            <el-input
-              ref="code"
-              v-model="registerForm.code"
-              placeholder="验证码"
-              name="code"
-              type="text"
-              class="margin-r12"
-              size="big"
-            />
-              <el-button size="big" @click="getPhoneCode()">{{smsTxt}}</el-button>
-            </div>
+              <MDinput class="margin-r12" ref="code" v-model="registerForm.code" :maxlength="6" name="code">
+                验证码
+              </MDinput>
+               <span class="link-type sms-btn" @click="getPhoneCode()">{{smsTxt}}</span>
           </el-form-item>
 
           <div class="padding-10"></div>
@@ -142,67 +104,43 @@
         </el-form>
 
         <el-form ref="changeForm" v-if="active == 3"  size="big" label-width="0px" style="width: 370px;"  class="" :model="registerForm" :rules="registerRules"  auto-complete="on">
-          <span style="font-size: 18px;font-weight: 600;line-height: 40px;">修改密码</span>
-          <el-form-item prop="phone" label="">
-            <div class="flex f-a-c">
-              <el-input
-                ref="phone"
-                v-model="registerForm.phone"
-                placeholder="手机号"
-                name="phone"
-                type="phone"
-              />
-            </div>
+          <!-- <span style="font-size: 18px;font-weight: 600;line-height: 40px;">修改密码</span> -->
+          <el-form-item prop="username" label="">
+              <MDinput v-model="registerForm.username" :maxlength="20" name="username">
+                手机号
+              </MDinput>
           </el-form-item>
           <el-form-item prop="password"  label="">
-            <el-input
-              ref="password1"
-              v-model="registerForm.password"
-              :type="passwordType"
-              :placeholder="$t('login.password')"
+            <MDinput ref="password1" v-model="registerForm.password" :maxlength="20"
               name="password"
-            />
+              auto-complete = "new-password"
+              :type="passwordType"
+              @focus="passwordType = 'password'"
+              @keyup.enter.native="handleLogin">
+              {{$t('login.password')}}
+            </MDinput>
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
           <el-form-item prop="confirmPassword"  label="">
-            <el-input
-              ref="confirmPassword"
-              v-model="registerForm.confirmPassword"
-              :type="passwordType"
-              placeholder="确认密码"
+            <MDinput ref="confirmPassword" v-model="registerForm.confirmPassword" :maxlength="20"
               name="confirmPassword"
-            />
+              auto-complete = "new-password"
+              :type="passwordType"
+              @focus="passwordType = 'password'"
+              @keyup.enter.native="handleLogin">
+              确认密码
+            </MDinput>
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-
-          <!-- <el-form-item prop="imgCode" label="图形验证码">
-            <div class="flex">
-            <el-input
-              ref="imgCode"
-              v-model="registerForm.imgCode"
-              placeholder="图形验证码"
-              name="imgCode"
-              type="text"
-            />
-              <img @click="getCode()" v-if="code != ''" class="h-36" :src="'data:image/png;base64,'+code.img" alt="">
-            </div>
-          </el-form-item> -->
           <el-form-item prop="code" label="">
-            <div class="flex">
-            <el-input
-              ref="code"
-              v-model="registerForm.code"
-              placeholder="验证码"
-              name="code"
-              type="text"
-              class="margin-r12"
-            />
-              <el-button @click="getPhoneCode()">{{smsTxt}}</el-button>
-            </div>
+            <MDinput class="margin-r10" ref="code" v-model="registerForm.code" :maxlength="6" name="code">
+              验证码
+            </MDinput>
+              <span class="link-type sms-btn" @click="getPhoneCode()">{{smsTxt}}</span>
           </el-form-item>
 
           <div class="padding-10"></div>
@@ -231,10 +169,11 @@ import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
 import Nav from './components/nav.vue'
 import Footer from './components/ifooter.vue'
+import MDinput from '@/components/MDinput'
 let codeTimeOut;
 export default {
   name: 'Login',
-  components: { LangSelect, SocialSign,Nav,Footer },
+  components: { LangSelect, SocialSign,Nav,Footer, MDinput },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -288,7 +227,7 @@ export default {
         code: [{ required: true, trigger: 'blur', message: '请输入验证码' }],
         imgCode: [{ required: true, trigger: 'blur', message: '请输入图形验证码' }],
       },
-      passwordType: 'password',
+      passwordType: 'text',
       loading: false,
       showDialog: false,
       redirect: undefined,
@@ -359,7 +298,7 @@ export default {
     },
     showPwd() {
       if (this.passwordType === 'password') {
-        this.passwordType = ''
+        this.passwordType = 'text'
       } else {
         this.passwordType = 'password'
       }
@@ -425,7 +364,7 @@ export default {
         }
       })
     }
-  }
+  },
 }
 </script>
 
@@ -442,7 +381,6 @@ $light_gray:#eee;
   margin-bottom: 6px;
 }
 ::v-deep .el-form-item__error {
-  top: -27px;
   right: 0;
   left: auto;
 }
@@ -479,9 +417,17 @@ $light_gray:#eee;
  .show-pwd {
    position: absolute;
    right: 10px;
-   top: 0px;
+   top: 23px;
    font-size: 16px;
    color: $dark_gray;
+   cursor: pointer;
+   user-select: none;
+ }
+ .sms-btn {
+   position: absolute;
+   right: 10px;
+   top: 23px;
+   font-size: 16px;
    cursor: pointer;
    user-select: none;
  }
@@ -513,7 +459,7 @@ $light_gray:#eee;
   }
 
   .elcard{
-    width: 450px; height: 400px;
+    width: 450px; height: 450px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -524,5 +470,16 @@ $light_gray:#eee;
     transform: translate(-50%, -50%);
     background: #fff url(./img/login-bg.png) no-repeat;
     background-size: 100% auto;
+  }
+  .material-input__component{
+    background: none;
+    margin-top: 20px;
+  }
+  ::v-deep .material-input__component .material-label {
+      font-size: 14px;
+      color: #c08888;
+  }
+  ::v-deep input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px white inset;
   }
 </style>

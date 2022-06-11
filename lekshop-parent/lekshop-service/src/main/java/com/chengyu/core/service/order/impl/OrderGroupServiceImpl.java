@@ -17,6 +17,7 @@ import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.pay.PayService;
 import com.chengyu.core.service.schedule.job.OrderGroupAutoCancelJob;
+import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -46,6 +47,8 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	private PayService payService;
 	@Autowired
 	private TaskTriggerService taskTriggerService;
+	@Autowired
+	private ShopService shopService;
 	
 	@Override
 	public List<OmsOrderGroup> getOrderGroupList(OrderGroupSearchForm form, Integer page, Integer pageSize) {
@@ -187,9 +190,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 			//拼团成功通知所有拼团人员
 			List<OmsOrderGroupMember> assembleMemberList = this.getGroupMemberList(orderGroupId, 999);
 			MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_GROUP_SUS);
-			UmsShop shop = new UmsShop();
-			shop.setId(orderGroup.getShopId());
-			shop.setName(orderGroup.getShopName());
+			UmsShop shop = shopService.getShopById(orderGroup.getShopId());
 			newsForm.setShop(shop);
 			newsForm.initTurnParams("orderId", orderGroup.getOrderId().toString());
 			newsForm.replace("#goodsName#", orderGroup.getGoodsName());
@@ -243,9 +244,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 
 		MemberNewsForm newsForm = new MemberNewsForm(MemberNewsEnums.MemberNewsTypes.NEWS_GROUP_FAIL);
 		OmsOrderGroup orderGroup = this.getOrderGroupById(assemble.getId());
-		UmsShop shop = new UmsShop();
-		shop.setId(orderGroup.getShopId());
-		shop.setName(orderGroup.getShopName());
+		UmsShop shop = shopService.getShopById(orderGroup.getShopId());
 		newsForm.setShop(shop);
 		newsForm.initTurnParams("orderId", orderGroup.getOrderId().toString());
 		newsForm.replace("#goodsName#", orderGroup.getGoodsName());
