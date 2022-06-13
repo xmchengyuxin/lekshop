@@ -1,5 +1,6 @@
 <template>
   <div class="wrap-page">
+    <div class="main-cover">
     <div class="app-container">
       <Nav></Nav>
       <el-card shadow="hover">
@@ -62,7 +63,7 @@
         </div>
         <el-form ref="formShop" :model="form" label-width="200px">
           <el-form-item></el-form-item>
- <el-form-item label="店铺名" prop="name" :rules="[{ required: true, message: '请输入店铺名', trigger: 'blur' }]">
+          <el-form-item label="店铺名" prop="name" :rules="[{ required: true, message: '请输入店铺名', trigger: 'blur' }]">
             <el-input v-model="form.name" type="text"></el-input>
           </el-form-item>
           <el-form-item label="店铺图标" prop="logo" :rules="[{ required: true, message: '请上传店铺图标', trigger: 'blur' }]">
@@ -144,19 +145,36 @@
       </el-card>
       <Footer></Footer>
     </div>
+    </div>
   </div>
 </template>
 <!-- <style scoped="scoped" src="../../css/index/task.css"></style> -->
 <style scoped="scoped">
   .app-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: auto;
+    padding-top: 100px;
   }
 
   .wrap-page {
-    background: #f5f5f5;
+    background: #FFFFFF;
     padding: 60px 0 50px 0;
     min-height: 100%;
+    width: 100%;
+
+    background-image: url(../../login/img/banner.jpeg);
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+  }
+
+  .main-cover {
+      background:rgba(0, 0, 0, 0.7);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
   }
 </style>
 <script>
@@ -170,7 +188,7 @@
     getUser
   } from '@/api/login'
   import Nav from '@/views/login/components/nav.vue'
-  import Footer from '@/views/login/components/footer.vue'
+  import Footer from '@/views/login/components/ifooter.vue'
   import Tinymce from '@/components/Tinymce'
   import Upload from '@/components/Upload/singleImage'
   import ImageSource from '@/components/Upload/imageSource'
