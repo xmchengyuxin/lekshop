@@ -9,7 +9,7 @@
           <div @click="$router.push('/join')" class="flex f-a-c padding-lr15 cursor t-color-w" style="font-size: 14px; color: #aaa;">商家入驻</div>
           <div  v-if="$store.state.user.name == ''" @click="$router.push('/login')" class="flex f-a-c padding-lr15 cursor t-color-w"  style="font-size: 14px; color: #aaa;">登录</div>
           <el-dropdown  v-if="$store.state.user.name != ''">
-            <div  class="flex f-a-c cursor">
+            <div  class="flex f-a-c h100 cursor">
               <el-image :src="$store.state.user.avatar" class="w-34 h-34 bg-color-9 flex f-a-c f-j-c margin-r4 b-radius">
                 <div slot="error" class="image-slot">
                   <div class="w-34 h-34 b-radius" style="background-color: #F7f7f7"></div>

@@ -1,6 +1,7 @@
 <template>
   <div class="wrap-page">
-    <div class="main-cover">
+    <div class="main-cover"></div>
+    <div class="main-cover1"></div>
     <div class="app-container">
       <Nav></Nav>
       <el-card shadow="hover">
@@ -145,36 +146,53 @@
       </el-card>
       <Footer></Footer>
     </div>
-    </div>
   </div>
 </template>
 <!-- <style scoped="scoped" src="../../css/index/task.css"></style> -->
 <style scoped="scoped">
   .app-container {
+        position: relative;
     max-width: 1000px;
     margin: auto;
     padding-top: 100px;
+    padding-bottom: 70px;
   }
 
   .wrap-page {
+  /*  position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; */
     background: #FFFFFF;
     padding: 60px 0 50px 0;
-    min-height: 100%;
+    height: 100vh;
     width: 100%;
 
-    background-image: url(../../login/img/banner.jpeg);
-    background-position-x: center;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
+
   }
 
   .main-cover {
-      background:rgba(0, 0, 0, 0.7);
-      position: absolute;
+    background-image: url(../../login/img/banner.jpeg);
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+      background-color:rgba(0, 0, 0, 0.7);
+      position: fixed;
       width: 100%;
       height: 100%;
       left: 0;
       top: 0;
+      bottom: 0;
+  }
+  .main-cover1 {
+    background-color:rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
   }
 </style>
 <script>
