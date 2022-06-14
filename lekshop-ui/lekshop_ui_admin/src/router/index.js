@@ -19,6 +19,8 @@ import goodsRouter from './modules/goods'
 import orderRouter from './modules/order'
 import trendsRouter from './modules/trends'
 import reportRouter from './modules/report'
+import floorRouter from './modules/floor'
+
 
 
 
@@ -98,6 +100,7 @@ export const asyncRoutes = [
   trendsRouter,
   configRouter,
 	contentRouter,
+  floorRouter,
 	systemRouter,
   reportRouter,
   logRouter,

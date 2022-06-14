@@ -11,6 +11,7 @@ import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigSearchService;
 import com.chengyu.core.service.content.*;
+import com.chengyu.core.service.floor.FloorService;
 import com.chengyu.core.service.system.BankConfigService;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.service.system.VerifyCodeService;
@@ -62,6 +63,8 @@ public class ConfigController extends UserBaseController {
 	private NoticeService noticeService;
 	@Autowired
 	private ConfigSearchService configSearchService;
+	@Autowired
+	private FloorService floorService;
 
 
 	@ApiOperation(value = "系统参数列表")
@@ -70,6 +73,14 @@ public class ConfigController extends UserBaseController {
 	public CommonResult<Map<String,String>> getConfig() {
 		Map<String, String> map = configService.getAllConfigValueMap();
 		return CommonResult.success(map);
+	}
+
+	@ApiOperation(value = "首页装修配置")
+	@ResponseBody
+	@RequestMapping(value="/floor/getList", method=RequestMethod.GET)
+	public CommonResult<List<FloorMobilePages>> getFloorList() {
+		List<FloorMobilePages> list = floorService.getCurrentIndexFloor();
+		return CommonResult.success(list);
 	}
 
 	@ApiOperation(value = "热门搜索列表")

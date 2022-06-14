@@ -42,7 +42,7 @@
 </template>
 
 <style scoped="scoped">
-  /deep/ .line {
+  ::v-deep .line {
     text-align: center;
   }
 </style>

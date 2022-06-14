@@ -297,6 +297,8 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		comment.setAddTime(DateUtil.date());
 		comment.setUpdTime(comment.getAddTime());
 		trendsCommentMapper.insertSelective(comment);
+
+		baseMapper.update("update walk_trends set comment_num=comment_num+1 where id = "+trendsId);
 		return comment;
 	}
 

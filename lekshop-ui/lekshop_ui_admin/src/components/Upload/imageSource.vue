@@ -1,6 +1,6 @@
 <template>
   <div class="upload-container">
-  <el-button @click="chooseImage" style="width: 100px;">素材库选择>></el-button>
+  <el-button @click="chooseImage" style="width: 100px;" size="mini">素材库选择>></el-button>
 
 <el-dialog title="选择图片" :visible.sync="dialogFormVisible" append-to-body>
     <el-tabs type="border-card" tab-position="top" v-model="activeName" @tab-click="handleClickTab">

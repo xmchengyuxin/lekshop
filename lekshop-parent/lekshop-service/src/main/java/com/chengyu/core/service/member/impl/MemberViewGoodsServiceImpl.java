@@ -2,6 +2,7 @@ package com.chengyu.core.service.member.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.PmsGoodsMapper;
 import com.chengyu.core.mapper.UmsMemberViewGoodsMapper;
 import com.chengyu.core.model.PmsGoods;
@@ -31,6 +32,8 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 	private UmsMemberViewGoodsMapper memberViewGoodsMapper;
 	@Autowired
 	private PmsGoodsMapper goodsMapper;
+	@Autowired
+	private BaseMapper baseMapper;
 
 	@Override
 	public List<UmsMemberViewGoods> getMemberViewGoodsList(Integer memberId, Date date, Integer page, Integer pageSize) {
@@ -50,6 +53,8 @@ public class MemberViewGoodsServiceImpl implements MemberViewGoodsService {
 
 	@Override
 	public void viewGoods(UmsMember member, Integer goodsId) {
+		//增加商品的点击数量
+		baseMapper.update("update pms_goods set point_num=point_num+1 where id = "+goodsId);
 		if(member == null){
 			return ;
 		}

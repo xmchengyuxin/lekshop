@@ -5,9 +5,9 @@
     <div class="app-container">
       <Nav></Nav>
       <el-card shadow="hover">
-        <div slot="header" class="flex f-a-c f-j-c f16-size">
+        <!-- <div slot="header" class="flex f-a-c f-j-c f16-size">
           <span>商城申请入驻</span>
-        </div>
+        </div> -->
         <div class="padding-lr15">
           <el-steps :active="active" simple finish-status="success">
             <el-step title="注册账号"></el-step>
@@ -318,6 +318,7 @@
 
         getUser().then((res) => {
            this.form.phone = res.data.phone
+           this.$store.state.user.avatar = res.data.headImg
         })
 
         getShopInfo().then((res) => {

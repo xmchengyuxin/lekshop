@@ -69,12 +69,14 @@
 			</el-table-column>
       <el-table-column label="宝贝相册" width="150px">
         <template slot-scope="scope">
+          <div class="line1">
           <el-image
               v-for="item in scope.row.goodsImg.split('|')"
               style="height: 30px;margin-left: 5px;"
               :src="item"
               :preview-src-list="scope.row.goodsImg.split('|')">
             </el-image>
+          </div>
         </template>
       </el-table-column>
 			<el-table-column label="价格" width="70px"  align="center">

@@ -35,6 +35,7 @@ public class TrendsController extends UserBaseController {
 	@RequestMapping(value="/common/trends/search", method=RequestMethod.GET)
 	public CommonResult<CommonPage<WalkTrendsResult>> search(TrendsForm form, Integer page, Integer pageSize) {
 		form.setStatus(CommonConstant.SUS_INT);
+		form.setWalkMember(getCurrentWalkMember());
 		CommonPage<WalkTrendsResult> list = walkTrendsService.getTrendsList(form, page, pageSize);
 		return CommonResult.success(list);
 	}

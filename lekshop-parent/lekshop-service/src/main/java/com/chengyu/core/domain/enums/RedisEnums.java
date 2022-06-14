@@ -100,7 +100,11 @@ public enum RedisEnums {
 	/**
 	 * 第三方接口缓存key
 	 */
-	INTERFACE_CONFIG_KEY("rds-sys-interfaceConfig");
+	INTERFACE_CONFIG_KEY("rds-sys-interfaceConfig"),
+	/**
+	 * 移动端首页模板
+	 */
+	MOBILE_INDEX_TEMPLATE("rds-mobile-index");
 
 	private final String key;
 
