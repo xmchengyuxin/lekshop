@@ -211,4 +211,15 @@ public interface OrderService {
      * @throws ServiceException 业务异常
      */
     void cancelAndRefundOrderSus(OmsOrder order);
+
+    /**
+     * 查询订单详情
+     * @author LeGreen
+     * @date   2022/6/16
+     * @param  form
+     * @param  page
+     * @param  pageSize
+     * @return List<OmsOrderDetail>
+     */
+    List<OmsOrderDetail> getOrderDetailList(OrderSearchForm form, Integer page, Integer pageSize);
 }

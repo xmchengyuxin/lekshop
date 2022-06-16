@@ -29,4 +29,6 @@ public class OrderSearchForm {
 	private Integer shopId;
 
 	private Integer type;
+
+	private Integer commentStatus;
 }

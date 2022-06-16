@@ -844,6 +844,40 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
+	public List<OmsOrderDetail> getOrderDetailList(OrderSearchForm form, Integer page, Integer pageSize) {
+		PageHelper.startPage(page, pageSize);
+		OmsOrderDetailExample example = new OmsOrderDetailExample();
+		if(StringUtils.isNotBlank(form.getSort())){
+			example.setOrderByClause(form.getSort());
+		}else{
+			example.setOrderByClause("add_time desc");
+		}
+		OmsOrderDetailExample.Criteria criteria = example.createCriteria();
+		if(StringUtils.isNotBlank(form.getOrderNo())){
+			criteria.andOrderNoLike("%"+form.getOrderNo()+"%");
+		}
+		if(form.getMemberId() != null){
+			criteria.andMemberIdEqualTo(form.getMemberId());
+		}
+		if(form.getShopId() != null){
+			criteria.andShopIdEqualTo(form.getShopId());
+		}
+		if(StringUtils.isNotBlank(form.getMemberName())){
+			criteria.andMemberNameLike("%"+form.getMemberName()+"%");
+		}
+		if(form.getStatus() != null){
+			criteria.andStatusEqualTo(form.getStatus());
+		}
+		if(CollectionUtil.isNotEmpty(form.getStatusList())){
+			criteria.andStatusIn(form.getStatusList());
+		}
+		if(form.getCommentStatus() != null){
+			criteria.andCommentStatusEqualTo(form.getCommentStatus());
+		}
+		return orderDetailMapper.selectByExample(example);
+	}
+
 	/**
 	 * 根据用户获取订单
 	 * @author LeGreen

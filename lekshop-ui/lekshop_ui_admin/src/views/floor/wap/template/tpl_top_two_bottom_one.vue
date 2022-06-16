@@ -1,10 +1,10 @@
 <template>
   <div class="layout">
     <div class="view-width-100">
-      <div class="view-height-85">
+      <div class="">
         <img class="image-mode" :src="res.list[0].img" alt />
       </div>
-      <div class="view-height-85">
+      <div class="">
         <img class="image-mode" :src="res.list[1].img" alt />
       </div>
     </div>
@@ -27,17 +27,17 @@ export default {
   align-items: center;
   justify-content: center;
   background-size: cover;
-  height: 170px;
+  // height: 170px;
   flex-direction: column;
 }
 img {
   width: 100% !important;
-  height: 85px !important;
+  // height: 85px !important;
 }
 .view-width-100 {
   padding: 1px 0;
   display: flex;
-  height: 85px;
+  // height: 85px;
   width: 100%;
 }
 .view-height-85 {

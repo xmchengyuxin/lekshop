@@ -21,7 +21,7 @@ export default {
 .flex-two {
   width: 100%;
   display: flex;
-  height: 110px;
+  // height: 110px;
   overflow: hidden;
 }
 .flex-item {
@@ -30,6 +30,7 @@ export default {
     display: block;
     max-width: 100%;
     height: 100%;
+    padding-left: 5px;
   }
 }
 </style>

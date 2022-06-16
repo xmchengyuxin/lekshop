@@ -23,17 +23,11 @@ export const modelData = [
           size: "750*350"
         },
         {
-          img: "https://i.loli.net/2020/12/05/12kleCgrSLfKoQs.png",
+          img: "https://qiniu.chengyuwb.com/1655346787375.jpg",
           url: "",
           link: "",
           size: "750*350"
         },
-        {
-          img: "https://i.loli.net/2021/05/14/ZlzcCdnpejtN9gL.png",
-          url: "",
-          link: "",
-          size: "750*350"
-        }
       ]
     }
   },
@@ -47,19 +41,19 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655360218844.webp",
           url: "",
           link: "",
           size: "335*335"
         },
         {
-          img: "https://i.loli.net/2021/05/14/kdB3AE9ay4c1SnN.png",
+          img: "https://qiniu.chengyuwb.com/1655360218534.webp",
           url: "",
           link: "",
           size: "335*177"
         },
         {
-          img: "https://i.loli.net/2021/05/14/FmDr9ksiXeEqYLU.png",
+          img: "https://qiniu.chengyuwb.com/1655360218500.webp",
           url: "",
           link: "",
           size: "335*177"
@@ -99,19 +93,19 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/kdB3AE9ay4c1SnN.png",
+          img: "https://qiniu.chengyuwb.com/1655360218534.webp",
           url: "",
           link: "",
           size: "335*177"
         },
         {
-          img: "https://i.loli.net/2021/05/14/FmDr9ksiXeEqYLU.png",
+          img: "https://qiniu.chengyuwb.com/1655360218500.webp",
           url: "",
           link: "",
           size: "335*177"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655360218844.webp",
           url: "",
           link: "",
           size: "335*335"
@@ -129,19 +123,19 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655360218511.webp",
           url: "",
           link: "",
           size: "226*226 (1:1)"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655360218526.webp",
           url: "",
           link: "",
           size: "226*226 (1:1)"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655360218489.webp",
           url: "",
           link: "",
           size: "226*226 (1:1)"
@@ -159,7 +153,7 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2020/12/05/8wSNWbnqujDh6HL.png",
+          img: "https://qiniu.chengyuwb.com/1655360218895.webp",
           url: "",
           link: "",
           size: "750*280"
@@ -177,13 +171,13 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655361963167.webp",
           url: "",
           link: "",
           size: "335*220"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655361963249.webp",
           url: "",
           link: "",
           size: "335*220"
@@ -201,19 +195,19 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362247094.webp",
           url: "",
           link: "",
           size: "710*170"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362247077.webp",
           url: "",
           link: "",
           size: "335*170"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362560973.webp",
           url: "",
           link: "",
           size: "335*170"
@@ -231,20 +225,20 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362247077.webp",
           url: "",
           link: "",
 
           size: "335*170"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362560973.webp",
           url: "",
           link: "",
           size: "335*170"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362247094.webp",
           url: "",
           link: "",
           size: "710*170"
@@ -262,31 +256,31 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://picsum.photos/id/127/200/200",
+          img: "https://qiniu.chengyuwb.com/1655362790013.webp",
           url: "",
           link: "",
           size: "75*75（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362776220.webp",
           url: "",
           link: "",
           size: "75*75（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362776245.webp",
           url: "",
           link: "",
           size: "75*75（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362790013.webp",
           url: "",
           link: "",
           size: "75*75（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362776245.webp",
           url: "",
           link: "",
           size: "75*75（1:1）"
@@ -304,25 +298,25 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362790013.webp",
           url: "",
           link: "",
           size: "88*88（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362776220.webp",
           url: "",
           link: "",
           size: "88*88（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362776245.webp",
           url: "",
           link: "",
           size: "88*88（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362790013.webp",
           url: "",
           link: "",
           size: "88*88（1:1）"
@@ -340,31 +334,31 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362790013.webp",
           url: "",
           link: "",
-          title: "文字",
+          title: "新品榜",
           size: "88*88（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362776245.webp",
           url: "",
           link: "",
-          title: "文字",
+          title: "护肤榜",
           size: "88*88（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362776220.webp",
           url: "",
           link: "",
-          title: "文字",
+          title: "底妆榜",
           size: "88*88（1:1）"
         },
         {
-          img: "https://i.loli.net/2021/05/14/dtNvI5UxchXn8gz.png",
+          img: "https://qiniu.chengyuwb.com/1655362790013.webp",
           url: "",
           link: "",
-          title: "文字",
+          title: "数码榜",
           size: "88*88（1:1）"
         }
       ]

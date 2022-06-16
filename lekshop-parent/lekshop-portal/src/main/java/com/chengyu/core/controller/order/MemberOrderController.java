@@ -1,8 +1,11 @@
 package com.chengyu.core.controller.order;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.GoodsEnums;
+import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.OrderSearchForm;
 import com.chengyu.core.domain.result.OrderFreightResult;
 import com.chengyu.core.domain.result.OrderGroupResult;
@@ -10,6 +13,7 @@ import com.chengyu.core.domain.result.OrderResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.model.OmsOrderDetail;
 import com.chengyu.core.service.order.OrderFreightService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.order.OrderService;
@@ -23,6 +27,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Api(tags = "订单管理")
 @Controller
@@ -44,6 +51,31 @@ public class MemberOrderController extends UserBaseController {
 	public CommonResult<CommonPage<OrderResult>> getList(OrderSearchForm form, Integer page, Integer pageSize) throws ServiceException {
 		form.setMemberId(getCurrentMemberId());
 		CommonPage<OrderResult> list = orderService.getOrderList(form, page, pageSize);
+		return CommonResult.success(list);
+	}
+
+	@ApiOperation(value = "获取滚动订单")
+	@ResponseBody
+	@RequestMapping(value={"/order/getRolliingList"}, method=RequestMethod.GET)
+	public CommonResult<List<OmsOrderDetail>> getRolliingList() throws ServiceException {
+		List<OmsOrderDetail> list = new ArrayList<>();
+		//待付款，待评价，待收货
+		OrderSearchForm form = new OrderSearchForm();
+		form.setMemberId(getCurrentMemberId());
+		form.setStatusList(CollectionUtil.newArrayList(OrderEnums.OrderStatus.WAIT_PAY.getValue(), OrderEnums.OrderStatus.WAIT_RECEIVE.getValue()));
+		List<OmsOrderDetail> detailList = orderService.getOrderDetailList(form, 1, 5);
+		if(CollectionUtil.isNotEmpty(detailList)){
+			list.addAll(detailList);
+		}
+
+		form = new OrderSearchForm();
+		form.setMemberId(getCurrentMemberId());
+		form.setStatus(OrderEnums.OrderStatus.FINISHED.getValue());
+		form.setCommentStatus(CommonConstant.NO_INT);
+		List<OmsOrderDetail> commentList = orderService.getOrderDetailList(form, 1, 5);
+		if(CollectionUtil.isNotEmpty(commentList)){
+			list.addAll(commentList);
+		}
 		return CommonResult.success(list);
 	}
 

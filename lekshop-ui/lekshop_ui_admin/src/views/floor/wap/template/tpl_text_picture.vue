@@ -57,9 +57,9 @@ export default {
      }
 }
 .-item-tilte {
-  background: #ff9f28;
+  // background: #ff9f28;
   height: 30px;
-  color: #fff;
+  color: #C75D19;
   font-size: 14px;
   text-align: center;
   line-height: 30px;

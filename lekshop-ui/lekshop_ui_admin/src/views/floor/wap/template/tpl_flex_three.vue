@@ -17,7 +17,7 @@ export default {
 @import "./tpl.scss";
 .layout {
    background: #e8e8e8;
-  height: 110px;
+  // height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,5 +25,6 @@ export default {
 }
 img{
    width: 111px !important;
+   margin-left: 5px;
 }
 </style>
