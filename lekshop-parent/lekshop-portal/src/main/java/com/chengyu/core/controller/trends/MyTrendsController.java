@@ -14,6 +14,7 @@ import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.OmsOrderDetail;
 import com.chengyu.core.model.WalkTrends;
+import com.chengyu.core.model.WalkTrendsCollection;
 import com.chengyu.core.service.order.OrderService;
 import com.chengyu.core.service.walk.WalkTrendsService;
 import io.swagger.annotations.Api;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = "我发布的动态")
@@ -92,5 +94,29 @@ public class MyTrendsController extends UserBaseController {
 		}
 		walkTrendsService.deleteTrends(ids);
 		return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "我关注的动态列表")
+	@ResponseBody
+	@RequestMapping(value="/trends/getMyCollectionList", method=RequestMethod.GET)
+	public CommonResult<CommonPage<WalkTrends>> getMyCollectionList(@RequestParam(value = "page", defaultValue = "1") Integer page,
+															  @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize ) throws ServiceException {
+		List<WalkTrendsCollection> list = walkTrendsService.getMyCollectionTrends(getCurrentWalkMember().getId(), page, pageSize);
+		if(CollectionUtil.isEmpty(list)){
+			return CommonResult.success(CommonPage.restPage(new ArrayList<>()));
+		}
+		List<WalkTrends> trendsList = new ArrayList<>();
+		for(WalkTrendsCollection collection : list){
+			trendsList.add(walkTrendsService.getTrendsById(collection.getTrendsId()));
+		}
+		return CommonResult.success(CommonPage.restPage(trendsList));
+	}
+
+	@ApiOperation(value = "动态详情")
+	@ResponseBody
+	@RequestMapping(value="/trends/getDetail", method=RequestMethod.GET)
+	public CommonResult<WalkTrendsResult> getDetail(Integer trendsId) {
+		WalkTrendsResult result = walkTrendsService.getTrendsDetail(trendsId);
+		return CommonResult.success(result);
 	}
 }

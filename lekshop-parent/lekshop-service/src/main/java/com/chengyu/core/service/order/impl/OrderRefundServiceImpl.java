@@ -3,12 +3,15 @@ package com.chengyu.core.service.order.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.enums.MemberNewsEnums;
 import com.chengyu.core.domain.enums.MemberRemindEnums;
 import com.chengyu.core.domain.enums.OrderEnums;
 import com.chengyu.core.domain.form.MemberNewsForm;
 import com.chengyu.core.domain.form.OrderRefundForm;
 import com.chengyu.core.domain.form.OrderRefundSearchForm;
+import com.chengyu.core.domain.result.ChatNotice;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.domain.result.OrderRefundResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.OmsOrderDetailMapper;
@@ -17,8 +20,8 @@ import com.chengyu.core.mapper.OmsOrderRefundLogMapper;
 import com.chengyu.core.mapper.OmsOrderRefundMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigOrderService;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberNewsService;
-import com.chengyu.core.service.member.MemberRemindService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderRefundService;
 import com.chengyu.core.service.pay.PayService;
@@ -61,8 +64,6 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	@Autowired
 	private TaskTriggerService taskTriggerService;
 	@Autowired
-	private MemberRemindService memberRemindService;
-	@Autowired
 	private MemberService memberService;
 	@Autowired
 	private MemberNewsService memberNewsService;
@@ -70,6 +71,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	private ShopService shopService;
 	@Autowired
 	private PayService payService;
+	@Autowired
+	private ChatService chatService;
 
 	@Override
 	public List<OmsOrderRefund> getRefundList(OrderRefundSearchForm form, Integer page, Integer pageSize) {
@@ -200,7 +203,13 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
 
-		memberRemindService.addShopRemind(order.getShopId(), MemberRemindEnums.MemberRemindTypes.WAIT_VERIFY_REFUND, "重要! 有用户申请售后,请及时处理~");
+		ChatNotice notice = new ChatNotice();
+		notice.setTitle("重要! 有用户申请售后,请及时处理~");
+		notice.setContent(JSONUtil.toJsonStr(refund));
+		notice.setType(MemberRemindEnums.MemberRemindTypes.WAIT_VERIFY_REFUND.getType());
+		UmsShop shop = shopService.getShopById(order.getShopId());
+		chatService.sendNoticeMsg(shop.getMemberId(), JSONUtil.toJsonStr(notice));
+//		memberRemindService.addShopRemind(order.getShopId(), MemberRemindEnums.MemberRemindTypes.WAIT_VERIFY_REFUND, "重要! 有用户申请售后,请及时处理~");
 	}
 
 	@Override
@@ -339,6 +348,12 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setAddTime(DateUtil.date());
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
+
+		ChatNotice notice = new ChatNotice();
+		notice.setTitle("重要! 买家申请客服介入, 请及时处理~");
+		notice.setContent(JSONUtil.toJsonStr(refund));
+		notice.setType(MemberRemindEnums.AdminRemindTypes.WAIT_VERIFY_COMPLAINT.getType());
+		chatService.sendNoticeMsg(CustomerConstant.ADMIN_MEMBER_ID, JSONUtil.toJsonStr(notice));
 	}
 
 	@Override
@@ -472,7 +487,13 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		log.setUpdTime(log.getAddTime());
 		orderRefundLogMapper.insert(log);
 
-		memberRemindService.addShopRemind(refund.getShopId(), MemberRemindEnums.MemberRemindTypes.WAIT_CONFIRM_RECEIVE, "重要! 买家已退货,请及时确认~");
+		ChatNotice notice = new ChatNotice();
+		notice.setTitle("重要! 买家已退货,请及时确认~");
+		notice.setContent(JSONUtil.toJsonStr(refund));
+		notice.setType(MemberRemindEnums.MemberRemindTypes.WAIT_CONFIRM_RECEIVE.getType());
+		UmsShop shop = shopService.getShopById(refund.getShopId());
+		chatService.sendNoticeMsg(shop.getMemberId(), JSONUtil.toJsonStr(notice));
+//		memberRemindService.addShopRemind(refund.getShopId(), MemberRemindEnums.MemberRemindTypes.WAIT_CONFIRM_RECEIVE, "重要! 买家已退货,请及时确认~");
 	}
 
 	@Override
@@ -589,6 +610,7 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 				OrderEnums.RefundDetailStatus.APPLY.getValue(),
 				OrderEnums.RefundDetailStatus.WAIT_BUYER_RETURN.getValue(),
 				OrderEnums.RefundDetailStatus.BUYER_RETURNED.getValue(),
+				OrderEnums.RefundDetailStatus.SALES_REFUSE.getValue(),
 				OrderEnums.RefundDetailStatus.SERVICE_IN.getValue()
 		).contains(refund.getStatus())){
 			throw new ServiceException("order.refund.status.error");

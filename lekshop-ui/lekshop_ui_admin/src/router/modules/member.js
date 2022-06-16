@@ -9,7 +9,7 @@ const memberRouter = {
   name: 'member',
 	alwaysShow: true,
   meta: {
-    title: '会员管理',
+    title: '会员',
     icon: 'user'
   },
   children: [
@@ -17,13 +17,13 @@ const memberRouter = {
       path: 'list',
       component: () => import('@/views/member/index/index'),
       name: 'memberList',
-      meta: { title: '会员列表', icon:'list', role: ['admin'] }
+      meta: { title: '会员列表',  role: ['admin'] }
     },
     {
       path: 'detail',
       component: () => import('@/views/member/index/detailInfo'),
       name: 'memberDetailInfo',
-      meta: { title: '会员详情', icon:'list', role: ['admin'] }
+      meta: { title: '会员详情',  role: ['admin'] }
     },
     {
     	path: 'detail/:id(\\d+)',
@@ -36,31 +36,31 @@ const memberRouter = {
       path: 'group',
       component: () => import('@/views/member/group/index'),
       name: 'group',
-      meta: { title: '会员组别', icon:'list', role: ['admin'] }
+      meta: { title: '会员组别',  role: ['admin'] }
     },
     {
       path: 'realname',
       component: () => import('@/views/member/realname/index'),
       name: 'realnameVerify',
-      meta: { title: '实名认证', icon:'list', role: ['admin'] }
+      meta: { title: '实名认证',  role: ['admin'] }
     },
     {
       path: 'bank',
       component: () => import('@/views/member/bank/index'),
       name: 'bankVerify',
-      meta: { title: '银行认证', icon:'list', role: ['admin'] }
+      meta: { title: '银行认证',  role: ['admin'] }
     },
 	{
 	  path: 'punishment',
 	  component: () => import('@/views/member/punishment/index'),
 	  name: 'memberPunishment',
-	  meta: { title: '用户处罚', icon:'list', role: ['admin'] }
+	  meta: { title: '用户处罚',  role: ['admin'] }
 	},
   {
     path: 'phonebook',
     component: () => import('@/views/phonebook/index/index'),
     name: 'phonebook',
-    meta: { title: '手机通讯录',icon: 'list',  role: ['admin'] }
+    meta: { title: '手机通讯录', role: ['admin'] }
   },
   {
   	path: 'phonebook/viewLog/:id(\\d+)',
@@ -80,7 +80,7 @@ const memberRouter = {
       path: 'log',
       component: () => import('@/views/member/log/index'),
       name: 'memberLog',
-      meta: { title: '会员日志', icon:'list', role: ['admin'] }
+      meta: { title: '会员日志',  role: ['admin'] }
     },
   ]
 }

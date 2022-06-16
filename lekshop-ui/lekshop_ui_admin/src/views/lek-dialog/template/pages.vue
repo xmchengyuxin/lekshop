@@ -7,6 +7,16 @@
        </el-select>
        <el-input v-model="listQuery.title" clearable placeholder="标题" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
+       <el-pagination
+       class="filter-item"
+         small
+         layout="prev, pager, next"
+         :total="total"
+         :current-page.sync="listQuery.page"
+         :page-size.sync="listQuery.pageSize"
+         @current-change="getList"
+         >
+       </el-pagination>
   	</div>
   	<el-table
       :key="tableKey"
@@ -16,7 +26,7 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="文章分类" width="180px" align="center" prop="cateName" >
+      <el-table-column label="文章分类" width="100px" prop="cateName" >
         <template slot-scope="scope">
           <span>{{ scope.row.cateName}}</span>
         </template>
@@ -26,7 +36,7 @@
             <span class="link-type">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" min-width="120px"  fixed="right">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" width="90px"  fixed="right">
         <template slot-scope="scope">
           <el-button v-if="scope.row.checked" type="primary" size="mini" icon="el-icon-check">
             <span>已选</span>
@@ -38,7 +48,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
+    <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" /> -->
 
   </div>
 

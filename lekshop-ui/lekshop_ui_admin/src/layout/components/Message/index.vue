@@ -19,7 +19,8 @@
       :contextmenu="contextmenu"
       @pull-messages="handlePullMessages"
       @send="handleSend"
-      @change-contact="handleChangeContact">
+      @change-contact="handleChangeContact"
+      @message-click="handleMessageClick">
           <template #sidebar-message-fixedtop>
             <span></span>
           </template>
@@ -40,8 +41,10 @@
   import Vue from 'vue';
   import LemonMessageGoods from './lemon-message-goods';
   import LemonMessageOrder from './lemon-message-order';
+  import LemonMessageNotice from './lemon-message-notice';
   Vue.component(LemonMessageGoods.name,LemonMessageGoods);
   Vue.component(LemonMessageOrder.name,LemonMessageOrder);
+  Vue.component(LemonMessageNotice.name,LemonMessageNotice);
 
   let IMUI;
   export default {
@@ -133,6 +136,8 @@
                   lastMsg = '[咨询商品]';
                 }else if(item.msgType == 'order'){
                   lastMsg = '[咨询订单]';
+                }else if(item.msgType == 'notice'){
+                  lastMsg = '[您有一条重要的待办待处理]';
                 }
                 contacts.push({
                   sessionId: item.id,
@@ -265,6 +270,8 @@
                 msgContent = '[咨询商品]';
               }else if(msg.type == 'order'){
                 msgContent = '[咨询订单]';
+              }else if(msg.type == 'notice'){
+                msgContent = '[您有一条重要的待办待处理]';
               }else{
                 msgContent = msg.content;
               }
@@ -298,6 +305,30 @@
              }
            }
         };
+      },
+      handleMessageClick(e, key, message, instance) {
+        if (message.type == "notice") {
+          let content = JSON.parse(message.content)
+          if(content.type == 1){
+            //待审核实名
+            this.$router.push('/member/realname');
+          }else if(content.type == 2){
+            //待审核银行
+            this.$router.push('/member/bank');
+          }else if(content.type == 3){
+            //待审核充值
+            this.$router.push('/fund/recharge');
+          }else if(content.type == 4){
+            //待审核提现
+            this.$router.push('/fund/withdraw');
+          }else if(content.type == 5){
+            //待处理申诉
+            this.$router.push('/order/refund');
+          }else if(content.type == 6){
+            //待审核店铺
+            this.$router.push('/shop/verify');
+          }
+        }
       },
       playAudio() {
       	const self = this;

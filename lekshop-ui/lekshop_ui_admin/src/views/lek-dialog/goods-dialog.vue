@@ -3,7 +3,12 @@
     <div class="wap-content">
       <div class="query-wrapper">
         <div class="query-item">
-          <el-input placeholder="商品名称" @on-clear="goodsData=[]; goodsParams.title=''; goodsParams.page = 1; getQueryGoodsList()" @on-enter="()=>{goodsData=[];goodsParams.pageNumber =1; getQueryGoodsList();}" icon="ios-search" clearable
+          <el-select v-model="goodsParams.type" placeholder="全部商品" class="filter-item" filterable style="width: 100px;" @change="()=>{goodsData=[];goodsParams.page =1; getQueryGoodsList();}">
+              <el-option label="全部商品" value=""> </el-option>
+              <el-option label="秒杀商品" value="2"> </el-option>
+              <el-option label="拼团商品" value="3"> </el-option>
+            </el-select>
+          <el-input placeholder="商品名称" @on-clear="goodsData=[]; goodsParams.title=''; goodsParams.page = 1; getQueryGoodsList()" @on-enter="()=>{goodsData=[];goodsParams.page =1; getQueryGoodsList();}" icon="ios-search" clearable
             style="width: 150px" v-model="goodsParams.title" />
         </div>
         <!-- <div class="query-item">
@@ -11,16 +16,30 @@
         </div> -->
         <div class="query-item">
           <el-button type="primary" @click="goodsData=[]; getQueryGoodsList();" icon="ios-search">搜索</el-button>
+          <el-pagination
+            small
+            layout="prev, pager, next"
+            :total="total"
+            :current-page.sync="goodsParams.page"
+            :page-size.sync="goodsParams.pageSize"
+            @current-change="getQueryGoodsList"
+            >
+          </el-pagination>
+          <!-- <pagination v-show="total>0" :total="total" :page.sync="goodsParams.page" :limit.sync="goodsParams.pageSize" @pagination="getQueryGoodsList" /> -->
         </div>
       </div>
       <div style="positon:retavle;">
-        <div  class="wap-content-list flex" v-infinite-scroll="handleReachBottom" :distance-to-edge="[3,3]">
-          <div class="wap-content-item" :class="{ active: item.selected }" @click="checkedGoods(item, index)" v-for="(item, index) in goodsData" :key="index">
+        <div  class="wap-content-list flex f-w" style="height: 500px;">
+          <div class="wap-content-item f-s-0" :class="{ active: item.selected }" @click="checkedGoods(item, index)" v-for="(item, index) in goodsData" :key="index">
             <div>
               <img :src="item.mainImg" alt="" />
             </div>
             <div class="wap-content-desc">
-              <div class="wap-content-desc-title">{{ item.title }}</div>
+              <div class="wap-content-desc-title">
+                <span class="pintuan" v-if="item.type == 3">拼</span>
+                <span class="miaosha" v-if="item.type == 2">秒</span>
+                {{ item.title }}
+              </div>
               <div class="wap-content-desc-bottom">
                 <div>￥{{ item.price }}</div>
               </div>
@@ -37,7 +56,9 @@
 </template>
 <script>
 import * as API_Goods from "@/api/goods";
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 export default {
+  components: { Pagination },
   data() {
     return {
       type: "multiple", //单选或者多选 single  multiple
@@ -45,7 +66,7 @@ export default {
       total: 0,  // 商品总数
       goodsParams: { // 商品请求参数
         page: 1,
-        pageSize: 18,
+        pageSize: 20,
         goodsName: "",
         sn: "",
         categoryPath: "",
@@ -123,7 +144,8 @@ export default {
          * 解决数据请求中，滚动栏会一直上下跳动
          */
         this.total = res.data.total;
-        this.goodsData.push(...res.data.list);
+        this.goodsData = res.data.list;
+        // this.goodsData.push(...res.data.list);
 
       } else {
         this.empty = true;
@@ -241,4 +263,16 @@ export default {
   background-position: right;
   background-size: 10%;
 }
+
+.pintuan {
+    background-color: #E65D6E;
+    color: #fff;
+    border-radius: 5%;
+    font-size: 12px;
+  }
+  .miaosha{
+    background-color: #5555ff;
+    color: #fff;
+    border-radius: 5%;
+  }
 </style>

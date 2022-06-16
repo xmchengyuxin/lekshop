@@ -8,7 +8,8 @@
       <span v-if="totalUnReadNum > 0" class="chat-num flex f-a-c f-j-c padding-lr2 f10-size t-color-w bg-color-r b-radius-30">{{totalUnReadNum}}</span>
     </div>
 
-    <el-dialog v-el-drag-dialog title="" :visible.sync="imDialog"	:modal="false" :close-on-click-modal="false" width="850px" height="640px">
+    <el-dialog v-el-drag-dialog title="" :visible.sync="imDialog"	:modal="false"
+      :close-on-click-modal="false" width="850px" height="640px" :close-on-press-escape="true" :modal-append-to-body="false"	>
       <lemon-imui
       ref='IMUI'
       :user="user"
@@ -19,7 +20,8 @@
       :contextmenu="contextmenu"
       @pull-messages="handlePullMessages"
       @send="handleSend"
-      @change-contact="handleChangeContact">
+      @change-contact="handleChangeContact"
+      @message-click="handleMessageClick">
           <template #sidebar-message-fixedtop>
             <span></span>
           </template>
@@ -40,8 +42,10 @@
   import Vue from 'vue';
   import LemonMessageGoods from './lemon-message-goods';
   import LemonMessageOrder from './lemon-message-order';
+  import LemonMessageNotice from './lemon-message-notice';
   Vue.component(LemonMessageGoods.name,LemonMessageGoods);
   Vue.component(LemonMessageOrder.name,LemonMessageOrder);
+  Vue.component(LemonMessageNotice.name,LemonMessageNotice);
 
   let IMUI;
   export default {
@@ -133,6 +137,8 @@
                   lastMsg = '[咨询商品]';
                 }else if(item.msgType == 'order'){
                   lastMsg = '[咨询订单]';
+                }else if(item.msgType == 'notice'){
+                  lastMsg = '[您有一条重要的待办待处理]';
                 }
                 contacts.push({
                   sessionId: item.id,
@@ -265,6 +271,8 @@
                 msgContent = '[咨询商品]';
               }else if(msg.type == 'order'){
                 msgContent = '[咨询订单]';
+              }else if(msg.type == 'notice'){
+                msgContent = '[您有一条重要的待办待处理]';
               }else{
                 msgContent = msg.content;
               }
@@ -291,13 +299,28 @@
               }
               if(IMUI){
                 IMUI.appendMessage(msg, true);
-                IMUI.setLastContentRender(msg.type, msg => {
+                IMUI.setLastContentRender('text', msg => {
                   return msgContent;
                 });
               }
              }
            }
         };
+      },
+      handleMessageClick(e, key, message, instance) {
+        if (message.type == "notice") {
+          let content = JSON.parse(message.content)
+          if(content.type == 1){
+            //提现
+            this.$router.push('/fund/withdraw');
+          }else if(content.type == 2){
+            //新订单
+            this.$router.push('/order/list');
+          }else if(content.type == 3 || content.type == 4){
+            //退款
+            this.$router.push('/order/refund');
+          }
+        }
       },
       playAudio() {
       	const self = this;

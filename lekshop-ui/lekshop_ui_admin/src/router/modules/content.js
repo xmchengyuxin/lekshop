@@ -9,7 +9,7 @@ const contentRouter = {
   redirect: '/system/content/banner',
   name: 'content',
   meta: {
-    title: '内容管理',
+    title: '内容',
     icon: 'table'
   },
   children: [
@@ -17,37 +17,37 @@ const contentRouter = {
       path: 'banner',
       component: () => import('@/views/content/banner/index'),
       name: 'bannerTable',
-      meta: { title: '轮播图', icon: 'list', role: ['admin'] }
+      meta: { title: '轮播图',  role: ['admin'] }
     },
     {
       path: 'advert',
       component: () => import('@/views/content/advert/index'),
       name: 'advertTable',
-      meta: { title: '广告图设置',  icon: 'list', role: ['admin'] }
+      meta: { title: '广告图设置',   role: ['admin'] }
     },
 		{
 		  path: 'agreement',
 		  component: () => import('@/views/content/agreement/index'),
 		  name: 'agreementTable',
-		  meta: { title: '协议文案', icon: 'list',  role: ['admin'] }
+		  meta: { title: '协议文案',   role: ['admin'] }
 		},
     {
       path: 'feedback',
       component: () => import('@/views/content/feedback/index'),
       name: 'feedbackTable',
-      meta: { title: '意见反馈', icon: 'list',  role: ['admin'] }
+      meta: { title: '意见反馈',   role: ['admin'] }
     },
     {
       path: 'articleCate',
       component: () => import('@/views/content/articleCate/index'),
       name: 'articleCate',
-      meta: { title: '文章分类', icon: 'list',  role: ['admin'] }
+      meta: { title: '文章分类',   role: ['admin'] }
     },
 		{
 		  path: 'article',
 		  component: () => import('@/views/content/article/index'),
 		  name: 'articleTable',
-		  meta: { title: '文章列表', icon: 'list',  role: ['admin'] }
+		  meta: { title: '文章列表',   role: ['admin'] }
 		},
 		{
 			path: 'article/create',
@@ -67,13 +67,13 @@ const contentRouter = {
       path: 'notice',
       component: () => import('@/views/content/notice/index'),
       name: 'notice',
-      meta: { title: '公告管理', icon: 'list',  role: ['admin'] }
+      meta: { title: '公告管理',   role: ['admin'] }
     },
     {
       path: 'source',
       component: () => import('@/views/content/source/index'),
       name: 'source',
-      meta: { title: '素材管理', icon: 'list',  role: ['admin'] }
+      meta: { title: '素材管理',   role: ['admin'] }
     },
 
   ]

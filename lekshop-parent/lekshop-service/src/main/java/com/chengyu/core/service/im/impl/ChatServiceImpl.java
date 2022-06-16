@@ -8,7 +8,8 @@ import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.MemberRemindEnums;
 import com.chengyu.core.domain.enums.RedisEnums;
-import com.chengyu.core.domain.result.CustomerConstatnt;
+import com.chengyu.core.domain.result.ChatNotice;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.mapper.BaseMapper;
 import com.chengyu.core.mapper.CustomChatMapper;
 import com.chengyu.core.mapper.ImChatLogMapper;
@@ -47,8 +48,6 @@ public class ChatServiceImpl implements ChatService {
 	private BaseMapper baseMapper;
 	@Autowired
 	private CustomChatMapper customChatMapper;
-	@Autowired
-	private ScheduleService scheduleService;
 
 	@Override
 	public Long initChatSession(UmsMember member, UmsMember targetMember) {
@@ -64,15 +63,15 @@ public class ChatServiceImpl implements ChatService {
 			session.setTargetId(targetMember.getId());
 			session.setTargetNickname(targetMember.getNickname());
 			session.setTargetHeadImg(targetMember.getHeadImg());
-			if(targetMember.getId() == CustomerConstatnt.MEMBER_ID){
+			if(targetMember.getId() == CustomerConstant.MEMBER_ID){
 				session.setMsgType("text");
-				session.setLastMsg(CustomerConstatnt.WELCOME);
+				session.setLastMsg(CustomerConstant.WELCOME);
 			}
 			session.setUnReadNum(0);
 			session.setAddTime(now);
 			session.setUpdTime(now);
 			chatSessionMapper.insertSelective(session);
-			if(targetMember.getId() == CustomerConstatnt.MEMBER_ID){
+			if(targetMember.getId() == CustomerConstant.MEMBER_ID){
 				this.initCustomerMsg(member, session.getId());
 			}
 			return session.getId();
@@ -89,7 +88,7 @@ public class ChatServiceImpl implements ChatService {
 	private void initCustomerMsg(UmsMember member, Long sessionId) {
 		ImChatLog chatLog = new ImChatLog();
 		chatLog.setMsgType("text");
-		chatLog.setMsgContent(CustomerConstatnt.WELCOME);
+		chatLog.setMsgContent(CustomerConstant.WELCOME);
 		chatLog.setReadStatus(CommonConstant.NO_INT);
 		chatLog.setSendStatus(CommonConstant.NO_INT);
 		chatLog.setSendTime(DateUtil.date());
@@ -98,9 +97,9 @@ public class ChatServiceImpl implements ChatService {
 		chatLog.setMemberId(member.getId());
 		chatLog.setMemberNickname(member.getNickname());
 		chatLog.setMemberHeadImg(member.getHeadImg());
-		chatLog.setTargetId(CustomerConstatnt.MEMBER_ID);
-		chatLog.setTargetNickname(CustomerConstatnt.NICKNAME);
-		chatLog.setTargetHeadImg(CustomerConstatnt.AVATAR);
+		chatLog.setTargetId(CustomerConstant.MEMBER_ID);
+		chatLog.setTargetNickname(CustomerConstant.NICKNAME);
+		chatLog.setTargetHeadImg(CustomerConstant.AVATAR);
 		chatLog.setSendType(2);
 		chatLogMapper.insertSelective(chatLog);
 	}
@@ -148,7 +147,7 @@ public class ChatServiceImpl implements ChatService {
 		chatLog.setTargetHeadImg(targetMember.getHeadImg());
 		chatLog.setSendType(1);
 		chatLogMapper.insertSelective(chatLog);
-		if(targetMemberId == CustomerConstatnt.MEMBER_ID){
+		if(targetMemberId == CustomerConstant.MEMBER_ID){
 			ThreadUtil.execAsync(() -> {
 				this.smartAnswer(member, chatLog);
 			}, false);
@@ -170,6 +169,11 @@ public class ChatServiceImpl implements ChatService {
 		chatLogMapper.insertSelective(targetLog);
 
 		//更新最新消息
+		if("notice".equals(msgType)){
+			msgType = "text";
+			ChatNotice chatNotice = JSONUtil.toBean(content, ChatNotice.class);
+			content = chatNotice.getTitle();
+		}
 		baseMapper.update("update im_chat_session set upd_time = now(), msg_type='"+msgType+"', last_msg='"+content+"' where id="+sessionId);
 		baseMapper.update("update im_chat_session set un_read_num = un_read_num+1, upd_time = now(), msg_type='"+msgType+"', last_msg='"+content+"' where id="+targetSessionId);
 
@@ -182,6 +186,11 @@ public class ChatServiceImpl implements ChatService {
 		extras.put("addTime", DateUtil.current()+"");
 		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
 		return chatLog;
+	}
+
+	@Override
+	public void sendNoticeMsg(Integer targetMemberId, String content) {
+		this.sendMsg(this.getMemberByRds(CustomerConstant.NOTICE_MEMBER_ID), targetMemberId, "notice", content);
 	}
 
 	/**
@@ -204,9 +213,9 @@ public class ChatServiceImpl implements ChatService {
 		targetLog.setMemberNickname(member.getNickname());
 		targetLog.setMemberHeadImg(member.getHeadImg());
 
-		targetLog.setTargetId(CustomerConstatnt.MEMBER_ID);
-		targetLog.setTargetNickname(CustomerConstatnt.NICKNAME);
-		targetLog.setTargetHeadImg(CustomerConstatnt.AVATAR);
+		targetLog.setTargetId(CustomerConstant.MEMBER_ID);
+		targetLog.setTargetNickname(CustomerConstant.NICKNAME);
+		targetLog.setTargetHeadImg(CustomerConstant.AVATAR);
 		targetLog.setSendType(2);
 		targetLog.setReadStatus(CommonConstant.NO_INT);
 		chatLogMapper.insertSelective(targetLog);
@@ -230,18 +239,24 @@ public class ChatServiceImpl implements ChatService {
 		if(member != null){
 			return member;
 		}
-		if(memberId == CustomerConstatnt.MEMBER_ID){
+		if(memberId == CustomerConstant.MEMBER_ID){
 			member = new UmsMember();
-			member.setId(CustomerConstatnt.MEMBER_ID);
-			member.setNickname(CustomerConstatnt.NICKNAME);
-			member.setHeadImg(CustomerConstatnt.AVATAR);
-			member.setUid(CustomerConstatnt.UID);
-		}else if(memberId == CustomerConstatnt.ADMIN_MEMBER_ID){
+			member.setId(CustomerConstant.MEMBER_ID);
+			member.setNickname(CustomerConstant.NICKNAME);
+			member.setHeadImg(CustomerConstant.AVATAR);
+			member.setUid(CustomerConstant.UID);
+		}else if(memberId == CustomerConstant.ADMIN_MEMBER_ID){
 			member = new UmsMember();
-			member.setId(CustomerConstatnt.ADMIN_MEMBER_ID);
-			member.setNickname(CustomerConstatnt.ADMIN_NICKNAME);
-			member.setHeadImg(CustomerConstatnt.ADMIN_AVATAR);
-			member.setUid(CustomerConstatnt.ADMIN_UID);
+			member.setId(CustomerConstant.ADMIN_MEMBER_ID);
+			member.setNickname(CustomerConstant.ADMIN_NICKNAME);
+			member.setHeadImg(CustomerConstant.ADMIN_AVATAR);
+			member.setUid(CustomerConstant.ADMIN_UID);
+		}else if(memberId == CustomerConstant.NOTICE_MEMBER_ID){
+			member = new UmsMember();
+			member.setId(CustomerConstant.NOTICE_MEMBER_ID);
+			member.setNickname(CustomerConstant.NOTICE_NICKNAME);
+			member.setHeadImg(CustomerConstant.NOTICE_AVATAR);
+			member.setUid(CustomerConstant.NOTICE_UID);
 		}else{
 			member = memberService.getMemberById(memberId);
 		}

@@ -2,11 +2,14 @@ package com.chengyu.core.service.member.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.AccountEnums;
 import com.chengyu.core.domain.enums.MemberRemindEnums.AdminRemindTypes;
 import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.domain.form.BaseSearchForm;
+import com.chengyu.core.domain.result.ChatNotice;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.UmsMemberBankMapper;
 import com.chengyu.core.mapper.UmsMemberMapper;
@@ -14,6 +17,7 @@ import com.chengyu.core.mapper.UmsMemberRealnameMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigRealnameService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberRealnameService;
 import com.chengyu.core.service.member.MemberRemindService;
 import com.chengyu.core.service.member.MemberService;
@@ -55,7 +59,7 @@ public class MemberRealnameServiceImpl implements MemberRealnameService {
 	@Autowired
 	private UmsMemberBankMapper memberBankMapper;
 	@Autowired
-	private MemberRemindService memberRemindService;
+	private ChatService chatService;
 
 	@Override
 	public List<UmsMemberRealname> getMemberRealnameList(BaseSearchForm form, Integer page, Integer pageSize) {
@@ -236,7 +240,12 @@ public class MemberRealnameServiceImpl implements MemberRealnameService {
 			memberService.updateMember(updateMember);
 		}
 		if(memberRealname.getStatus() != null && memberRealname.getStatus() == CommonConstant.WAIT_INT){
-			memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_REALNAME, "「"+member.getCode()+"」申请了实名认证, 请尽快审批");
+			ChatNotice notice = new ChatNotice();
+			notice.setTitle("「"+member.getCode()+"」申请了实名认证, 请尽快审批");
+			notice.setContent(JSONUtil.toJsonStr(realname));
+			notice.setType(AdminRemindTypes.WAIT_VERIFY_REALNAME.getType());
+			chatService.sendNoticeMsg(CustomerConstant.ADMIN_MEMBER_ID, JSONUtil.toJsonStr(notice));
+//			memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_REALNAME, "「"+member.getCode()+"」申请了实名认证, 请尽快审批");
 		}
 
 		return memberRealname;

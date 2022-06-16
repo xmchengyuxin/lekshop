@@ -6,10 +6,12 @@ import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.*;
 import com.chengyu.core.domain.form.*;
+import com.chengyu.core.domain.result.ChatNotice;
 import com.chengyu.core.domain.result.OrderGroupResult;
 import com.chengyu.core.domain.result.OrderPayResult;
 import com.chengyu.core.domain.result.OrderResult;
@@ -21,6 +23,7 @@ import com.chengyu.core.service.config.ConfigMissionService;
 import com.chengyu.core.service.config.ConfigOrderService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.goods.GoodsService;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.*;
 import com.chengyu.core.service.order.*;
 import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
@@ -99,6 +102,8 @@ public class OrderServiceImpl implements OrderService {
 	private OmsOrderRefundMapper orderRefundMapper;
 	@Autowired
 	private ConfigMissionService configMissionService;
+	@Autowired
+	private ChatService chatService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -429,7 +434,13 @@ public class OrderServiceImpl implements OrderService {
 					memberCouponService.useCoupon(order.getCouponId());
 				}
 
-				memberRemindService.addShopRemind(order.getShopId(), MemberRemindEnums.MemberRemindTypes.NEW_ORDER, "重要! 您有一笔新的订单,请及时发货~");
+				ChatNotice notice = new ChatNotice();
+				notice.setTitle("重要! 您有一笔新的订单,请及时发货~");
+				notice.setContent(JSONUtil.toJsonStr(detailList.get(0)));
+				notice.setType(MemberRemindEnums.MemberRemindTypes.NEW_ORDER.getType());
+				UmsShop shop = shopService.getShopById(order.getShopId());
+				chatService.sendNoticeMsg(shop.getMemberId(), JSONUtil.toJsonStr(notice));
+//				memberRemindService.addShopRemind(order.getShopId(), MemberRemindEnums.MemberRemindTypes.NEW_ORDER, "重要! 您有一笔新的订单,请及时发货~");
 			}
 
 			//拼团订单

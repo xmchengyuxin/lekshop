@@ -2,7 +2,7 @@ package com.chengyu.core.controller.im;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.controller.AdminBaseController;
-import com.chengyu.core.domain.result.CustomerConstatnt;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -85,10 +85,10 @@ public class ChatController extends AdminBaseController {
 
 	private UmsMember getChatMember() {
 		UmsMember member = new UmsMember();
-		member.setId(CustomerConstatnt.ADMIN_MEMBER_ID);
-		member.setUid(CustomerConstatnt.ADMIN_UID);
-		member.setNickname(CustomerConstatnt.ADMIN_NICKNAME);
-		member.setHeadImg(CustomerConstatnt.ADMIN_AVATAR);
+		member.setId(CustomerConstant.ADMIN_MEMBER_ID);
+		member.setUid(CustomerConstant.ADMIN_UID);
+		member.setNickname(CustomerConstant.ADMIN_NICKNAME);
+		member.setHeadImg(CustomerConstant.ADMIN_AVATAR);
 		return member;
 	}
 }

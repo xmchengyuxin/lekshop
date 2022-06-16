@@ -8,7 +8,7 @@ const floorRouter = {
   redirect: 'noredirect',
   name: 'floor',
   meta: {
-    title: '装修商城',
+    title: '装修',
     icon: 'qu'
   },
   children: [
@@ -16,7 +16,7 @@ const floorRouter = {
       path: 'mobile',
       component: () => import('@/views/floor/index'),
       name: 'floorMobile',
-      meta: { title: '移动端', icon: 'list', role: ['admin'] }
+      meta: { title: '移动端',  role: ['admin'] }
     },
     {
     	path: 'mobile/create',

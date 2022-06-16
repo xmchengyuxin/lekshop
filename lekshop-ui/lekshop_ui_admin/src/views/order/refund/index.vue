@@ -33,6 +33,11 @@
           <span>{{ scope.row.shopName }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="申请人" prop="memberName" align="center" width="130">
+        <template slot-scope="scope">
+          <span>{{ scope.row.memberName }}</span>
+        </template>
+      </el-table-column>
 			<el-table-column label="退款商品" prop="goodsInfo" align="center" min-width="250">
 			  <template slot-scope="scope">
           <div  class="flex  padding-tb10">
@@ -92,13 +97,13 @@
           <el-tag  v-if="scope.row.status == 6" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
 			  </template>
 			</el-table-column>
-			<el-table-column label="操作" class-name="small-padding" fixed="right" width="200">
+			<el-table-column label="操作" class-name="small-padding" fixed="right" width="220">
 			  <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleRefundDetail(scope.row)"></el-button>
           </el-tooltip>
           <el-popconfirm
-            v-if="scope.row.status == 0"
+            v-if="scope.row.status == 4"
             confirm-button-text='好的'
             cancel-button-text='不用了'
             icon="el-icon-info"
@@ -110,10 +115,10 @@
               同意
             </el-button>
           </el-popconfirm>
-          <el-button v-if="scope.row.status == 0" type="danger" icon="el-icon-close" size="mini" @click="refuseRefund(scope.row)">
+          <el-button v-if="scope.row.status == 4" type="danger" icon="el-icon-close" size="mini" @click="handleVerify(scope.row)">
             拒绝
           </el-button>
-          <el-popconfirm
+          <!-- <el-popconfirm
             v-if="scope.row.status == 2"
             confirm-button-text='好的'
             cancel-button-text='不用了'
@@ -125,7 +130,7 @@
             <el-button  slot="reference"  type="success" icon="el-icon-circle-check" size="mini">
               确认收货
             </el-button>
-          </el-popconfirm>
+          </el-popconfirm> -->
 			  </template>
 			</el-table-column>
     </el-table>
@@ -134,7 +139,7 @@
 
 
 		<el-dialog title="拒绝退款" :visible.sync="dialogFormVisible">
-		    <el-form ref="dataForm" :model="verifyForm" label-width="80px" label-position="left" style="width: 100%; margin-left:50px;">
+		    <el-form ref="verifyForm" :model="verifyForm" label-width="80px" label-position="left" style="width: 100%; ">
 					<el-form-item label="拒绝原因" prop="reason" :rules="[{ required: true, message: '请输入拒绝原因', trigger: 'blur' }]">
 						<el-input :rows="4" type="textarea" v-model="verifyForm.reason" placeholder="请输入拒绝原因"></el-input>
 					</el-form-item>
@@ -457,15 +462,20 @@ export default {
         })
     },
     refuseRefund(row){
-      refuseRefund(this.verifyForm).then((response) => {
-        	this.getList()
-          this.$notify({
-            title: '成功',
-            message: '您已拒绝退款',
-            type: 'success',
-            duration: 2000
-          })
-        })
+      this.$refs['verifyForm'].validate((valid) => {
+        if (valid) {
+          refuseRefund(this.verifyForm).then((response) => {
+            	this.getList()
+              this.dialogFormVisible = false
+              this.$notify({
+                title: '成功',
+                message: '您已拒绝退款',
+                type: 'success',
+                duration: 2000
+              })
+            })
+        }
+      })
     },
     confirmReceiveByShop(row){
       confirmReceiveByShop({refundId: row.id}).then((response) => {

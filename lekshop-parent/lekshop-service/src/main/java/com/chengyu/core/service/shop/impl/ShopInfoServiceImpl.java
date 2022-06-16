@@ -3,13 +3,18 @@ package com.chengyu.core.service.shop.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.MemberRemindEnums;
 import com.chengyu.core.domain.enums.ShopEnums;
 import com.chengyu.core.domain.form.ShopSearchForm;
+import com.chengyu.core.domain.result.ChatNotice;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.UmsShopInfoMapper;
 import com.chengyu.core.mapper.UmsShopMapper;
 import com.chengyu.core.model.*;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.shop.ShopConfigService;
 import com.chengyu.core.service.shop.ShopInfoService;
@@ -41,6 +46,8 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 	private MemberService memberService;
 	@Autowired
 	private WalkMemberService walkMemberService;
+	@Autowired
+	private ChatService chatService;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -86,6 +93,12 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 		shopInfo.setUpdTime(DateUtil.date());
 		shopInfo.setStatus(ShopEnums.ShopStatus.SUBMIT_VERIFY.getValue());
 		shopInfoMapper.updateByPrimaryKeySelective(shopInfo);
+
+		ChatNotice notice = new ChatNotice();
+		notice.setTitle("「"+shopInfo.getName()+"」申请新开店铺, 请尽快审批");
+		notice.setContent(JSONUtil.toJsonStr(shopInfo));
+		notice.setType(MemberRemindEnums.AdminRemindTypes.WAIT_VERIFY_SHOP.getType());
+		chatService.sendNoticeMsg(CustomerConstant.ADMIN_MEMBER_ID, JSONUtil.toJsonStr(notice));
 	}
 
 	@Override

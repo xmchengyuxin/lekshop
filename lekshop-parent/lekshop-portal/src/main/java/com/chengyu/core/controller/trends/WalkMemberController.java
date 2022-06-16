@@ -6,6 +6,7 @@ import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
+import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.WalkMember;
 import com.chengyu.core.model.WalkMemberCollection;
 import com.chengyu.core.service.walk.WalkMemberCollectService;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Api(tags = "创作人主页")
 @Controller
@@ -91,8 +93,12 @@ public class WalkMemberController extends UserBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value={"/member/walkMember/collectOrNo"}, method=RequestMethod.POST)
-	public CommonResult<String> collectOrNoGoods(Integer walkMemberId) {
-		walkMemberCollectService.collectOrNoWalkMember(getCurrentWalkMember(), walkMemberId);
+	public CommonResult<String> collectOrNoGoods(Integer walkMemberId) throws ServiceException {
+		WalkMember walkMember = getCurrentWalkMember();
+		if(Objects.equals(walkMemberId, walkMember.getId())){
+			throw new ServiceException("trends.collect.notmyself");
+		}
+		walkMemberCollectService.collectOrNoWalkMember(walkMember, walkMemberId);
 		return CommonResult.success(null);
 	}
 

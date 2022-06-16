@@ -10,9 +10,11 @@ import com.chengyu.core.domain.result.WalkTrendsCommentResult;
 import com.chengyu.core.domain.result.WalkTrendsResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
+import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.WalkMember;
 import com.chengyu.core.model.WalkTrendsComment;
 import com.chengyu.core.service.walk.WalkTrendsService;
+import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -106,7 +108,10 @@ public class TrendsController extends UserBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value={"/member/trends/comment"}, method=RequestMethod.POST)
-	public CommonResult<WalkTrendsComment> comment(Integer trendsId, Integer commentId, String content) {
+	public CommonResult<WalkTrendsComment> comment(Integer trendsId, Integer commentId, String content) throws ServiceException {
+		if(StringUtils.isBlank(content)){
+			throw new ServiceException("trends.comment.empty");
+		}
 		WalkTrendsComment comment = walkTrendsService.addComment(getCurrentWalkMember(), trendsId, commentId, content);
 		return CommonResult.success(comment);
 	}

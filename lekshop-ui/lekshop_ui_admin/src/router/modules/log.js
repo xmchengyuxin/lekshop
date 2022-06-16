@@ -8,7 +8,7 @@ const logRouter = {
   redirect: 'noredirect',
   name: 'log',
   meta: {
-    title: '系统监控',
+    title: '监控',
     icon: 'message'
   },
   children: [
@@ -16,19 +16,19 @@ const logRouter = {
 		  path: 'loginLog',
 		  component: () => import('@/views/log/login/index'),
 		  name: 'loginLogTable',
-		  meta: { title: '后台登录日志', icon: 'list', role: ['admin'] }
+		  meta: { title: '后台登录日志',  role: ['admin'] }
 		},
 		{
 		  path: 'operationLog',
 		  component: () => import('@/views/log/operation/index'),
 		  name: 'operationLogTable',
-		  meta: { title: '后台操作日志', icon: 'list',  role: ['admin'] }
+		  meta: { title: '后台操作日志',   role: ['admin'] }
 		},
     {
       path: 'messageCode',
       component: () => import('@/views/log/messageCode/index'),
       name: 'messageCodeTable',
-      meta: { title: '验证码记录', icon: 'list',  role: ['admin'] }
+      meta: { title: '验证码记录',   role: ['admin'] }
     },
 
   ]

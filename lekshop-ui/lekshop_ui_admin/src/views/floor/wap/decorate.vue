@@ -289,7 +289,7 @@
                 -
                 <!-- 当选择完链接之后的商品名称 -->
                 <span v-if="item.url.___type == 'goods'">
-                  {{ item.url.goodsName }}</span
+                  {{ item.url.title }}</span
                 >
                 <!-- 当选择完链接之后的分类回调 -->
                 <span v-if="item.url.___type == 'category'">
@@ -297,7 +297,7 @@
                 >
                 <!-- 当选择完链接之后的店铺回调 -->
                 <span v-if="item.url.___type == 'shops'">
-                  {{ item.url.memberName }}</span
+                  {{ item.url.name }}</span
                 >
                 <!-- 当选择完链接之后的其他回调 -->
                 <span v-if="item.url.___type == 'other'">

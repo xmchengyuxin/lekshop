@@ -3,17 +3,21 @@ package com.chengyu.core.service.member.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.AccountEnums;
 import com.chengyu.core.domain.enums.MemberRemindEnums.AdminRemindTypes;
 import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.domain.form.BaseSearchForm;
+import com.chengyu.core.domain.result.ChatNotice;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.UmsMemberBankMapper;
 import com.chengyu.core.mapper.UmsMemberRealnameMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigRealnameService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberBankService;
 import com.chengyu.core.service.member.MemberRealnameService;
 import com.chengyu.core.service.member.MemberRemindService;
@@ -56,7 +60,7 @@ public class MemberBankServiceImpl implements MemberBankService {
 	@Autowired
 	private ThirdConfigService thirdConfigService;
 	@Autowired
-	private MemberRemindService memberRemindService;
+	private ChatService chatService;
 
 	@Override
 	public List<UmsMemberBank> getMemberBankList(BaseSearchForm form, Integer page, Integer pageSize) {
@@ -275,7 +279,12 @@ public class MemberBankServiceImpl implements MemberBankService {
 			}
 			memberService.updateMember(updateMember);
 		}else if(mbank.getStatus() == CommonConstant.WAIT_INT){
-			memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_BANK, "「"+member.getCode()+"」申请了银行认证, 请尽快审批");
+			ChatNotice notice = new ChatNotice();
+			notice.setTitle("「"+member.getCode()+"」申请了银行认证, 请尽快审批");
+			notice.setContent(JSONUtil.toJsonStr(mbank));
+			notice.setType(AdminRemindTypes.WAIT_VERIFY_BANK.getType());
+			chatService.sendNoticeMsg(CustomerConstant.ADMIN_MEMBER_ID, JSONUtil.toJsonStr(notice));
+//			memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_BANK, "「"+member.getCode()+"」申请了银行认证, 请尽快审批");
 		}
 		return mbank;
 	}

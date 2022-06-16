@@ -5,6 +5,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.json.JSONUtil;
 import com.alipay.api.AlipayApiException;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.AccountEnums;
@@ -13,6 +14,8 @@ import com.chengyu.core.domain.enums.MemberRemindEnums.AdminRemindTypes;
 import com.chengyu.core.domain.enums.MemberRemindEnums.MemberRemindTypes;
 import com.chengyu.core.domain.form.BankForm;
 import com.chengyu.core.domain.form.WithdrawSearchForm;
+import com.chengyu.core.domain.result.ChatNotice;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.domain.result.WithdrawCountResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.CustomMemberWithdrawMapper;
@@ -21,6 +24,7 @@ import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigWithdrawService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.funds.MemberSpmissionLogService;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.*;
 import com.chengyu.core.service.pay.alipay.AliPay;
 import com.chengyu.core.service.system.ConfigService;
@@ -69,6 +73,8 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 	private ConfigService configService;
 	@Autowired
 	private MemberRemindService memberRemindService;
+	@Autowired
+	private ChatService chatService;
 
 	@Override
 	public List<UmsMemberWithdraw> getWithdrawLog(WithdrawSearchForm form, Integer page, Integer pageSize) {
@@ -241,7 +247,12 @@ public class MemberWithdrawServiceImpl implements MemberWithdrawService {
 		withdraw.setAddTime(DateUtil.date());
 		withdrawMapper.insertSelective(withdraw);
 
-		memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_WITHDRAW, "「"+member.getCode()+"」进行了提现, 请尽快审批");
+//		memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_WITHDRAW, "「"+member.getCode()+"」进行了提现, 请尽快审批");
+		ChatNotice notice = new ChatNotice();
+		notice.setTitle("「"+member.getCode()+"」进行了提现, 请尽快审批");
+		notice.setContent(JSONUtil.toJsonStr(withdraw));
+		notice.setType(AdminRemindTypes.WAIT_VERIFY_WITHDRAW.getType());
+		chatService.sendNoticeMsg(CustomerConstant.ADMIN_MEMBER_ID, JSONUtil.toJsonStr(notice));
 		return withdraw.getId();
 	}
 

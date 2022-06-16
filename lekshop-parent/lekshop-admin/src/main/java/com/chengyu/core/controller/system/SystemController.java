@@ -3,7 +3,7 @@ package com.chengyu.core.controller.system;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.UmsAdminLoginParam;
-import com.chengyu.core.domain.result.CustomerConstatnt;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.SysAdmin;
@@ -102,9 +102,9 @@ public class SystemController extends AdminBaseController {
 			data.put("admin", admin);
 			data.put("menus", menuService.getMenuListByTypeId(admin.getTypeId()));
 			data.put("roles", new String[]{String.valueOf(admin.getTypeId()), "1".equals(admin.getIsAdmin()) ? "admin" : "editor"});
-            data.put("memberId", CustomerConstatnt.ADMIN_MEMBER_ID);
-            data.put("memberNickname", CustomerConstatnt.ADMIN_NICKNAME);
-            data.put("memberAvatar", CustomerConstatnt.ADMIN_AVATAR);
+            data.put("memberId", CustomerConstant.ADMIN_MEMBER_ID);
+            data.put("memberNickname", CustomerConstant.ADMIN_NICKNAME);
+            data.put("memberAvatar", CustomerConstant.ADMIN_AVATAR);
 			
 			super.setSessionAdmin(admin);
 		}

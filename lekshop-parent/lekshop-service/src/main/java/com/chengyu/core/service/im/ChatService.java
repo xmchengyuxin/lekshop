@@ -56,6 +56,15 @@ public interface ChatService {
     ImChatLog sendMsg(UmsMember member, Integer targetMemberId, String msgType, String content);
 
     /**
+     * 发送系统通知
+     * @author LeGreen
+     * @date   2022/6/15
+     * @param  targetMemberId
+     * @param  content
+     */
+    void sendNoticeMsg(Integer targetMemberId, String content);
+
+    /**
      * 获取聊天记录
      * @author LeGreen
      * @date   2022/5/25

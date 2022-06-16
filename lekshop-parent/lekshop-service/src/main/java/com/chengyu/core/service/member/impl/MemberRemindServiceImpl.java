@@ -2,10 +2,10 @@ package com.chengyu.core.service.member.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.MemberRemindEnums.AdminRemindTypes;
 import com.chengyu.core.domain.enums.MemberRemindEnums.MemberRemindTypes;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.mapper.UmsMemberRemindMapper;
 import com.chengyu.core.model.SysAdmin;
 import com.chengyu.core.model.UmsMember;
@@ -21,9 +21,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @title  消息提醒
@@ -58,14 +56,13 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 		remind.setAddTime(DateUtil.date());
 		remind.setUpdTime(remind.getAddTime());
 		memberRemindMapper.insertSelective(remind);
-
-		Map<String,String> extras = new HashMap<>(16);
+		/*Map<String,String> extras = new HashMap<>(16);
 		extras.put("reqId", remind.getId().toString());
 		extras.put("rid", "member-"+member.getId().toString());
 		extras.put("type", type.getType().toString());
 		extras.put("content", content);
 		extras.put("addTime", DateUtil.current()+"");
-		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
+		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));*/
 	}
 
 	@Override
@@ -94,15 +91,24 @@ public class MemberRemindServiceImpl implements MemberRemindService {
 				remind.setUpdTime(remind.getAddTime());
 				memberRemindMapper.insertSelective(remind);
 
-				Map<String,String> extras = new HashMap<>(16);
+				/*Map<String,String> extras = new HashMap<>(16);
 				extras.put("reqId", remind.getId().toString());
 				extras.put("rid", "admin-"+admin.getId());
 				extras.put("type", type.getType().toString());
 				extras.put("content", content);
 				extras.put("addTime", DateUtil.current()+"");
-				nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
+				nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));*/
 			}
 		}
+	}
+
+	private UmsMember getNoticeMember(){
+		UmsMember member = new UmsMember();
+		member.setId(CustomerConstant.NOTICE_MEMBER_ID);
+		member.setNickname(CustomerConstant.NOTICE_NICKNAME);
+		member.setHeadImg(CustomerConstant.NOTICE_AVATAR);
+		member.setUid(CustomerConstant.NOTICE_UID);
+		return member;
 	}
 
 	@Override

@@ -131,7 +131,15 @@ public class OrderCommentServiceImpl implements OrderCommentService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void addComment(UmsMember member, OrderCommentForm form) throws ServiceException {
-		OmsOrderComment comment = orderCommentMapper.selectByPrimaryKey(form.getId());
+		OmsOrderComment comment;
+		if(form.getId() != null){
+			comment = orderCommentMapper.selectByPrimaryKey(form.getId());
+		}else{
+			OmsOrderCommentExample example = new OmsOrderCommentExample();
+			example.createCriteria().andDetailIdEqualTo(form.getDetailId());
+			List<OmsOrderComment> commentList = orderCommentMapper.selectByExample(example);
+			comment = CollectionUtil.isEmpty(commentList) ? null : commentList.get(0);
+		}
 		if(comment == null || comment.getStatus() != OrderEnums.CommentStatus.WAIT_COMMENT.getValue()){
 			throw new ServiceException("order.comment.add");
 		}

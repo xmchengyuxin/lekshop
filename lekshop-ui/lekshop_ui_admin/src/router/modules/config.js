@@ -8,7 +8,7 @@ const configRouter = {
   redirect: 'noredirect',
   name: 'config',
   meta: {
-    title: '参数管理',
+    title: '参数',
     icon: 'order-setting'
   },
   children: [
@@ -16,13 +16,13 @@ const configRouter = {
       path: 'member',
       component: () => import('@/views/config/memberGroup/index'),
       name: 'configMember',
-      meta: { title: '会员组参数', icon: 'list', role: ['admin'] }
+      meta: { title: '会员组参数',  role: ['admin'] }
     },
     {
       path: 'mission',
       component: () => import('@/views/config/mission/index'),
       name: 'configMission',
-      meta: { title: '佣金奖励设置', icon: 'list', role: ['admin'] }
+      meta: { title: '佣金奖励设置',  role: ['admin'] }
     },
     {
     	path: 'mission/edit/:id(\\d+)',
@@ -35,25 +35,25 @@ const configRouter = {
       path: 'gzh',
       component: () => import('@/views/config/gzh/index'),
       name: 'configGzh',
-      meta: { title: '微信短信通知', icon: 'list', role: ['admin'] }
+      meta: { title: '微信短信通知',  role: ['admin'] }
     },
     {
       path: 'account',
       component: () => import('@/views/config/account/index'),
       name: 'configAccount',
-      meta: { title: '系统收款账户', icon: 'list', role: ['admin'] }
+      meta: { title: '系统收款账户',  role: ['admin'] }
     },
     {
       path: 'order',
       component: () => import('@/views/config/order/index'),
       name: 'configOrder',
-      meta: { title: '订单配置', icon: 'list', role: ['admin'] }
+      meta: { title: '订单配置',  role: ['admin'] }
     },
     {
       path: 'search',
       component: () => import('@/views/config/search/index'),
       name: 'configSearch',
-      meta: { title: '搜索管理', icon: 'list', role: ['admin'] }
+      meta: { title: '搜索管理',  role: ['admin'] }
     },
   ]
 }

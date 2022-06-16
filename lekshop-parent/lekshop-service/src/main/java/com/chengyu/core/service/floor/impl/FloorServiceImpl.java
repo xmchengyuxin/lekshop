@@ -137,6 +137,9 @@ public class FloorServiceImpl implements FloorService {
 		}
 
 		if(template.getStatus() == CommonConstant.YES_INT){
+			if(template.getType() == null){
+				template = floorMobileTemplateMapper.selectByPrimaryKey(template.getId());
+			}
 			this.updateDefault(template.getId(), template.getType());
 		}
 	}

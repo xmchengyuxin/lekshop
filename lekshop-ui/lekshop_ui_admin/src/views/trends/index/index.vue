@@ -109,7 +109,7 @@
       		 <el-tag :type="scope.row.walkTrends.status == 1 ? 'success' : 'danger' ">{{ scope.row.walkTrends.status | statusFilter}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="150px">
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="185px">
         <template slot-scope="scope">
           <el-button-group>
            <el-tooltip class="item" effect="dark" content="审核" placement="top">

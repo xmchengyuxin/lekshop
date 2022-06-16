@@ -12,7 +12,7 @@
 			</div>
 			<div class="wrap-notice-scroll" style="height: 480px;overflow-y: scroll;color: #000000;">
         <div style="font-size: 15px; font-weight: 600;border-bottom: 1px solid #ece5e5;">今天</div>
-        <div  v-if="todayList.length > 0" @click="clickItem(item,index)" v-for="(item,index) in todayList" :key="index" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
+        <div  v-if="todayList.length > 0" @click="clickItem(item,index)" v-for="(item,index) in todayList" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
           <div class="flex f-a-s f-s-0">
             <img style="width: 24px;" class="margin-r8" src="./notice_chat_icon.png" alt="">
           </div>
@@ -29,7 +29,7 @@
         <div v-if="todayList.length <= 0" class="t-color-9 flex f-j-c padding-15 margin-t30">暂无消息</div>
 
         <div style="font-size: 15px; font-weight: 600;border-bottom: 1px solid #ece5e5;">更早之前</div>
-        <div  v-if="earlierList.length > 0" @click="clickItem(item,index)" v-for="(item,index) in earlierList" :key="index" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
+        <div  v-if="earlierList.length > 0" @click="clickItem(item,index)" v-for="(item,index) in earlierList" class="flex padding-tb15 b-bottom cursor" style="line-height: 20px; color: #000000;">
           <div class="flex f-a-s f-s-0">
             <img style="width: 24px;" class="margin-r8" src="./notice_chat_icon.png" alt="">
           </div>
@@ -220,7 +220,7 @@
 				this.getCount();
 				this.getList();
          self.socket.onMessage = function(res) {
-           // console.log(res,'onmessage');
+           console.log(res,'onmessage');
            let info = JSON.parse(res);
             if(info.cmd == 5) {
               let data = JSON.parse(info.data);

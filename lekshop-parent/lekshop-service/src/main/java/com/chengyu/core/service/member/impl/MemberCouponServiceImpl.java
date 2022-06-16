@@ -157,7 +157,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 				couponMap.put("discountAmount", discountAmount);
 				canUseList.add(couponMap);
 			}catch (ServiceException e){
-				couponMap.put("reason", messageSourceUtil.getMessage(e.getMessage()));
+				couponMap.put("reason", messageSourceUtil.getMessage(e.getMessage(), e.getParams()));
 				cannotUseList.add(couponMap);
 			}
 		}

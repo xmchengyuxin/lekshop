@@ -3,17 +3,26 @@
     <div class="wap-content">
       <div class="query-wrapper">
         <div class="query-item">
-          <el-input placeholder="请输入店铺名称" @on-clear="shopsData=[]; params.name=''; params.page =1; init()" @on-enter="()=>{shopsData=[]; params.name =1; init();}" icon="ios-search" clearable style="width: 150px"
+          <el-input placeholder="请输入店铺名称" @on-clear="shopsData=[]; params.name=''; params.page =1; init()" @on-enter="()=>{shopsData=[]; params.name =''; init();}" icon="ios-search" clearable style="width: 150px"
             v-model="params.name" />
         </div>
 
         <div class="query-item">
           <el-button type="primary" size="mini" @click="shopsData=[];params.page =1; init();" >搜索</el-button>
+          <el-pagination
+            small
+            layout="prev, pager, next"
+            :total="total"
+            :current-page.sync="params.page"
+            :page-size.sync="params.pageSize"
+            @current-change="init"
+            >
+          </el-pagination>
         </div>
       </div>
       <div>
-        <div class="wap-content-list flex" v-infinite-scroll="handleReachBottom" :distance-to-edge="23">
-          <div class="wap-content-item" @click="clickShop(item,index)" :class="{ active:selected == index }" v-for="(item, index) in shopsData" :key="index">
+        <div class="wap-content-list flex f-w">
+          <div class="wap-content-item f-s-0" @click="clickShop(item,index)" :class="{ active:selected == index }" v-for="(item, index) in shopsData" :key="index">
             <div>
               <img class="shop-logo" :src="item.logo" alt="" />
             </div>
@@ -36,7 +45,7 @@ export default {
   data() {
     return {
       loading: false, // 加载状态
-      total: "", // 总数
+      total: 0, // 总数
       params: { // 请求参数
         page: 1,
         pageSize: 10,
@@ -68,8 +77,10 @@ export default {
            * 解决数据请求中，滚动栏会一直上下跳动
            */
           this.total = res.data.total;
-
-          this.shopsData.push(...res.data.list);
+          
+          this.shopsData = res.data.list;
+          
+          // this.shopsData.push(...res.data.list);
 
           this.loading = false;
         }

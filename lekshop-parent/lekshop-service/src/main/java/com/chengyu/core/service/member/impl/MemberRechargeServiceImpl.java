@@ -2,11 +2,14 @@ package com.chengyu.core.service.member.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.AccountEnums;
 import com.chengyu.core.domain.enums.MemberNewsEnums;
 import com.chengyu.core.domain.enums.MemberRemindEnums.AdminRemindTypes;
 import com.chengyu.core.domain.form.RechargeSearchForm;
+import com.chengyu.core.domain.result.ChatNotice;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.CustomMemberRechargeMapper;
 import com.chengyu.core.mapper.UmsMemberRechargeMapper;
@@ -18,6 +21,7 @@ import com.chengyu.core.service.config.ConfigAccountService;
 import com.chengyu.core.service.config.ConfigWithdrawService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
 import com.chengyu.core.service.funds.MemberMissionLogService;
+import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberRechargeService;
 import com.chengyu.core.service.member.MemberRemindService;
@@ -58,7 +62,7 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 	@Autowired
 	private ConfigAccountService configAccountService;
 	@Autowired
-	private MemberRemindService memberRemindService;
+	private ChatService chatService;
 
 	@Override
 	public List<UmsMemberRecharge> getRechargeLog(RechargeSearchForm form, Integer page, Integer pageSize) {
@@ -112,7 +116,12 @@ public class MemberRechargeServiceImpl implements MemberRechargeService {
 		recharge.setStatus(CommonConstant.WAIT);
 		rechargeMapper.insertSelective(recharge);
 
-		memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_RECHARGE, "「"+member.getCode()+"」进行了充值, 请尽快审批");
+		ChatNotice notice = new ChatNotice();
+		notice.setTitle("「"+member.getCode()+"」进行了充值, 请尽快审批");
+		notice.setContent(JSONUtil.toJsonStr(recharge));
+		notice.setType(AdminRemindTypes.WAIT_VERIFY_RECHARGE.getType());
+		chatService.sendNoticeMsg(CustomerConstant.ADMIN_MEMBER_ID, JSONUtil.toJsonStr(notice));
+//		memberRemindService.addAdminRemind(AdminRemindTypes.WAIT_VERIFY_RECHARGE, "「"+member.getCode()+"」进行了充值, 请尽快审批");
 		return recharge.getOrderNo();
 	}
 

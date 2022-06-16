@@ -4,11 +4,10 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.chengyu.core.domain.CommonConstant;
-import com.chengyu.core.domain.enums.BlockTypeEnums;
 import com.chengyu.core.domain.enums.ConfigEnums;
 import com.chengyu.core.domain.enums.MemberTypes;
 import com.chengyu.core.domain.form.MemberSearchForm;
-import com.chengyu.core.domain.result.CustomerConstatnt;
+import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.domain.result.MemberDetails;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.UmsMemberLoginLogMapper;
@@ -151,10 +150,10 @@ public class MemberServiceImpl implements MemberService {
 
 		//初始化智能小兵
 		UmsMember targetMember = new UmsMember();
-		targetMember.setId(CustomerConstatnt.MEMBER_ID);
-		targetMember.setNickname(CustomerConstatnt.NICKNAME);
-		targetMember.setHeadImg(CustomerConstatnt.AVATAR);
-		targetMember.setUid(CustomerConstatnt.UID);
+		targetMember.setId(CustomerConstant.MEMBER_ID);
+		targetMember.setNickname(CustomerConstant.NICKNAME);
+		targetMember.setHeadImg(CustomerConstant.AVATAR);
+		targetMember.setUid(CustomerConstant.UID);
 		chatService.initChatSession(member, targetMember);
 	}
 

@@ -40,11 +40,11 @@ export default {
     },
     layout: {
       type: String,
-      default: 'total, sizes, prev, pager, next, jumper'
+      default: 'total, prev, pager, next, sizes, jumper'
     },
     background: {
       type: Boolean,
-      default: true
+      default: false
     },
     autoScroll: {
       type: Boolean,
@@ -93,7 +93,8 @@ export default {
 <style scoped>
 .pagination-container {
   background: #fff;
-  padding: 32px 16px;
+  padding: 10px 10px;
+  margin-top: 0px;
 }
 .pagination-container.hidden {
   display: none;

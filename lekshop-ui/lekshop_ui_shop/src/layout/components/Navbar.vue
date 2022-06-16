@@ -24,7 +24,7 @@
           <size-select class="right-menu-item hover-effect" />
         </el-tooltip>
 
-        <notice class="right-menu-item"/>
+        <!-- <notice class="right-menu-item"/> -->
         <!-- <i class="el-icon-message-solid hover-effect right-menu-item " id="message-icon" style="line-height: 50px;" @click="goControl"></i>
 
         <i class="el-icon-question hover-effect right-menu-item " id="exception-icon" style="line-height: 50px;" @click="goException"></i> -->
@@ -67,7 +67,7 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
-import Notice from './Notice'
+/* import Notice from './Notice' */
 
 export default {
   components: {
@@ -78,7 +78,6 @@ export default {
     SizeSelect,
     LangSelect,
     Search,
-    Notice
   },
   computed: {
     ...mapGetters([

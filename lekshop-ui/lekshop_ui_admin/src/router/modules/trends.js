@@ -8,7 +8,7 @@ const trendsRouter = {
   name: 'trends',
 	alwaysShow: true,
   meta: {
-    title: '逛逛社区',
+    title: '逛逛',
     icon: 'theme'
   },
   children: [
@@ -16,7 +16,7 @@ const trendsRouter = {
       path: 'list',
       component: () => import('@/views/trends/index/index'),
       name: 'trendsList',
-      meta: { title: '种草短视频', noCache: true, icon:'list', role: ['admin'] }
+      meta: { title: '种草短视频', noCache: true,  role: ['admin'] }
     },
   ]
 }

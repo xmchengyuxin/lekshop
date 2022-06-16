@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 @Setter
 public class OrderCommentForm {
 
+	@ApiModelProperty(value = "详情ID")
+	private Integer detailId;
+
 	@ApiModelProperty(value = "待评价ID")
 	private Integer id;
 
