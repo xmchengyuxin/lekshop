@@ -114,21 +114,21 @@ public class ShopCouponServiceImpl implements ShopCouponService {
 	public void drawCoupon(UmsMember member, Integer shopCouponId) throws ServiceException {
 		UmsShopCoupon coupon = shopCouponMapper.selectByPrimaryKey(shopCouponId);
 		if(coupon == null || coupon.getStatus() != ShopEnums.CouponStatus.SENDING.getValue()){
-			throw new ServiceException("优惠券已被抢光了");
+			throw new ServiceException("member.coupon.empty");
 		}
 		if(coupon.getDrawNum() >= coupon.getTotalNum()){
-			throw new ServiceException("优惠券已被抢光了");
+			throw new ServiceException("member.coupon.empty");
 		}
 		Date now = DateUtil.date();
 		if(coupon.getBeginDate().after(now)){
-			throw new ServiceException("优惠券即将抢购");
+			throw new ServiceException("member.coupon.nostart");
 		}
 		if(coupon.getEndDate().before(now)){
-			throw new ServiceException("优惠券已过期");
+			throw new ServiceException("member.coupon.expired");
 		}
 		if(coupon.getValidityType() == ShopEnums.CouponValidityType.FIXED_TIME.getValue()){
 			if(coupon.getFixedEndDate().before(now)){
-				throw new ServiceException("优惠券已过期");
+				throw new ServiceException("member.coupon.expired");
 			}
 		}
 		//查询该优惠券是否可重复领
@@ -136,7 +136,7 @@ public class ShopCouponServiceImpl implements ShopCouponService {
 		example.createCriteria().andMemberIdEqualTo(member.getId()).andCouponConfigIdEqualTo(shopCouponId);
 		long count = memberCouponMapper.countByExample(example);
 		if(count >= coupon.getLimitNum()){
-			throw new ServiceException("您已领取过");
+			throw new ServiceException("member.coupon.drawed");
 		}
 
 		UmsMemberCoupon memberCoupon = new UmsMemberCoupon();

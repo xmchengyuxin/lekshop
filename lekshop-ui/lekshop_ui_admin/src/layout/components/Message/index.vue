@@ -8,7 +8,8 @@
       <span v-if="totalUnReadNum > 0" class="chat-num flex f-a-c f-j-c padding-lr2 f10-size t-color-w bg-color-r b-radius-30">{{totalUnReadNum}}</span>
     </div>
 
-    <el-dialog v-el-drag-dialog title="" :visible.sync="imDialog" :modal="false" :close-on-click-modal="false" width="850px" height="640px">
+    <el-dialog v-el-drag-dialog title="" :visible.sync="imDialog" :modal="false"
+      :close-on-click-modal="false" width="850px" height="640px" :close-on-press-escape="true" :modal-append-to-body="false"	>
       <lemon-imui
       ref='IMUI'
       :user="user"
@@ -394,6 +395,7 @@
   ::v-deep .el-dialog {
     background:#1d232a;
     box-shadow: unset;
+    pointer-events:auto;
   }
   ::v-deep .el-dialog__body {
     color:#000;
@@ -402,6 +404,10 @@
   ::v-deep .lemon-wrapper *{
     box-sizing: content-box;
   }
+  ::v-deep .el-dialog__wrapper{
+    pointer-events:none;
+  }
+
   .chat-num {
     position: absolute;
     right: 24px;

@@ -386,6 +386,7 @@
   ::v-deep .el-dialog {
     background:#1d232a;
     box-shadow: unset;
+    pointer-events:auto;
   }
   ::v-deep .el-dialog__body {
     color:#000;
@@ -393,6 +394,10 @@
   }
   ::v-deep .lemon-wrapper *{
     box-sizing: content-box;
+  }
+  
+  ::v-deep .el-dialog__wrapper{
+    pointer-events:none;
   }
   .chat-num {
     position: absolute;
