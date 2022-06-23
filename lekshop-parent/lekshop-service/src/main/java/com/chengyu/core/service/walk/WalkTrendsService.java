@@ -195,4 +195,12 @@ public interface WalkTrendsService {
 	 * @return WalkTrendsResult
 	 */
 	WalkTrendsResult getTrendsDetail(Integer trendsId);
+
+	/**
+	 * 删除关注
+	 * @author LeGreen
+	 * @date   2022/6/18
+	 * @param  collectionId
+	 */
+    void deleteCollectionTrends(WalkMember member, Integer trendsId);
 }

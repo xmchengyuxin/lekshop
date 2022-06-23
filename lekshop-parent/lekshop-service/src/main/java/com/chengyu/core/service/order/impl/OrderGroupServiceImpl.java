@@ -55,7 +55,7 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		PageHelper.startPage(page, pageSize);
 		
 		OmsOrderGroupExample example = new OmsOrderGroupExample();
-		example.setOrderByClause("end_time asc");
+		example.setOrderByClause("add_time desc");
 		OmsOrderGroupExample.Criteria criteria = example.createCriteria();
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());

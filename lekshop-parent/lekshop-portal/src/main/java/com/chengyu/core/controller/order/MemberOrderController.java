@@ -62,7 +62,7 @@ public class MemberOrderController extends UserBaseController {
 		//待付款，待评价，待收货
 		OrderSearchForm form = new OrderSearchForm();
 		form.setMemberId(getCurrentMemberId());
-		form.setStatusList(CollectionUtil.newArrayList(OrderEnums.OrderStatus.WAIT_PAY.getValue(), OrderEnums.OrderStatus.WAIT_RECEIVE.getValue()));
+		form.setStatusList(CollectionUtil.newArrayList(OrderEnums.OrderStatus.WAIT_PAY.getValue()));
 		List<OmsOrderDetail> detailList = orderService.getOrderDetailList(form, 1, 5);
 		if(CollectionUtil.isNotEmpty(detailList)){
 			list.addAll(detailList);

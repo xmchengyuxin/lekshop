@@ -112,6 +112,15 @@ public class MyTrendsController extends UserBaseController {
 		return CommonResult.success(CommonPage.restPage(trendsList));
 	}
 
+	@OperationLog
+	@ApiOperation(value = "删除关注的动态")
+	@ResponseBody
+	@RequestMapping(value="/trends/deleteMyCollection", method=RequestMethod.POST)
+	public CommonResult<String> deleteMyCollection(Integer id) {
+		walkTrendsService.deleteCollectionTrends(getCurrentWalkMember(), id);
+		return CommonResult.success(null);
+	}
+
 	@ApiOperation(value = "动态详情")
 	@ResponseBody
 	@RequestMapping(value="/trends/getDetail", method=RequestMethod.GET)

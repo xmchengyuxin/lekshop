@@ -413,4 +413,12 @@ public class WalkTrendsServiceImpl implements WalkTrendsService {
 		result.setTrendsGoodsList(walkTrendsGoodsMapper.selectByExample(goodsExample));
 		return result;
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void deleteCollectionTrends(WalkMember member, Integer trendsId) {
+		WalkTrendsCollectionExample example = new WalkTrendsCollectionExample();
+		example.createCriteria().andViewMemberIdEqualTo(member.getId()).andTrendsIdEqualTo(trendsId);
+		trendsCollectionMapper.deleteByExample(example);
+	}
 }

@@ -40,4 +40,5 @@ public class ConfigForm{
 	private String shop_need_verify;
 	private String local_img_save_path;
 	private String local_img_url;
+	private String guangguang_status;
 }

@@ -77,6 +77,16 @@
               v-model="config.caner_status">
             </el-switch>
         </el-descriptions-item>
+        
+        <el-descriptions-item>
+          <template slot="label">
+           逛逛是否开启
+          </template>
+            <el-switch
+              active-value="1" inactive-value="0"
+              v-model="config.guangguang_status">
+            </el-switch>
+        </el-descriptions-item>
 
         <el-descriptions-item>
           <template slot="label">

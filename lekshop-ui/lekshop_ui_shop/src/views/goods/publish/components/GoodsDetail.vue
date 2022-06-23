@@ -28,7 +28,11 @@
         <el-form-item label="温馨提醒" prop="thirdGoodsUrl">
           <p class="tips" style="color: #468847;">*目前仅支持识别淘宝，京东，拼多多商品详情，其他电商平台后续会升级更新</p>
         </el-form-item>
-      </el-card>
+        <el-form-item label="测试链接" prop="thirdGoodsUrl">
+          <p class="tips" style="color: #468847;">https://mobile.yangkeduo.com/goods.html?goods_id=373696623577
+      </p>
+        </el-form-item>
+        </el-card>
       <br>
       <el-card id="jichu" class="box-card" shadow="hover">
         <div slot="header" class="clearfix">
