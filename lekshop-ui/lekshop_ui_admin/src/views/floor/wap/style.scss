@@ -55,7 +55,9 @@
   .draggable {
     height: 590px;
     overflow-y: auto;
-    background: #ebebeb;
+    overflow-x: hidden;
+    background: #f7f7f7;
+    padding: 12px;
   }
   > .draggable {
     padding-bottom: 100px;

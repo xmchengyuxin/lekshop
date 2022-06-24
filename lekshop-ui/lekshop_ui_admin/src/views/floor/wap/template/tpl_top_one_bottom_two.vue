@@ -1,16 +1,10 @@
 
 <template>
-  <div class="layout">
-    <div class="view-width-100">
-      <img class="image-mode" :src="res.list[0].img" />
-    </div>
-    <div class="view-width-100">
-      <div class="">
-        <img class="image-mode" :src="res.list[1].img" alt />
-      </div>
-      <div class="">
-        <img class="image-mode" :src="res.list[2].img" alt />
-      </div>
+  <div class="layout over-h bg-color-w">
+   <img class="image-mode" :src="res.list[0].img" />
+    <div class="grid grid-c-2 grid-g10">
+      <img class="image-mode" :src="res.list[1].img" alt />
+      <img class="image-mode" :src="res.list[2].img" alt />
     </div>
   </div>
 </template>
@@ -23,14 +17,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./tpl.scss";
-.layout {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  // height: 170px;
-  flex-direction: column;
-}
 img {
   width: 100% !important;
   // height: 85px !important;

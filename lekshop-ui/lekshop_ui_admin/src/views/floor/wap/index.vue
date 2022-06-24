@@ -38,6 +38,7 @@
           >
             <div
               class="list"
+              :class="'list'+element.type"
               v-for="(element, index) in contentData.list"
               :key="element.key"
             >
@@ -231,4 +232,10 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./style.scss";
+.listsearch {
+  top: -12px;
+  right: -12px;
+  left: -12px;
+  width: 328px;
+}
 </style>

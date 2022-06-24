@@ -1,6 +1,6 @@
 
 <template>
-  <div class="layout">
+  <div class="layout bg-color-w padding-10 grid grid-c-3 grid-g10">
       <img class="image-mode" :src="res.list[0].img" alt="">
       <img class="image-mode" :src="res.list[1].img" alt="">
       <img class="image-mode" :src="res.list[2].img" alt="">
@@ -15,16 +15,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./tpl.scss";
-.layout {
-   background: #e8e8e8;
-  // height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-}
 img{
-   width: 111px !important;
-   margin-left: 5px;
+   width: 100% !important;
 }
 </style>

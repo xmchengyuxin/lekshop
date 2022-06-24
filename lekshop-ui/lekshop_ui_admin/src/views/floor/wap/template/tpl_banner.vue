@@ -27,6 +27,6 @@ export default {
 @import "./tpl.scss";
 .carousel,
 .image-mode {
-  height: 150px;
+  height: 165px;
 }
 </style>

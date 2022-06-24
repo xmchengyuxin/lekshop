@@ -1,33 +1,9 @@
 
 <template>
-  <div class="layout">
-    <div class="view-list">
-      <div class="view-item">
-        <div class="-item-tilte">{{res.list[0].title}}</div>
-        <div class="-item-image">
-          <img :src="res.list[0].img" alt />
-        </div>
-      </div>
-      <div class="view-item">
-        <div class="-item-tilte">{{res.list[1].title}}</div>
-        <div class="-item-image">
-          <img :src="res.list[1].img" alt />
-        </div>
-      </div>
-    </div>
-    <div class="view-list">
-      <div class="view-item">
-        <div class="-item-tilte">{{res.list[2].title}}</div>
-        <div class="-item-image">
-          <img :src="res.list[2].img" alt />
-        </div>
-      </div>
-      <div class="view-item">
-        <div class="-item-tilte">{{res.list[3].title}}</div>
-        <div class="-item-image">
-          <img :src="res.list[3].img" alt />
-        </div>
-      </div>
+  <div class="layout grid grid-c-4 grid-g10 b-radius-10 bg-color-w wrap-tuijian padding-10">
+    <div v-for="(item,index) in res.list" class="flex f-c f-a-c">
+    	<span class="t-color-y f15-size f-w-500">{{item.title}}</span>
+      <img style="width: 100%;" class="margin-t10 b-radius-5 w100" :src="item.img" alt />
     </div>
   </div>
 </template>
@@ -40,52 +16,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./tpl.scss";
-.layout {
-  display: flex;
-  background: #e8e8e8;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  padding: 0;
-}
-.-item-image{
-
-     padding: 10px ;
-     >img{
-
-         width: 100%;
-     }
-}
-.-item-tilte {
-  // background: #ff9f28;
-  height: 30px;
-  color: #C75D19;
-  font-size: 14px;
-  text-align: center;
-  line-height: 30px;
-}
-
-.view-list {
-  width: 48%;
-  margin: 0 auto;
-  display: flex;
-  background: #fff;
-   border-top-left-radius: 0.8em;
-    border-top-right-radius: 0.8em;
-    border: 1px solid #ededed;
-
-  > .view-item {
-    width: 50%;
-  }
-  > .view-item:nth-of-type(1) {
-    > .-item-tilte {
-      border-top-left-radius: 0.8em;
-    }
-  }
-  > .view-item:nth-of-type(2) {
-    > .-item-tilte {
-      border-top-right-radius: 0.8em;
-    }
-  }
-}
 </style>

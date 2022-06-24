@@ -1,17 +1,15 @@
 
 <template>
-  <div class="layout ">
-    <div class="view-height-150">
-      <div class="view-height-75">
+  <div class="layout bg-color-w b-radius-5 padding-10 grid grid-c-2 grid-g10">
+    <div class="flex f-c">
+      <div class="flex flex-1 ">
         <img class="image-mode" :src="res.list[0].img" alt />
       </div>
-      <div class="view-height-75">
+      <div class="flex flex-1 margin-t10">
         <img class="image-mode" :src="res.list[1].img" alt />
       </div>
     </div>
-    <div class="view-height-150">
-      <img class="image-mode" style="height:150px;" :src="res.list[2].img" />
-    </div>
+    <img class="image-mode" :src="res.list[2].img" />
   </div>
 </template>
 
@@ -23,17 +21,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./tpl.scss";
-.layout {
-  height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-size: cover;
-}
-.view-height-75 {
-  .image-mode {
-    height: 75px;
-  }
-}
 </style>

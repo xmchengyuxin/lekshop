@@ -1,18 +1,13 @@
 <template>
   <div class="layout">
-    <div class="goods-cell-title">
-      <div
-        class="goods-item-title"
-        :class="{ selected: selected.index == index }"
-        @click="handleClickTitle(title, index)"
-        v-for="(title, index) in res.list[0].titleWay"
-        :key="index"
-      >
-        <h4>{{ title.title }}</h4>
-        <div>{{ title.desc }}</div>
-      </div>
+    <div class="grid grid-c-4 h-40 margin-b10">
+    	<div  @click="handleClickTitle(title, index)" :class="{ selected: selected.index == index }" v-for="(title, index) in res.list[0].titleWay" class="flex f-s-0 f-c f-a-c f-j-c h100 ">
+    		<span :class="selected.index == index ? 't-color-y f18-size' : 'f15-size'" class=" flex f-a-c h-24 f-w-500">{{title.title}}</span>
+    		<span class="f11-size t-color-9">{{title.desc}}</span>
+    	</div>
     </div>
-    <div class="goods-list">
+
+    <div class="goods-list ">
       <div
         v-if="
           item.___index != undefined
@@ -34,8 +29,8 @@
           <div class="goods-title">
             {{ item.title }}
           </div>
-          <div class="goods-bottom">
-            <div class="goods-price">￥{{ item.price }}</div>
+          <div class="goods-bottom margin-t4">
+            <div class="text-price f16-size f-w-b t-color-y">{{ item.price }}</div>
           </div>
         </div>
       </div>
@@ -78,10 +73,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.layout {
-  padding: 8px 0;
-  background: #e8e8e8;
-}
+@import "./tpl.scss";
 .selected {
   > h4 {
     color: #000 !important;
@@ -115,15 +107,18 @@ export default {
   flex-wrap: wrap;
 }
 .goods-item {
-  width: 50%;
+  width: 48%;
+  margin-right: 4%;
   margin-bottom: 10px;
   border-radius: 0.4em;
   overflow: hidden;
 }
+.goods-item:nth-child(2n+2) {
+  margin-right: 0;
+}
 .goods-img {
   position: relative;
   margin: 0 auto;
-  width: 158px;
   height: 150px;
   border-top-left-radius: 0.4em;
   border-top-right-radius: 0.4em;
@@ -132,17 +127,19 @@ export default {
     width: 100%;
     height: 100%;
   }
+  .el-icon-error {
+    position: absolute;
+    right: 10px;
+    top: 2px;
+  }
 }
 .goods-desc {
+  padding: 12px;
   border-bottom-left-radius: 0.4em;
   border-bottom-right-radius: 0.4em;
-  width: 158px;
   background: #fff;
-  padding: 4px;
   margin: 0 auto;
   > .goods-title {
-    font-size: 12px;
-    height: 38px;
     display: -webkit-box;
     font-weight: 500;
     -webkit-box-orient: vertical;
@@ -154,8 +151,6 @@ export default {
   > .goods-bottom {
     display: flex;
     > .goods-price {
-      line-height: 2;
-      color: #000000;
     }
   }
 }

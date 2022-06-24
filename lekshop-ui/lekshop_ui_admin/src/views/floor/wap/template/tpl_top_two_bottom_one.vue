@@ -1,16 +1,11 @@
 <template>
-  <div class="layout">
-    <div class="view-width-100">
-      <div class="">
-        <img class="image-mode" :src="res.list[0].img" alt />
-      </div>
-      <div class="">
-        <img class="image-mode" :src="res.list[1].img" alt />
-      </div>
+  <div class="layout over-h bg-color-w">
+    <div class="grid grid-c-2 grid-g10 margin-b10">
+      <img class="image-mode" :src="res.list[0].img" alt />
+      <img class="image-mode" :src="res.list[1].img" alt />
     </div>
-    <div class="view-width-100">
-      <img class="image-mode" :src="res.list[2].img" />
-    </div>
+   <img class="image-mode" :src="res.list[2].img" />
+
   </div>
 </template>
 

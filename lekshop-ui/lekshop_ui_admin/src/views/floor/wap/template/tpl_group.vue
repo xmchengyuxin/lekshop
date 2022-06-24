@@ -1,25 +1,28 @@
 <template>
-  <div class="layout">
-    <div class="join-list">
-      <div class="join-title">
-        <div>{{ res.list[0].titleWay[0].title }}</div>
-        <div>{{ res.list[0].titleWay[0].desc }}</div>
-        <div>更多 ></div>
-      </div>
-      <div class="join-box">
-        <div class="join-item" v-for="item in res.list[0].listWay" >
-          <div class="item-img-box goods-img">
-            <i @click="closeGoods(item, item_index)"
-              style="font-size: 20px;"
-              class="el-icon-error"></i>
+  <div class="layout bg-color-w wrap-pintuan  over-h">
+    <div   class="flex padding-lr12 h-40 f-a-c f-j-s">
+    	<div class="flex f-a-c">
+    		<span class="f-w-b margin-r8" style="color: rgb(173, 78, 0);">{{res.list[0].titleWay[0].title}}</span>
+    		<span class="f10-size" style="color: rgb(199, 90, 0);">{{res.list[0].titleWay[0].desc}}</span>
+    	</div>
+    	<div class="flex f-a-c">
+    		<span class="f12-size t-color-9 margin-r2">更多 ></span>
+    	</div>
+    </div>
+    <div class="flex padding-lr12 ">
+    	<div @click="go('/pages/shops/detail?id='+item.id)" v-for="(goods,index) in res.list[0].listWay" class="flex  f-s-0 margin-r12 f-c pintuan-item">
 
-            <img :src="item.mainImg" alt />
-          </div>
-          <div class="item-price">
-            <div class="goods-price">￥{{ item.price }}</div>
-          </div>
+    		<div :style="{'background-image': 'url('+goods.mainImg+')'}" class="padding50 bg-img b-radius-8">
+          <i @click="closeGoods(goods, index)"
+            style="font-size: 20px;"
+            class="el-icon-error"></i>
         </div>
-      </div>
+    		<div class="f12-size line1 margin-t4">{{goods.title}}</div>
+    		<div class="flex f-a-c f-j-s margin-t4">
+    			<div class="text-price f16-size t-color-y">{{goods.price}}</div>
+    			<div class="bg-color-linear-y h-16 t-color-w f10-size padding-lr5 b-radius-30">拼</div>
+    		</div>
+    	</div>
     </div>
   </div>
 </template>

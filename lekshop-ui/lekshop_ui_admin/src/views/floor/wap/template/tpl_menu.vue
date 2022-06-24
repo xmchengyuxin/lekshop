@@ -1,11 +1,11 @@
 <template>
-  <div class="layout">
+  <div class="layout bg-color-w padding-tb10">
     <div class="menu-list">
       <div class="menu-item" v-for="(item, index) in res.list" :key="index">
-        <div>
+        <div class="h-50 flex f-a-c f-j-c">
           <img class="menu-img" :src="item.img" alt="" />
         </div>
-        <div class="menu-title">{{ item.title }}</div>
+        <div class="menu-title t-color-9">{{ item.title }}</div>
       </div>
     </div>
   </div>
@@ -26,12 +26,11 @@ export default {
   > .menu-item {
     text-align: center;
     width: 20%;
-    margin: 10px 0;
   }
 }
 .menu-img {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
 }
 .menu-title {
   font-size: 12px;
