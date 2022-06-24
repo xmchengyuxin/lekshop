@@ -42,47 +42,47 @@ export default {
         {
           title: "首页",
           icon: "dashboard",
-          ___type: "home",
+          ___ptype: "home",
         },
         {
           title: "购物车",
           icon: "shop-list",
-          ___type: "cart",
+          ___ptype: "cart",
         },
         {
           title: "收藏商品",
           icon: "food-list",
-          ___type: "collection",
+          ___ptype: "collection",
         },
         {
           title: "我的订单",
           icon: "order-list",
-          ___type: "order",
+          ___ptype: "order",
         },
         {
           title: "个人中心",
           icon: "user",
-          ___type: "user",
+          ___ptype: "user",
         },
         {
           title: "拼团频道",
           icon: "lock",
-          ___type: "group",
+          ___ptype: "group",
         },
         {
           title: "秒杀频道",
           icon: "list",
-          ___type: "seckill",
+          ___ptype: "seckill",
         },
         {
           title: "领券中心",
           icon: "promotion-coupon",
-          ___type: "coupon",
+          ___ptype: "coupon",
         },
         {
           title: "签到",
           icon: "report-brand",
-          ___type: "sign",
+          ___ptype: "sign",
         },
         /* {
           title: "小程序直播",
@@ -103,7 +103,7 @@ export default {
       linkItem: {
         title: "外部链接",
         icon: "link",
-        ___type: "link",
+        ___ptype: "link",
         url: "",
       },
       linkVisible: false, // 是否显示外部链接

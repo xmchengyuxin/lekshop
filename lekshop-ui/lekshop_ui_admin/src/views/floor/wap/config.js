@@ -387,38 +387,38 @@ export const modelData = [
     options: {
       list: [
         {
-          img: "https://i.loli.net/2020/12/05/SoGAv7gYybuWzED.png",
+          img: "https://qiniu.chengyuwb.com/1655975888802.png",
           url: "",
           link: "",
-          title: "标题",
+          title: "进口海淘",
           size: "88*88 (1:1)"
         },
         {
-          img: "https://i.loli.net/2020/12/05/JXR5K3sbIeENjqH.png",
+          img: "https://qiniu.chengyuwb.com/1655975538173.png",
           url: "",
           link: "",
-          title: "标题",
+          title: "领红包",
           size: "88*88 (1:1)"
         },
         {
-          img: "https://i.loli.net/2020/12/05/KlZfnCFIdEV231Y.png",
+          img: "https://qiniu.chengyuwb.com/1655975538171.png",
           url: "",
           link: "",
-          title: "标题",
+          title: "领券",
           size: "88*88 (1:1)"
         },
         {
-          img: "https://i.loli.net/2020/12/05/GfmMyN2wrUVIlci.png",
+          img: "https://qiniu.chengyuwb.com/1655975538183.png",
           url: "",
           link: "",
-          title: "标题",
+          title: "电子产品",
           size: "88*88 (1:1)"
         },
         {
-          img: "https://i.loli.net/2020/12/05/eznDa3iNby5FkYL.png",
+          img: "https://qiniu.chengyuwb.com/1655975538187.png",
           url: "",
           link: "",
-          title: "标题",
+          title: "精选超市",
           size: "88*88 (1:1)"
         }
       ]

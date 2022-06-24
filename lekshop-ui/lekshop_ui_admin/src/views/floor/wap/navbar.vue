@@ -22,7 +22,7 @@
       <el-dialog :visible.sync="saveDialog" title="保存中" :closable="true" :mask-closable="false" :footer-hide="true"
         width="20%" center>
         <el-form label-position="right" label-width="80px">
-          <div v-if="progress">
+          <div>
             <el-form-item label="模板名称">
               <el-input v-model="submitWay.name"></el-input>
             </el-form-item>
@@ -35,9 +35,9 @@
             <el-button size="mini" type="primary" @click="save()">保存</el-button>
           </el-form-item>
           </div>
-          <el-form-item label="" v-else>
+          <!-- <el-form-item label="">
             <Progress  :percent="num" status="active" />
-          </el-form-item>
+          </el-form-item> -->
       </el-form>
     </el-dialog>
   </div>
