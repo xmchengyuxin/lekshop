@@ -12,10 +12,10 @@
         <div class="h-30 flex padding-lr12">
           <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">推荐</div>
           <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">女装</div>
-          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">女装</div>
-          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">女装</div>
-          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">女装</div>
-          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">女装</div>
+          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">母婴</div>
+          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">手机数码</div>
+          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">男装</div>
+          <div  class="flex f-s-0  f-a-c h100 margin-r20 t-color-w  f-w-500">美妆洗护</div>
         </div>
     </div>
     <div class="h-44"></div>

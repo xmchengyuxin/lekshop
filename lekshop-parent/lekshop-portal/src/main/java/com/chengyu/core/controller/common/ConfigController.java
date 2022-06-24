@@ -11,6 +11,7 @@ import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigSearchService;
 import com.chengyu.core.service.content.*;
+import com.chengyu.core.service.floor.FloorGlobalStyleService;
 import com.chengyu.core.service.floor.FloorService;
 import com.chengyu.core.service.system.BankConfigService;
 import com.chengyu.core.service.system.ConfigService;
@@ -65,6 +66,8 @@ public class ConfigController extends UserBaseController {
 	private ConfigSearchService configSearchService;
 	@Autowired
 	private FloorService floorService;
+	@Autowired
+	private FloorGlobalStyleService floorGlobalStyleService;
 
 
 	@ApiOperation(value = "系统参数列表")
@@ -81,6 +84,13 @@ public class ConfigController extends UserBaseController {
 	public CommonResult<List<FloorMobilePages>> getFloorList() {
 		List<FloorMobilePages> list = floorService.getCurrentIndexFloor();
 		return CommonResult.success(list);
+	}
+
+	@ApiOperation(value = "全局样式")
+	@ResponseBody
+	@RequestMapping(value="/globalStyle/get", method=RequestMethod.GET)
+	public CommonResult<Map<String, String>> getGlobalStyle() {
+		return CommonResult.success(floorGlobalStyleService.getGlobalStyleByCache());
 	}
 
 	@ApiOperation(value = "热门搜索列表")

@@ -104,7 +104,11 @@ public enum RedisEnums {
 	/**
 	 * 移动端首页模板
 	 */
-	MOBILE_INDEX_TEMPLATE("rds-mobile-index");
+	MOBILE_INDEX_TEMPLATE("rds-mobile-index"),
+	/**
+	 * 移动端全局样式
+	 */
+	MOBILE_GLOBAL_STYLE("rds-mobile-global-style");
 
 	private final String key;
 

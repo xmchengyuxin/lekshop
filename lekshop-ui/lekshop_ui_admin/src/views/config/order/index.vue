@@ -58,7 +58,7 @@
 import { getParams, updateParams } from '@/api/config'
 
 export default {
-  name: 'smsConfig',
+  name: 'orderConfig',
   data() {
     return {
 			config:{},

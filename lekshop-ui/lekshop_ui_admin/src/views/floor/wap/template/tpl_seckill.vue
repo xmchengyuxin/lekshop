@@ -20,7 +20,7 @@
     		<div class="f12-size line1 margin-t4">{{goods.title}}</div>
     		<div class="flex f-a-c f-j-s margin-t4">
     			<div class="text-price f16-size t-color-y">{{goods.price}}</div>
-    			<div class="bg-color-linear-r h-16 t-color-w f10-size padding-lr5 b-radius-30">拼</div>
+    			<div class="bg-color-linear-r h-16 t-color-w f10-size padding-lr5 b-radius-30">秒</div>
     		</div>
     	</div>
     </div>

@@ -39,3 +39,27 @@ export function updateFloorData(data) {
     data
   })
 }
+
+export function getGlobalStyle(query) {
+  return request({
+    url: '/system/globalStyle/get',
+    method: 'get',
+    params: query
+  })
+}
+
+export function getDefaultGlobalStyle(query) {
+  return request({
+    url: '/system/globalStyle/getDefault',
+    method: 'get',
+    params: query
+  })
+}
+
+export function updateGlobalStyle(data) {
+  return request({
+    url: '/system/globalStyle/editSubmit',
+    method: 'post',
+    data
+  })
+}

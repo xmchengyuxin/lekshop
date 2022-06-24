@@ -32,6 +32,12 @@ const floorRouter = {
     	meta: { title: '编辑模板', role: [] },
     	hidden: true
     },
+    {
+      path: 'globalStyle',
+      component: () => import('@/views/floor/global/index'),
+      name: 'globalStyle',
+      meta: { title: '全局样式',  role: ['admin'] }
+    },
   ]
 }
 export default floorRouter
