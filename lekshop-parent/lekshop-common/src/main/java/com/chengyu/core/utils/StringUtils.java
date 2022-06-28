@@ -212,6 +212,8 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(genTradeNo(20));
+		for(int i =0; i<5; i++){
+			System.out.println(genenrateUniqueInd().substring(0,16));
+		}
 	}
 }

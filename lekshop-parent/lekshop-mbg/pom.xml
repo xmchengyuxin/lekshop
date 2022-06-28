@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>lekshop-mbg</name>
-    <description>mybatis自动生成实体类和Mapper文件</description>
+    <description>lekshop-mbg project for lekshop</description>
 
     <parent>
         <groupId>com.chengyu.lekshop</groupId>

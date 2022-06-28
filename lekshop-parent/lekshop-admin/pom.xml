@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>lekshop-admin</name>
-    <description>总后台</description>
+    <description>lekshop-admin project for mall</description>
 
     <parent>
         <groupId>com.chengyu.lekshop</groupId>

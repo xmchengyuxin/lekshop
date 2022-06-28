@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>lekshop-common</name>
-    <description>公共基础包</description>
+    <description>lekshop-common project for lekshop</description>
 
     <parent>
         <groupId>com.chengyu.lekshop</groupId>
