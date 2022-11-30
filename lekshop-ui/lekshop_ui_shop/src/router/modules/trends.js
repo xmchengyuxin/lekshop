@@ -9,14 +9,15 @@ const trendsRouter = {
 	alwaysShow: true,
   meta: {
     title: '逛逛社区',
-    icon: 'theme'
+    icon: 'theme',
+    roles: ['walk']
   },
   children: [
     {
       path: 'list',
       component: () => import('@/views/trends/index/index'),
       name: 'trendsList',
-      meta: { title: '种草短视频', noCache: true, icon:'list', role: ['admin'] }
+      meta: { title: '种草短视频', noCache: true, icon:'list', roles: ['walk:trends'] }
     },
   ]
 }

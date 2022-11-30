@@ -77,3 +77,18 @@ export function setPassword(data) {
     data
   })
 }
+
+export function changeRole(data) {
+  return request({
+    url: '/member/changeRole',
+    method: 'post',
+    params: data
+  })
+}
+
+export function getAllRole() {
+  return request({
+    url: '/member/getAllRole',
+    method: 'get'
+  })
+}

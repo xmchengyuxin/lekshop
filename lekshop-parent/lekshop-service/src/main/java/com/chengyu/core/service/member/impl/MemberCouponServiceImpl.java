@@ -42,7 +42,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 	private LocaleMessageSourceUtil messageSourceUtil;
 
 	@Override
-	public List<UmsMemberCoupon> getMemberCouponList(Integer memberId, Integer status, Integer page, Integer pageSize) {
+	public List<UmsMemberCoupon> getMemberCouponList(Integer memberId, Integer couponConfigId, Integer status, Integer page, Integer pageSize) {
 		PageHelper.startPage(page, pageSize);
 
 		UmsMemberCouponExample example = new UmsMemberCouponExample();
@@ -53,6 +53,9 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 		}
 		if(status != null){
 			criteria.andStatusEqualTo(status);
+		}
+		if(couponConfigId != null){
+			criteria.andCouponConfigIdEqualTo(couponConfigId);
 		}
 		return memberCouponMapper.selectByExample(example);
 	}

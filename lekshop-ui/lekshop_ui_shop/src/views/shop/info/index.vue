@@ -72,7 +72,7 @@
   }
 </style>
 <script>
-import { getShop, updateShop, getShopServiceSelector } from '@/api/shop'
+import { getShopDetail, updateShop, getShopServiceSelector } from '@/api/shop'
 import MDinput from '@/components/MDinput'
 import Upload from '@/components/Upload/singleImage'
 import ImageSource from '@/components/Upload/imageSource'
@@ -107,7 +107,7 @@ export default {
     },
     get() {
       this.getShopServiceSelector();
-      getShop().then(response => {
+      getShopDetail().then(response => {
         this.shop = response.data
         if(!this.shop){
           this.shop = {}

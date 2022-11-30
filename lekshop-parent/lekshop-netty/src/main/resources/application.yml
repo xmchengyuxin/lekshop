@@ -8,5 +8,3 @@ netty:
   so:
     keepalive: true
     backlog: 1024
-logging:
-  path: C:/java/prod/jar/logs

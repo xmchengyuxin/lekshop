@@ -30,12 +30,12 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.chengyu.core.model" targetProject="src\main\java"/>
+        <javaModelGenerator targetPackage="com.chengyu.core.model" targetProject="src/main/java"/>
 
-        <sqlMapGenerator targetPackage="com.chengyu.core.mapper" targetProject="src\main\resources"/>
+        <sqlMapGenerator targetPackage="com.chengyu.core.mapper" targetProject="src/main/resources"/>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.chengyu.core.mapper"
-                             targetProject="src\main\java"/>
+                             targetProject="src/main/java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>

@@ -18,6 +18,7 @@ import com.chengyu.core.security.util.JwtTokenUtil;
 import com.chengyu.core.service.config.ConfigMissionService;
 import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.*;
+import com.chengyu.core.service.shop.ShopAccountService;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.service.system.SysInviteCodeService;
 import com.chengyu.core.service.walk.WalkMemberService;
@@ -81,10 +82,12 @@ public class MemberServiceImpl implements MemberService {
 	private WalkMemberService walkMemberService;
 	@Autowired
 	private ChatService chatService;
+	@Autowired
+	private ShopAccountService shopAccountService;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void register(UmsMember member) throws ServiceException {
+	public void register(UmsMember member, boolean isShop) throws ServiceException {
 		//校验code是否已被注册
 		UmsMember haveMember = this.getMemberByParams(member.getCode(), MemberTypes.CODE);
 		if(haveMember != null) {
@@ -96,6 +99,7 @@ public class MemberServiceImpl implements MemberService {
 		if(StringUtils.isBlank(member.getNickname())){
 			member.setNickname("U"+StringUtils.getSixCode());
 		}
+		String oriPassword = member.getPassword();
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		if(member.getMethod() == null){
 			member.setMethod(1);
@@ -135,6 +139,18 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.updateByPrimaryKeySelective(updateMember);
 
 		sysInviteCodeService.updateUserId(member.getInviteCode(), CommonConstant.INVITE_CODE_MEMBER, member.getId());
+
+		//注册子账号
+		if(isShop) {
+			UmsShopAccount account = new UmsShopAccount();
+			account.setMemberId(member.getId());
+			account.setUsername(member.getCode());
+			account.setPassword(oriPassword);
+			account.setPhone(member.getPhone());
+			account.setMainInd(CommonConstant.YES_INT);
+			account.setRealname(member.getCode()+":主账号");
+			shopAccountService.register(account);
+		}
 
 		//注册用户分销关系
 		if(member.getTjrId() != null){

@@ -86,7 +86,7 @@ public class RegisterController extends UserBaseController {
 					.replaceAll("https://", "")
 					.replaceAll("/", ""));
 		}
-		memberService.register(member);
+		memberService.register(member, false);
 		
 		String token = memberService.loginByNoPassword(regParam.getUsername());
 		Map<String, Object> tokenMap = new HashMap<>(16);

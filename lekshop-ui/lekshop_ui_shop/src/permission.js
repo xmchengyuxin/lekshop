@@ -30,6 +30,7 @@ router.beforeEach(async (to, from, next) => {
 	// determine whether the user has logged in
 	const hasToken = getToken()
 	if (hasToken) {
+    await store.dispatch('user/getRolesList')
 		if (to.path === '/login') {
 			// if is logged in, redirect to the home page
 			next({
@@ -47,8 +48,8 @@ router.beforeEach(async (to, from, next) => {
 					// get user info
 					// note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           // const { roles} = await store.dispatch('user/getUserInfo')
-          const { roles, name} = await store.dispatch('user/getUserInfo')
-          if(!name){
+          const { roles, shopInfo} = await store.dispatch('user/getUserInfo')
+          if(!shopInfo || !shopInfo.name){
             next({
             	path: '/join'
             })

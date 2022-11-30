@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomGoodsMapper">
+
+	<select id="getGoodsStockList" resultType="com.chengyu.core.domain.result.GoodsStockResult">
+		select
+			pg.title as goodsName,
+			pgs.id as id,
+			pgs.stock as stock,
+			pgs.attr_symbol_name as attrSymbolName,
+			pg.cate_name as cateName,
+			pgs.price as price,
+			pgs.img as img
+		from pms_goods_sku pgs
+		join pms_goods pg on pgs.goods_id = pg.id and pg.status = 1
+		where 1=1
+		<if test="form.shopId != null">
+			and pg.shop_id = #{form.shopId}
+		</if>
+		<if test="form.cateId != null">
+			and pg.cate_ids like concat('%',#{form.cateId},'%')
+		</if>
+		<if test="form.title != null">
+			and pg.title like concat('%',#{form.title},'%')
+		</if>
+		order by pg.sort asc
+	</select>
+
+
+</mapper>

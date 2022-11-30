@@ -27,6 +27,8 @@
     <result column="add_by" jdbcType="VARCHAR" property="addBy" />
     <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
     <result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+    <result column="send_condition" jdbcType="INTEGER" property="sendCondition" />
+    <result column="full_send_amount" jdbcType="DECIMAL" property="fullSendAmount" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -90,7 +92,7 @@
     id, shop_id, shop_name, name, type, use_type, use_goods_ids, use_goods_cate_ids, 
     amount, full_amount, total_num, draw_num, limit_num, validity_type, validity_days, 
     fixed_begin_date, fixed_end_date, begin_date, end_date, rules, status, add_time, 
-    add_by, upd_time, upd_by
+    add_by, upd_time, upd_by, send_condition, full_send_amount
   </sql>
   <select id="selectByExample" parameterType="com.chengyu.core.model.UmsShopCouponExample" resultMap="BaseResultMap">
     select
@@ -133,8 +135,8 @@
       validity_type, validity_days, fixed_begin_date, 
       fixed_end_date, begin_date, end_date, 
       rules, status, add_time, 
-      add_by, upd_time, upd_by
-      )
+      add_by, upd_time, upd_by, 
+      send_condition, full_send_amount)
     values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{useType,jdbcType=INTEGER}, #{useGoodsIds,jdbcType=VARCHAR}, 
       #{useGoodsCateIds,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{fullAmount,jdbcType=DECIMAL}, 
@@ -142,8 +144,8 @@
       #{validityType,jdbcType=INTEGER}, #{validityDays,jdbcType=INTEGER}, #{fixedBeginDate,jdbcType=DATE}, 
       #{fixedEndDate,jdbcType=DATE}, #{beginDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
       #{rules,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}
-      )
+      #{addBy,jdbcType=VARCHAR}, #{updTime,jdbcType=TIMESTAMP}, #{updBy,jdbcType=VARCHAR}, 
+      #{sendCondition,jdbcType=INTEGER}, #{fullSendAmount,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.chengyu.core.model.UmsShopCoupon">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -223,6 +225,12 @@
       <if test="updBy != null">
         upd_by,
       </if>
+      <if test="sendCondition != null">
+        send_condition,
+      </if>
+      <if test="fullSendAmount != null">
+        full_send_amount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="shopId != null">
@@ -296,6 +304,12 @@
       </if>
       <if test="updBy != null">
         #{updBy,jdbcType=VARCHAR},
+      </if>
+      <if test="sendCondition != null">
+        #{sendCondition,jdbcType=INTEGER},
+      </if>
+      <if test="fullSendAmount != null">
+        #{fullSendAmount,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -383,6 +397,12 @@
       <if test="record.updBy != null">
         upd_by = #{record.updBy,jdbcType=VARCHAR},
       </if>
+      <if test="record.sendCondition != null">
+        send_condition = #{record.sendCondition,jdbcType=INTEGER},
+      </if>
+      <if test="record.fullSendAmount != null">
+        full_send_amount = #{record.fullSendAmount,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -414,7 +434,9 @@
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       add_by = #{record.addBy,jdbcType=VARCHAR},
       upd_time = #{record.updTime,jdbcType=TIMESTAMP},
-      upd_by = #{record.updBy,jdbcType=VARCHAR}
+      upd_by = #{record.updBy,jdbcType=VARCHAR},
+      send_condition = #{record.sendCondition,jdbcType=INTEGER},
+      full_send_amount = #{record.fullSendAmount,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -494,6 +516,12 @@
       <if test="updBy != null">
         upd_by = #{updBy,jdbcType=VARCHAR},
       </if>
+      <if test="sendCondition != null">
+        send_condition = #{sendCondition,jdbcType=INTEGER},
+      </if>
+      <if test="fullSendAmount != null">
+        full_send_amount = #{fullSendAmount,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -522,7 +550,9 @@
       add_time = #{addTime,jdbcType=TIMESTAMP},
       add_by = #{addBy,jdbcType=VARCHAR},
       upd_time = #{updTime,jdbcType=TIMESTAMP},
-      upd_by = #{updBy,jdbcType=VARCHAR}
+      upd_by = #{updBy,jdbcType=VARCHAR},
+      send_condition = #{sendCondition,jdbcType=INTEGER},
+      full_send_amount = #{fullSendAmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

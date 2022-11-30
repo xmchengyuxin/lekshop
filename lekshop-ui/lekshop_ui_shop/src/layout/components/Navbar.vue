@@ -14,7 +14,7 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search class="right-menu-item" />
+        <!-- <search class="right-menu-item" />
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
@@ -22,7 +22,7 @@
 
         <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
           <size-select class="right-menu-item hover-effect" />
-        </el-tooltip>
+        </el-tooltip> -->
 
         <!-- <notice class="right-menu-item"/> -->
         <!-- <i class="el-icon-message-solid hover-effect right-menu-item " id="message-icon" style="line-height: 50px;" @click="goControl"></i>
@@ -33,7 +33,41 @@
 
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click" @command="handleCommand" v-if="rolesList && rolesList.length > 0">
+          <div class="avatar-wrapper">
+            <div>{{ roleName }}</div>
+            <i class="el-icon-caret-bottom" />
+          </div>
+         <el-dropdown-menu slot="dropdown" >
+              <el-dropdown-item v-for="(item,index) in rolesList" :key="item.roleId" :command="item.deptName +'-'+item.roleName">
+                {{item.deptName +'-'+item.roleName}}
+              </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+         <div class="avatar-wrapper flex f-a-c f-j-s">
+           <!-- <img :src="userData.headImg+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
+           <div class="margin-l6">{{userData.realname}}</div>
+           <i class="el-icon-caret-bottom" />
+         </div>
+         <el-dropdown-menu slot="dropdown">
+           <router-link to="/">
+             <el-dropdown-item>
+               {{ $t('navbar.dashboard') }}
+             </el-dropdown-item>
+           </router-link>
+           <router-link to="/config/info">
+             <el-dropdown-item divided>
+               个人中心
+             </el-dropdown-item>
+           </router-link>
+           <el-dropdown-item divided>
+             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
+           </el-dropdown-item>
+         </el-dropdown-menu>
+       </el-dropdown>
+
+      <!-- <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
@@ -53,7 +87,7 @@
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
     </div>
   </div>
 </template>
@@ -84,14 +118,22 @@ export default {
       'sidebar',
       'name',
       'avatar',
-      'device'
+      'device',
+      'rolesList',
+      'roles',
+      'userData'
     ])
   },
   data() {
     return {
+      roleName: '',
+      list: [],
       title: this.$store.state.user.brandName ? this.$store.state.user.brandName : this.$store.state.system.webName,
       logo: this.$store.state.user.brandLogo ? this.$store.state.user.brandLogo : this.$store.state.system.logo
     }
+  },
+  created(){
+    this.roleName = this.$store.state.user.userData.deptName + '-' +this.$store.state.user.userData.roleName
   },
   methods: {
     toggleSideBar() {
@@ -101,13 +143,10 @@ export default {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
-    goControl(){
-      document.getElementById('message-icon').classList.remove('show-animate');
-      this.$router.push(`/control/controlCenter`)
-    },
-    goException(){
-      document.getElementById('exception-icon').classList.remove('show-animate');
-      this.$router.push(`/control/all?active=eight`)
+    handleCommand(Command) {
+      this.roleName = Command
+      let role = this.rolesList.find(item => item.deptName+'-'+item.roleName == Command)
+      this.$store.dispatch("user/changeRoles",role.roleId)
     },
   }
 }
@@ -180,7 +219,7 @@ export default {
       display: inline-block;
       padding: 0 8px;
       height: 100%;
-      font-size: 18px;
+      font-size: 16px;
       color: #fff;
       vertical-align: text-bottom;
 
@@ -198,7 +237,7 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
+        // margin-top: 5px;
         position: relative;
 
         .user-avatar {
@@ -212,7 +251,7 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 25px;
+          top: 20px;
           font-size: 12px;
         }
       }

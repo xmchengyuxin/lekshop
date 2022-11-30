@@ -29,6 +29,7 @@ import com.chengyu.core.service.order.*;
 import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
 import com.chengyu.core.service.schedule.job.OrderAutoCommentJob;
 import com.chengyu.core.service.shop.ShopConfigService;
+import com.chengyu.core.service.shop.ShopCouponService;
 import com.chengyu.core.service.shop.ShopFreightService;
 import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.service.task.TaskTriggerService;
@@ -104,6 +105,8 @@ public class OrderServiceImpl implements OrderService {
 	private ConfigMissionService configMissionService;
 	@Autowired
 	private ChatService chatService;
+	@Autowired
+	private ShopCouponService shopCouponService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -561,8 +564,11 @@ public class OrderServiceImpl implements OrderService {
 		memberAccountLogService.inAccount(shopMember, AccountEnums.MemberAccountTypes.ACCOUNT_TRADE_IN, order.getOrderNo(), order.getPayPrice(),
 				"商品交易收款", null);
 
-		//分销收益
+		//赠送优惠券
 		UmsMember member = memberService.getMemberById(order.getMemberId());
+		shopCouponService.sendCouponByConsumption(member, order.getShopId(), order.getPayPrice());
+
+		//分销收益
 		this.settleDistribution(member, order.getOrderNo(), order.getPayPrice());
 		//添加自动评价定时器
 		orderCommentService.initComment(detailList);

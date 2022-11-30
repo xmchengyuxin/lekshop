@@ -23,7 +23,8 @@ const memberRouter = {
       path: 'detail',
       component: () => import('@/views/member/index/detailInfo'),
       name: 'memberDetailInfo',
-      meta: { title: '会员详情',  role: ['admin'] }
+      meta: { title: '会员详情',  role: ['admin'],  },
+      hidden: true
     },
     {
     	path: 'detail/:id(\\d+)',

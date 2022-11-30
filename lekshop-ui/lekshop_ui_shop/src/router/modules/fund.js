@@ -9,20 +9,21 @@ const fundRouter = {
   name: 'fund',
   meta: {
     title: '财务管理',
-    icon: 'money'
+    icon: 'money',
+    roles: ['finance']
   },
   children: [
     {
       path: 'bank',
       component: () => import('@/views/member/bank/index'),
       name: 'bank',
-      meta: { title: '提现账户', icon:'list', role: ['admin'] }
+      meta: { title: '提现账户', icon:'list', roles: ['finance:account'] }
     },
     {
       path: 'withdraw',
       component: () => import('@/views/fund/withdraw/index'),
       name: 'withdraw',
-      meta: { title: '商家提现', icon:'list', role: ['admin'] }
+      meta: { title: '商家提现', icon:'list', roles: ['finance:withdraw'] }
     },
 		/* {
 		  path: 'recharge',
@@ -34,7 +35,7 @@ const fundRouter = {
       path: 'account',
       component: () => import('@/views/fund/account/index'),
       name: 'account',
-      meta: { title: '商家对账单', icon:'list', role: ['admin'] }
+      meta: { title: '商家对账单', icon:'list', roles: ['finance:accountLog'] }
     },
   ]
 }

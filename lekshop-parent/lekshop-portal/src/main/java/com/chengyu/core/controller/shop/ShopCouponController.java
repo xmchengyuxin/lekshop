@@ -33,7 +33,7 @@ public class ShopCouponController extends UserBaseController {
 	@ResponseBody
 	@RequestMapping(value="/coupon/getList", method=RequestMethod.GET)
 	public CommonResult<CommonPage<UmsShopCoupon>> search(Integer shopId, Integer type, Integer page, Integer pageSize) {
-		List<UmsShopCoupon> list = shopCouponService.getShopCouponList(shopId, null, type, page, pageSize);
+		List<UmsShopCoupon> list = shopCouponService.getShopCouponList(shopId, null, type, 1, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 

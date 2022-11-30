@@ -8,9 +8,7 @@ import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.GoodsEnums;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
-import com.chengyu.core.domain.result.GoodsAttrKeyResult;
-import com.chengyu.core.domain.result.GoodsResult;
-import com.chengyu.core.domain.result.GoodsSkuResult;
+import com.chengyu.core.domain.result.*;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.*;
 import com.chengyu.core.model.*;
@@ -53,6 +51,10 @@ public class GoodsServiceImpl implements GoodsService {
 	private PmsGoodsAttrKeyMapper goodsAttrKeyMapper;
 	@Autowired
 	private PmsGoodsAttrValMapper goodsAttrValMapper;
+	@Autowired
+	private CustomGoodsMapper customGoodsMapper;
+	@Autowired
+	private TradeStorageStockMapper tradeStorageStockMapper;
 
 	@Override
 	public List<PmsGoods> getGoodsList(GoodsSearchForm form, Integer page, Integer pageSize) {
@@ -451,6 +453,64 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public PmsGoodsGroup getGoodsGroup(Integer groupId) {
 		return goodsGroupMapper.selectByPrimaryKey(groupId);
+	}
+
+	@Override
+	public List<GoodsStockResult> getGoodsStockList(GoodsSearchForm form, Integer page, Integer pageSize) {
+		PageHelper.startPage(page, pageSize);
+		return customGoodsMapper.getGoodsStockList(form);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void updateGoodsStock(List<PmsGoodsSku> stockList) {
+		for(PmsGoodsSku sku : stockList) {
+			PmsGoodsSku updateSku = new PmsGoodsSku();
+			updateSku.setId(sku.getId());
+			updateSku.setStock(sku.getStock());
+			goodsSkuMapper.updateByPrimaryKeySelective(updateSku);
+		}
+	}
+
+	@Override
+	public void synStock(Integer shopId) {
+		//查询仓库所有库存
+		TradeStorageStockExample example = new TradeStorageStockExample();
+		example.createCriteria().andShopIdEqualTo(shopId);
+		List<TradeStorageStock> stockList = tradeStorageStockMapper.selectByExample(example);
+		if(CollectionUtil.isNotEmpty(stockList)) {
+			for(TradeStorageStock stock : stockList) {
+				PmsGoodsSku updateSku = new PmsGoodsSku();
+				updateSku.setId(stock.getSkuId());
+				updateSku.setStock(stock.getStock());
+				goodsSkuMapper.updateByPrimaryKeySelective(updateSku);
+			}
+		}
+
+	}
+
+	@Override
+	public List<GoodsExportResult> getExportList(GoodsSearchForm form, Integer page, Integer pageSize) {
+		List<PmsGoods> goodsList = this.getGoodsList(form, page, pageSize);
+		if(CollectionUtil.isEmpty(goodsList)) {
+			return null;
+		}
+		List<Integer> goodsIds = goodsList.stream().map(PmsGoods::getId).collect(Collectors.toList());
+
+		PmsGoodsSkuExample example = new PmsGoodsSkuExample();
+		example.setOrderByClause("id asc");
+		example.createCriteria().andGoodsIdIn(goodsIds);
+		List<PmsGoodsSku> skuList = goodsSkuMapper.selectByExample(example);
+		Map<Integer, List<PmsGoodsSku>> skuMap = skuList.stream().collect(Collectors.groupingBy(PmsGoodsSku::getGoodsId));
+
+		List<GoodsExportResult> list = new ArrayList<>();
+		for(PmsGoods goods : goodsList) {
+			GoodsExportResult result = new GoodsExportResult();
+			BeanUtil.copyProperties(goods, result);
+			result.setSkuList(skuMap.get(goods.getId()));
+			list.add(result);
+		}
+		return list;
 	}
 
 	private List<PmsGoodsAttrKey> getGoodsAttrKeyList(Integer goodsId){

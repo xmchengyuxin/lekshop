@@ -41,8 +41,14 @@ const systemRouter = {
 		  path: 'menuList',
 		  component: () => import('@/views/system/menu/index'),
 		  name: 'menuList',
-		  meta: { title: '菜单管理',  role: ['admin'] }
+		  meta: { title: '后台菜单',  role: ['admin'] }
 		},
+    {
+      path: 'shopMenuList',
+      component: () => import('@/views/system/shopMenu/index'),
+      name: 'shopMenuList',
+      meta: { title: '商家菜单',  role: ['admin'] }
+    },
     {
     	path: 'center',
     	component: () => import('@/views/system/center/index'),

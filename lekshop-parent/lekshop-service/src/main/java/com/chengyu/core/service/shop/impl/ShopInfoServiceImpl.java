@@ -11,6 +11,7 @@ import com.chengyu.core.domain.form.ShopSearchForm;
 import com.chengyu.core.domain.result.ChatNotice;
 import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.mapper.UmsShopAccountMapper;
 import com.chengyu.core.mapper.UmsShopInfoMapper;
 import com.chengyu.core.mapper.UmsShopMapper;
 import com.chengyu.core.model.*;
@@ -48,6 +49,8 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 	private WalkMemberService walkMemberService;
 	@Autowired
 	private ChatService chatService;
+	@Autowired
+	private UmsShopAccountMapper shopAccountMapper;
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -72,7 +75,7 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 		shopInfo.setUpdTime(DateUtil.date());
 		if(shopInfo.getId() == null){
 			shopInfo.setAddTime(shopInfo.getUpdTime());
-			shopInfoMapper.insert(shopInfo);
+			shopInfoMapper.insertSelective(shopInfo);
 		}else{
 			shopInfoMapper.updateByPrimaryKeySelective(shopInfo);
 		}
@@ -178,6 +181,14 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 			updateMember.setNickname(shop.getName());
 			updateMember.setHeadImg(shop.getLogo());
 			memberService.updateMember(updateMember);
+
+			//更新子账号
+			UmsShopAccountExample example = new UmsShopAccountExample();
+			example.createCriteria().andMemberIdEqualTo(shopInfo.getMemberId()).andShopIdIsNull();
+			UmsShopAccount updateAccount = new UmsShopAccount();
+			updateAccount.setShopId(shop.getId());
+			updateAccount.setShopName(shop.getName());
+			shopAccountMapper.updateByExampleSelective(updateAccount, example);
 
 			WalkMember walkMember = walkMemberService.getWalkMemberByMember(shopInfo.getMemberId());
 			if(walkMember != null){

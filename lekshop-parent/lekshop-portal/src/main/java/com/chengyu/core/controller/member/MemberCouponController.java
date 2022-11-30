@@ -39,7 +39,7 @@ public class MemberCouponController extends UserBaseController {
 	@ResponseBody
 	@RequestMapping(value="/memberCoupon/getList", method=RequestMethod.GET)
 	public CommonResult<CommonPage<UmsMemberCoupon>> search(Integer status, Integer page, Integer pageSize) throws ServiceException {
-		List<UmsMemberCoupon> list = memberCouponService.getMemberCouponList(getCurrentMemberId(), status, page, pageSize);
+		List<UmsMemberCoupon> list = memberCouponService.getMemberCouponList(getCurrentMemberId(), null, status, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 

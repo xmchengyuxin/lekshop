@@ -1,11 +1,12 @@
 package com.chengyu.core.controller.common;
 
 import com.chengyu.core.controller.ShopBaseController;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
-import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.model.UmsShop;
+import com.chengyu.core.model.UmsShopAccount;
 import com.chengyu.core.security.util.JwtTokenUtil;
-import com.chengyu.core.service.member.MemberImeIdService;
 import com.chengyu.core.service.system.VerifyCodeService;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
@@ -41,28 +42,17 @@ public class LoginController extends ShopBaseController {
 	private VerifyCodeService verifyCodeService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-	@Autowired
-	private MemberImeIdService memberImeIdService;
 
 	@ApiOperation(value = "密码登录")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "username", value = "账号"),
 		@ApiImplicitParam(name = "password", value = "密码"),
-		@ApiImplicitParam(name = "type", value = "1买号登录>>2卖家登录"),
-		@ApiImplicitParam(name = "registrationId", value = "极光注册ID"),
-		@ApiImplicitParam(name = "imeId", value = "设备ID"),
-		@ApiImplicitParam(name = "phoneType", value = "设备型号"),
-		@ApiImplicitParam(name = "cToken", value = "图形验证码TOKEN"),
-		@ApiImplicitParam(name = "captcha", value = "图形验证码")
 	})
 	@RequestMapping(value={"/login"}, method=RequestMethod.POST)
     @ResponseBody
-    public CommonResult<Map<String, Object>> login(String username, String password, String imeId, String phoneType, Integer type, String registrationId, String cToken, String captcha) throws ServiceException{
-		//校验图形验证码
-//		super.validateCaptcha(cToken, captcha);
-
+    public CommonResult<Map<String, Object>> login(String username, String password) throws ServiceException{
 		//进行登录
-		String token = memberService.login(username, password, this.getRequestIp());
+		String token = shopAccountService.login(username, password, this.getRequestIp());
         if (token == null) {
         	return CommonResult.validateFailed("用户名或密码错误");
         }
@@ -70,19 +60,14 @@ public class LoginController extends ShopBaseController {
         Map<String, Object> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
-        UmsMember member = memberService.getCurrentMember();
-        /*if(member.getType() != CommonConstant.SELLER){
-			return CommonResult.validateFailed("请使用商家账号进行登录");
-		}*/
-		memberImeIdService.loginByImeId(member, imeId, phoneType);
-        tokenMap.put("member", member);
-
-        if(StringUtils.isNotBlank(registrationId)){
-			UmsMember updateMember = new UmsMember();
-			updateMember.setId(member.getId());
-			updateMember.setRegistrationId(registrationId);
-			memberService.updateMember(updateMember);
+		UmsShopAccount member = shopAccountService.getCurrentAccount();
+		if(member.getShopId() != null) {
+			UmsShop shop = shopService.getShopById(member.getShopId());
+			if(shop != null && shop.getStatus() == CommonConstant.NO_INT) {
+				throw new ServiceException("商户已被停止使用");
+			}
 		}
+        tokenMap.put("member", member);
         return CommonResult.success(tokenMap);
 		
 	 }
@@ -94,7 +79,7 @@ public class LoginController extends ShopBaseController {
 	@RequestMapping(value={"/loginByUsername"}, method=RequestMethod.POST)
 	@ResponseBody
 	public CommonResult<Map<String, Object>> loginByUsername(String username) throws ServiceException{
-		String token = memberService.loginByNoPassword(username);
+		String token = shopAccountService.loginByNoPassword(username);
 		//进行登录
 		if (token == null) {
 			return CommonResult.validateFailed("用户名或密码错误");
@@ -103,7 +88,7 @@ public class LoginController extends ShopBaseController {
 		Map<String, Object> tokenMap = new HashMap<>(16);
 		tokenMap.put("token", token);
 		tokenMap.put("tokenHead", tokenHead);
-		tokenMap.put("member", getCurrentMember());
+		tokenMap.put("member", getCurrentAccount());
 		return CommonResult.success(tokenMap);
 
 	}
@@ -130,7 +115,7 @@ public class LoginController extends ShopBaseController {
 	public CommonResult<Map<String, Object>> forgetPassword(String phone, String code) throws Exception {
 		verifyCodeService.validateCode(phone, code);
 
-		String token = memberService.loginByNoPassword(phone);
+		String token = shopAccountService.loginByNoPassword(phone);
 		Map<String, Object> tokenMap = new HashMap<>(16);
 		tokenMap.put("token", token);
 		tokenMap.put("tokenHead", tokenHead);

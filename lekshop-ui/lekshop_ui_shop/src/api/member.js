@@ -50,6 +50,15 @@ export function getMemberList(query) {
   })
 }
 
+
+export function getMemberSimpleList(query) {
+  return request({
+    url: 'member/member/getSimpleList',
+    method: 'get',
+    params: query
+  })
+}
+
 export function getMember(query) {
   return request({
     url: 'member/member/get',

@@ -108,7 +108,19 @@ public enum RedisEnums {
 	/**
 	 * 移动端全局样式
 	 */
-	MOBILE_GLOBAL_STYLE("rds-mobile-global-style");
+	MOBILE_GLOBAL_STYLE("rds-mobile-global-style"),
+	/**
+	 * 菜单
+	 */
+	MENU("menu"),
+	/**
+	 * 定价器
+	 */
+	POLICY("policy"),
+	/**
+	 * 记录用户不符合的定价器
+	 */
+	POLICY_NOT_MEMBER("policy-not-member");
 
 	private final String key;
 

@@ -6,6 +6,7 @@ import com.chengyu.core.domain.form.UmsMemberRegParam;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.model.SysInviteCode;
 import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.model.UmsShopAccount;
 import com.chengyu.core.service.system.SysInviteCodeService;
 import com.chengyu.core.service.system.VerifyCodeService;
 import com.chengyu.core.util.ip.IpSearch;
@@ -87,14 +88,14 @@ public class RegisterController extends ShopBaseController {
 					.replaceAll("https://", "")
 					.replaceAll("/", ""));
 		}
-		memberService.register(member);
-		
-		String token = memberService.loginByNoPassword(regParam.getUsername());
+		memberService.register(member, true);
+
+		String token = shopAccountService.loginByNoPassword(regParam.getUsername());
 		Map<String, Object> tokenMap = new HashMap<>(16);
-        tokenMap.put("token", token);
-        tokenMap.put("tokenHead", tokenHead);
-		UmsMember currentMember = memberService.getCurrentMember();
-        tokenMap.put("member", currentMember);
+		tokenMap.put("token", token);
+		tokenMap.put("tokenHead", tokenHead);
+		UmsShopAccount currentMember = shopAccountService.getCurrentAccount();
+		tokenMap.put("member", currentMember);
         return CommonResult.success(tokenMap);
 	}
 	

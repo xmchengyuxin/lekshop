@@ -38,7 +38,7 @@ public class ShopCouponController extends AdminBaseController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws ServiceException {
 		
-		List<UmsShopCoupon> list = shopCouponService.getShopCouponList(null, name, type, page, pageSize);
+		List<UmsShopCoupon> list = shopCouponService.getShopCouponList(null, name, type, null, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 }

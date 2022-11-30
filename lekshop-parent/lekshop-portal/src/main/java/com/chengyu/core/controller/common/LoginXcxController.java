@@ -148,7 +148,7 @@ public class LoginXcxController extends UserBaseController {
 				}
 		    }
 		    member.setPassword("123456");
-			memberService.register(member);
+			memberService.register(member, false);
 		}else{
 			//登录
 			if(StringUtils.isBlank(member.getXcxOpenId())){

@@ -6,7 +6,7 @@
 import GoodsDetail from './components/GoodsDetail'
 
 export default {
-  name: 'AddForm',
+  name: 'publishGoods',
   components: { GoodsDetail }
 }
 </script>

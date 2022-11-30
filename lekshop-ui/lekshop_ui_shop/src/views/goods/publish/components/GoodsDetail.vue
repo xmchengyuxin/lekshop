@@ -8,7 +8,7 @@
     <el-tabs v-model="activeName" tab-position="left" class="flex f-s-0 f-c" @tab-click="handleClickTab">
       <el-tab-pane label="快速录入" name="kuaisu"></el-tab-pane>
       <el-tab-pane label="基础信息" name="jichu"></el-tab-pane>
-      <el-tab-pane label="秒杀拼团" name="miaosha"></el-tab-pane>
+      <!-- <el-tab-pane label="秒杀拼团" name="miaosha"></el-tab-pane> -->
       <el-tab-pane label="销售信息" name="xiaoshou"></el-tab-pane>
       <el-tab-pane label="图文描述" name="tuwen"></el-tab-pane>
       <el-tab-pane label="支付信息" name="zhifu"></el-tab-pane>
@@ -30,7 +30,7 @@
         </el-form-item>
         <el-form-item label="测试链接" prop="thirdGoodsUrl">
           <p class="tips" style="color: #468847;">https://mobile.yangkeduo.com/goods.html?goods_id=373696623577
-      </p>
+        </p>
         </el-form-item>
         </el-card>
       <br>
@@ -63,7 +63,7 @@
           <el-button @click="$router.push('/cate/cateList')"size="mini" type="danger">新建分类</el-button>
         </el-form-item>
       </el-card>
-      <br>
+      <!-- <br>
       <el-card id="miaosha" class="box-card" shadow="hover">
         <div slot="header" class="clearfix">
           <span>秒杀拼团</span>
@@ -75,7 +75,6 @@
               <el-radio :label="3" border>拼团商品</el-radio>
             </el-radio-group>
         </el-form-item>
-        <!--秒杀商品-->
         <div v-if="postForm.type == 2 ">
           <el-form-item  prop="seckillDateRange" label="秒杀时间" :rules="[{ required: true, message: '请选择', trigger: 'blur' }]" >
             <el-date-picker
@@ -91,7 +90,6 @@
             <el-input v-model.number="postForm.seckillLimitNum"style="width: 60%;" placeholder="请输入秒杀限购数量" />
           </el-form-item>
           </div>
-          <!--拼团商品-->
           <div v-if="postForm.type == 3 ">
             <el-form-item label="拼团类型" prop="groupType" :rules="[{ required: true, message: '请选择', trigger: 'change' }]">
                 <el-radio-group v-model="postForm.groupType" size="small">
@@ -133,7 +131,7 @@
                 </el-radio-group>
             </el-form-item>
         </div>
-      </el-card>
+      </el-card> -->
       <br>
       <el-card id="xiaoshou" class="box-card" shadow="hover">
         <div slot="header" class="clearfix">
@@ -302,6 +300,7 @@
               </el-option>
             </el-select>
             <el-button @click="$router.push('/freight/list')"size="mini" type="danger">新建模板</el-button>
+            <el-button @click="getFreightTemplate"size="mini" type="danger">刷新</el-button>
         </el-form-item>
       </el-card>
       <br>
@@ -430,6 +429,13 @@
           console.log(err)
         })
         this.groupList.push({num: null, discounts: null})
+      },
+      getFreightTemplate(){
+        getShopFreightList().then(response => {
+          this.freightOptions = response.data.list
+        }).catch(err => {
+          console.log(err)
+        })
       },
       getGoods(id) {
         getGoods({

@@ -9,20 +9,21 @@ const shopRouter = {
 	alwaysShow: true,
   meta: {
     title: '店铺管理',
-    icon: 'shop-list'
+    icon: 'shop-list',
+    roles: ['shop']
   },
   children: [
     {
       path: 'info',
       component: () => import('@/views/shop/info/index'),
       name: 'shopInfo',
-      meta: { title: '店铺资料', icon:'list', role: ['admin'] }
+      meta: { title: '店铺资料', icon:'list', roles: ['shop:info'] }
     },
     {
       path: 'source',
       component: () => import('@/views/shop/source/index'),
       name: 'source',
-      meta: { title: '店铺素材', icon:'list', role: ['admin'] }
+      meta: { title: '店铺素材', icon:'list', roles: ['shop:source'] }
     },
   ]
 }

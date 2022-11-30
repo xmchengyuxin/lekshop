@@ -181,7 +181,7 @@
 
 <script>
 import {countGoods, getOrderAddList, countNumber, getGoodsSellList, getLoginInfo} from '@/api/index'
-import { getShop } from '@/api/shop'
+import { getShopDetail } from '@/api/shop'
 import PanThumb from '@/components/PanThumb'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
@@ -268,7 +268,7 @@ export default {
         this.loginData = result
       })
 
-      getShop().then(response => {
+      getShopDetail().then(response => {
         this.shop = response.data
       })
 

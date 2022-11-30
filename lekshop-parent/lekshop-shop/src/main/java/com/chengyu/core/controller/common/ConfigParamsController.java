@@ -4,6 +4,7 @@ import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.form.ParamsSearchForm;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.model.UmsMember;
+import com.chengyu.core.model.UmsShopAccount;
 import com.chengyu.core.service.config.ParamsManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +31,9 @@ public class ConfigParamsController extends ShopBaseController {
     @ResponseBody
     @RequestMapping(value="/params/get", method= RequestMethod.GET)
     public CommonResult<Object> getParams(ParamsSearchForm form) {
-        UmsMember member = getCurrentMemberOrNull();
-        if(member != null){
+        UmsShopAccount shopAccount = getCurrentAccountOrNull();
+        if(shopAccount != null){
+            UmsMember member = memberService.getMemberById(shopAccount.getMemberId());
             form.setGroupId(member.getGroupId());
             form.setMissionConfigId(member.getMissionConfigId());
         }

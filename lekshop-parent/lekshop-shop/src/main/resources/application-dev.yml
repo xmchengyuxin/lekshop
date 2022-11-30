@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/lekshop?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
-    password: chengyu
+    password: chengyu888
     druid:
       initial-size: 5 #连接池初始化大小
       min-idle: 10 #最小空闲连接数
@@ -23,14 +23,6 @@ spring:
     password: # Redis服务器连接密码（默认为空）
     timeout: 3000ms # 连接超时时间（毫秒）
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    virtual-host: /
-    username: guest
-    password: guest
-    publisher-confirms: true #如果对异步消息需要回调必须设置为true
-  
   quartz:
     job-store-type: jdbc # quartz任务存储类型：jdbc或memory
     wait-for-jobs-to-complete-on-shutdown: true # 关闭时等待任务完成

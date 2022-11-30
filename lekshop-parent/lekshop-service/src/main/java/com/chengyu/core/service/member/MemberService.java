@@ -23,7 +23,7 @@ public interface MemberService {
 	 * @param  member
 	 * @throws ServiceException 业务异常
 	 */
-	void register(UmsMember member) throws ServiceException;
+	void register(UmsMember member, boolean isShop) throws ServiceException;
 	
 	/**
 	 * 更新用户信息

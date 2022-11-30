@@ -29,7 +29,6 @@ public class FloorMobileTemplate implements Serializable {
     @ApiModelProperty(value = "修改人")
     private String updBy;
 
-    @ApiModelProperty(value = "原始數據")
     private String oriData;
 
     private static final long serialVersionUID = 1L;
