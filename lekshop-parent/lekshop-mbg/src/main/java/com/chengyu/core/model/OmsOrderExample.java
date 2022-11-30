@@ -3125,6 +3125,256 @@ public class OmsOrderExample {
             addCriterion("upd_by not between", value1, value2, "updBy");
             return (Criteria) this;
         }
+
+        public Criteria andVerifyCodeIsNull() {
+            addCriterion("verify_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeIsNotNull() {
+            addCriterion("verify_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeEqualTo(String value) {
+            addCriterion("verify_code =", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeNotEqualTo(String value) {
+            addCriterion("verify_code <>", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeGreaterThan(String value) {
+            addCriterion("verify_code >", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("verify_code >=", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeLessThan(String value) {
+            addCriterion("verify_code <", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeLessThanOrEqualTo(String value) {
+            addCriterion("verify_code <=", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeLike(String value) {
+            addCriterion("verify_code like", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeNotLike(String value) {
+            addCriterion("verify_code not like", value, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeIn(List<String> values) {
+            addCriterion("verify_code in", values, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeNotIn(List<String> values) {
+            addCriterion("verify_code not in", values, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeBetween(String value1, String value2) {
+            addCriterion("verify_code between", value1, value2, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andVerifyCodeNotBetween(String value1, String value2) {
+            addCriterion("verify_code not between", value1, value2, "verifyCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusIsNull() {
+            addCriterion("merge_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusIsNotNull() {
+            addCriterion("merge_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusEqualTo(Integer value) {
+            addCriterion("merge_status =", value, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusNotEqualTo(Integer value) {
+            addCriterion("merge_status <>", value, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusGreaterThan(Integer value) {
+            addCriterion("merge_status >", value, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("merge_status >=", value, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusLessThan(Integer value) {
+            addCriterion("merge_status <", value, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("merge_status <=", value, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusIn(List<Integer> values) {
+            addCriterion("merge_status in", values, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusNotIn(List<Integer> values) {
+            addCriterion("merge_status not in", values, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusBetween(Integer value1, Integer value2) {
+            addCriterion("merge_status between", value1, value2, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andMergeStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("merge_status not between", value1, value2, "mergeStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingIsNull() {
+            addCriterion("self_lifting is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingIsNotNull() {
+            addCriterion("self_lifting is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingEqualTo(Integer value) {
+            addCriterion("self_lifting =", value, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingNotEqualTo(Integer value) {
+            addCriterion("self_lifting <>", value, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingGreaterThan(Integer value) {
+            addCriterion("self_lifting >", value, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingGreaterThanOrEqualTo(Integer value) {
+            addCriterion("self_lifting >=", value, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingLessThan(Integer value) {
+            addCriterion("self_lifting <", value, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingLessThanOrEqualTo(Integer value) {
+            addCriterion("self_lifting <=", value, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingIn(List<Integer> values) {
+            addCriterion("self_lifting in", values, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingNotIn(List<Integer> values) {
+            addCriterion("self_lifting not in", values, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingBetween(Integer value1, Integer value2) {
+            addCriterion("self_lifting between", value1, value2, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingNotBetween(Integer value1, Integer value2) {
+            addCriterion("self_lifting not between", value1, value2, "selfLifting");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeIsNull() {
+            addCriterion("self_lifting_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeIsNotNull() {
+            addCriterion("self_lifting_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeEqualTo(Date value) {
+            addCriterion("self_lifting_time =", value, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeNotEqualTo(Date value) {
+            addCriterion("self_lifting_time <>", value, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeGreaterThan(Date value) {
+            addCriterion("self_lifting_time >", value, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("self_lifting_time >=", value, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeLessThan(Date value) {
+            addCriterion("self_lifting_time <", value, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeLessThanOrEqualTo(Date value) {
+            addCriterion("self_lifting_time <=", value, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeIn(List<Date> values) {
+            addCriterion("self_lifting_time in", values, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeNotIn(List<Date> values) {
+            addCriterion("self_lifting_time not in", values, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeBetween(Date value1, Date value2) {
+            addCriterion("self_lifting_time between", value1, value2, "selfLiftingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelfLiftingTimeNotBetween(Date value1, Date value2) {
+            addCriterion("self_lifting_time not between", value1, value2, "selfLiftingTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

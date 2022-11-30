@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengyu.core.mapper.CustomStockCountingMapper">
+
+    <insert id="addCountingDetail">
+        insert into trade_storage_stock_counting_detail (
+        counting_id, storage_id, storage_name,
+        cate_id, cate_name, goods_id, sku_id,
+        bar_code, goods_name, sku_name, stock,
+        counting_stock, status, shop_id, shop_name)
+        values
+    <foreach collection="countingDetailList" item="item" separator="," index="index">
+        (#{countingId,jdbcType=BIGINT}, #{item.storageId,jdbcType=BIGINT}, #{item.storageName,jdbcType=VARCHAR},
+        #{item.cateId,jdbcType=BIGINT}, #{item.cateName,jdbcType=VARCHAR}, #{item.goodsId,jdbcType=BIGINT}, #{item.skuId,jdbcType=BIGINT},
+        #{item.barCode,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.skuName,jdbcType=VARCHAR}, #{item.stock,jdbcType=INTEGER},
+        #{item.countingStock,jdbcType=INTEGER}, #{item.status,jdbcType=INTEGER}, #{item.shopId,jdbcType=INTEGER}, #{item.shopName,jdbcType=VARCHAR})
+    </foreach>
+
+    </insert>
+
+</mapper>

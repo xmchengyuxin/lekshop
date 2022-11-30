@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 public class OrderResult {
 
+	private Integer memberId;
+
 	private OmsOrder order;
 	
 	private List<OmsOrderDetail> orderDetailList;

@@ -32,6 +32,12 @@ const fundRouter = {
 		  meta: { title: '充值记录', icon:'list', role: ['admin'] }
 		}, */
     {
+      path: 'order',
+      component: () => import('@/views/order/writeOff/index'),
+      name: 'orderFinance',
+      meta: { title: '订单核销',  icon:'list', roles: ['finance:writeOff'] }
+    },
+    {
       path: 'account',
       component: () => import('@/views/fund/account/index'),
       name: 'account',

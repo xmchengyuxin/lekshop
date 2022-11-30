@@ -15,6 +15,8 @@ public class OrderSearchForm {
 	private String memberName;
 	
 	private String orderNo;
+
+	private String verifyCode;
 	
 	private Integer status;
 	
@@ -31,4 +33,12 @@ public class OrderSearchForm {
 	private Integer type;
 
 	private Integer commentStatus;
+
+	private List<Integer> orderIdList;
+
+	private Integer mergeStatus;
+
+	private Integer salesId;
+
+
 }

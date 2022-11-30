@@ -90,6 +90,31 @@ export function deleteGoodsQuality(data) {
   })
 }
 
+
+export function getStockList(data) {
+  return request({
+    url: 'member/goods/getStockList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function updateStock(data) {
+  return request({
+    url: 'member/goods/updateStock',
+    method: 'post',
+    data
+  })
+}
+
+export function synStock(data) {
+  return request({
+    url: 'member/goods/synStock',
+    method: 'post',
+    data
+  })
+}
+
 export function getGoodsRelateList(data) {
   return request({
     url: 'member/goodsRelate/getList',

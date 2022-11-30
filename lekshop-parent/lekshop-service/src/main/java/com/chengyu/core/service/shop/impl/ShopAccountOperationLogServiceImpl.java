@@ -32,7 +32,7 @@ public class ShopAccountOperationLogServiceImpl implements ShopAccountOperationL
 	public void addOperationLog(UmsShopAccount account, String ip, String remark, String params) {
 		UmsShopAccountOperationLog log = new UmsShopAccountOperationLog();
 		log.setAccountId(account.getId());
-		log.setAccountName(account.getUsername());
+		log.setAccountName(account.getRealname());
 		log.setIp(ip);
 		log.setRemark(remark);
 		log.setParams(params);

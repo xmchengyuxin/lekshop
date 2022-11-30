@@ -143,11 +143,18 @@ public class OrderServiceImpl implements OrderService {
 		if(form.getType() != null){
 			criteria.andTypeEqualTo(form.getType());
 		}
+		if(CollectionUtil.isNotEmpty(form.getOrderIdList())){
+			criteria.andIdIn(form.getOrderIdList());
+		}
+		if(form.getMergeStatus() != null) {
+			criteria.andMergeStatusEqualTo(form.getMergeStatus());
+		}
 		List<OmsOrder> list = orderMapper.selectByExample(example);
 
 		List<OrderResult> orderList = new ArrayList<>();
 		for(OmsOrder order : list){
 			OrderResult orderResult = new OrderResult();
+			orderResult.setMemberId(order.getMemberId());
 			orderResult.setOrder(order);
 
 			OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
@@ -322,6 +329,8 @@ public class OrderServiceImpl implements OrderService {
 			order.setReceiveLng(address.getLng());
 			order.setReceiveLat(address.getLat());
 			order.setRemark(form.getRemark());
+			//核销码
+			order.setVerifyCode(StringUtils.get12Code());
 			order.setAddTime(now);
 			order.setUpdTime(now);
 			//判断是新客单还是老客单
@@ -540,7 +549,9 @@ public class OrderServiceImpl implements OrderService {
 		this.finishOrder(order);
 	}
 
-	private void finishOrder(OmsOrder order) throws ServiceException {
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void finishOrder(OmsOrder order) throws ServiceException {
 		ConfigOrder config = configOrderService.getConfigOrder();
 
 		OmsOrder updateOrder = new OmsOrder();

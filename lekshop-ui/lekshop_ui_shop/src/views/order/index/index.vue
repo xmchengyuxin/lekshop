@@ -96,6 +96,7 @@
 			<el-table-column label="买家" prop="memberName" align="center" width="150">
 			  <template slot-scope="scope">
 			    <span>{{ scope.row.order.memberName }}</span>
+          <el-tag type="danger" v-if="scope.row.order.selfLifting == 1">自提</el-tag>
 			  </template>
 			</el-table-column>
 			<el-table-column label="实际支付" prop="price" width="150">
@@ -156,6 +157,7 @@
         <div style="margin-bottom: 10px;">
           <span>订单号： {{order.orderNo}}</span>
           <span style="margin-left: 20px;">买家：{{order.memberName}}</span>
+          <span style="margin-left: 20px;">核销码：{{order.verifyCode}}</span>
         </div>
 
         <el-table
@@ -367,6 +369,11 @@
                     <el-tag effect="plain" v-if="scope.row.status == 2" type="info">{{ scope.row.status | statusFilter }}</el-tag>
                     <el-tag effect="plain" v-if="scope.row.status == 3" type="success">{{ scope.row.status | statusFilter }}</el-tag>
                     <el-tag effect="plain" v-if="scope.row.status == 4" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="仓库状态"  align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tag effect="plain" type="danger">{{ scope.row.mergeStatus | mergeStatusFilter }}</el-tag>
                   </template>
                 </el-table-column>
                 <el-table-column label="姓名"  align="center" width="100">
@@ -627,6 +634,21 @@ const payMethodKeyValue = payMethodOptions.reduce((acc, cur) => {
   return acc
 }, {})
 
+
+const mergeStatusOptions = [
+  { key: 0, text: '待配货' },
+  { key: 1, text: '待配货' },
+  { key: 2, text: '已配货' },
+  { key: 3, text: '已分拣' },
+  { key: 4, text: '已配货' }
+]
+
+const mergeStatusKeyValue = mergeStatusOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.text
+  return acc
+}, {})
+
+
 export default {
   name: 'orderList',
   components: { Pagination },
@@ -640,7 +662,10 @@ export default {
     },
     payMethodFilter(type) {
       return payMethodKeyValue[type]
-    }
+    },
+    mergeStatusFilter(status) {
+      return mergeStatusKeyValue[status]
+    },
 	},
   data() {
     return {

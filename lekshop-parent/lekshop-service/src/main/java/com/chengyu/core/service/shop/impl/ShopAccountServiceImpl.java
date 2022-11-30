@@ -229,7 +229,7 @@ public class ShopAccountServiceImpl implements ShopAccountService {
 	private void insertLoginLog(UmsShopAccount account, String ip) {
 		UmsShopAccountLoginLog loginLog = new UmsShopAccountLoginLog();
 		loginLog.setAccountId(account.getId());
-		loginLog.setAccountName(account.getUsername());
+		loginLog.setAccountName(account.getRealname());
 		loginLog.setAddTime(new Date());
 		loginLog.setAddBy(account.getUsername());
 		loginLog.setIp(ip);

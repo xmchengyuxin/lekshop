@@ -147,6 +147,18 @@ public class OmsOrder implements Serializable {
     @ApiModelProperty(value = "修改人")
     private String updBy;
 
+    @ApiModelProperty(value = "核销码")
+    private String verifyCode;
+
+    @ApiModelProperty(value = "配货状态>>1已合并>>2已配货>>3已分拣")
+    private Integer mergeStatus;
+
+    @ApiModelProperty(value = "是否自提")
+    private Integer selfLifting;
+
+    @ApiModelProperty(value = "自提时间")
+    private Date selfLiftingTime;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -525,6 +537,38 @@ public class OmsOrder implements Serializable {
         this.updBy = updBy;
     }
 
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
+
+    public Integer getMergeStatus() {
+        return mergeStatus;
+    }
+
+    public void setMergeStatus(Integer mergeStatus) {
+        this.mergeStatus = mergeStatus;
+    }
+
+    public Integer getSelfLifting() {
+        return selfLifting;
+    }
+
+    public void setSelfLifting(Integer selfLifting) {
+        this.selfLifting = selfLifting;
+    }
+
+    public Date getSelfLiftingTime() {
+        return selfLiftingTime;
+    }
+
+    public void setSelfLiftingTime(Date selfLiftingTime) {
+        this.selfLiftingTime = selfLiftingTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -578,6 +622,10 @@ public class OmsOrder implements Serializable {
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);
         sb.append(", updBy=").append(updBy);
+        sb.append(", verifyCode=").append(verifyCode);
+        sb.append(", mergeStatus=").append(mergeStatus);
+        sb.append(", selfLifting=").append(selfLifting);
+        sb.append(", selfLiftingTime=").append(selfLiftingTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
