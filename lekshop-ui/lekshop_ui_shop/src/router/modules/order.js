@@ -37,6 +37,12 @@ const orderRouter = {
       name: 'refundList',
       meta: { title: '退款管理', noCache: true, icon:'list', roles: ['order:refund'] }
     },
+    {
+      path: 'order',
+      component: () => import('@/views/order/writeOff/index'),
+      name: 'orderFinance',
+      meta: { title: '订单核销',  icon:'list', roles: ['order:writeOff'] }
+    },
   ]
 }
 export default orderRouter
