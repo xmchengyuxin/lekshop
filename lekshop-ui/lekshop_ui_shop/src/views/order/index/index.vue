@@ -10,7 +10,7 @@
 		</el-tabs>
     <div class="filter-container">
 			 <el-input v-model="listQuery.orderNo" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
-			 <el-input v-model="listQuery.memberName" clearable placeholder="买家" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
+			 <el-input v-model="listQuery.memberNickname" clearable placeholder="买家" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
 			 <el-select v-model="listQuery.type" placeholder="订单类型" clearable class="filter-item" style="width: 130px">
 			   <el-option v-for="item in orderTypeOptions" :key="item.key" :label="item.text" :value="item.key" />
 			 </el-select>
@@ -93,9 +93,9 @@
 
 			  </template>
 			</el-table-column>
-			<el-table-column label="买家" prop="memberName" align="center" width="150">
+			<el-table-column label="买家" prop="memberNickname" align="center" width="150">
 			  <template slot-scope="scope">
-			    <span>{{ scope.row.order.memberName }}</span>
+			    <span>{{ scope.row.order.memberNickname }}</span>
           <el-tag type="danger" v-if="scope.row.order.selfLifting == 1">自提</el-tag>
 			  </template>
 			</el-table-column>
@@ -156,7 +156,7 @@
         </div>
         <div style="margin-bottom: 10px;">
           <span>订单号： {{order.orderNo}}</span>
-          <span style="margin-left: 20px;">买家：{{order.memberName}}</span>
+          <span style="margin-left: 20px;">买家：{{order.memberNickname}}</span>
           <span style="margin-left: 20px;">核销码：{{order.verifyCode}}</span>
         </div>
 
@@ -434,7 +434,7 @@
             </div>
             <div class="flex margin-t30" style="margin-bottom: 10px;">
               <span class="flex flex-1 f-a-c">订单号： {{order.orderNo}}</span>
-              <span class="flex f-a-c flex-1" style="margin-left: 20px;">买家：{{order.memberName}}</span>
+              <span class="flex f-a-c flex-1" style="margin-left: 20px;">买家：{{order.memberNickname}}</span>
               <span class="flex f-a-c flex-1 f-j-e" style="margin-left: 20px;">下单时间：{{order.payTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
             </div>
 

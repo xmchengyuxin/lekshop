@@ -162,7 +162,7 @@ public class TradeStorageStockOrderServiceImpl implements TradeStorageStockOrder
         if(stockEdit.getEditNum() > 0){
             tradeStorageStockService.inStock(stockEdit.getEditNo(), stockEdit.getStorageId(), null, null, stockEdit.getSkuId(), stockEdit.getEditNum(), "手动修改库存");
         } else if(stockEdit.getEditNum() < 0){
-            tradeStorageStockService.outStock(stockEdit.getEditNo(), stockEdit.getStorageId(), stockEdit.getGoodsId(), stockEdit.getEditNum(), "手动修改库存");
+            tradeStorageStockService.outStock(stockEdit.getEditNo(), stockEdit.getStorageId(), stockEdit.getSkuId(), stockEdit.getEditNum(), "手动修改库存");
         }
 
         this.addOrderProcess(stockEdit.getId(), "修改库存", null);

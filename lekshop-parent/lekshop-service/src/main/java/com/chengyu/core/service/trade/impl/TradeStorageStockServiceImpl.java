@@ -97,7 +97,7 @@ public class TradeStorageStockServiceImpl implements TradeStorageStockService {
         }
         baseMapper.update("update trade_storage_stock set stock = stock-"+Math.abs(num)+" where id ="+storageStock.getId());
 
-        this.addStockLog(orderNo, CommonConstant.OUT, num, storageStock, remark);
+        this.addStockLog(orderNo, CommonConstant.OUT, Math.abs(num), storageStock, remark);
     }
 
     @Override

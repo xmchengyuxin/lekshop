@@ -22,7 +22,7 @@ const stockRouter = {
       path: 'goodsStock',
       component: () => import('@/views/goods/stock/index'),
       name: 'goodsStock',
-      meta: { title: '商城库存',  icon: 'list', roles: ['stock:shopStock'] }
+      meta: { title: '商城库存',  icon: 'list', noCache: true, roles: ['stock:shopStock'] }
     },
     {
       path: 'storage',
@@ -34,7 +34,7 @@ const stockRouter = {
       path: 'storageStock',
       component: () => import('@/views/trade/storage/stock/index'),
       name: 'storageStock',
-      meta: { title: '仓库库存',  icon: 'list', roles: ['stock:storageStock'] }
+      meta: { title: '仓库库存',  icon: 'list', noCache: true, roles: ['stock:storageStock'] }
     },
     {
       path: 'inStock',
