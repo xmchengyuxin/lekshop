@@ -47,7 +47,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepShopDayExample example = new RepShopDayExample();
-		example.setOrderByClause("add_time desc, business_amount desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("add_time desc, business_amount desc");
+		}
 		RepShopDayExample.Criteria criteria = example.createCriteria();
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());
@@ -66,7 +70,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepShopMonthExample example = new RepShopMonthExample();
-		example.setOrderByClause("add_time desc, business_amount desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("add_time desc, business_amount desc");
+		}
 		RepShopMonthExample.Criteria criteria = example.createCriteria();
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());
@@ -85,7 +93,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepPlatformDayExample example = new RepPlatformDayExample();
-		example.setOrderByClause("add_time desc, business_amount desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("add_time desc, business_amount desc");
+		}
 		RepPlatformDayExample.Criteria criteria = example.createCriteria();
 		if(form.getDateFrom() != null && form.getDateTo() != null){
 			criteria.andDayBetween(form.getDateFrom(), form.getDateTo());
@@ -98,7 +110,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepPlatformMonthExample example = new RepPlatformMonthExample();
-		example.setOrderByClause("add_time desc, business_amount desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("add_time desc, business_amount desc");
+		}
 		RepPlatformMonthExample.Criteria criteria = example.createCriteria();
 		if(form.getDateFrom() != null && form.getDateTo() != null){
 			criteria.andAddTimeBetween(form.getDateFrom(), form.getDateTo());
@@ -111,7 +127,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepPlatformGoodsDayExample example = new RepPlatformGoodsDayExample();
-		example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		}
 		RepPlatformGoodsDayExample.Criteria criteria = example.createCriteria();
 		if(form.getDateFrom() != null && form.getDateTo() != null){
 			criteria.andAddTimeBetween(form.getDateFrom(), form.getDateTo());
@@ -130,7 +150,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepPlatformGoodsMonthExample example = new RepPlatformGoodsMonthExample();
-		example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		}
 		RepPlatformGoodsMonthExample.Criteria criteria = example.createCriteria();
 		if(form.getDateFrom() != null && form.getDateTo() != null){
 			criteria.andAddTimeBetween(form.getDateFrom(), form.getDateTo());
@@ -149,7 +173,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepMemberDayExample example = new RepMemberDayExample();
-		example.setOrderByClause("add_time desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("add_time desc");
+		}
 		RepMemberDayExample.Criteria criteria = example.createCriteria();
 		if(form.getDateFrom() != null && form.getDateTo() != null){
 			criteria.andAddTimeBetween(form.getDateFrom(), form.getDateTo());
@@ -162,7 +190,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepMemberMonthExample example = new RepMemberMonthExample();
-		example.setOrderByClause("add_time desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("add_time desc");
+		}
 		RepMemberMonthExample.Criteria criteria = example.createCriteria();
 		if(form.getDateFrom() != null && form.getDateTo() != null){
 			criteria.andAddTimeBetween(form.getDateFrom(), form.getDateTo());
@@ -187,7 +219,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepShopGoodsDayExample example = new RepShopGoodsDayExample();
-		example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		}
 		RepShopGoodsDayExample.Criteria criteria = example.createCriteria();
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());
@@ -209,7 +245,11 @@ public class ReportLogServiceImpl implements ReportLogService {
 		PageHelper.startPage(page, pageSize);
 		
 		RepShopGoodsMonthExample example = new RepShopGoodsMonthExample();
-		example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		if(StringUtils.isNotBlank(form.getSort())) {
+			example.setOrderByClause(form.getSort());
+		} else {
+			example.setOrderByClause("cate_id asc, add_time desc, sell_num desc");
+		}
 		RepShopGoodsMonthExample.Criteria criteria = example.createCriteria();
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());

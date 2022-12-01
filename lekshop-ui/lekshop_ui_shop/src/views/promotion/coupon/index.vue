@@ -7,7 +7,7 @@
 		</el-tabs>
     <div class="filter-container">
 			<el-button-group>
-      <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-promotion" @click="handlePresent">发券</el-button>
+      <!-- <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-promotion" @click="handlePresent">发券</el-button> -->
       <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-claim" @click="handleFullSend">满送券</el-button>
 			<el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus" @click="handleCreate">添加</el-button>
 			<el-button class="filter-item" size="mini" type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
