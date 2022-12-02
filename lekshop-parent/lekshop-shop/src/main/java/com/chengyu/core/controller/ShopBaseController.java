@@ -74,6 +74,8 @@ public class ShopBaseController {
 			}
 			throw new ServiceException(CommonConstant.WARN_MSG, msg);
 		}
+		member.setPassword(null);
+		member.setPayPassword(null);
 		return member;
 	}
 

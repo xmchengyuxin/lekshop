@@ -96,6 +96,23 @@ public class ShopAccountController extends ShopBaseController {
         return CommonResult.success(map);
     }
 
+    @ApiOperation(value = "当前账号详情")
+    @ResponseBody
+    @RequestMapping(value = "/shopAccount/getInfo", method = RequestMethod.GET)
+    public CommonResult<UmsShopAccount> getInfo() throws ServiceException {
+        return CommonResult.success(getCurrentAccount());
+    }
+
+    @OperationLog
+    @ApiOperation(value = "修改当前账号信息")
+    @ResponseBody
+    @RequestMapping(value = "/shopAccount/updateInfo", method = RequestMethod.POST)
+    public CommonResult<String> updateInfo(UmsShopAccount shopAccount) throws ServiceException {
+        shopAccount.setId(getCurrentAccount().getId());
+        shopAccountService.updateAccount(shopAccount);
+        return CommonResult.success(null);
+    }
+
     @OperationLog
     @ApiOperation(value = "修改子账号信息")
     @ResponseBody

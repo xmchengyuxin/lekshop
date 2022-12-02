@@ -152,6 +152,22 @@ export function updateShopAccount(data) {
   })
 }
 
+export function getShopAccountInfo(query) {
+  return request({
+    url: '/member/shopAccount/getInfo',
+    method: 'get',
+    params: query
+  })
+}
+
+export function updateShopAccountInfo(data) {
+  return request({
+    url: '/member/shopAccount/updateInfo',
+    method: 'post',
+    data
+  })
+}
+
 export function register(data) {
   return request({
     url: '/member/shopAccount/register',

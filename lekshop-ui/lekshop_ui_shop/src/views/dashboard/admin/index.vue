@@ -173,6 +173,15 @@
       </el-col>
     </el-row> -->
 
+    <el-dialog
+      title="LEKSHOP B2B2C商城系统 v3.0 全新改版, 隆重归来"
+      :visible.sync="centerDialogVisible"
+      width="40%"
+      center>
+      <span>非常感谢新老客户的鼎力支持</span>
+    </el-dialog>
+
+
     <audio src="https://qiniuvideo.wurun.net/appoint_order.wav" id="audio-tip"></audio>
     <audio src="https://qiniuvideo.wurun.net/order_sound_exception.ogg" id="audio-exception"></audio>
 
@@ -249,10 +258,12 @@ export default {
       loginData:{},
       platformIncome: 0,
       goodsSellList: [],
-      shop: {}
+      shop: {},
+      centerDialogVisible: false
     }
   },
 	created() {
+    // this.centerDialogVisible = true;
 	  this.getInfo()
 	},
   methods: {

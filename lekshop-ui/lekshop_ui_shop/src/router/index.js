@@ -88,6 +88,13 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/info',
+    component: () => import('@/views/org/account/info'),
+    name: 'accountInfo',
+    meta: { title: '个人中心'},
+    hidden: true
+  },
+  {
     path: '',
     component: Layout,
     redirect: 'dashboard',

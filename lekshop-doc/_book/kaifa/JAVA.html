@@ -1,0 +1,638 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>后端开发规范 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="LeGreen">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-fexa/fexa.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../style/css/website.css">
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="CONTROLLER.html" />
+    
+    
+
+    
+        <link rel="shortcut icon" href='../style/imgs/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../styleimgs/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../styleimgs/favicon.ico'>
+    
+    
+        
+        <link rel="apple-touch-icon" sizes="120x120" href="../styleimgs/favicon.ico">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="../styleimgs/favicon.ico">
+        
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+	<div class="header-inner">
+		<!-- LOGO -->
+		<div class="logo"></div>
+		<span class="title"></span>
+
+		<!-- Search -->
+		
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+
+		<!-- Nav -->
+		<ul class="header-nav">
+			<li>
+				<a href="https://www.lekshop.cn" target="_blank">官网</a>
+			</li><li>
+				<a href="https://www.lekshop.cn/1325.html" target="_blank">演示站点</a>
+			</li><li>
+				<a href="http://doc.lekshop.cn/PROBLEM.html" target="">常见问题</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="book-summary">
+		<div class="book-summary-title">文档目录</div>
+		
+		
+		<nav role="navigation">
+			
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    项目介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../PROBLEM.html">
+            
+                <a href="../PROBLEM.html">
+            
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    部署文档
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../deploy/READY.html">
+            
+                <a href="../deploy/READY.html">
+            
+                    
+                    部署准备
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../deploy/CODE.html">
+            
+                <a href="../deploy/CODE.html">
+            
+                    
+                    部署程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    使用文档
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../use/PROBLEM.html">
+            
+                <a href="../use/PROBLEM.html">
+            
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" >
+            
+                <span>
+            
+                    
+                    运营后台
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" >
+            
+                <span>
+            
+                    
+                    店铺后台
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" >
+            
+                <span>
+            
+                    
+                    移动端
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    开发文档
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.5.1" data-path="JAVA.html">
+            
+                <a href="JAVA.html">
+            
+                    
+                    后端开发规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="CONTROLLER.html">
+            
+                <a href="CONTROLLER.html">
+            
+                    
+                    控制器开发规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="VUE.html">
+            
+                <a href="VUE.html">
+            
+                    
+                    前端开发规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../CODE.html">
+            
+                <a href="../CODE.html">
+            
+                    
+                    代码结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    参数配置
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../params/WECHAT.html">
+            
+                <a href="../params/WECHAT.html">
+            
+                    
+                    微信配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../params/QINIU.html">
+            
+                <a href="../params/QINIU.html">
+            
+                    
+                    七牛云
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../params/ALI.html">
+            
+                <a href="../params/ALI.html">
+            
+                    
+                    阿里云短信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../OTHER.html">
+            
+                <a href="../OTHER.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+		</nav>
+		
+		
+	</div>
+
+	<!-- Content nav -->
+	<div class="book-anchor">
+		<div class="book-anchor-title">在这篇文章中:</div>
+		<div class="book-anchor-body">
+
+		</div>
+	</div>
+
+	<div class="book-body">
+		
+		<div class="body-inner">
+			
+			
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >后端开发规范</a>
+    </h1>
+</div>
+
+
+
+
+			<div class="page-wrapper" tabindex="-1" role="main">
+				<div class="page-inner">
+					
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+					<section class="normal markdown-section">
+						
+						<h1 id="&#x540E;&#x7AEF;&#x5F00;&#x53D1;&#x89C4;&#x8303;">&#x540E;&#x7AEF;&#x5F00;&#x53D1;&#x89C4;&#x8303;</h1>
+<h3 id="&#x9ED8;&#x8BA4;&#x89C4;&#x7EA6;">&#x9ED8;&#x8BA4;&#x89C4;&#x7EA6;</h3>
+<p>&#x4E0E;&#x963F;&#x91CC;&#x5DF4;&#x5DF4;java&#x89C4;&#x7EA6;&#x4E00;&#x81F4;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x9700;&#x8981;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;idea&#x4E2D;&#x4EE5;&#x53CA;&#x7C7B;&#x4F3C;ide&#x4E2D;&#x4E0B;&#x8F7D;&#x5BF9;&#x5E94;&#x7684;&#x963F;&#x91CC;&#x5DF4;&#x5DF4;&#x89C4;&#x7EA6;</p>
+<h3 id="&#x89C4;&#x8303;&#x6269;&#x5C55;">&#x89C4;&#x8303;&#x6269;&#x5C55;</h3>
+<ol>
+<li><p>&#x7C7B;&#x540D;&#x4F7F;&#x7528; UpperCamelCase &#x98CE;&#x683C;&#xFF1A;&#x7B2C;&#x4E00;&#x4E2A;&#x8BCD;&#x7684;&#x9996;&#x5B57;&#x6BCD;&#xFF0C;&#x4EE5;&#x53CA;&#x540E;&#x9762;&#x6BCF;&#x4E2A;&#x8BCD;&#x7684;&#x9996;&#x5B57;&#x6BCD;&#x90FD;&#x5927;&#x5199;</p>
+</li>
+<li><p>&#x65B9;&#x6CD5;&#x540D;&#x4F7F;&#x7528;lowerCamelCase&#x98CE;&#x683C;&#xFF1A;&#x7B2C;&#x4E00;&#x4E2A;&#x8BCD;&#x7684;&#x9996;&#x5B57;&#x6BCD;&#x5C0F;&#x5199;&#xFF0C;&#x540E;&#x9762;&#x6BCF;&#x4E2A;&#x8BCD;&#x7684;&#x9996;&#x5B57;&#x6BCD;&#x5927;&#x5199;&#x3002;</p>
+</li>
+<li><p>&#x5E38;&#x91CF;&#x547D;&#x540D;&#x5168;&#x90E8;&#x5927;&#x5199;&#xFF0C;&#x5355;&#x8BCD;&#x95F4;&#x7528;&#x4E0B;&#x5212;&#x7EBF;&#x9694;&#x5F00;&#x3002;</p>
+</li>
+<li><p>&#x63A7;&#x5236;&#x5668;&#x9700;&#x4EE5;&#xFF1A;Controller&#x7ED3;&#x5C3E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;GoodsController&#x3002;</p>
+</li>
+<li><p>&#x4E1A;&#x52A1;&#x5C42;&#x9700;&#x4EE5;Service&#x7ED3;&#x5C3E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;GoodsService&#x3002;</p>
+</li>
+<li><p>Mapper&#x9700;&#x4EE5;Mapper&#x7ED3;&#x5C3E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;GoodsMapper&#x3002;</p>
+</li>
+</ol>
+<h3 id="&#x6CE8;&#x91CA;&#x6A21;&#x677F;">&#x6CE8;&#x91CA;&#x6A21;&#x677F;</h3>
+<h4 id="&#x7C7B;&#x6CE8;&#x91CA;&#x6A21;&#x677F;">&#x7C7B;&#x6CE8;&#x91CA;&#x6A21;&#x677F;</h4>
+<pre><code>  /**
+    * @title  {&#x7C7B;&#x5185;&#x5BB9;}
+    * @author {&#x4F5C;&#x8005;}
+    * @date   {date}
+    */
+</code></pre><h4 id="&#x65B9;&#x6CD5;&#x6CE8;&#x91CA;&#x6A21;&#x677F;">&#x65B9;&#x6CD5;&#x6CE8;&#x91CA;&#x6A21;&#x677F;</h4>
+<pre><code>  /**
+    * {&#x65B9;&#x6CD5;&#x63CF;&#x8FF0;}
+    * @author {&#x4F5C;&#x8005;}
+    * @date   {date}
+    * @param  {&#x53C2;&#x6570;}
+    * @return {&#x8FD4;&#x56DE;&#x503C;}
+    */
+</code></pre><ol>
+<li><p>&#x4E1A;&#x52A1;&#x5C42;&#x9700;&#x4EE5;Service&#x7ED3;&#x5C3E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;GoodsService&#x3002;</p>
+</li>
+<li><p>Mapper&#x9700;&#x4EE5;Mapper&#x7ED3;&#x5C3E;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;GoodsMapper&#x3002;</p>
+</li>
+<li><p>&#x6A21;&#x578B;&#x547D;&#x540D;&#x89C4;&#x8303;</p>
+<p>i. &#x5728;lekshop-mbg &#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x7C7B;&#xFF0C;&#x5373;&#x4E3A;&#x6570;&#x636E;&#x5E93;&#x6A21;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x65E0;&#x540E;&#x7F00;&#x547D;&#x540D;&#xFF0C;&#x4F8B;&#x5982;Goods</p>
+<p>ii. &#x5728;domain.result &#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x7C7B;&#xFF0C;&#x5373;&#x4E3A;&#x54CD;&#x5E94;&#x6570;&#x636E;&#x6A21;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x540E;&#x7F00;Result&#x547D;&#x540D;&#xFF0C;&#x4F8B;&#x5982;GoodsResult&#xFF0C;&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x7528;&#x4E8E;&#x670D;&#x52A1;&#x7AEF;&#x7ED9;&#x524D;&#x7AEF;&#x7684;&#x54CD;&#x5E94;</p>
+<p>iii. &#x5728;domain.form &#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x7C7B;&#xFF0C;&#x5373;&#x4E3A;&#x4F20;&#x9012;&#x6570;&#x636E;&#x6A21;&#x578B;&#xFF0C;&#x9ED8;&#x8BA4;&#x540E;&#x7F00;Form&#x547D;&#x540D;&#xFF0C;&#x4F8B;&#x5982;GoodsForm&#xFF0C;&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x7528;&#x4E8E;&#x524D;&#x540E;&#x7AEF;&#xFF0C;&#x6216;&#x8005;&#x670D;&#x52A1;&#x4E8E;&#x670D;&#x52A1;&#x4E4B;&#x95F4;&#x4EA4;&#x4E92;&#x7684;&#x6570;&#x636E;&#x6A21;&#x578B;</p>
+</li>
+</ol>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; LEKSHOP 2022 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-12-02 16:12:31
+</span></footer>
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+						
+					</section>
+					
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+				</div>
+			</div>
+			
+		</div>
+
+		
+		
+		
+		<a href="CONTROLLER.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 控制器开发规范">
+			<i class="fa fa-angle-right"></i>
+		</a>
+		
+		
+		
+	</div>
+	<script>
+		var gitbook = gitbook || [];
+		gitbook.push(function() {
+			gitbook.page.hasChanged({"page":{"title":"后端开发规范","level":"1.5.1","depth":2,"next":{"title":"控制器开发规范","level":"1.5.2","depth":2,"path":"kaifa/CONTROLLER.md","ref":"kaifa/CONTROLLER.md","articles":[]},"previous":{"title":"开发文档","level":"1.5","depth":1,"ref":"","articles":[{"title":"后端开发规范","level":"1.5.1","depth":2,"path":"kaifa/JAVA.md","ref":"kaifa/JAVA.md","articles":[]},{"title":"控制器开发规范","level":"1.5.2","depth":2,"path":"kaifa/CONTROLLER.md","ref":"kaifa/CONTROLLER.md","articles":[]},{"title":"前端开发规范","level":"1.5.3","depth":2,"path":"kaifa/VUE.md","ref":"kaifa/VUE.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["code","pageview-count","popup","tbfed-pagefooter","favicon","search-plus","expandable-chapters","hide-element","back-to-top-button","splitter","-lunr","-search","-sharing","sharing-plus","chapter-fold","copy-code-button","theme-fexa"],"styles":{"website":"./style/css/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright © LEKSHOP 2022","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright © LEKSHOP 2022","minHeaderCount":"2","minHeaderDeep":"2"},"chapter-fold":{},"splitter":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"popup":{},"theme-fexa":{"search-placeholder":"输入关键字搜索","logo":"./style/imgs/logo.png","favicon":"./style/imgs/favicon.ico"},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"favicon":{"shortcut":"./style/imgs/favicon.ico","bookmark":"./styleimgs/favicon.ico","appleTouch":"./styleimgs/favicon.ico","appleTouchMore":{"120x120":"./styleimgs/favicon.ico","180x180":"./styleimgs/favicon.ico"}},"back-to-top-button":{},"pageview-count":{},"copy-code-button":{},"sharing":{"all":["facebook","google","linkedin","twitter","weibo","qq"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"LeGreen","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a5","margin":{"right":10,"left":10,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":true},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{"themeFexa":{"nav":[{"url":"https://www.lekshop.cn","target":"_blank","name":"官网"},{"url":"https://www.lekshop.cn/1325.html","target":"_blank","name":"演示站点"},{"url":"http://doc.lekshop.cn/PROBLEM.html","name":"常见问题"}]}},"language":"zh-hans","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null}},"gitbook":"*","description":"LEKSHOP b2b2c商城文档说明","extension":null},"file":{"path":"kaifa/JAVA.md","mtime":"2022-12-02T08:12:31.445Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-12-02T08:42:56.494Z"},"basePath":"..","book":{"language":""}});
+		});
+	</script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-fexa/fexa.js"></script>
+        
+    
+
+    </body>
+</html>
+

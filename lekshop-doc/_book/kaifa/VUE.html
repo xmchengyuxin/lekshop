@@ -1,0 +1,1827 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>前端开发规范 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="LeGreen">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-fexa/fexa.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../style/css/website.css">
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../CODE.html" />
+    
+    
+    <link rel="prev" href="CONTROLLER.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../style/imgs/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../styleimgs/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../styleimgs/favicon.ico'>
+    
+    
+        
+        <link rel="apple-touch-icon" sizes="120x120" href="../styleimgs/favicon.ico">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="../styleimgs/favicon.ico">
+        
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+	<div class="header-inner">
+		<!-- LOGO -->
+		<div class="logo"></div>
+		<span class="title"></span>
+
+		<!-- Search -->
+		
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+
+		<!-- Nav -->
+		<ul class="header-nav">
+			<li>
+				<a href="https://www.lekshop.cn" target="_blank">官网</a>
+			</li><li>
+				<a href="https://www.lekshop.cn/1325.html" target="_blank">演示站点</a>
+			</li><li>
+				<a href="http://doc.lekshop.cn/PROBLEM.html" target="">常见问题</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="book-summary">
+		<div class="book-summary-title">文档目录</div>
+		
+		
+		<nav role="navigation">
+			
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    项目介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../PROBLEM.html">
+            
+                <a href="../PROBLEM.html">
+            
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    部署文档
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../deploy/READY.html">
+            
+                <a href="../deploy/READY.html">
+            
+                    
+                    部署准备
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../deploy/CODE.html">
+            
+                <a href="../deploy/CODE.html">
+            
+                    
+                    部署程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    使用文档
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../use/PROBLEM.html">
+            
+                <a href="../use/PROBLEM.html">
+            
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" >
+            
+                <span>
+            
+                    
+                    运营后台
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" >
+            
+                <span>
+            
+                    
+                    店铺后台
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" >
+            
+                <span>
+            
+                    
+                    移动端
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    开发文档
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="JAVA.html">
+            
+                <a href="JAVA.html">
+            
+                    
+                    后端开发规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="CONTROLLER.html">
+            
+                <a href="CONTROLLER.html">
+            
+                    
+                    控制器开发规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5.3" data-path="VUE.html">
+            
+                <a href="VUE.html">
+            
+                    
+                    前端开发规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../CODE.html">
+            
+                <a href="../CODE.html">
+            
+                    
+                    代码结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    参数配置
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../params/WECHAT.html">
+            
+                <a href="../params/WECHAT.html">
+            
+                    
+                    微信配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../params/QINIU.html">
+            
+                <a href="../params/QINIU.html">
+            
+                    
+                    七牛云
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../params/ALI.html">
+            
+                <a href="../params/ALI.html">
+            
+                    
+                    阿里云短信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../OTHER.html">
+            
+                <a href="../OTHER.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+		</nav>
+		
+		
+	</div>
+
+	<!-- Content nav -->
+	<div class="book-anchor">
+		<div class="book-anchor-title">在这篇文章中:</div>
+		<div class="book-anchor-body">
+
+		</div>
+	</div>
+
+	<div class="book-body">
+		
+		<div class="body-inner">
+			
+			
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >前端开发规范</a>
+    </h1>
+</div>
+
+
+
+
+			<div class="page-wrapper" tabindex="-1" role="main">
+				<div class="page-inner">
+					
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+					<section class="normal markdown-section">
+						
+						<!-- wp:heading {"level":1} -->
+<p></p><h1 id="&#x524D;&#x7AEF;-js-&#x9879;&#x76EE;&#x5F00;&#x53D1;&#x89C4;&#x8303;">&#x524D;&#x7AEF; JS &#x9879;&#x76EE;&#x5F00;&#x53D1;&#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#%E5%89%8D%E7%AB%AF-js-%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83" target="_blank"></a></h1>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x89C4;&#x8303;&#x7684;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x7F16;&#x5199;&#x9AD8;&#x8D28;&#x91CF;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x8BA9;&#x4F60;&#x7684;&#x56E2;&#x961F;&#x6210;&#x5458;&#x6BCF;&#x5929;&#x5F97;&#x5FC3;&#x60C5;&#x90FD;&#x662F;&#x6109;&#x60A6;&#x7684;&#xFF0C;&#x5927;&#x5BB6;&#x5728;&#x4E00;&#x8D77;&#x662F;&#x5FEB;&#x4E50;&#x7684;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5F15;&#x81EA;&#x300A;&#x963F;&#x91CC;&#x89C4;&#x7EA6;&#x300B;&#x7684;&#x5F00;&#x5934;&#x7247;&#x6BB5;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p><em>----&#x73B0;&#x4EE3;&#x8F6F;&#x4EF6;&#x67B6;&#x6784;&#x7684;&#x590D;&#x6742;&#x6027;&#x9700;&#x8981;&#x534F;&#x540C;&#x5F00;&#x53D1;&#x5B8C;&#x6210;&#xFF0C;&#x5982;&#x4F55;&#x9AD8;&#x6548;&#x5730;&#x534F;&#x540C;&#x5462;&#xFF1F;&#x65E0;&#x89C4;&#x77E9;&#x4E0D;&#x6210;&#x65B9;&#x5706;&#xFF0C;&#x65E0;&#x89C4;&#x8303;&#x96BE;&#x4EE5;&#x534F;&#x540C;&#xFF0C;&#x6BD4;&#x5982;&#xFF0C;&#x5236;&#x8BA2;&#x4EA4;&#x901A;&#x6CD5;&#x89C4;&#x8868;&#x9762;&#x4E0A;&#x662F;&#x8981;&#x9650;&#x5236;&#x884C;&#x8F66;&#x6743;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4FDD;&#x969C;&#x516C;&#x4F17;&#x7684;&#x4EBA;&#x8EAB;&#x5B89;&#x5168;&#xFF0C;&#x8BD5;&#x60F3;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x9650;&#x901F;&#xFF0C;&#x6CA1;&#x6709;&#x7EA2;&#x7EFF;&#x706F;&#xFF0C;&#x8C01;&#x8FD8;&#x6562;&#x4E0A;&#x8DEF;&#x884C;&#x9A76;&#x3002;&#x5BF9;&#x8F6F;&#x4EF6;&#x6765;&#x8BF4;&#xFF0C;&#x9002;&#x5F53;&#x7684;&#x89C4;&#x8303;&#x548C;&#x6807;&#x51C6;&#x7EDD;&#x4E0D;&#x662F;&#x6D88;&#x706D;&#x4EE3;&#x7801;&#x5185;&#x5BB9;&#x7684;&#x521B;&#x9020;&#x6027;&#x3001;&#x4F18;&#x96C5;&#x6027;&#xFF0C;&#x800C;&#x662F;&#x9650;&#x5236;&#x8FC7;&#x5EA6;&#x4E2A;&#x6027;&#x5316;&#xFF0C;&#x4EE5;&#x4E00;&#x79CD;&#x666E;&#x904D;&#x8BA4;&#x53EF;&#x7684;&#x7EDF;&#x4E00;&#x65B9;&#x5F0F;&#x4E00;&#x8D77;&#x505A;&#x4E8B;&#xFF0C;&#x63D0;&#x5347;&#x534F;&#x4F5C;&#x6548;&#x7387;&#xFF0C;&#x964D;&#x4F4E;&#x6C9F;&#x901A;&#x6210;&#x672C;&#x3002;&#x4EE3;&#x7801;&#x7684;&#x5B57;&#x91CC;&#x884C;&#x95F4;&#x6D41;&#x6DCC;&#x7684;&#x662F;&#x8F6F;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x8840;&#x6DB2;&#xFF0C;&#x8D28;&#x91CF;&#x7684;&#x63D0;&#x5347;&#x662F;&#x5C3D;&#x53EF;&#x80FD;&#x5C11;&#x8E29;&#x5751;&#xFF0C;&#x675C;&#x7EDD;&#x8E29;&#x91CD;&#x590D;&#x7684;&#x5751;&#xFF0C;&#x5207;&#x5B9E;&#x63D0;&#x5347;&#x7CFB;&#x7EDF;&#x7A33;&#x5B9A;&#x6027;&#xFF0C;&#x7801;&#x51FA;&#x8D28;&#x91CF;&#x3002;</em></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":1} -->
+<p></p><h1 id="&#x4E00;&#x3001;&#x7F16;&#x7A0B;&#x89C4;&#x7EA6;">&#x4E00;&#x3001;&#x7F16;&#x7A0B;&#x89C4;&#x7EA6;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#%E4%B8%80%E3%80%81%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6" target="_blank"></a></h1>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":3} -->
+<p></p><h3 id="&#x4E00;&#x547D;&#x540D;&#x89C4;&#x8303;">(&#x4E00;)&#x547D;&#x540D;&#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#%E4%B8%80%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83" target="_blank"></a></h3>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="111-&#x9879;&#x76EE;&#x547D;&#x540D;">1.1.1 &#x9879;&#x76EE;&#x547D;&#x540D;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#111-%E9%A1%B9%E7%9B%AE%E5%91%BD%E5%90%8D" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5168;&#x90E8;&#x91C7;&#x7528;&#x5C0F;&#x5199;&#x65B9;&#x5F0F;&#xFF0C; &#x4EE5;&#x4E2D;&#x5212;&#x7EBF;&#x5206;&#x9694;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;<code>mall-management-system</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;<code>mall_management-system / mallManagementSystem</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="112-&#x76EE;&#x5F55;&#x547D;&#x540D;">1.1.2 &#x76EE;&#x5F55;&#x547D;&#x540D;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#112-%E7%9B%AE%E5%BD%95%E5%91%BD%E5%90%8D" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5168;&#x90E8;&#x91C7;&#x7528;&#x5C0F;&#x5199;&#x65B9;&#x5F0F;&#xFF0C; &#x4EE5;&#x4E2D;&#x5212;&#x7EBF;&#x5206;&#x9694;&#xFF0C;&#x6709;&#x590D;&#x6570;&#x7ED3;&#x6784;&#x65F6;&#xFF0C;&#x8981;&#x91C7;&#x7528;&#x590D;&#x6570;&#x547D;&#x540D;&#x6CD5;&#xFF0C; &#x7F29;&#x5199;&#x4E0D;&#x7528;&#x590D;&#x6570;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;&#xA0;<code>scripts / styles / components / images / utils / layouts / demo-styles / demo-scripts / img / doc</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;&#xA0;<code>script / style / demo_scripts / demoStyles / imgs / docs</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x3010;&#x7279;&#x6B8A;&#x3011;VUE &#x7684;&#x9879;&#x76EE;&#x4E2D;&#x7684; components &#x4E2D;&#x7684;&#x7EC4;&#x4EF6;&#x76EE;&#x5F55;&#xFF0C;&#x4F7F;&#x7528; kebab-case &#x547D;&#x540D;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;&#xA0;<code>head-search / page-loading / authorized / notice-icon</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;&#xA0;<code>HeadSearch / PageLoading</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x3010;&#x7279;&#x6B8A;&#x3011;VUE &#x7684;&#x9879;&#x76EE;&#x4E2D;&#x7684;&#x9664; components &#x7EC4;&#x4EF6;&#x76EE;&#x5F55;&#x5916;&#x7684;&#x6240;&#x6709;&#x76EE;&#x5F55;&#x4E5F;&#x4F7F;&#x7528; kebab-case &#x547D;&#x540D; &#x6B63;&#x4F8B;&#xFF1A;&#xA0;<code>page-one / shopping-car / user-management</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;&#xA0;<code>ShoppingCar / UserManagement</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="113-js&#x3001;css&#x3001;scss&#x3001;html&#x3001;png-&#x6587;&#x4EF6;&#x547D;&#x540D;">1.1.3 JS&#x3001;CSS&#x3001;SCSS&#x3001;HTML&#x3001;PNG &#x6587;&#x4EF6;&#x547D;&#x540D;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#113-js%E3%80%81css%E3%80%81scss%E3%80%81html%E3%80%81png-%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5168;&#x90E8;&#x91C7;&#x7528;&#x5C0F;&#x5199;&#x65B9;&#x5F0F;&#xFF0C; &#x4EE5;&#x4E2D;&#x5212;&#x7EBF;&#x5206;&#x9694;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;&#xA0;<code>render-dom.js / signup.css / index.html / company-logo.png</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;&#xA0;<code>renderDom.js / UserManagement.html</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="114-&#x547D;&#x540D;&#x4E25;&#x8C28;&#x6027;">1.1.4 &#x547D;&#x540D;&#x4E25;&#x8C28;&#x6027;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#114-%E5%91%BD%E5%90%8D%E4%B8%A5%E8%B0%A8%E6%80%A7" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x547D;&#x540D;&#x4E25;&#x7981;&#x4F7F;&#x7528;&#x62FC;&#x97F3;&#x4E0E;&#x82F1;&#x6587;&#x6DF7;&#x5408;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x66F4;&#x4E0D;&#x5141;&#x8BB8;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E2D;&#x6587;&#x7684;&#x65B9;&#x5F0F;&#x3002; &#x8BF4;&#x660E;&#xFF1A;&#x6B63;&#x786E;&#x7684;&#x82F1;&#x6587;&#x62FC;&#x5199;&#x548C;&#x8BED;&#x6CD5;&#x53EF;&#x4EE5;&#x8BA9;&#x9605;&#x8BFB;&#x8005;&#x6613;&#x4E8E;&#x7406;&#x89E3;&#xFF0C;&#x907F;&#x514D;&#x6B67;&#x4E49;&#x3002;&#x6CE8;&#x610F;&#xFF0C;&#x5373;&#x4F7F;&#x7EAF;&#x62FC;&#x97F3;&#x547D;&#x540D;&#x65B9;&#x5F0F;&#x4E5F;&#x8981;&#x907F;&#x514D;&#x91C7;&#x7528;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;<code>henan / luoyang / rmb &#x7B49;&#x56FD;&#x9645;&#x901A;&#x7528;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x53EF;&#x89C6;&#x540C;&#x82F1;&#x6587;&#x3002;</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;<code>DaZhePromotion [&#x6253;&#x6298;] / getPingfenByName() [&#x8BC4;&#x5206;] / int &#x67D0;&#x53D8;&#x91CF; = 3</code></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p><strong>&#x675C;&#x7EDD;&#x5B8C;&#x5168;&#x4E0D;&#x89C4;&#x8303;&#x7684;&#x7F29;&#x5199;&#xFF0C;&#x907F;&#x514D;&#x671B;&#x6587;&#x4E0D;&#x77E5;&#x4E49;&#xFF1A;</strong></p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;AbstractClass&#x201C;&#x7F29;&#x5199;&#x201D;&#x547D;&#x540D;&#x6210; AbsClass&#xFF1B;condition&#x201C;&#x7F29;&#x5199;&#x201D;&#x547D;&#x540D;&#x6210; condi&#xFF0C;&#x6B64;&#x7C7B;&#x968F;&#x610F;&#x7F29;&#x5199;&#x4E25;&#x91CD;&#x964D;&#x4F4E;&#x4E86;&#x4EE3;&#x7801;&#x7684;&#x53EF;&#x9605;&#x8BFB;&#x6027;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":3} -->
+<p></p><h3 id="&#x4E8C;html-&#x89C4;&#x8303;-&#xFF08;vue-template-&#x540C;&#x6837;&#x9002;&#x7528;&#xFF09;">(&#x4E8C;)HTML &#x89C4;&#x8303; &#xFF08;Vue Template &#x540C;&#x6837;&#x9002;&#x7528;&#xFF09;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#%E4%BA%8Chtml-%E8%A7%84%E8%8C%83-%EF%BC%88vue-template-%E5%90%8C%E6%A0%B7%E9%80%82%E7%94%A8%EF%BC%89" target="_blank"></a></h3>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="121-html-&#x7C7B;&#x578B;">1.2.1 HTML &#x7C7B;&#x578B;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#121-html-%E7%B1%BB%E5%9E%8B" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x63A8;&#x8350;&#x4F7F;&#x7528; HTML5 &#x7684;&#x6587;&#x6863;&#x7C7B;&#x578B;&#x7533;&#x660E;&#xFF1A; . &#xFF08;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528; text/html &#x683C;&#x5F0F;&#x7684; HTML&#x3002;&#x907F;&#x514D;&#x4F7F;&#x7528; XHTML&#x3002;XHTML &#x4EE5;&#x53CA;&#x5B83;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x6BD4;&#x5982; application/xhtml+xml &#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x7684;&#x5E94;&#x7528;&#x652F;&#x6301;&#x4E0E;&#x4F18;&#x5316;&#x7A7A;&#x95F4;&#x90FD;&#x5341;&#x5206;&#x6709;&#x9650;&#xFF09;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:list -->
+<p><ul><!-- wp:list-item --></ul></p>
+<p><li>&#x89C4;&#x5B9A;&#x5B57;&#x7B26;&#x7F16;&#x7801;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>IE &#x517C;&#x5BB9;&#x6A21;&#x5F0F;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>&#x89C4;&#x5B9A;&#x5B57;&#x7B26;&#x7F16;&#x7801;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>doctype &#x5927;&#x5199;</li>
+<!-- /wp:list-item -->&lt;/ul&gt;
+<!-- /wp:list --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot; /&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;Page title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;img src=&quot;images/company-logo.png&quot; alt=&quot;Company&quot; /&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="122-&#x7F29;&#x8FDB;">1.2.2 &#x7F29;&#x8FDB;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#122-%E7%BC%A9%E8%BF%9B" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x7F29;&#x8FDB;&#x4F7F;&#x7528; 4 &#x4E2A;&#x7A7A;&#x683C;&#xFF08;&#x4E00;&#x4E2A; tab&#xFF09;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5D4C;&#x5957;&#x7684;&#x8282;&#x70B9;&#x5E94;&#x8BE5;&#x7F29;&#x8FDB;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="123-&#x5206;&#x5757;&#x6CE8;&#x91CA;">1.2.3 &#x5206;&#x5757;&#x6CE8;&#x91CA;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#123-%E5%88%86%E5%9D%97%E6%B3%A8%E9%87%8A" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5728;&#x6BCF;&#x4E00;&#x4E2A;&#x5757;&#x72B6;&#x5143;&#x7D20;&#xFF0C;&#x5217;&#x8868;&#x5143;&#x7D20;&#x548C;&#x8868;&#x683C;&#x5143;&#x7D20;&#x540E;&#xFF0C;&#x52A0;&#x4E0A;&#x4E00;&#x5BF9; HTML &#x6CE8;&#x91CA;&#x3002;&#x6CE8;&#x91CA;&#x683C;&#x5F0F;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:image {"linkDestination":"custom"} -->
+<p><figure class="wp-block-image"><a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#" target="_blank"><img src="https://docs.pickmall.cn/development/images/header.jpg" alt=""></a></figure>
+<!-- /wp:image --></p>
+<!-- wp:paragraph -->
+<p></p><p>&lt;/body&gt;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h3 id="124-&#x8BED;&#x4E49;&#x5316;&#x6807;&#x7B7E;">1.2.4 &#x8BED;&#x4E49;&#x5316;&#x6807;&#x7B7E;</h3>
+<p>HTML5 &#x4E2D;&#x65B0;&#x589E;&#x5F88;&#x591A;&#x8BED;&#x4E49;&#x5316;&#x6807;&#x7B7E;&#xFF0C;&#x6240;&#x4EE5;&#x4F18;&#x5148;&#x4F7F;&#x7528;&#x8BED;&#x4E49;&#x5316;&#x6807;&#x7B7E;&#xFF0C;&#x907F;&#x514D;&#x4E00;&#x4E2A;&#x9875;&#x9762;&#x90FD;&#x662F; div &#x6216;&#x8005; p &#x6807;&#x7B7E;</p>
+<p>&#x6B63;&#x4F8B;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x53CD;&#x4F8B;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="125-&#x5F15;&#x53F7;">1.2.5 &#x5F15;&#x53F7;</h4>
+<p>&#x4F7F;&#x7528;&#x53CC;&#x5F15;&#x53F7;(&quot; &quot;) &#x800C;&#x4E0D;&#x662F;&#x5355;&#x5F15;&#x53F7;(&#x2019; &apos;) &#x3002;</p>
+<p>&#x6B63;&#x4F8B;&#xFF1A; <code>&quot;header&quot;</code></p>
+<p>&#x53CD;&#x4F8B;&#xFF1A; <code>&apos;header&apos;</code></p>
+<h3 id="&#x4E09;-css-&#x89C4;&#x8303;">(&#x4E09;) CSS &#x89C4;&#x8303;</h3>
+<h4 id="131-&#x547D;&#x540D;">1.3.1 &#x547D;&#x540D;</h4>
+<ul>
+<li>&#x7C7B;&#x540D;&#x4F7F;&#x7528;&#x5C0F;&#x5199;&#x5B57;&#x6BCD;&#xFF0C;&#x4EE5;&#x4E2D;&#x5212;&#x7EBF;&#x5206;&#x9694;</li>
+<li>id &#x91C7;&#x7528;&#x9A7C;&#x5CF0;&#x5F0F;&#x547D;&#x540D;</li>
+<li>scss &#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x3001;&#x51FD;&#x6570;&#x3001;&#x6DF7;&#x5408;&#x3001;placeholder &#x91C7;&#x7528;&#x9A7C;&#x5CF0;&#x5F0F;&#x547D;&#x540D;</li>
+</ul>
+<p>ID &#x548C; class &#x7684;&#x540D;&#x79F0;&#x603B;&#x662F;&#x4F7F;&#x7528;&#x53EF;&#x4EE5;&#x53CD;&#x5E94;&#x5143;&#x7D20;&#x76EE;&#x7684;&#x548C;&#x7528;&#x9014;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x6216;&#x5176;&#x4ED6;&#x901A;&#x7528;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x4EE3;&#x66FF;&#x8868;&#x8C61;&#x548C;&#x6666;&#x6DA9;&#x96BE;&#x61C2;&#x7684;&#x540D;&#x79F0;</p>
+<p>&#x4E0D;&#x63A8;&#x8350;&#xFF1A;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>.fw-800 { font-weight: 800; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>.red { color: red; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x63A8;&#x8350;:
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>.heavy { font-weight: 800; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>.important { color: red; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="132-&#x9009;&#x62E9;&#x5668;">1.3.2 &#x9009;&#x62E9;&#x5668;</h4>
+<p>1)css &#x9009;&#x62E9;&#x5668;&#x4E2D;&#x907F;&#x514D;&#x4F7F;&#x7528;&#x6807;&#x7B7E;&#x540D;
+&#x4ECE;&#x7ED3;&#x6784;&#x3001;&#x8868;&#x73B0;&#x3001;&#x884C;&#x4E3A;&#x5206;&#x79BB;&#x7684;&#x539F;&#x5219;&#x6765;&#x770B;&#xFF0C;&#x5E94;&#x8BE5;&#x5C3D;&#x91CF;&#x907F;&#x514D; css &#x4E2D;&#x51FA;&#x73B0; HTML &#x6807;&#x7B7E;&#xFF0C;&#x5E76;&#x4E14;&#x5728; css &#x9009;&#x62E9;&#x5668;&#x4E2D;&#x51FA;&#x73B0;&#x6807;&#x7B7E;&#x540D;&#x4F1A;&#x5B58;&#x5728;&#x6F5C;&#x5728;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<p>2)&#x5F88;&#x591A;&#x524D;&#x7AEF;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x5199;&#x9009;&#x62E9;&#x5668;&#x94FE;&#x7684;&#x65F6;&#x5019;&#x4E0D;&#x4F7F;&#x7528; &#x76F4;&#x63A5;&#x5B50;&#x9009;&#x62E9;&#x5668;&#xFF08;&#x6CE8;&#xFF1A;&#x76F4;&#x63A5;&#x5B50;&#x9009;&#x62E9;&#x5668;&#x548C;&#x540E;&#x4EE3;&#x9009;&#x62E9;&#x5668;&#x7684;&#x533A;&#x522B;&#xFF09;&#x3002;&#x6709;&#x65F6;&#xFF0C;&#x8FD9;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x75BC;&#x75DB;&#x7684;&#x8BBE;&#x8BA1;&#x95EE;&#x9898;&#x5E76;&#x4E14;&#x6709;&#x65F6;&#x5019;&#x53EF;&#x80FD;&#x4F1A;&#x5F88;&#x8017;&#x6027;&#x80FD;&#x3002;&#x7136;&#x800C;&#xFF0C;&#x5728;&#x4EFB;&#x4F55;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x4E0D;&#x597D;&#x7684;&#x505A;&#x6CD5;&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E0D;&#x5199;&#x5F88;&#x901A;&#x7528;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x5339;&#x914D;&#x5230; DOM &#x672B;&#x7AEF;&#x7684;&#x9009;&#x62E9;&#x5668;&#xFF0C; &#x4F60;&#x5E94;&#x8BE5;&#x603B;&#x662F;&#x8003;&#x8651;&#x76F4;&#x63A5;&#x5B50;&#x9009;&#x62E9;&#x5668;&#x3002;</p>
+<p>&#x4E0D;&#x63A8;&#x8350;:
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>.content .title { font-size: 2rem; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x63A8;&#x8350;:
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>.content &gt; .title { font-size: 2rem; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="133-&#x5C3D;&#x91CF;&#x4F7F;&#x7528;&#x7F29;&#x5199;&#x5C5E;&#x6027;">1.3.3 &#x5C3D;&#x91CF;&#x4F7F;&#x7528;&#x7F29;&#x5199;&#x5C5E;&#x6027;</h4>
+<p>&#x4E0D;&#x63A8;&#x8350;&#xFF1A;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>border-top-style: none; font-family: palatino, georgia, serif; font-size: 100%; line-height: 1.6; padding-bottom: 2em; padding-left: 1em; padding-right: 1em; padding-top: 0;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x63A8;&#x8350;&#xFF1A;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>border-top: 0; font: 100%/1.6 palatino, georgia, serif; padding: 0 1em 2em;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="134-&#x6BCF;&#x4E2A;&#x9009;&#x62E9;&#x5668;&#x53CA;&#x5C5E;&#x6027;&#x72EC;&#x5360;&#x4E00;&#x884C;">1.3.4 &#x6BCF;&#x4E2A;&#x9009;&#x62E9;&#x5668;&#x53CA;&#x5C5E;&#x6027;&#x72EC;&#x5360;&#x4E00;&#x884C;</h4>
+<p>&#x4E0D;&#x63A8;&#x8350;&#xFF1A;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>button{ width:100px;height:50px;color:#fff;background:#00a0e9; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x63A8;&#x8350;&#xFF1A;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>button{ width:100px; height:50px; color:#fff; background:#00a0e9; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="135-&#x7701;&#x7565;0&#x540E;&#x9762;&#x7684;&#x5355;&#x4F4D;">1.3.5 &#x7701;&#x7565;0&#x540E;&#x9762;&#x7684;&#x5355;&#x4F4D;</h4>
+<p>&#x4E0D;&#x63A8;&#x8350;&#xFF1A;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>div{ padding-bottom: 0px; margin: 0em; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x63A8;&#x8350;&#xFF1A;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>div{ padding-bottom: 0; margin: 0; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="136-&#x907F;&#x514D;&#x4F7F;&#x7528;id&#x9009;&#x62E9;&#x5668;&#x53CA;&#x5168;&#x5C40;&#x6807;&#x7B7E;&#x9009;&#x62E9;&#x5668;&#x9632;&#x6B62;&#x6C61;&#x67D3;&#x5168;&#x5C40;&#x6837;&#x5F0F;">1.3.6 &#x907F;&#x514D;&#x4F7F;&#x7528;ID&#x9009;&#x62E9;&#x5668;&#x53CA;&#x5168;&#x5C40;&#x6807;&#x7B7E;&#x9009;&#x62E9;&#x5668;&#x9632;&#x6B62;&#x6C61;&#x67D3;&#x5168;&#x5C40;&#x6837;&#x5F0F;</h4>
+<p>&#x4E0D;&#x63A8;&#x8350;&#xFF1A;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":1} -->
+<p></p><h1 id="header">header{<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#header" target="_blank"></a></h1>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>padding-bottom: 0px; margin: 0em; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x63A8;&#x8350;&#xFF1A;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>.header{ padding-bottom: 0px; margin: 0em; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h3 id="&#x56DB;-less-&#x89C4;&#x8303;">(&#x56DB;) LESS &#x89C4;&#x8303;</h3>
+<h4 id="141-&#x4EE3;&#x7801;&#x7EC4;&#x7EC7;">1.4.1 &#x4EE3;&#x7801;&#x7EC4;&#x7EC7;</h4>
+<h5 id="1&#x5C06;&#x516C;&#x5171;less&#x6587;&#x4EF6;&#x653E;&#x7F6E;&#x5728;stylelesscommon&#x6587;&#x4EF6;&#x5939;">1)&#x5C06;&#x516C;&#x5171;less&#x6587;&#x4EF6;&#x653E;&#x7F6E;&#x5728;style/less/common&#x6587;&#x4EF6;&#x5939;</h5>
+<p>&#x4F8B;:// color.less,common.less</p>
+<h5 id="2&#x6309;&#x4EE5;&#x4E0B;&#x987A;&#x5E8F;&#x7EC4;&#x7EC7;">2)&#x6309;&#x4EE5;&#x4E0B;&#x987A;&#x5E8F;&#x7EC4;&#x7EC7;</h5>
+<p>1&#x3001;@import;
+2&#x3001;&#x53D8;&#x91CF;&#x58F0;&#x660E;;
+3&#x3001;&#x6837;&#x5F0F;&#x58F0;&#x660E;;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p>&lt;p&gt;@import &quot;mixins/size.less&quot;;&lt;/p&gt;
+<!-- /wp:paragraph --></p>
+<!-- wp:paragraph -->
+<p>&lt;p&gt;@default-text-color: #333;&lt;/p&gt;
+<!-- /wp:paragraph --></p>
+<!-- wp:paragraph -->
+<p></p><p>.page { width: 960px; margin: 0 auto; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="142-&#x907F;&#x514D;&#x5D4C;&#x5957;&#x5C42;&#x7EA7;&#x8FC7;&#x591A;">1.4.2 &#x907F;&#x514D;&#x5D4C;&#x5957;&#x5C42;&#x7EA7;&#x8FC7;&#x591A;</h4>
+<p>&#x5C06;&#x5D4C;&#x5957;&#x6DF1;&#x5EA6;&#x9650;&#x5236;&#x5728;3&#x7EA7;&#x3002;&#x5BF9;&#x4E8E;&#x8D85;&#x8FC7;4&#x7EA7;&#x7684;&#x5D4C;&#x5957;&#xFF0C;&#x7ED9;&#x4E88;&#x91CD;&#x65B0;&#x8BC4;&#x4F30;&#x3002;&#x8FD9;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x51FA;&#x73B0;&#x8FC7;&#x4E8E;&#x8BE6;&#x5B9E;&#x7684;CSS&#x9009;&#x62E9;&#x5668;&#x3002;
+&#x907F;&#x514D;&#x5927;&#x91CF;&#x7684;&#x5D4C;&#x5957;&#x89C4;&#x5219;&#x3002;&#x5F53;&#x53EF;&#x8BFB;&#x6027;&#x53D7;&#x5230;&#x5F71;&#x54CD;&#x65F6;&#xFF0C;&#x5C06;&#x4E4B;&#x6253;&#x65AD;&#x3002;&#x63A8;&#x8350;&#x907F;&#x514D;&#x51FA;&#x73B0;&#x591A;&#x4E8E;20&#x884C;&#x7684;&#x5D4C;&#x5957;&#x89C4;&#x5219;&#x51FA;&#x73B0;</p>
+<p>&#x4E0D;&#x63A8;&#x8350;&#xFF1A;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>.main{ .title{ .name{ color:#fff } } }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x63A8;&#x8350;&#xFF1A;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>.main-title{ .name{ color:#fff } }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h3 id="&#x4E94;-javascript-&#x89C4;&#x8303;">(&#x4E94;) Javascript &#x89C4;&#x8303;</h3>
+<h4 id="151-&#x547D;&#x540D;">1.5.1 &#x547D;&#x540D;</h4>
+<h5 id="1-&#x91C7;&#x7528;&#x5C0F;&#x5199;&#x9A7C;&#x5CF0;&#x547D;&#x540D;-lowercamelcase&#xFF0C;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x547D;&#x540D;&#x5747;&#x4E0D;&#x80FD;&#x4EE5;&#x4E0B;&#x5212;&#x7EBF;&#xFF0C;&#x4E5F;&#x4E0D;&#x80FD;&#x4EE5;&#x4E0B;&#x5212;&#x7EBF;&#x6216;&#x7F8E;&#x5143;&#x7B26;&#x53F7;&#x7ED3;&#x675F;">1) &#x91C7;&#x7528;&#x5C0F;&#x5199;&#x9A7C;&#x5CF0;&#x547D;&#x540D; lowerCamelCase&#xFF0C;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x547D;&#x540D;&#x5747;&#x4E0D;&#x80FD;&#x4EE5;&#x4E0B;&#x5212;&#x7EBF;&#xFF0C;&#x4E5F;&#x4E0D;&#x80FD;&#x4EE5;&#x4E0B;&#x5212;&#x7EBF;&#x6216;&#x7F8E;&#x5143;&#x7B26;&#x53F7;&#x7ED3;&#x675F;</h5>
+<p>&#x53CD;&#x4F8B;&#xFF1A; <code>_name / name_ / name$</code></p>
+<h5 id="2-&#x65B9;&#x6CD5;&#x540D;&#x3001;&#x53C2;&#x6570;&#x540D;&#x3001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x3001;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x90FD;&#x7EDF;&#x4E00;&#x4F7F;&#x7528;-lowercamelcase-&#x98CE;&#x683C;&#xFF0C;&#x5FC5;&#x987B;&#x9075;&#x4ECE;&#x9A7C;&#x5CF0;&#x5F62;&#x5F0F;&#x3002;">2) &#x65B9;&#x6CD5;&#x540D;&#x3001;&#x53C2;&#x6570;&#x540D;&#x3001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x3001;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x90FD;&#x7EDF;&#x4E00;&#x4F7F;&#x7528; lowerCamelCase &#x98CE;&#x683C;&#xFF0C;&#x5FC5;&#x987B;&#x9075;&#x4ECE;&#x9A7C;&#x5CF0;&#x5F62;&#x5F0F;&#x3002;</h5>
+<p>&#x6B63;&#x4F8B;&#xFF1A; <code>localValue / getHttpMessage() / inputUserId</code></p>
+<p><strong><strong>&#x5176;&#x4E2D; method &#x65B9;&#x6CD5;&#x547D;&#x540D;&#x5FC5;&#x987B;&#x662F; &#x52A8;&#x8BCD; &#x6216;&#x8005; &#x52A8;&#x8BCD;+&#x540D;&#x8BCD; &#x5F62;&#x5F0F;\</strong></strong></p>
+<p>&#x6B63;&#x4F8B;&#xFF1A;<code>saveShopCarData /openShopCarInfoDialog</code></p>
+<p>&#x53CD;&#x4F8B;&#xFF1A;<code>save / open / show / go</code></p>
+<p><strong><em>&#x7279;&#x6B64;&#x8BF4;&#x660E;&#xFF0C;&#x589E;&#x5220;&#x67E5;&#x6539;&#xFF0C;&#x8BE6;&#x60C5;&#x7EDF;&#x4E00;&#x4F7F;&#x7528;&#x5982;&#x4E0B; 5 &#x4E2A;&#x5355;&#x8BCD;&#xFF0C;&#x4E0D;&#x5F97;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#xFF08;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x7EDF;&#x4E00;&#x5404;&#x4E2A;&#x7AEF;&#xFF09;</em></strong>
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>add / update / delete / detail / get</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+**&#x9644;&#xFF1A; &#x51FD;&#x6570;&#x65B9;&#x6CD5;&#x5E38;&#x7528;&#x7684;&#x52A8;&#x8BCD;:**
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>get &#x83B7;&#x53D6;/set &#x8BBE;&#x7F6E;, add &#x589E;&#x52A0;/remove &#x5220;&#x9664; create &#x521B;&#x5EFA;/destory &#x79FB;&#x9664; start &#x542F;&#x52A8;/stop &#x505C;&#x6B62; open &#x6253;&#x5F00;/close &#x5173;&#x95ED;, read &#x8BFB;&#x53D6;/write &#x5199;&#x5165; load &#x8F7D;&#x5165;/save &#x4FDD;&#x5B58;, create &#x521B;&#x5EFA;/destroy &#x9500;&#x6BC1; begin &#x5F00;&#x59CB;/end &#x7ED3;&#x675F;, backup &#x5907;&#x4EFD;/restore &#x6062;&#x590D; import &#x5BFC;&#x5165;/export &#x5BFC;&#x51FA;, split &#x5206;&#x5272;/merge &#x5408;&#x5E76; inject &#x6CE8;&#x5165;/extract &#x63D0;&#x53D6;, attach &#x9644;&#x7740;/detach &#x8131;&#x79BB; bind &#x7ED1;&#x5B9A;/separate &#x5206;&#x79BB;, view &#x67E5;&#x770B;/browse &#x6D4F;&#x89C8; edit &#x7F16;&#x8F91;/modify &#x4FEE;&#x6539;, select &#x9009;&#x53D6;/mark &#x6807;&#x8BB0; copy &#x590D;&#x5236;/paste &#x7C98;&#x8D34;, undo &#x64A4;&#x9500;/redo &#x91CD;&#x505A; insert &#x63D2;&#x5165;/delete &#x79FB;&#x9664;, add &#x52A0;&#x5165;/append &#x6DFB;&#x52A0; clean &#x6E05;&#x7406;/clear &#x6E05;&#x9664;, index &#x7D22;&#x5F15;/sort &#x6392;&#x5E8F; find &#x67E5;&#x627E;/search &#x641C;&#x7D22;, increase &#x589E;&#x52A0;/decrease &#x51CF;&#x5C11; play &#x64AD;&#x653E;/pause &#x6682;&#x505C;, launch &#x542F;&#x52A8;/run &#x8FD0;&#x884C; compile &#x7F16;&#x8BD1;/execute &#x6267;&#x884C;, debug &#x8C03;&#x8BD5;/trace &#x8DDF;&#x8E2A; observe &#x89C2;&#x5BDF;/listen &#x76D1;&#x542C;, build &#x6784;&#x5EFA;/publish &#x53D1;&#x5E03; input &#x8F93;&#x5165;/output &#x8F93;&#x51FA;, encode &#x7F16;&#x7801;/decode &#x89E3;&#x7801; encrypt &#x52A0;&#x5BC6;/decrypt &#x89E3;&#x5BC6;, compress &#x538B;&#x7F29;/decompress &#x89E3;&#x538B;&#x7F29; pack &#x6253;&#x5305;/unpack &#x89E3;&#x5305;, parse &#x89E3;&#x6790;/emit &#x751F;&#x6210; connect &#x8FDE;&#x63A5;/disconnect &#x65AD;&#x5F00;, send &#x53D1;&#x9001;/receive &#x63A5;&#x6536; download &#x4E0B;&#x8F7D;/upload &#x4E0A;&#x4F20;, refresh &#x5237;&#x65B0;/synchronize &#x540C;&#x6B65; update &#x66F4;&#x65B0;/revert &#x590D;&#x539F;, lock &#x9501;&#x5B9A;/unlock &#x89E3;&#x9501; check out &#x7B7E;&#x51FA;/check in &#x7B7E;&#x5165;, submit &#x63D0;&#x4EA4;/commit &#x4EA4;&#x4ED8; push &#x63A8;/pull &#x62C9;, expand &#x5C55;&#x5F00;/collapse &#x6298;&#x53E0; begin &#x8D77;&#x59CB;/end &#x7ED3;&#x675F;, start &#x5F00;&#x59CB;/finish &#x5B8C;&#x6210; enter &#x8FDB;&#x5165;/exit &#x9000;&#x51FA;, abort &#x653E;&#x5F03;/quit &#x79BB;&#x5F00; obsolete &#x5E9F;&#x5F03;/depreciate &#x5E9F;&#x65E7;, collect &#x6536;&#x96C6;/aggregate &#x805A;&#x96C6;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h5 id="3-&#x5E38;&#x91CF;&#x547D;&#x540D;&#x5168;&#x90E8;&#x5927;&#x5199;&#xFF0C;&#x5355;&#x8BCD;&#x95F4;&#x7528;&#x4E0B;&#x5212;&#x7EBF;&#x9694;&#x5F00;&#xFF0C;&#x529B;&#x6C42;&#x8BED;&#x4E49;&#x8868;&#x8FBE;&#x5B8C;&#x6574;&#x6E05;&#x695A;&#xFF0C;&#x4E0D;&#x8981;&#x5ACC;&#x540D;&#x5B57;&#x957F;&#x3002;">3) &#x5E38;&#x91CF;&#x547D;&#x540D;&#x5168;&#x90E8;&#x5927;&#x5199;&#xFF0C;&#x5355;&#x8BCD;&#x95F4;&#x7528;&#x4E0B;&#x5212;&#x7EBF;&#x9694;&#x5F00;&#xFF0C;&#x529B;&#x6C42;&#x8BED;&#x4E49;&#x8868;&#x8FBE;&#x5B8C;&#x6574;&#x6E05;&#x695A;&#xFF0C;&#x4E0D;&#x8981;&#x5ACC;&#x540D;&#x5B57;&#x957F;&#x3002;</h5>
+<p>&#x6B63;&#x4F8B;&#xFF1A; <code>MAX_STOCK_COUNT</code></p>
+<p>&#x53CD;&#x4F8B;&#xFF1A; <code>MAX_COUNT</code></p>
+<h4 id="152-&#x4EE3;&#x7801;&#x683C;&#x5F0F;">1.5.2 &#x4EE3;&#x7801;&#x683C;&#x5F0F;</h4>
+<h5 id="1-&#x4F7F;&#x7528;-4-&#x4E2A;&#x7A7A;&#x683C;&#x8FDB;&#x884C;&#x7F29;&#x8FDB;">1) &#x4F7F;&#x7528; 4 &#x4E2A;&#x7A7A;&#x683C;&#x8FDB;&#x884C;&#x7F29;&#x8FDB;</h5>
+<p>&#x6B63;&#x4F8B;&#xFF1A;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>if (x &lt; y) { x += 10; } else { x += 1; }</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h5 id="2-&#x4E0D;&#x540C;&#x903B;&#x8F91;&#x3001;&#x4E0D;&#x540C;&#x8BED;&#x4E49;&#x3001;&#x4E0D;&#x540C;&#x4E1A;&#x52A1;&#x7684;&#x4EE3;&#x7801;&#x4E4B;&#x95F4;&#x63D2;&#x5165;&#x4E00;&#x4E2A;&#x7A7A;&#x884C;&#x5206;&#x9694;&#x5F00;&#x6765;&#x4EE5;&#x63D0;&#x5347;&#x53EF;&#x8BFB;&#x6027;&#x3002;">2) &#x4E0D;&#x540C;&#x903B;&#x8F91;&#x3001;&#x4E0D;&#x540C;&#x8BED;&#x4E49;&#x3001;&#x4E0D;&#x540C;&#x4E1A;&#x52A1;&#x7684;&#x4EE3;&#x7801;&#x4E4B;&#x95F4;&#x63D2;&#x5165;&#x4E00;&#x4E2A;&#x7A7A;&#x884C;&#x5206;&#x9694;&#x5F00;&#x6765;&#x4EE5;&#x63D0;&#x5347;&#x53EF;&#x8BFB;&#x6027;&#x3002;</h5>
+<p>&gt; &#x8BF4;&#x660E;&#xFF1A;&#x4EFB;&#x4F55;&#x60C5;&#x5F62;&#xFF0C;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x63D2;&#x5165;&#x591A;&#x4E2A;&#x7A7A;&#x884C;&#x8FDB;&#x884C;&#x9694;&#x5F00;&#x3002;</p>
+<h4 id="153-&#x5B57;&#x7B26;&#x4E32;">1.5.3 &#x5B57;&#x7B26;&#x4E32;</h4>
+<p>&#x7EDF;&#x4E00;&#x4F7F;&#x7528;&#x5355;&#x5F15;&#x53F7;(&#x2018;)&#xFF0C;&#x4E0D;&#x4F7F;&#x7528;&#x53CC;&#x5F15;&#x53F7;(&#x201C;)&#x3002;&#x8FD9;&#x5728;&#x521B;&#x5EFA; HTML &#x5B57;&#x7B26;&#x4E32;&#x975E;&#x5E38;&#x6709;&#x597D;&#x5904;&#xFF1A;</p>
+<p>&#x6B63;&#x4F8B;:
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>let str = &apos;foo&apos;; let testDiv = &apos;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&apos;;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>
+&#x53CD;&#x4F8B;:
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>let str = &apos;foo&apos;; let testDiv = &quot;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&quot;;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code></code></pre></p>
+<h4 id="154-&#x5BF9;&#x8C61;&#x58F0;&#x660E;">1.5.4 &#x5BF9;&#x8C61;&#x58F0;&#x660E;</h4>
+<h5 id="1&#x4F7F;&#x7528;&#x5B57;&#x9762;&#x503C;&#x521B;&#x5EFA;&#x5BF9;&#x8C61;">1)&#x4F7F;&#x7528;&#x5B57;&#x9762;&#x503C;&#x521B;&#x5EFA;&#x5BF9;&#x8C61;</h5>
+<p>&#x6B63;&#x4F8B;&#xFF1A; <code>let user = {};</code></p>
+<p>&#x53CD;&#x4F8B;&#xFF1A; <code>let user = new Object();</code></p>
+<h5 id="2-&#x4F7F;&#x7528;&#x5B57;&#x9762;&#x91CF;&#x6765;&#x4EE3;&#x66FF;&#x5BF9;&#x8C61;&#x6784;&#x9020;&#x5668;">2) &#x4F7F;&#x7528;&#x5B57;&#x9762;&#x91CF;&#x6765;&#x4EE3;&#x66FF;&#x5BF9;&#x8C61;&#x6784;&#x9020;&#x5668;</h5>
+<p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<p>```javascript
+var user = {
+  age: 0,
+  name: 1,
+  city: 3
+};
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>var user = new Object();
+user.age = 0;
+user.name = 0;
+user.city = 0;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="155-&#x4F7F;&#x7528;-es67">1.5.5 &#x4F7F;&#x7528; ES6,7<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#155-%E4%BD%BF%E7%94%A8-es67" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5FC5;&#x987B;&#x4F18;&#x5148;&#x4F7F;&#x7528; ES6,7 &#x4E2D;&#x65B0;&#x589E;&#x7684;&#x8BED;&#x6CD5;&#x7CD6;&#x548C;&#x51FD;&#x6570;&#x3002;&#x8FD9;&#x5C06;&#x7B80;&#x5316;&#x4F60;&#x7684;&#x7A0B;&#x5E8F;&#xFF0C;&#x5E76;&#x8BA9;&#x4F60;&#x7684;&#x4EE3;&#x7801;&#x66F4;&#x52A0;&#x7075;&#x6D3B;&#x548C;&#x53EF;&#x590D;&#x7528;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:quote -->
+<p><blockquote class="wp-block-quote"><!-- wp:paragraph --></blockquote></p>
+<p></p><p>&#x5FC5;&#x987B;&#x5F3A;&#x5236;&#x4F7F;&#x7528; ES6, ES7 &#x7684;&#x65B0;&#x8BED;&#x6CD5;&#xFF0C;&#x6BD4;&#x5982;&#x7BAD;&#x5934;&#x51FD;&#x6570;&#x3001;await/async &#xFF0C; &#x89E3;&#x6784;&#xFF0C; let &#xFF0C; for&#x2026;of &#x7B49;&#x7B49;</p>
+<!-- /wp:paragraph -->&lt;/blockquote&gt;
+<!-- /wp:quote --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="156-&#x62EC;&#x53F7;">1.5.6 &#x62EC;&#x53F7;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#156-%E6%8B%AC%E5%8F%B7" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x4E0B;&#x5217;&#x5173;&#x952E;&#x5B57;&#x540E;&#x5FC5;&#x987B;&#x6709;&#x5927;&#x62EC;&#x53F7;&#xFF08;&#x5373;&#x4F7F;&#x4EE3;&#x7801;&#x5757;&#x7684;&#x5185;&#x5BB9;&#x53EA;&#x6709;&#x4E00;&#x884C;&#xFF09;&#xFF1A;if, else, for, while, do, switch, try, catch, finally, with&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>if (condition) {
+  doSomething();
+}
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>if (condition) doSomething();
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="157-undefined-&#x5224;&#x65AD;">1.5.7 undefined &#x5224;&#x65AD;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#157-undefined-%E5%88%A4%E6%96%AD" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6C38;&#x8FDC;&#x4E0D;&#x8981;&#x76F4;&#x63A5;&#x4F7F;&#x7528; undefined &#x8FDB;&#x884C;&#x53D8;&#x91CF;&#x5224;&#x65AD;&#xFF1B;&#x4F7F;&#x7528; typeof &#x548C;&#x5B57;&#x7B26;&#x4E32;&#x2019;undefined&#x2019;&#x5BF9;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>if (typeof person === &apos;undefined&apos;) {
+    ...
+}
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>if (person === undefined) {
+    ...
+}
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="158-&#x6761;&#x4EF6;&#x5224;&#x65AD;&#x548C;&#x5FAA;&#x73AF;&#x6700;&#x591A;&#x4E09;&#x5C42;">1.5.8 &#x6761;&#x4EF6;&#x5224;&#x65AD;&#x548C;&#x5FAA;&#x73AF;&#x6700;&#x591A;&#x4E09;&#x5C42;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#158-%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%E5%92%8C%E5%BE%AA%E7%8E%AF%E6%9C%80%E5%A4%9A%E4%B8%89%E5%B1%82" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6761;&#x4EF6;&#x5224;&#x65AD;&#x80FD;&#x4F7F;&#x7528;&#x4E09;&#x76EE;&#x8FD0;&#x7B97;&#x7B26;&#x548C;&#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x7B26;&#x89E3;&#x51B3;&#x7684;&#xFF0C;&#x5C31;&#x4E0D;&#x8981;&#x4F7F;&#x7528;&#x6761;&#x4EF6;&#x5224;&#x65AD;&#xFF0C;&#x4F46;&#x662F;&#x8C28;&#x8BB0;&#x4E0D;&#x8981;&#x5199;&#x592A;&#x957F;&#x7684;&#x4E09;&#x76EE;&#x8FD0;&#x7B97;&#x7B26;&#x3002;&#x5982;&#x679C;&#x8D85;&#x8FC7; 3 &#x5C42;&#x8BF7;&#x62BD;&#x6210;&#x51FD;&#x6570;&#xFF0C;&#x5E76;&#x5199;&#x6E05;&#x695A;&#x6CE8;&#x91CA;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="159-this-&#x7684;&#x8F6C;&#x6362;&#x547D;&#x540D;">1.5.9 this &#x7684;&#x8F6C;&#x6362;&#x547D;&#x540D;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#159-this-%E7%9A%84%E8%BD%AC%E6%8D%A2%E5%91%BD%E5%90%8D" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5BF9;&#x4E0A;&#x4E0B;&#x6587; this &#x7684;&#x5F15;&#x7528;&#x53EA;&#x80FD;&#x4F7F;&#x7528;&#x2019;self&#x2019;&#x6765;&#x547D;&#x540D;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="1510-&#x614E;&#x7528;-consolelog">1.5.10 &#x614E;&#x7528; console.log<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#1510-%E6%85%8E%E7%94%A8-consolelog" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x56E0; console.log &#x5927;&#x91CF;&#x4F7F;&#x7528;&#x4F1A;&#x6709;&#x6027;&#x80FD;&#x95EE;&#x9898;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x975E; webpack &#x9879;&#x76EE;&#x4E2D;&#x8C28;&#x614E;&#x4F7F;&#x7528; log &#x529F;&#x80FD;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":1} -->
+<p></p><h1 id="&#x4E8C;&#x3001;vue-&#x9879;&#x76EE;&#x89C4;&#x8303;">&#x4E8C;&#x3001;Vue &#x9879;&#x76EE;&#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#%E4%BA%8C%E3%80%81vue-%E9%A1%B9%E7%9B%AE%E8%A7%84%E8%8C%83" target="_blank"></a></h1>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":3} -->
+<p></p><h3 id="&#x4E00;-vue-&#x7F16;&#x7801;&#x57FA;&#x7840;">(&#x4E00;) Vue &#x7F16;&#x7801;&#x57FA;&#x7840;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#%E4%B8%80-vue-%E7%BC%96%E7%A0%81%E5%9F%BA%E7%A1%80" target="_blank"></a></h3>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>vue &#x9879;&#x76EE;&#x89C4;&#x8303;&#x4EE5; Vue &#x5B98;&#x65B9;&#x89C4;&#x8303; &#xFF08;<a href="https://cn.vuejs.org/v2/style-guide/%EF%BC%89" target="_blank" rel="noreferrer noopener">https://cn.vuejs.org/v2/style-guide/&#xFF09;</a>&#xA0;&#x4E2D;&#x7684; A &#x89C4;&#x8303;&#x4E3A;&#x57FA;&#x7840;&#xFF0C;&#x5728;&#x5176;&#x4E0A;&#x9762;&#x8FDB;&#x884C;&#x9879;&#x76EE;&#x5F00;&#x53D1;&#xFF0C;&#x6545;&#x6240;&#x6709;&#x4EE3;&#x7801;&#x5747;&#x9075;&#x5B88;&#x8BE5;&#x89C4;&#x8303;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:quote -->
+<p><blockquote class="wp-block-quote"><!-- wp:paragraph --></blockquote></p>
+<p></p><p>&#x8BF7;&#x4ED4;&#x4ED4;&#x7EC6;&#x7EC6;&#x9605;&#x8BFB; Vue &#x5B98;&#x65B9;&#x89C4;&#x8303;&#xFF0C;&#x5207;&#x8BB0;&#xFF0C;&#x6B64;&#x4E3A;&#x7B2C;&#x4E00;&#x6B65;&#x3002;</p>
+<!-- /wp:paragraph -->&lt;/blockquote&gt;
+<!-- /wp:quote --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="211-&#x7EC4;&#x4EF6;&#x89C4;&#x8303;">2.1.1. &#x7EC4;&#x4EF6;&#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#211-%E7%BB%84%E4%BB%B6%E8%A7%84%E8%8C%83" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="1-&#x7EC4;&#x4EF6;&#x540D;&#x4E3A;&#x591A;&#x4E2A;&#x5355;&#x8BCD;&#x3002;">1) &#x7EC4;&#x4EF6;&#x540D;&#x4E3A;&#x591A;&#x4E2A;&#x5355;&#x8BCD;&#x3002;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#1-%E7%BB%84%E4%BB%B6%E5%90%8D%E4%B8%BA%E5%A4%9A%E4%B8%AA%E5%8D%95%E8%AF%8D%E3%80%82" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x7EC4;&#x4EF6;&#x540D;&#x5E94;&#x8BE5;&#x59CB;&#x7EC8;&#x662F;&#x591A;&#x4E2A;&#x5355;&#x8BCD;&#x7EC4;&#x6210;&#xFF08;&#x5927;&#x4E8E;&#x7B49;&#x4E8E; 2&#xFF09;&#xFF0C;&#x4E14;&#x547D;&#x540D;&#x89C4;&#x8303;&#x4E3A;<code>KebabCase</code>&#x683C;&#x5F0F;&#x3002; &#x8FD9;&#x6837;&#x505A;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x8DDF;&#x73B0;&#x6709;&#x7684;&#x4EE5;&#x53CA;&#x672A;&#x6765;&#x7684; HTML &#x5143;&#x7D20;&#x76F8;&#x51B2;&#x7A81;&#xFF0C;&#x56E0;&#x4E3A;&#x6240;&#x6709;&#x7684; HTML &#x5143;&#x7D20;&#x540D;&#x79F0;&#x90FD;&#x662F;&#x5355;&#x4E2A;&#x5355;&#x8BCD;&#x7684;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>export default {
+  name: &apos;TodoItem&apos;
+  // ...
+};
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>export default {
+  name: &apos;Todo&apos;,
+  // ...
+}
+export default {
+  name: &apos;todo-item&apos;,
+  // ...
+}
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="2-&#x7EC4;&#x4EF6;&#x6587;&#x4EF6;&#x540D;&#x4E3A;-pascal-case-&#x683C;&#x5F0F;">2) &#x7EC4;&#x4EF6;&#x6587;&#x4EF6;&#x540D;&#x4E3A; pascal-case &#x683C;&#x5F0F;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#2-%E7%BB%84%E4%BB%B6%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BA-pascal-case-%E6%A0%BC%E5%BC%8F" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>components/
+|- my-component.vue
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>components/
+|- myComponent.vue
+|- MyComponent.vue
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="3-&#x57FA;&#x7840;&#x7EC4;&#x4EF6;&#x6587;&#x4EF6;&#x540D;&#x4E3A;-base-&#x5F00;&#x5934;&#xFF0C;&#x4F7F;&#x7528;&#x5B8C;&#x6574;&#x5355;&#x8BCD;&#x800C;&#x4E0D;&#x662F;&#x7F29;&#x5199;&#x3002;">3) &#x57FA;&#x7840;&#x7EC4;&#x4EF6;&#x6587;&#x4EF6;&#x540D;&#x4E3A; base &#x5F00;&#x5934;&#xFF0C;&#x4F7F;&#x7528;&#x5B8C;&#x6574;&#x5355;&#x8BCD;&#x800C;&#x4E0D;&#x662F;&#x7F29;&#x5199;&#x3002;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#3-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BA-base-%E5%BC%80%E5%A4%B4%EF%BC%8C%E4%BD%BF%E7%94%A8%E5%AE%8C%E6%95%B4%E5%8D%95%E8%AF%8D%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BC%A9%E5%86%99%E3%80%82" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>components/
+|- base-button.vue
+|- base-table.vue
+|- base-icon.vue
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>components/
+|- MyButton.vue
+|- VueTable.vue
+|- Icon.vue
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="4-&#x548C;&#x7236;&#x7EC4;&#x4EF6;&#x7D27;&#x5BC6;&#x8026;&#x5408;&#x7684;&#x5B50;&#x7EC4;&#x4EF6;&#x5E94;&#x8BE5;&#x4EE5;&#x7236;&#x7EC4;&#x4EF6;&#x540D;&#x4F5C;&#x4E3A;&#x524D;&#x7F00;&#x547D;&#x540D;">4) &#x548C;&#x7236;&#x7EC4;&#x4EF6;&#x7D27;&#x5BC6;&#x8026;&#x5408;&#x7684;&#x5B50;&#x7EC4;&#x4EF6;&#x5E94;&#x8BE5;&#x4EE5;&#x7236;&#x7EC4;&#x4EF6;&#x540D;&#x4F5C;&#x4E3A;&#x524D;&#x7F00;&#x547D;&#x540D;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#4-%E5%92%8C%E7%88%B6%E7%BB%84%E4%BB%B6%E7%B4%A7%E5%AF%86%E8%80%A6%E5%90%88%E7%9A%84%E5%AD%90%E7%BB%84%E4%BB%B6%E5%BA%94%E8%AF%A5%E4%BB%A5%E7%88%B6%E7%BB%84%E4%BB%B6%E5%90%8D%E4%BD%9C%E4%B8%BA%E5%89%8D%E7%BC%80%E5%91%BD%E5%90%8D" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>components/
+|- todo-list.vue
+|- todo-list-item.vue
+|- todo-list-item-button.vue
+|- user-profile-options.vue &#xFF08;&#x5B8C;&#x6574;&#x5355;&#x8BCD;&#xFF09;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>components/
+|- TodoList.vue
+|- TodoItem.vue
+|- TodoButton.vue
+|- UProfOpts.vue &#xFF08;&#x4F7F;&#x7528;&#x4E86;&#x7F29;&#x5199;&#xFF09;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="5-&#x5728;-template-&#x6A21;&#x7248;&#x4E2D;&#x4F7F;&#x7528;&#x7EC4;&#x4EF6;&#xFF0C;&#x5E94;&#x4F7F;&#x7528;-pascalcase-&#x6A21;&#x5F0F;&#xFF0C;&#x5E76;&#x4E14;&#x4F7F;&#x7528;&#x81EA;&#x95ED;&#x5408;&#x7EC4;&#x4EF6;&#x3002;">5) &#x5728; Template &#x6A21;&#x7248;&#x4E2D;&#x4F7F;&#x7528;&#x7EC4;&#x4EF6;&#xFF0C;&#x5E94;&#x4F7F;&#x7528; PascalCase &#x6A21;&#x5F0F;&#xFF0C;&#x5E76;&#x4E14;&#x4F7F;&#x7528;&#x81EA;&#x95ED;&#x5408;&#x7EC4;&#x4EF6;&#x3002;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#5-%E5%9C%A8-template-%E6%A8%A1%E7%89%88%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%EF%BC%8C%E5%BA%94%E4%BD%BF%E7%94%A8-pascalcase-%E6%A8%A1%E5%BC%8F%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%BD%BF%E7%94%A8%E8%87%AA%E9%97%AD%E5%90%88%E7%BB%84%E4%BB%B6%E3%80%82" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;!-- &#x5728;&#x5355;&#x6587;&#x4EF6;&#x7EC4;&#x4EF6;&#x3001;&#x5B57;&#x7B26;&#x4E32;&#x6A21;&#x677F;&#x548C; JSX &#x4E2D; --&gt;
+&lt;MyComponent /&gt;
+&lt;Row&gt;&lt;table :column=&quot;data&quot;/&gt;&lt;/Row&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;my-component /&gt; &lt;row&gt;&lt;table :column=&quot;data&quot;/&gt;&lt;/row&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="6-&#x7EC4;&#x4EF6;&#x7684;-data-&#x5FC5;&#x987B;&#x662F;&#x4E00;&#x4E2A;&#x51FD;&#x6570;">6) &#x7EC4;&#x4EF6;&#x7684; data &#x5FC5;&#x987B;&#x662F;&#x4E00;&#x4E2A;&#x51FD;&#x6570;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#6-%E7%BB%84%E4%BB%B6%E7%9A%84-data-%E5%BF%85%E9%A1%BB%E6%98%AF%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5F53;&#x5728;&#x7EC4;&#x4EF6;&#x4E2D;&#x4F7F;&#x7528; data &#x5C5E;&#x6027;&#x7684;&#x65F6;&#x5019; (&#x9664;&#x4E86; new Vue &#x5916;&#x7684;&#x4EFB;&#x4F55;&#x5730;&#x65B9;)&#xFF0C;&#x5B83;&#x7684;&#x503C;&#x5FC5;&#x987B;&#x662F;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x51FD;&#x6570;&#x3002; &#x56E0;&#x4E3A;&#x5982;&#x679C;&#x76F4;&#x63A5;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x8BDD;&#xFF0C;&#x5B50;&#x7EC4;&#x4EF6;&#x4E4B;&#x95F4;&#x7684;&#x5C5E;&#x6027;&#x503C;&#x4F1A;&#x4E92;&#x76F8;&#x5F71;&#x54CD;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>export default {
+  data () {
+    return {
+      name: &apos;jack&apos;
+    }
+  }
+}
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>export default {
+  data: {
+    name: &apos;jack&apos;
+  }
+}
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="7-prop-&#x5B9A;&#x4E49;&#x5E94;&#x8BE5;&#x5C3D;&#x91CF;&#x8BE6;&#x7EC6;">7) Prop &#x5B9A;&#x4E49;&#x5E94;&#x8BE5;&#x5C3D;&#x91CF;&#x8BE6;&#x7EC6;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#7-prop-%E5%AE%9A%E4%B9%89%E5%BA%94%E8%AF%A5%E5%B0%BD%E9%87%8F%E8%AF%A6%E7%BB%86" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:list -->
+<p><ul><!-- wp:list-item --></ul></p>
+<p><li>&#x5FC5;&#x987B;&#x4F7F;&#x7528; camelCase &#x9A7C;&#x5CF0;&#x547D;&#x540D;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>&#x5FC5;&#x987B;&#x6307;&#x5B9A;&#x7C7B;&#x578B;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>&#x5FC5;&#x987B;&#x52A0;&#x4E0A;&#x6CE8;&#x91CA;&#xFF0C;&#x8868;&#x660E;&#x5176;&#x542B;&#x4E49;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>&#x5FC5;&#x987B;&#x52A0;&#x4E0A; required &#x6216;&#x8005; default&#xFF0C;&#x4E24;&#x8005;&#x4E8C;&#x9009;&#x5176;&#x4E00;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>&#x5982;&#x679C;&#x6709;&#x4E1A;&#x52A1;&#x9700;&#x8981;&#xFF0C;&#x5FC5;&#x987B;&#x52A0;&#x4E0A; validator &#x9A8C;&#x8BC1;</li>
+<!-- /wp:list-item -->&lt;/ul&gt;
+<!-- /wp:list --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code> props: {
+  // &#x7EC4;&#x4EF6;&#x72B6;&#x6001;&#xFF0C;&#x7528;&#x4E8E;&#x63A7;&#x5236;&#x7EC4;&#x4EF6;&#x7684;&#x989C;&#x8272;
+   status: {
+     type: String,
+     required: true,
+     validator: function (value) {
+       return [
+         &apos;succ&apos;,
+         &apos;info&apos;,
+         &apos;error&apos;
+       ].indexOf(value) !== -1
+     }
+   },
+    // &#x7528;&#x6237;&#x7EA7;&#x522B;&#xFF0C;&#x7528;&#x4E8E;&#x663E;&#x793A;&#x7687;&#x51A0;&#x4E2A;&#x6570;
+   userLevel&#xFF1A;{
+      type: String,
+      required: true
+   }
+}
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="8-&#x4E3A;&#x7EC4;&#x4EF6;&#x6837;&#x5F0F;&#x8BBE;&#x7F6E;&#x4F5C;&#x7528;&#x57DF;">8) &#x4E3A;&#x7EC4;&#x4EF6;&#x6837;&#x5F0F;&#x8BBE;&#x7F6E;&#x4F5C;&#x7528;&#x57DF;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#8-%E4%B8%BA%E7%BB%84%E4%BB%B6%E6%A0%B7%E5%BC%8F%E8%AE%BE%E7%BD%AE%E4%BD%9C%E7%94%A8%E5%9F%9F" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;template&gt;
+  &lt;button class=&quot;btn btn-close&quot;&gt;X&lt;/button&gt;
+&lt;/template&gt;</code></pre></p>
+<p>&lt;!-- &#x4F7F;&#x7528; <code>scoped</code> &#x7279;&#x6027; --&gt;
+&lt;style scoped&gt;
+  .btn-close {
+    background-color: red;
+  }
+&lt;/style&gt;
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;template&gt;
+  &lt;button class=&quot;btn btn-close&quot;&gt;X&lt;/button&gt;
+&lt;/template&gt;
+&lt;!-- &#x6CA1;&#x6709;&#x4F7F;&#x7528; `scoped` &#x7279;&#x6027; --&gt;
+&lt;style&gt;
+  .btn-close {
+    background-color: red;
+  }
+&lt;/style&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="9-&#x5982;&#x679C;&#x7279;&#x6027;&#x5143;&#x7D20;&#x8F83;&#x591A;&#xFF0C;&#x5E94;&#x8BE5;&#x4E3B;&#x52A8;&#x6362;&#x884C;&#x3002;">9) &#x5982;&#x679C;&#x7279;&#x6027;&#x5143;&#x7D20;&#x8F83;&#x591A;&#xFF0C;&#x5E94;&#x8BE5;&#x4E3B;&#x52A8;&#x6362;&#x884C;&#x3002;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#9-%E5%A6%82%E6%9E%9C%E7%89%B9%E6%80%A7%E5%85%83%E7%B4%A0%E8%BE%83%E5%A4%9A%EF%BC%8C%E5%BA%94%E8%AF%A5%E4%B8%BB%E5%8A%A8%E6%8D%A2%E8%A1%8C%E3%80%82" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;MyComponent foo=&quot;a&quot; bar=&quot;b&quot; baz=&quot;c&quot;
+    foo=&quot;a&quot; bar=&quot;b&quot; baz=&quot;c&quot;
+    foo=&quot;a&quot; bar=&quot;b&quot; baz=&quot;c&quot;
+ /&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;MyComponent foo=&quot;a&quot; bar=&quot;b&quot; baz=&quot;c&quot; foo=&quot;a&quot; bar=&quot;b&quot; baz=&quot;c&quot; foo=&quot;a&quot; bar=&quot;b&quot; baz=&quot;c&quot; foo=&quot;a&quot; bar=&quot;b&quot; baz=&quot;c&quot;/&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="212-&#x6A21;&#x677F;&#x4E2D;&#x4F7F;&#x7528;&#x7B80;&#x5355;&#x7684;&#x8868;&#x8FBE;&#x5F0F;">2.1.2. &#x6A21;&#x677F;&#x4E2D;&#x4F7F;&#x7528;&#x7B80;&#x5355;&#x7684;&#x8868;&#x8FBE;&#x5F0F;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#212-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%AE%80%E5%8D%95%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x7EC4;&#x4EF6;&#x6A21;&#x677F;&#x5E94;&#x8BE5;&#x53EA;&#x5305;&#x542B;&#x7B80;&#x5355;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x590D;&#x6742;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x5219;&#x5E94;&#x8BE5;&#x91CD;&#x6784;&#x4E3A;&#x8BA1;&#x7B97;&#x5C5E;&#x6027;&#x6216;&#x65B9;&#x6CD5;&#x3002;&#x590D;&#x6742;&#x8868;&#x8FBE;&#x5F0F;&#x4F1A;&#x8BA9;&#x4F60;&#x7684;&#x6A21;&#x677F;&#x53D8;&#x5F97;&#x4E0D;&#x90A3;&#x4E48;&#x58F0;&#x660E;&#x5F0F;&#x3002;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x5C3D;&#x91CF;&#x63CF;&#x8FF0;&#x5E94;&#x8BE5;&#x51FA;&#x73B0;&#x7684;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x800C;&#x975E;&#x5982;&#x4F55;&#x8BA1;&#x7B97;&#x90A3;&#x4E2A;&#x503C;&#x3002;&#x800C;&#x4E14;&#x8BA1;&#x7B97;&#x5C5E;&#x6027;&#x548C;&#x65B9;&#x6CD5;&#x4F7F;&#x5F97;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x91CD;&#x7528;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;template&gt;
+  &lt;p&gt;&lt;/p&gt;
+&lt;/template&gt;</code></pre></p>
+<p>// &#x590D;&#x6742;&#x8868;&#x8FBE;&#x5F0F;&#x5DF2;&#x7ECF;&#x79FB;&#x5165;&#x4E00;&#x4E2A;&#x8BA1;&#x7B97;&#x5C5E;&#x6027;
+computed: {
+  normalizedFullName: function () {
+    return this.fullName.split(&apos; &apos;).map(function (word) {
+      return word[0].toUpperCase() + word.slice(1)
+    }).join(&apos; &apos;)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="213-&#x6307;&#x4EE4;&#x90FD;&#x4F7F;&#x7528;&#x7F29;&#x5199;&#x5F62;&#x5F0F;">2.1.3 &#x6307;&#x4EE4;&#x90FD;&#x4F7F;&#x7528;&#x7F29;&#x5199;&#x5F62;&#x5F0F;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#213-%E6%8C%87%E4%BB%A4%E9%83%BD%E4%BD%BF%E7%94%A8%E7%BC%A9%E5%86%99%E5%BD%A2%E5%BC%8F" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6307;&#x4EE4;&#x63A8;&#x8350;&#x90FD;&#x4F7F;&#x7528;&#x7F29;&#x5199;&#x5F62;&#x5F0F;&#xFF0C;(&#x7528; : &#x8868;&#x793A; v-bind: &#x3001;&#x7528; @ &#x8868;&#x793A; v-on: &#x548C;&#x7528; # &#x8868;&#x793A; v-slot:)</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;input
+  @input=&quot;onInput&quot;
+  @focus=&quot;onFocus&quot;
+&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;input
+  v-on:input=&quot;onInput&quot;
+  @focus=&quot;onFocus&quot;
+&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="214-&#x6807;&#x7B7E;&#x987A;&#x5E8F;&#x4FDD;&#x6301;&#x4E00;&#x81F4;">2.1.4 &#x6807;&#x7B7E;&#x987A;&#x5E8F;&#x4FDD;&#x6301;&#x4E00;&#x81F4;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#214-%E6%A0%87%E7%AD%BE%E9%A1%BA%E5%BA%8F%E4%BF%9D%E6%8C%81%E4%B8%80%E8%87%B4" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5355;&#x6587;&#x4EF6;&#x7EC4;&#x4EF6;&#x5E94;&#x8BE5;&#x603B;&#x662F;&#x8BA9;&#x6807;&#x7B7E;&#x987A;&#x5E8F;&#x4FDD;&#x6301;&#x4E3A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;template&gt;...&lt;/template&gt;
+&lt;script&gt;...&lt;/script&gt;
+&lt;style&gt;...&lt;/style&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x53CD;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>&lt;template&gt;...&lt;/template&gt;
+&lt;style&gt;...&lt;/style&gt;
+&lt;script&gt;...&lt;/script&gt;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="215-&#x5FC5;&#x987B;&#x4E3A;-v-for-&#x8BBE;&#x7F6E;&#x952E;&#x503C;-key">2.1.5 &#x5FC5;&#x987B;&#x4E3A; v-for &#x8BBE;&#x7F6E;&#x952E;&#x503C; key<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#215-%E5%BF%85%E9%A1%BB%E4%B8%BA-v-for-%E8%AE%BE%E7%BD%AE%E9%94%AE%E5%80%BC-key" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="216-v-show-&#x4E0E;-v-if-&#x9009;&#x62E9;">2.1.6 v-show &#x4E0E; v-if &#x9009;&#x62E9;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#216-v-show-%E4%B8%8E-v-if-%E9%80%89%E6%8B%A9" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x5982;&#x679C;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x975E;&#x5E38;&#x9891;&#x7E41;&#x5730;&#x5207;&#x6362;&#xFF0C;&#x4F7F;&#x7528; v-show &#xFF1B;&#x5982;&#x679C;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x6761;&#x4EF6;&#x5F88;&#x5C11;&#x6539;&#x53D8;&#xFF0C;&#x4F7F;&#x7528; v-if&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="217-script-&#x6807;&#x7B7E;&#x5185;&#x90E8;&#x7ED3;&#x6784;&#x987A;&#x5E8F;">2.1.7 script &#x6807;&#x7B7E;&#x5185;&#x90E8;&#x7ED3;&#x6784;&#x987A;&#x5E8F;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#217-script-%E6%A0%87%E7%AD%BE%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84%E9%A1%BA%E5%BA%8F" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>components &gt; props &gt; data &gt; computed &gt; watch &gt; filter &gt; &#x94A9;&#x5B50;&#x51FD;&#x6570;&#xFF08;&#x94A9;&#x5B50;&#x51FD;&#x6570;&#x6309;&#x5176;&#x6267;&#x884C;&#x987A;&#x5E8F;&#xFF09; &gt; methods</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="218-vue-router-&#x89C4;&#x8303;">2.1.8 Vue Router &#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#218-vue-router-%E8%A7%84%E8%8C%83" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="1-&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x6570;&#x636E;&#x4F20;&#x9012;&#x4F7F;&#x7528;&#x8DEF;&#x7531;&#x53C2;&#x6570;">1) &#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x6570;&#x636E;&#x4F20;&#x9012;&#x4F7F;&#x7528;&#x8DEF;&#x7531;&#x53C2;&#x6570;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#1-%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92%E4%BD%BF%E7%94%A8%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#xFF0C;&#x4F8B;&#x5982; A &#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x5230; B &#x9875;&#x9762;&#xFF0C;&#x9700;&#x8981;&#x5C06; A &#x9875;&#x9762;&#x7684;&#x6570;&#x636E;&#x4F20;&#x9012;&#x5230; B &#x9875;&#x9762;&#xFF0C;&#x63A8;&#x8350;&#x4F7F;&#x7528; &#x8DEF;&#x7531;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x4F20;&#x53C2;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5C06;&#x9700;&#x8981;&#x4F20;&#x9012;&#x7684;&#x6570;&#x636E;&#x4FDD;&#x5B58; vuex&#xFF0C;&#x7136;&#x540E;&#x5728; B &#x9875;&#x9762;&#x53D6;&#x51FA; vuex &#x7684;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x4E3A;&#x5982;&#x679C;&#x5728; B &#x9875;&#x9762;&#x5237;&#x65B0;&#x4F1A;&#x5BFC;&#x81F4; vuex &#x6570;&#x636E;&#x4E22;&#x5931;&#xFF0C;&#x5BFC;&#x81F4; B &#x9875;&#x9762;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x663E;&#x793A;&#x6570;&#x636E;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>let id = &apos; 123&apos;;
+this.$router.push({ name: &apos;userCenter&apos;, query: { id: id } });
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="2-&#x4F7F;&#x7528;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF08;&#x5EF6;&#x8FDF;&#x52A0;&#x8F7D;&#xFF09;&#x673A;&#x5236;">2) &#x4F7F;&#x7528;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF08;&#x5EF6;&#x8FDF;&#x52A0;&#x8F7D;&#xFF09;&#x673A;&#x5236;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#2-%E4%BD%BF%E7%94%A8%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD%EF%BC%88%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%EF%BC%89%E6%9C%BA%E5%88%B6" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>    {
+        path: &apos;/uploadAttachment&apos;,
+        name: &apos;uploadAttachment&apos;,
+        meta: {
+          title: &apos;&#x4E0A;&#x4F20;&#x9644;&#x4EF6;&apos;
+        },
+        component: () =&gt; import(&apos;@/view/components/uploadAttachment/index.vue&apos;)
+      },
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="3-router-&#x4E2D;&#x7684;&#x547D;&#x540D;&#x89C4;&#x8303;">3) router &#x4E2D;&#x7684;&#x547D;&#x540D;&#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#3-router-%E4%B8%AD%E7%9A%84%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>path&#x3001;childrenPoints &#x547D;&#x540D;&#x89C4;&#x8303;&#x91C7;&#x7528;<code>kebab-case</code>&#x547D;&#x540D;&#x89C4;&#x8303;&#xFF08;&#x5C3D;&#x91CF;vue&#x6587;&#x4EF6;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF0C;&#x56E0;&#x4E3A;&#x76EE;&#x5F55;&#x3001;&#x6587;&#x4EF6;&#x540D;&#x90FD;&#x662F;<code>kebab-case</code>&#xFF0C;&#x8FD9;&#x6837;&#x5F88;&#x65B9;&#x4FBF;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;&#xFF09;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>name &#x547D;&#x540D;&#x89C4;&#x8303;&#x91C7;&#x7528;<code>KebabCase</code>&#x547D;&#x540D;&#x89C4;&#x8303;&#x4E14;&#x548C;component&#x7EC4;&#x4EF6;&#x540D;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF01;&#xFF08;&#x56E0;&#x4E3A;&#x8981;&#x4FDD;&#x6301;keep-alive&#x7279;&#x6027;&#xFF0C;keep-alive&#x6309;&#x7167;component&#x7684;name&#x8FDB;&#x884C;&#x7F13;&#x5B58;&#xFF0C;&#x6240;&#x4EE5;&#x4E24;&#x8005;&#x5FC5;&#x987B;&#x9AD8;&#x5EA6;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#xFF09;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>// &#x52A8;&#x6001;&#x52A0;&#x8F7D;
+export const reload = [
+  {
+    path: &apos;/reload&apos;,
+    name: &apos;reload&apos;,
+    component: Main,
+    meta: {
+      title: &apos;&#x52A8;&#x6001;&#x52A0;&#x8F7D;&apos;,
+      icon: &apos;icon iconfont&apos;
+    },</code></pre></p>
+<pre><code>children: &amp;#91;
+  {
+    path: &apos;/reload/smart-reload-list&apos;,
+    name: &apos;SmartReloadList&apos;,
+    meta: {
+      title: &apos;SmartReload&apos;,
+      childrenPoints: &amp;#91;
+        {
+          title: &apos;&#x67E5;&#x8BE2;&apos;,
+          name: &apos;smart-reload-search&apos;
+        },
+        {
+          title: &apos;&#x6267;&#x884C;reload&apos;,
+          name: &apos;smart-reload-update&apos;
+        },
+        {
+          title: &apos;&#x67E5;&#x770B;&#x6267;&#x884C;&#x7ED3;&#x679C;&apos;,
+          name: &apos;smart-reload-result&apos;
+        }
+      ]
+    },
+    component: () =&amp;gt;
+      import(&apos;@/views/reload/smart-reload/smart-reload-list.vue&apos;)
+  }
+]
+</code></pre><p>  }
+];
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="4-router-&#x4E2D;&#x7684;-path-&#x547D;&#x540D;&#x89C4;&#x8303;">4) router &#x4E2D;&#x7684; path &#x547D;&#x540D;&#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#4-router-%E4%B8%AD%E7%9A%84-path-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>path&#x9664;&#x4E86;&#x91C7;&#x7528;<code>kebab-case</code>&#x547D;&#x540D;&#x89C4;&#x8303;&#x4EE5;&#x5916;&#xFF0C;&#x5FC5;&#x987B;&#x4EE5; / &#x5F00;&#x5934;&#xFF0C;&#x5373;&#x4F7F;&#x662F;children&#x91CC;&#x7684;path&#x4E5F;&#x8981;&#x4EE5; / &#x5F00;&#x5934;&#x3002;&#x5982;&#x4E0B;&#x793A;&#x4F8B;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x76EE;&#x7684;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x7ECF;&#x5E38;&#x6709;&#x8FD9;&#x6837;&#x7684;&#x573A;&#x666F;&#xFF1A;&#x67D0;&#x4E2A;&#x9875;&#x9762;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x8981;&#x7ACB;&#x523B;&#x627E;&#x5230;&#x8FD9;&#x4E2A;vue&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x7528;&#x4EE5;/&#x5F00;&#x5934;&#xFF0C;path&#x4E3A;parent&#x548C;children&#x7EC4;&#x6210;&#x7684;&#xFF0C;&#x53EF;&#x80FD;&#x7ECF;&#x5E38;&#x9700;&#x8981;&#x5728;router&#x6587;&#x4EF6;&#x91CC;&#x641C;&#x7D22;&#x591A;&#x6B21;&#x624D;&#x80FD;&#x627E;&#x5230;&#xFF0C;&#x800C;&#x5982;&#x679C;&#x4EE5;/&#x5F00;&#x5934;&#xFF0C;&#x5219;&#x80FD;&#x7ACB;&#x523B;&#x641C;&#x7D22;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x7EC4;&#x4EF6;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>{
+    path: &apos;/file&apos;,
+    name: &apos;File&apos;,
+    component: Main,
+    meta: {
+      title: &apos;&#x6587;&#x4EF6;&#x670D;&#x52A1;&apos;,
+      icon: &apos;ios-cloud-upload&apos;
+    },
+    children: [
+      {
+        path: &apos;/file/file-list&apos;,
+        name: &apos;FileList&apos;,
+        component: () =&gt; import(&apos;@/views/file/file-list.vue&apos;)
+      },
+      {
+        path: &apos;/file/file-add&apos;,
+        name: &apos;FileAdd&apos;,
+        component: () =&gt; import(&apos;@/views/file/file-add.vue&apos;)
+      },
+      {
+        path: &apos;/file/file-update&apos;,
+        name: &apos;FileUpdate&apos;,
+        component: () =&gt; import(&apos;@/views/file/file-update.vue&apos;)
+      }
+    ]
+  }
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":3} -->
+<p></p><h3 id="&#x4E8C;-vue-&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x89C4;&#x8303;">(&#x4E8C;) Vue &#x9879;&#x76EE;&#x76EE;&#x5F55;&#x89C4;&#x8303;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#%E4%BA%8C-vue-%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83" target="_blank"></a></h3>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="221-&#x57FA;&#x7840;">2.2.1 &#x57FA;&#x7840;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#221-%E5%9F%BA%E7%A1%80" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>vue &#x9879;&#x76EE;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x547D;&#x540D;&#x4E00;&#x5B9A;&#x8981;&#x4E0E;&#x540E;&#x7AEF;&#x547D;&#x540D;&#x7EDF;&#x4E00;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6BD4;&#x5982;&#x6743;&#x9650;&#xFF1A;&#x540E;&#x7AEF; privilege, &#x524D;&#x7AEF;&#x65E0;&#x8BBA; router , store, api &#x7B49;&#x90FD;&#x5FC5;&#x987B;&#x4F7F;&#x7528; privielege &#x5355;&#x8BCD;&#xFF01;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="222-&#x4F7F;&#x7528;-vue-cli-&#x811A;&#x624B;&#x67B6;">2.2.2 &#x4F7F;&#x7528; Vue-cli &#x811A;&#x624B;&#x67B6;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#222-%E4%BD%BF%E7%94%A8-vue-cli-%E8%84%9A%E6%89%8B%E6%9E%B6" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x4F7F;&#x7528; vue-cli3 &#x6765;&#x521D;&#x59CB;&#x5316;&#x9879;&#x76EE;&#xFF0C;&#x9879;&#x76EE;&#x540D;&#x6309;&#x7167;&#x4E0A;&#x9762;&#x7684;&#x547D;&#x540D;&#x89C4;&#x8303;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="223-&#x76EE;&#x5F55;&#x8BF4;&#x660E;">2.2.3 &#x76EE;&#x5F55;&#x8BF4;&#x660E;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#223-%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x76EE;&#x5F55;&#x540D;&#x6309;&#x7167;&#x4E0A;&#x9762;&#x7684;&#x547D;&#x540D;&#x89C4;&#x8303;&#xFF0C;&#x5176;&#x4E2D; components &#x7EC4;&#x4EF6;&#x7528;&#x5927;&#x5199;&#x9A7C;&#x5CF0;&#xFF0C;&#x5176;&#x4F59;&#x9664; components &#x7EC4;&#x4EF6;&#x76EE;&#x5F55;&#x5916;&#x7684;&#x6240;&#x6709;&#x76EE;&#x5F55;&#x5747;&#x4F7F;&#x7528; kebab-case &#x547D;&#x540D;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>src                               &#x6E90;&#x7801;&#x76EE;&#x5F55;
+|-- api                              &#x6240;&#x6709;api&#x63A5;&#x53E3;
+|-- assets                           &#x9759;&#x6001;&#x8D44;&#x6E90;&#xFF0C;images, icons, styles&#x7B49;
+|-- components                       &#x516C;&#x7528;&#x7EC4;&#x4EF6;
+|-- config                           &#x914D;&#x7F6E;&#x4FE1;&#x606F;
+|-- constants                        &#x5E38;&#x91CF;&#x4FE1;&#x606F;&#xFF0C;&#x9879;&#x76EE;&#x6240;&#x6709;Enum, &#x5168;&#x5C40;&#x5E38;&#x91CF;&#x7B49;
+|-- directives                       &#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;
+|-- filters                          &#x8FC7;&#x6EE4;&#x5668;&#xFF0C;&#x5168;&#x5C40;&#x5DE5;&#x5177;
+|-- datas                            &#x6A21;&#x62DF;&#x6570;&#x636E;&#xFF0C;&#x4E34;&#x65F6;&#x5B58;&#x653E;
+|-- lib                              &#x5916;&#x90E8;&#x5F15;&#x7528;&#x7684;&#x63D2;&#x4EF6;&#x5B58;&#x653E;&#x53CA;&#x4FEE;&#x6539;&#x6587;&#x4EF6;
+|-- mock                             &#x6A21;&#x62DF;&#x63A5;&#x53E3;&#xFF0C;&#x4E34;&#x65F6;&#x5B58;&#x653E;
+|-- plugins                          &#x63D2;&#x4EF6;&#xFF0C;&#x5168;&#x5C40;&#x4F7F;&#x7528;
+|-- router                           &#x8DEF;&#x7531;&#xFF0C;&#x7EDF;&#x4E00;&#x7BA1;&#x7406;
+|-- store                            vuex, &#x7EDF;&#x4E00;&#x7BA1;&#x7406;
+|-- themes                           &#x81EA;&#x5B9A;&#x4E49;&#x6837;&#x5F0F;&#x4E3B;&#x9898;
+|-- views                            &#x89C6;&#x56FE;&#x76EE;&#x5F55;
+|   |-- role                             role&#x6A21;&#x5757;&#x540D;
+|   |-- |-- role-list.vue                    role&#x5217;&#x8868;&#x9875;&#x9762;
+|   |-- |-- role-add.vue                     role&#x65B0;&#x5EFA;&#x9875;&#x9762;
+|   |-- |-- role-update.vue                  role&#x66F4;&#x65B0;&#x9875;&#x9762;
+|   |-- |-- index.less                      role&#x6A21;&#x5757;&#x6837;&#x5F0F;
+|   |-- |-- components                      role&#x6A21;&#x5757;&#x901A;&#x7528;&#x7EC4;&#x4EF6;&#x6587;&#x4EF6;&#x5939;
+|   |-- employee                         employee&#x6A21;&#x5757;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="1-api-&#x76EE;&#x5F55;">1) api &#x76EE;&#x5F55;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#1-api-%E7%9B%AE%E5%BD%95" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:list -->
+<p><ul><!-- wp:list-item --></ul></p>
+<p><li>&#x6587;&#x4EF6;&#x3001;&#x53D8;&#x91CF;&#x547D;&#x540D;&#x8981;&#x4E0E;&#x540E;&#x7AEF;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>&#x6B64;&#x76EE;&#x5F55;&#x5BF9;&#x5E94;&#x540E;&#x7AEF; API &#x63A5;&#x53E3;&#xFF0C;&#x6309;&#x7167;&#x540E;&#x7AEF;&#x4E00;&#x4E2A; controller &#x4E00;&#x4E2A; api js &#x6587;&#x4EF6;&#x3002;&#x82E5;&#x9879;&#x76EE;&#x8F83;&#x5927;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4E1A;&#x52A1;&#x5212;&#x5206;&#x5B50;&#x76EE;&#x5F55;&#xFF0C;&#x5E76;&#x4E0E;&#x540E;&#x7AEF;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>api &#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#x540D;&#x5B57;&#x8981;&#x4E0E;&#x540E;&#x7AEF; api url &#x5C3D;&#x91CF;&#x4FDD;&#x6301;&#x8BED;&#x4E49;&#x9AD8;&#x5EA6;&#x4E00;&#x81F4;&#x6027;&#x3002;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>&#x5BF9;&#x4E8E; api &#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x65B9;&#x6CD5;&#x8981;&#x6DFB;&#x52A0;&#x6CE8;&#x91CA;&#xFF0C;&#x6CE8;&#x91CA;&#x4E0E;&#x540E;&#x7AEF; swagger &#x6587;&#x6863;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</li>
+<!-- /wp:list-item -->&lt;/ul&gt;
+<!-- /wp:list --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B63;&#x4F8B;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x540E;&#x7AEF; url&#xFF1A; EmployeeController.java</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>/employee/add
+/employee/delete/{id}
+/employee/update
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x524D;&#x7AEF;&#xFF1A; employee.js</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>  // &#x6DFB;&#x52A0;&#x5458;&#x5DE5;
+  addEmployee: (data) =&gt; {
+    return postAxios(&apos;/employee/add&apos;, data)
+  },
+  // &#x66F4;&#x65B0;&#x5458;&#x5DE5;&#x4FE1;&#x606F;
+  updateEmployee: (data) =&gt; {
+    return postAxios(&apos;/employee/update&apos;, data)
+  },
+    // &#x5220;&#x9664;&#x5458;&#x5DE5;
+  deleteEmployee: (employeeId) =&gt; {
+    return postAxios(&apos;/employee/delete/&apos; + employeeId)
+   },
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="2-assets-&#x76EE;&#x5F55;">2) assets &#x76EE;&#x5F55;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#2-assets-%E7%9B%AE%E5%BD%95" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>assets &#x4E3A;&#x9759;&#x6001;&#x8D44;&#x6E90;&#xFF0C;&#x91CC;&#x9762;&#x5B58;&#x653E; images, styles, icons &#x7B49;&#x9759;&#x6001;&#x8D44;&#x6E90;&#xFF0C;&#x9759;&#x6001;&#x8D44;&#x6E90;&#x547D;&#x540D;&#x683C;&#x5F0F;&#x4E3A; kebab-case</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>|assets
+|-- icons
+|-- images
+|   |-- background-color.png
+|   |-- upload-header.png
+|-- styles
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="3-components-&#x76EE;&#x5F55;">3) components &#x76EE;&#x5F55;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#3-components-%E7%9B%AE%E5%BD%95" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B64;&#x76EE;&#x5F55;&#x5E94;&#x6309;&#x7167;&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x76EE;&#x5F55;&#x5212;&#x5206;&#xFF0C;&#x76EE;&#x5F55;&#x547D;&#x540D;&#x4E3A; kebab-case&#xFF0C;&#x7EC4;&#x4EF6;&#x547D;&#x540D;&#x89C4;&#x5219;&#x4E5F;&#x4E3A; kebab-case</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>|components
+|-- error-log
+|   |-- index.vue
+|   |-- index.less
+|-- markdown-editor
+|   |-- index.vue
+|   |-- index.js
+|-- kebab-case
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="4-constants-&#x76EE;&#x5F55;">4) constants &#x76EE;&#x5F55;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#4-constants-%E7%9B%AE%E5%BD%95" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6B64;&#x76EE;&#x5F55;&#x5B58;&#x653E;&#x9879;&#x76EE;&#x6240;&#x6709;&#x5E38;&#x91CF;&#xFF0C;&#x5982;&#x679C;&#x5E38;&#x91CF;&#x5728; vue &#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x8BF7;&#x4F7F;&#x7528; vue-enum &#x63D2;&#x4EF6;(<a href="https://www.npmjs.com/package/vue-enum" target="_blank" rel="noreferrer noopener">https://www.npmjs.com/package/vue-enum</a>)</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#xFF1A;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>|constants
+|-- index.js
+|-- role.js
+|-- employee.js
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x4F8B;&#x5B50;&#xFF1A; employee.js</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>export const EMPLOYEE_STATUS = {
+  NORMAL: {
+    value: 1,
+    desc: &apos;&#x6B63;&#x5E38;&apos;
+  },
+  DISABLED: {
+    value: 1,
+    desc: &apos;&#x7981;&#x7528;&apos;
+  },
+  DELETED: {
+    value: 2,
+    desc: &apos;&#x5DF2;&#x5220;&#x9664;&apos;
+  }
+};</code></pre></p>
+<p>export const EMPLOYEE_ACCOUNT_TYPE = {
+  QQ: {
+    value: 1,
+    desc: &apos;QQ&#x767B;&#x5F55;&apos;
+  },
+  WECHAT: {
+    value: 2,
+    desc: &apos;&#x5FAE;&#x4FE1;&#x767B;&#x5F55;&apos;
+  },
+  DINGDING: {
+    value: 3,
+    desc: &apos;&#x9489;&#x9489;&#x767B;&#x5F55;&apos;
+  },
+  USERNAME: {
+    value: 4,
+    desc: &apos;&#x7528;&#x6237;&#x540D;&#x5BC6;&#x7801;&#x767B;&#x5F55;&apos;
+  }
+};</p>
+<p>export default {
+  EMPLOYEE_STATUS,
+  EMPLOYEE_ACCOUNT_TYPE
+};
+&lt;/code&gt;&lt;/pre&gt;
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="5-router-&#x4E0E;-store-&#x76EE;&#x5F55;">5) router &#x4E0E; store &#x76EE;&#x5F55;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#5-router-%E4%B8%8E-store-%E7%9B%AE%E5%BD%95" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x8FD9;&#x4E24;&#x4E2A;&#x76EE;&#x5F55;&#x4E00;&#x5B9A;&#x8981;&#x5C06;&#x4E1A;&#x52A1;&#x8FDB;&#x884C;&#x62C6;&#x5206;&#xFF0C;&#x4E0D;&#x80FD;&#x653E;&#x5230;&#x4E00;&#x4E2A; js &#x6587;&#x4EF6;&#x91CC;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>router &#x5C3D;&#x91CF;&#x6309;&#x7167; views &#x4E2D;&#x7684;&#x7ED3;&#x6784;&#x4FDD;&#x6301;&#x4E00;&#x81F4;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>store &#x6309;&#x7167;&#x4E1A;&#x52A1;&#x8FDB;&#x884C;&#x62C6;&#x5206;&#x4E0D;&#x540C;&#x7684; js &#x6587;&#x4EF6;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="6-views-&#x76EE;&#x5F55;">6) views &#x76EE;&#x5F55;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#6-views-%E7%9B%AE%E5%BD%95" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:list -->
+<p><ul><!-- wp:list-item --></ul></p>
+<p><li>&#x547D;&#x540D;&#x8981;&#x4E0E;&#x540E;&#x7AEF;&#x3001;router&#x3001;api &#x7B49;&#x4FDD;&#x6301;&#x4E00;&#x81F4;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>components &#x4E2D;&#x7EC4;&#x4EF6;&#x8981;&#x4F7F;&#x7528; PascalCase &#x89C4;&#x5219;</li>
+<!-- /wp:list-item -->&lt;/ul&gt;
+<!-- /wp:list --></p>
+<!-- wp:code -->
+<p><pre class="wp-block-code"><code>|-- views                            &#x89C6;&#x56FE;&#x76EE;&#x5F55;
+|   |-- role                             role&#x6A21;&#x5757;&#x540D;
+|   |   |-- role-list.vue                    role&#x5217;&#x8868;&#x9875;&#x9762;
+|   |   |-- role-add.vue                     role&#x65B0;&#x5EFA;&#x9875;&#x9762;
+|   |   |-- role-update.vue                  role&#x66F4;&#x65B0;&#x9875;&#x9762;
+|   |   |-- index.less                      role&#x6A21;&#x5757;&#x6837;&#x5F0F;
+|   |   |-- components                      role&#x6A21;&#x5757;&#x901A;&#x7528;&#x7EC4;&#x4EF6;&#x6587;&#x4EF6;&#x5939;
+|   |   |   |-- role-header.vue                        role&#x5934;&#x90E8;&#x7EC4;&#x4EF6;
+|   |   |   |-- role-modal.vue                         role&#x5F39;&#x51FA;&#x6846;&#x7EC4;&#x4EF6;
+|   |-- employee                         employee&#x6A21;&#x5757;
+|   |-- behavior-log                      &#x884C;&#x4E3A;&#x65E5;&#x5FD7;log&#x6A21;&#x5757;
+|   |-- code-generator                    &#x4EE3;&#x7801;&#x751F;&#x6210;&#x5668;&#x6A21;&#x5757;
+</code></pre>
+<!-- /wp:code --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="224-&#x6CE8;&#x91CA;&#x8BF4;&#x660E;">2.2.4 &#x6CE8;&#x91CA;&#x8BF4;&#x660E;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#224-%E6%B3%A8%E9%87%8A%E8%AF%B4%E6%98%8E" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x6574;&#x7406;&#x5FC5;&#x987B;&#x52A0;&#x6CE8;&#x91CA;&#x7684;&#x5730;&#x65B9;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:list -->
+<p><ul><!-- wp:list-item --></ul></p>
+<p><li>&#x516C;&#x5171;&#x7EC4;&#x4EF6;&#x4F7F;&#x7528;&#x8BF4;&#x660E;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>api &#x76EE;&#x5F55;&#x7684;&#x63A5;&#x53E3; js &#x6587;&#x4EF6;&#x5FC5;&#x987B;&#x52A0;&#x6CE8;&#x91CA;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>store &#x4E2D;&#x7684; state, mutation, action &#x7B49;&#x5FC5;&#x987B;&#x52A0;&#x6CE8;&#x91CA;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>vue &#x6587;&#x4EF6;&#x4E2D;&#x7684; template &#x5FC5;&#x987B;&#x52A0;&#x6CE8;&#x91CA;&#xFF0C;&#x82E5;&#x6587;&#x4EF6;&#x8F83;&#x5927;&#x6DFB;&#x52A0; start end &#x6CE8;&#x91CA;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>vue &#x6587;&#x4EF6;&#x7684; methods&#xFF0C;&#x6BCF;&#x4E2A; method &#x5FC5;&#x987B;&#x6DFB;&#x52A0;&#x6CE8;&#x91CA;</li>
+<!-- /wp:list-item --></p>
+<!-- wp:list-item -->
+<p><li>vue &#x6587;&#x4EF6;&#x7684; data, &#x975E;&#x5E38;&#x89C1;&#x5355;&#x8BCD;&#x8981;&#x52A0;&#x6CE8;&#x91CA;</li>
+<!-- /wp:list-item -->&lt;/ul&gt;
+<!-- /wp:list --></p>
+<!-- wp:heading {"level":4} -->
+<p></p><h4 id="225-&#x5176;&#x4ED6;">2.2.5 &#x5176;&#x4ED6;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#225-%E5%85%B6%E4%BB%96" target="_blank"></a></h4>
+<!-- /wp:heading --><p></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="1-&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x624B;&#x52A8;&#x64CD;&#x4F5C;-dom">1) &#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x624B;&#x52A8;&#x64CD;&#x4F5C; DOM<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#1-%E5%B0%BD%E9%87%8F%E4%B8%8D%E8%A6%81%E6%89%8B%E5%8A%A8%E6%93%8D%E4%BD%9C-dom" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x56E0;&#x4F7F;&#x7528; vue &#x6846;&#x67B6;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x9879;&#x76EE;&#x5F00;&#x53D1;&#x4E2D;&#x5C3D;&#x91CF;&#x4F7F;&#x7528; vue &#x7684;&#x6570;&#x636E;&#x9A71;&#x52A8;&#x66F4;&#x65B0; DOM&#xFF0C;&#x5C3D;&#x91CF;&#xFF08;&#x4E0D;&#x5230;&#x4E07;&#x4E0D;&#x5F97;&#x5DF2;&#xFF09;&#x4E0D;&#x8981;&#x624B;&#x52A8;&#x64CD;&#x4F5C; DOM&#xFF0C;&#x5305;&#x62EC;&#xFF1A;&#x589E;&#x5220;&#x6539; dom &#x5143;&#x7D20;&#x3001;&#x4EE5;&#x53CA;&#x66F4;&#x6539;&#x6837;&#x5F0F;&#x3001;&#x6DFB;&#x52A0;&#x4E8B;&#x4EF6;&#x7B49;&#x3002;</p>
+<!-- /wp:paragraph --><p></p>
+<!-- wp:heading {"level":5} -->
+<p></p><h5 id="2-&#x5220;&#x9664;&#x65E0;&#x7528;&#x4EE3;&#x7801;">2) &#x5220;&#x9664;&#x65E0;&#x7528;&#x4EE3;&#x7801;<a href="https://docs.pickmall.cn/development/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.html#2-%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E4%BB%A3%E7%A0%81" target="_blank"></a></h5>
+<!-- /wp:heading --><p></p>
+<!-- wp:paragraph -->
+<p></p><p>&#x56E0;&#x4F7F;&#x7528;&#x4E86; git/svn &#x7B49;&#x4EE3;&#x7801;&#x7248;&#x672C;&#x5DE5;&#x5177;&#xFF0C;&#x5BF9;&#x4E8E;&#x65E0;&#x7528;&#x4EE3;&#x7801;&#x5FC5;&#x987B;&#x53CA;&#x65F6;&#x5220;&#x9664;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;&#x4E00;&#x4E9B;&#x8C03;&#x8BD5;&#x7684; console &#x8BED;&#x53E5;&#x3001;&#x65E0;&#x7528;&#x7684;&#x5F03;&#x7528;&#x529F;&#x80FD;&#x4EE3;&#x7801;&#x3002;</p>
+<!-- /wp:paragraph --> <p></p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; LEKSHOP 2022 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-12-02 16:25:22
+</span></footer>
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+						
+					</section>
+					
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+				</div>
+			</div>
+			
+		</div>
+
+		
+		
+		<a href="CONTROLLER.html" class="navigation navigation-prev " aria-label="Previous page: 控制器开发规范">
+			<i class="fa fa-angle-left"></i>
+		</a>
+		
+		
+		<a href="../CODE.html" class="navigation navigation-next " aria-label="Next page: 代码结构">
+			<i class="fa fa-angle-right"></i>
+		</a>
+		
+		
+		
+	</div>
+	<script>
+		var gitbook = gitbook || [];
+		gitbook.push(function() {
+			gitbook.page.hasChanged({"page":{"title":"前端开发规范","level":"1.5.3","depth":2,"next":{"title":"代码结构","level":"1.6","depth":1,"path":"CODE.md","ref":"CODE.md","articles":[]},"previous":{"title":"控制器开发规范","level":"1.5.2","depth":2,"path":"kaifa/CONTROLLER.md","ref":"kaifa/CONTROLLER.md","articles":[]},"dir":"ltr"},"config":{"plugins":["code","pageview-count","popup","tbfed-pagefooter","favicon","search-plus","expandable-chapters","hide-element","back-to-top-button","splitter","-lunr","-search","-sharing","sharing-plus","chapter-fold","copy-code-button","theme-fexa"],"styles":{"website":"./style/css/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright © LEKSHOP 2022","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright © LEKSHOP 2022","minHeaderCount":"2","minHeaderDeep":"2"},"chapter-fold":{},"splitter":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"popup":{},"theme-fexa":{"search-placeholder":"输入关键字搜索","logo":"./style/imgs/logo.png","favicon":"./style/imgs/favicon.ico"},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"favicon":{"shortcut":"./style/imgs/favicon.ico","bookmark":"./styleimgs/favicon.ico","appleTouch":"./styleimgs/favicon.ico","appleTouchMore":{"120x120":"./styleimgs/favicon.ico","180x180":"./styleimgs/favicon.ico"}},"back-to-top-button":{},"pageview-count":{},"copy-code-button":{},"sharing":{"all":["facebook","google","linkedin","twitter","weibo","qq"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{},"search-plus":{}},"theme":"default","author":"LeGreen","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a5","margin":{"right":10,"left":10,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":true},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{"themeFexa":{"nav":[{"url":"https://www.lekshop.cn","target":"_blank","name":"官网"},{"url":"https://www.lekshop.cn/1325.html","target":"_blank","name":"演示站点"},{"url":"http://doc.lekshop.cn/PROBLEM.html","name":"常见问题"}]}},"language":"zh-hans","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null}},"gitbook":"*","description":"LEKSHOP b2b2c商城文档说明","extension":null},"file":{"path":"kaifa/VUE.md","mtime":"2022-12-02T08:25:22.900Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-12-02T08:42:56.494Z"},"basePath":"..","book":{"language":""}});
+		});
+	</script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-fexa/fexa.js"></script>
+        
+    
+
+    </body>
+</html>
+

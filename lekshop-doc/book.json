@@ -1,0 +1,93 @@
+{
+  "author": "LeGreen",
+  "description": "LEKSHOP b2b2c商城文档说明",
+  "extension": null,
+  "generator": "site",
+  "isbn": "",
+  "links": {
+      "sharing": {
+          "all": null,
+          "facebook": null,
+          "google": null,
+          "twitter": null,
+          "weibo": null
+      }
+  },
+  "output": null,
+  "pdf": {
+      "fontSize": 12,
+      "footerTemplate": null,
+      "headerTemplate": null,
+      "margin": {
+          "bottom": 36,
+          "left": 10,
+          "right": 10,
+          "top": 36
+      },
+      "pageNumbers": true,
+      "paperSize": "a5"
+  },
+  "plugins": [ "code", "pageview-count", "popup", "tbfed-pagefooter", "favicon",
+  "search-plus", "expandable-chapters", "hide-element", "back-to-top-button", "splitter",
+  "-lunr", "-search", "-sharing", "sharing-plus", "chapter-fold", "copy-code-button", "theme-fexa"],
+  "variables": {
+  	"themeFexa": {
+  		"nav": [{
+  				"url": "https://www.lekshop.cn",
+  				"target": "_blank",
+  				"name": "官网"
+  			},
+  			{
+  				"url": "https://www.lekshop.cn/1325.html",
+  				"target": "_blank",
+  				"name": "演示站点"
+  			},
+  			{
+  				"url": "http://doc.lekshop.cn/PROBLEM.html",
+  				"name": "常见问题"
+  			}
+  		]
+  	}
+  },
+  "pluginsConfig": {
+      "hide-element": {
+          "elements": [".gitbook-link"]
+      },
+      "tbfed-pagefooter": {
+          "copyright": "Copyright © LEKSHOP 2022",
+          "modify_label": "该文章修订时间：",
+          "modify_format": "YYYY-MM-DD HH:mm:ss"
+      },
+      "favicon": {
+          "shortcut": "./style/imgs/favicon.ico",
+          "bookmark": "./styleimgs/favicon.ico",
+          "appleTouch": "./styleimgs/favicon.ico",
+          "appleTouchMore": {
+              "120x120": "./styleimgs/favicon.ico",
+              "180x180": "./styleimgs/favicon.ico"
+          }
+      },
+      "fontsettings": {
+          "theme": "white",
+          "family": "sans",
+          "size": 2
+      },
+      "page-treeview": {
+          "copyright": "Copyright © LEKSHOP 2022",
+          "minHeaderCount": "2",
+          "minHeaderDeep": "2"
+      },
+      "sharing": {
+          "all": ["facebook", "google", "linkedin", "twitter", "weibo", "qq"]
+      },
+	"theme-fexa": {
+		"search-placeholder": "输入关键字搜索",
+		"logo": "./style/imgs/logo.png",
+		"favicon": "./style/imgs/favicon.ico"
+	}
+  },
+  "language": "zh-hans",
+  "styles": {
+      "website": "./style/css/website.css"
+  }
+}

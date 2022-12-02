@@ -56,7 +56,7 @@
                {{ $t('navbar.dashboard') }}
              </el-dropdown-item>
            </router-link>
-           <router-link to="/config/info">
+           <router-link to="/info">
              <el-dropdown-item divided>
                个人中心
              </el-dropdown-item>
