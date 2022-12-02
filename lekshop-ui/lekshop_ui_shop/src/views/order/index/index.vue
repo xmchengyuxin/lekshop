@@ -52,7 +52,7 @@
               <div style="float: right; padding: 3px 10px">
                 <el-button-group>
                    <el-tooltip class="item" effect="dark" content="联系买家" placement="top">
-                      <el-button  type="danger" icon="el-icon-s-comment" size="mini" @click="handleContact(scope.row.order.memberId)">
+                      <el-button  v-permission="['admin']" type="danger" icon="el-icon-s-comment" size="mini" @click="handleContact(scope.row.order.memberId)">
                       </el-button>
                    </el-tooltip>
                   <el-tooltip class="item" effect="dark" content="发货" placement="top">
