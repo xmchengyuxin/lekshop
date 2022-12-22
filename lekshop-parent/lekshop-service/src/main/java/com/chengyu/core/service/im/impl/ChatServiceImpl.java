@@ -17,7 +17,6 @@ import com.chengyu.core.mapper.ImChatSessionMapper;
 import com.chengyu.core.model.*;
 import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.MemberService;
-import com.chengyu.core.service.schedule.ScheduleService;
 import com.chengyu.core.util.RedisUtil;
 import com.chengyu.core.util.chat.QingyunkeUtil;
 import com.chengyu.core.util.netty.NettyPushUtil;

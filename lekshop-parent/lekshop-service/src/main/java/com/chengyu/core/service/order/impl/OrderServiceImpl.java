@@ -26,13 +26,12 @@ import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.im.ChatService;
 import com.chengyu.core.service.member.*;
 import com.chengyu.core.service.order.*;
-import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
-import com.chengyu.core.service.schedule.job.OrderAutoCommentJob;
+import com.chengyu.core.service.schedule.RedisDelayQueueEnum;
+import com.chengyu.core.service.schedule.RedisDelayQueueUtil;
 import com.chengyu.core.service.shop.ShopConfigService;
 import com.chengyu.core.service.shop.ShopCouponService;
 import com.chengyu.core.service.shop.ShopFreightService;
 import com.chengyu.core.service.shop.ShopService;
-import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -74,8 +73,6 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OmsPayOrderMapper payOrderMapper;
 	@Autowired
-	private TaskTriggerService taskTriggerService;
-	@Autowired
 	private MemberAddressService memberAddressService;
 	@Autowired
 	private OrderCommentService orderCommentService;
@@ -107,6 +104,8 @@ public class OrderServiceImpl implements OrderService {
 	private ChatService chatService;
 	@Autowired
 	private ShopCouponService shopCouponService;
+	@Autowired
+	private RedisDelayQueueUtil redisDelayQueueUtil;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -362,7 +361,8 @@ public class OrderServiceImpl implements OrderService {
 		payOrderMapper.insertSelective(payOrder);
 
 		//超时未支付自动取消
-		taskTriggerService.addTrigger(OrderAutoCancelJob.class, payOrder.getPayEndTime(), payOrder.getPayOrderNo());
+		redisDelayQueueUtil.addDelayQueue(payOrder.getPayOrderNo(), payOrder.getPayEndTime(), RedisDelayQueueEnum.ORDER_AUTO_CANCEL_JOB.getCode());
+//		taskTriggerService.addTrigger(OrderAutoCancelJob.class, payOrder.getPayEndTime(), payOrder.getPayOrderNo());
 
 		OrderPayResult result = new OrderPayResult();
 		result.setAmount(payOrder.getAmount());
@@ -508,7 +508,8 @@ public class OrderServiceImpl implements OrderService {
 				//添加物流信息
 				orderFreightService.initOrderFreight(updatedOrder);
 				//添加自动确认收货
-				taskTriggerService.addTrigger(OrderAutoCancelJob.class, updatedOrder.getFinishExpiredTime(), order.getOrderNo());
+				redisDelayQueueUtil.addDelayQueue(order.getOrderNo(), updatedOrder.getFinishExpiredTime(), RedisDelayQueueEnum.ORDER_AUTO_FINISH_JOB.getCode());
+//				taskTriggerService.addTrigger(OrderAutoCancelJob.class, updatedOrder.getFinishExpiredTime(), order.getOrderNo());
 
 				//发货通知
 				UmsMember member = memberService.getMemberById(order.getMemberId());
@@ -583,7 +584,8 @@ public class OrderServiceImpl implements OrderService {
 		this.settleDistribution(member, order.getOrderNo(), order.getPayPrice());
 		//添加自动评价定时器
 		orderCommentService.initComment(detailList);
-		taskTriggerService.addTrigger(OrderAutoCommentJob.class, updateOrder.getCommentExpiredTime(), order.getOrderNo());
+		redisDelayQueueUtil.addDelayQueue(order.getOrderNo(), updateOrder.getCommentExpiredTime(), RedisDelayQueueEnum.ORDER_AUTO_COMMENT_JOB.getCode());
+//		taskTriggerService.addTrigger(OrderAutoCommentJob.class, updateOrder.getCommentExpiredTime(), order.getOrderNo());
 
 		//订单评价提醒
 		UmsShop shop = shopService.getShopById(order.getShopId());

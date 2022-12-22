@@ -25,12 +25,10 @@ import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderRefundService;
 import com.chengyu.core.service.pay.PayService;
-import com.chengyu.core.service.schedule.job.RefundAutoAgreeJob;
-import com.chengyu.core.service.schedule.job.RefundAutoCancelJob;
-import com.chengyu.core.service.schedule.job.RefundAutoConfirmJob;
+import com.chengyu.core.service.schedule.RedisDelayQueueEnum;
+import com.chengyu.core.service.schedule.RedisDelayQueueUtil;
 import com.chengyu.core.service.shop.ShopConfigService;
 import com.chengyu.core.service.shop.ShopService;
-import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.NumberUtils;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -62,8 +60,6 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	@Autowired
 	private ConfigOrderService configOrderService;
 	@Autowired
-	private TaskTriggerService taskTriggerService;
-	@Autowired
 	private MemberService memberService;
 	@Autowired
 	private MemberNewsService memberNewsService;
@@ -73,6 +69,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 	private PayService payService;
 	@Autowired
 	private ChatService chatService;
+	@Autowired
+	private RedisDelayQueueUtil redisDelayQueueUtil;
 
 	@Override
 	public List<OmsOrderRefund> getRefundList(OrderRefundSearchForm form, Integer page, Integer pageSize) {
@@ -175,7 +173,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		orderRefundMapper.insertSelective(refund);
 
 		//自动同意定时器
-		taskTriggerService.addTrigger(RefundAutoAgreeJob.class, refund.getAutoAgreeTime(), refund.getRefundNo());
+		redisDelayQueueUtil.addDelayQueue(refund.getRefundNo(), refund.getAutoAgreeTime(), RedisDelayQueueEnum.REFUND_AUTO_AGREE_JOB.getCode());
+//		taskTriggerService.addTrigger(RefundAutoAgreeJob.class, refund.getAutoAgreeTime(), refund.getRefundNo());
 
 		OmsOrderDetail updateDetail = new OmsOrderDetail();
 		updateDetail.setId(orderDetail.getId());
@@ -406,7 +405,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 			ConfigOrder orderConfig = configOrderService.getConfigOrder();
 			updateRefund.setBuyerSendGoodsTime(DateUtil.offsetDay(DateUtil.date(), orderConfig.getBuyerRefundDay()));
 			//自动同意定时器
-			taskTriggerService.addTrigger(RefundAutoCancelJob.class, updateRefund.getBuyerSendGoodsTime(), refund.getRefundNo());
+			redisDelayQueueUtil.addDelayQueue(refund.getRefundNo(), updateRefund.getBuyerSendGoodsTime(), RedisDelayQueueEnum.REFUND_AUTO_CANCEL_JOB.getCode());
+//			taskTriggerService.addTrigger(RefundAutoCancelJob.class, updateRefund.getBuyerSendGoodsTime(), refund.getRefundNo());
 			orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
 		}
 
@@ -473,7 +473,8 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
 
 		//自动同意定时器
-		taskTriggerService.addTrigger(RefundAutoConfirmJob.class, updateRefund.getSellerConfirmTime(), refund.getRefundNo());
+		redisDelayQueueUtil.addDelayQueue(refund.getRefundNo(), updateRefund.getSellerConfirmTime(), RedisDelayQueueEnum.REFUND_AUTO_CONFIRM_JOB.getCode());
+//		taskTriggerService.addTrigger(RefundAutoConfirmJob.class, updateRefund.getSellerConfirmTime(), refund.getRefundNo());
 
 		//记录
 		OmsOrderRefundLog log = new OmsOrderRefundLog();
