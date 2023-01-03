@@ -22,7 +22,6 @@ import com.chengyu.core.security.util.JwtTokenUtil;
 
 /**
  * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
- * Created by macro on 2019/11/5.
  */
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

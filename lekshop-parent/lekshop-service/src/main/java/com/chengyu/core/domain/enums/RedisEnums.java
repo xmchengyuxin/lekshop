@@ -120,7 +120,19 @@ public enum RedisEnums {
 	/**
 	 * 记录用户不符合的定价器
 	 */
-	POLICY_NOT_MEMBER("policy-not-member");
+	POLICY_NOT_MEMBER("policy-not-member"),
+	/**
+	 * 商家PC端token
+	 */
+	SHOP_TOKEN_PC_KEY("shop-pc-token-"),
+	/**
+	 * 商家手机端token
+	 */
+	SHOP_TOKEN_PHONE_KEY("shop-phone-token-"),
+	/**
+	 * 运营后台token
+	 */
+	ADMIN_TOKEN_KEY("admin-token-");
 
 	private final String key;
 

@@ -2,6 +2,7 @@ package com.chengyu.core.controller;
 
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.SysAdmin;
+import com.chengyu.core.security.util.JwtTokenUtil;
 import com.chengyu.core.util.RedisUtil;
 import com.chengyu.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,15 @@ import java.util.concurrent.TimeUnit;
 
 @Controller
 public class AdminBaseController {
-	
-	public static final String SESSION_USER = "sessionUser";
-	
+
 	@Autowired
 	protected RedisUtil redisUtil;
 	@Value("${jwt.tokenHeader}")
-    private String tokenHeader;
+    protected String tokenHeader;
+	@Value("${jwt.tokenHead}")
+	protected String tokenHead;
+	@Autowired
+	protected JwtTokenUtil jwtTokenUtil;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {

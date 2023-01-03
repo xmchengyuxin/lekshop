@@ -22,7 +22,6 @@ import com.chengyu.core.security.util.JwtTokenUtil;
 
 /**
  * JWT登录授权过滤器
- * Created by macro on 2018/4/26.
  */
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);

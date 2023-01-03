@@ -2,6 +2,7 @@ package com.chengyu.core.controller.common;
 
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.RedisEnums;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsShop;
@@ -67,7 +68,8 @@ public class LoginController extends ShopBaseController {
 				throw new ServiceException("商户已被停止使用");
 			}
 		}
-        tokenMap.put("member", member);
+		redisUtil.setRedisValue(RedisEnums.SHOP_TOKEN_PC_KEY.getKey()+member.getUsername(), token);
+		tokenMap.put("member", member);
         return CommonResult.success(tokenMap);
 		
 	 }
