@@ -162,7 +162,8 @@ public class AccountEnums {
 		ACCOUNT_ADMIN_IN("管理员手动增加", 2),
 		ACCOUNT_ADMIN_OUT("管理员手动减少", 3),
 		ACCOUNT_FINISH_TASK("完成任务", 4),
-		ACCOUNT_EXCHANGE_GOODS("兑换商品", 5);
+		ACCOUNT_EXCHANGE_GOODS("兑换商品", 5),
+		ACCOUNT_CONSUME("消费获得积分", 6);
 
 
 		private final String name;

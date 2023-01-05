@@ -22,10 +22,15 @@ import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigMissionService;
 import com.chengyu.core.service.config.ConfigOrderService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
+import com.chengyu.core.service.funds.MemberPointLogService;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.im.ChatService;
-import com.chengyu.core.service.member.*;
+import com.chengyu.core.service.member.MemberAddressService;
+import com.chengyu.core.service.member.MemberCouponService;
+import com.chengyu.core.service.member.MemberNewsService;
+import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.*;
+import com.chengyu.core.service.point.PointConfigService;
 import com.chengyu.core.service.schedule.RedisDelayQueueEnum;
 import com.chengyu.core.service.schedule.RedisDelayQueueUtil;
 import com.chengyu.core.service.shop.ShopConfigService;
@@ -89,8 +94,6 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderGroupService orderGroupService;
 	@Autowired
-	private MemberRemindService memberRemindService;
-	@Autowired
 	private MemberNewsService memberNewsService;
 	@Autowired
 	private MemberService memberService;
@@ -106,6 +109,10 @@ public class OrderServiceImpl implements OrderService {
 	private ShopCouponService shopCouponService;
 	@Autowired
 	private RedisDelayQueueUtil redisDelayQueueUtil;
+	@Autowired
+	private PointConfigService pointConfigService;
+	@Autowired
+	private MemberPointLogService memberPointLogService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -582,6 +589,14 @@ public class OrderServiceImpl implements OrderService {
 
 		//分销收益
 		this.settleDistribution(member, order.getOrderNo(), order.getPayPrice());
+
+		//积分收益
+		PointConfig pointConfig = pointConfigService.getPointConfig();
+		if(pointConfig != null) {
+			memberPointLogService.inAccount(member, AccountEnums.MemberPointTypes.ACCOUNT_CONSUME,
+					order.getOrderNo(), pointConfig.getConsumePoint(), "消费获得积分", null);
+		}
+
 		//添加自动评价定时器
 		orderCommentService.initComment(detailList);
 		redisDelayQueueUtil.addDelayQueue(order.getOrderNo(), updateOrder.getCommentExpiredTime(), RedisDelayQueueEnum.ORDER_AUTO_COMMENT_JOB.getCode());

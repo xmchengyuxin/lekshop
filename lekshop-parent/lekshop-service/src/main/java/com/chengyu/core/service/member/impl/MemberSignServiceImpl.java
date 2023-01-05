@@ -4,11 +4,13 @@ import com.chengyu.core.domain.enums.AccountEnums;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.CustomSignMapper;
 import com.chengyu.core.mapper.UmsMemberSignMapper;
+import com.chengyu.core.model.PointConfig;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsMemberSign;
 import com.chengyu.core.model.UmsMemberSignExample;
 import com.chengyu.core.service.funds.MemberPointLogService;
 import com.chengyu.core.service.member.MemberSignService;
+import com.chengyu.core.service.point.PointConfigService;
 import com.chengyu.core.utils.DateUtil;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
@@ -17,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class MemberSignServiceImpl implements MemberSignService {
 	private CustomSignMapper customSignMapper;
 	@Autowired
 	private MemberPointLogService memberPointLogService;
+	@Autowired
+	private PointConfigService pointConfigService;
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -54,8 +57,11 @@ public class MemberSignServiceImpl implements MemberSignService {
 		sign.setUpdTime(sign.getAddTime());
 		signMapper.insertSelective(sign);
 
-		memberPointLogService.inAccount(member, AccountEnums.MemberPointTypes.ACCOUNT_SIGN,
-				StringUtils.genOrderNo(member.getId()), new BigDecimal(2), "签到获得积分", null);
+		PointConfig config = pointConfigService.getPointConfig();
+		if(config != null) {
+			memberPointLogService.inAccount(member, AccountEnums.MemberPointTypes.ACCOUNT_SIGN,
+					StringUtils.genOrderNo(member.getId()), config.getSignPoint(), "签到获得积分", null);
+		}
 	}
 
 	@Override
