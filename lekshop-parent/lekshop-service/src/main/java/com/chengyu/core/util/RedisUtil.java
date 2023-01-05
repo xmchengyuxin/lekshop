@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisUtil {
 	
-	private static final String COMMON_KEY = "scaffold-";
+	private static final String COMMON_KEY = "lekshop-";
 	
 	@Resource
 	private RedisTemplate<String, Object> redisTemplate;

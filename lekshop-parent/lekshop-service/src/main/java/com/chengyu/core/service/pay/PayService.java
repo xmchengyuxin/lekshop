@@ -23,6 +23,9 @@ public interface PayService {
     /**订单取消回调**/
     public static String ALIPAY_NOTIFY_URL_CANCEL_ORDER = "/common/cancelOrder/aliPay/callback";
     public static String WXPAY_NOTIFY_URL_CANCEL_ORDER = "/common/cancelOrder/wxPay/callback";
+    /**积分商城订单支付回调**/
+    public static String ALIPAY_NOTIFY_URL_POINT_ORDER = "/common/pointOrder/aliPay/paySus";
+    public static String WXPAY_NOTIFY_URL_POINT_ORDER = "/common/pointOrder/wxPay/paySus";
 
     /**
      * 支付商品订单
@@ -65,4 +68,15 @@ public interface PayService {
      * @throws Exception 业务异常
      */
     void cancelAndRefundOrder(String orderNo) throws ServiceException;
+
+    /**
+     * 支付积分商城订单
+     * @author LeGreen
+     * @date   2023/1/5
+     * @param  member
+     * @param  payOrderNo
+     * @param  payBaseForm
+     * @return String
+     */
+    String pointOrderPay(UmsMember member, String payOrderNo, PayBaseForm payBaseForm) throws Exception;
 }

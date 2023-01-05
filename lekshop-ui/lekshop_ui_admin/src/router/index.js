@@ -20,6 +20,7 @@ import orderRouter from './modules/order'
 import trendsRouter from './modules/trends'
 import reportRouter from './modules/report'
 import floorRouter from './modules/floor'
+import pointRouter from './modules/point'
 
 
 
@@ -95,6 +96,7 @@ export const asyncRoutes = [
   shopRouter,
 	memberRouter,
   goodsRouter,
+  pointRouter,
   orderRouter,
   fundRouter,
   trendsRouter,

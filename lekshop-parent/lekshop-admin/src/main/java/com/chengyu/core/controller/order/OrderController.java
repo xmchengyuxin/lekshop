@@ -59,11 +59,6 @@ public class OrderController extends AdminBaseController {
 		return CommonResult.success(result);
 	}
 
-	private List<Integer> getIdList(String ids){
-		List<String> idStrList = Arrays.asList(ids.split(CommonConstant.DH_REGEX));
-		return Convert.convert(new TypeReference<List<Integer>>() {}, idStrList);
-	}
-
 	@OperationLog
 	@ApiOperation(value = "删除订单")
 	@ResponseBody

@@ -1,5 +1,8 @@
 package com.chengyu.core.controller;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.TypeReference;
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.SysAdmin;
 import com.chengyu.core.security.util.JwtTokenUtil;
@@ -17,7 +20,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -73,11 +78,13 @@ public class AdminBaseController {
 	}
 	
 	/**
-	 * @功能描述    校验重复
-	 * @作者      LeGreen
-	 * @创建时间  2019年1月14日
-	 * @param 	  key
-	 * @throws    ServiceException 
+	 * 校验重复
+	 * @author LeGreen
+	 * @date   2023/1/5
+	 * @param  key 业务KEY
+	 * @param  message 错误信息
+	 * @param  timeout 超时时间
+	 * @throws ServiceException 业务异常
 	 */
 	protected void validateRepeat(String key, String message, Long timeout) throws ServiceException {
 		Object oBetTime = redisUtil.getRedisValue(key);
@@ -85,5 +92,11 @@ public class AdminBaseController {
 			throw new ServiceException(message);
 		}
 		redisUtil.setRedisValue(key, System.currentTimeMillis(), 1L, TimeUnit.HOURS);
+	}
+
+
+	protected List<Integer> getIdList(String ids){
+		List<String> idStrList = Arrays.asList(ids.split(CommonConstant.DH_REGEX));
+		return Convert.convert(new TypeReference<List<Integer>>() {}, idStrList);
 	}
 }

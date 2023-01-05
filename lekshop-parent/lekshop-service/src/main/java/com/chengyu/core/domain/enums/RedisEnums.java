@@ -66,6 +66,10 @@ public enum RedisEnums {
 	 */
 	GZH_CONFIG("rds-config-gzh"),
 	/**
+	 * 积分配置缓存key
+	 */
+	POINT_CONFIG("rds-config-point"),
+	/**
 	 * 电商网站类别缓存key
 	 */
 	SHOP_CATE("rds-config-shopCate"),

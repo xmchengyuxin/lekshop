@@ -16,7 +16,10 @@ public enum RedisDelayQueueEnum {
     REFUND_AUTO_AGREE_JOB("REFUND_AUTO_AGREE_JOB","售后申请超时未处理自动同意", "refundAutoAgreeJob"),
     REFUND_AUTO_CANCEL_JOB("REFUND_AUTO_CANCEL_JOB","买家超时未寄货自动取消售后申请", "refundAutoCancelJob"),
     REFUND_AUTO_CONFIRM_JOB("REFUND_AUTO_CONFIRM_JOB","卖家超时未确认收货自动确认", "refundAutoConfirmJob"),
-    ROBOT_ANSWER("ROBOT_ANSWER","自动回复", "robotAnswerJob");
+    ROBOT_ANSWER("ROBOT_ANSWER","自动回复", "robotAnswerJob"),
+    POINT_ORDER_AUTO_CANCEL_JOB("POINT_ORDER_AUTO_CANCEL_JOB","积分商城订单超时未支付自动取消", "pointOrderAutoCancelJob"),
+    POINT_ORDER_AUTO_FINISH_JOB("POINT_ORDER_AUTO_FINISH_JOB","积分商城订单自动确认收货", "pointOrderAutoFinishJob")
+    ;
 
 
 
