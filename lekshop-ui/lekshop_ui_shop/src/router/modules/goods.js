@@ -23,7 +23,7 @@ const goodsRouter = {
     	path: 'edit/:id(\\d+)',
     	component: () => import('@/views/goods/publish/edit'),
     	name: 'editGoods',
-    	meta: { title: '编辑宝贝', noCache: true, },
+    	meta: { title: '编辑宝贝', noCache: true, activeMenu: '/goods/list'},
     	hidden: true
     },
     {

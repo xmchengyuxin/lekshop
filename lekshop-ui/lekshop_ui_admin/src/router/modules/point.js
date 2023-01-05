@@ -34,21 +34,21 @@ const pointRouter = {
       path: 'goods/publish',
       component: () => import('@/views/point/goods/publish/add'),
       name: 'publishPointGoods',
-      meta: { title: '发布积分商品', icon:'list' },
+      meta: { title: '发布积分商品', activeMenu: '/point/goods' },
       hidden: true
     },
     {
     	path: 'goods/edit/:id(\\d+)',
     	component: () => import('@/views/point/goods/publish/edit'),
     	name: 'editPointGoods',
-    	meta: { title: '编辑积分商品', noCache: true, },
+    	meta: { title: '编辑积分商品', noCache: true, activeMenu: '/point/goods' },
     	hidden: true
     },
     {
       path: 'order',
       component: () => import('@/views/point/order/index'),
       name: 'pointOrderList',
-      meta: { title: '订单管理', noCache: true, }
+      meta: { title: '兑换订单', noCache: true, }
     },
   ]
 }

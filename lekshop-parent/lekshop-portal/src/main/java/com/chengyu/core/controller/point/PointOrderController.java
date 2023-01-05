@@ -52,6 +52,7 @@ public class PointOrderController extends UserBaseController {
 		result.put("goods", goods);
 		result.put("buyTotalPrice", NumberUtil.mul(goods.getPrice(), buyNum));
 		result.put("buyTotalPoint", NumberUtil.mul(goods.getPoint(), buyNum));
+		result.put("buyNum", buyNum);
 		return CommonResult.success(result);
 	}
 

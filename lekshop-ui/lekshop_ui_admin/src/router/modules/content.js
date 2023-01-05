@@ -53,14 +53,14 @@ const contentRouter = {
 			path: 'article/create',
 			component: () => import('@/views/content/article/create'),
 			name: 'createArticle',
-			meta: { title: '发表文章', role: ['admin']},
+			meta: { title: '发表文章', role: ['admin'], activeMenu: '/content/article'},
 			hidden: true
 		},
 		{
 			path: 'article/edit/:id(\\d+)',
 			component: () => import('@/views/content/article/edit'),
 			name: 'editArticle',
-			meta: { title: '编辑文章', role: [] },
+			meta: { title: '编辑文章', role: [], activeMenu: '/content/article' },
 			hidden: true
 		},
     {

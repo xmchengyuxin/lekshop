@@ -35,7 +35,7 @@ const orgRouter = {
       path: 'accountDetail',
       component: () => import('@/views/org/account/detailInfo'),
       name: 'accountDetail',
-      meta: { title: '子账号详情'},
+      meta: { title: '子账号详情', activeMenu: '/org/account'},
       hidden: true
     },
     // {

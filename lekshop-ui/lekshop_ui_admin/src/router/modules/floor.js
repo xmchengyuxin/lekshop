@@ -22,14 +22,14 @@ const floorRouter = {
     	path: 'mobile/create',
     	component: () => import('@/views/floor/wap/main'),
     	name: 'createMobile',
-    	meta: { title: '添加模板', role: ['admin']},
+    	meta: { title: '添加模板', role: ['admin'], activeMenu: '/floor/mobile'},
     	hidden: true
     },
     {
     	path: 'mobile/edit',
     	component: () => import('@/views/floor/wap/main'),
     	name: 'editMobile',
-    	meta: { title: '编辑模板', role: [] },
+    	meta: { title: '编辑模板', role: [], activeMenu: '/floor/mobile' },
     	hidden: true
     },
     {

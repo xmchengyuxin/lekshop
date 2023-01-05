@@ -24,14 +24,14 @@ const freightRouter = {
     	path: 'add',
     	component: () => import('@/views/shop/freight/add'),
     	name: 'addFreight',
-    	meta: { title: '添加运费模板', noCache: true },
+    	meta: { title: '添加运费模板', noCache: true , activeMenu: '/freight/list'},
     	hidden: true
     },
     {
     	path: 'edit/:id(\\d+)',
     	component: () => import('@/views/shop/freight/edit'),
     	name: 'editFreight',
-    	meta: { title: '编辑运费模板', noCache: true },
+    	meta: { title: '编辑运费模板', noCache: true, activeMenu: '/freight/list' },
     	hidden: true
     },
   ]
