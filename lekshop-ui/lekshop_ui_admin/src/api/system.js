@@ -14,6 +14,15 @@ export function getBankSelector() {
   })
 }
 
+
+export function getDeliveryTypeSelector() {
+  return request({
+    url: '/system/deliveryType/getSelector',
+    method: 'get'
+  })
+}
+
+
 export function upload(data) {
   return request({
     url: '/system/upload',

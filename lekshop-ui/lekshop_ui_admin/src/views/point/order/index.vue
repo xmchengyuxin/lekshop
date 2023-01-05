@@ -18,7 +18,7 @@
 			 <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
        <br>
        <el-button-group>
-       <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-promotion" @click="handlDelivery">批量发货</el-button>
+       <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-promotion" @click="handlDelivery()">批量发货</el-button>
        </el-button-group>
 			 <!-- <br>
 			 <el-button-group>
@@ -38,30 +38,22 @@
 			  <template slot-scope="scope">
           <el-card id="miaosha"  class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>订单号： {{ scope.row.order.orderNo }}</span>
-              <span style="margin-left: 20px;">下单时间：{{ scope.row.order.buyTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')  }}</span>
-                <span style="margin-left: 20px; color: #f90647; font-weight: bold;" v-if="scope.row.order.type == 3 && scope.row.order.groupId != -1 && scope.row.orderGroup">
-                  {{ scope.row.orderGroup.groupNum}}人团
-                  <span v-if="scope.row.orderGroup.haveGroupNum < scope.row.orderGroup.groupNum">, 距离拼团成功还差{{scope.row.orderGroup.groupNum-scope.row.orderGroup.haveGroupNum}}人</span>
-                  <span v-else>, 拼团成功</span>
-                </span>
+              <span>订单号： {{ scope.row.orderNo }}</span>
+              <span style="margin-left: 20px;">下单时间：{{ scope.row.buyTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}')  }}</span>
               </span>
               <div style="float: right; padding: 3px 10px">
                 <el-button-group>
                    <el-tooltip class="item" effect="dark" content="联系买家" placement="top">
-                      <el-button  v-permission="['admin']" type="danger" icon="el-icon-s-comment" size="mini" @click="handleContact(scope.row.order.memberId)">
+                      <el-button type="danger" icon="el-icon-s-comment" size="mini" @click="handleContact(scope.row.memberId)">
                       </el-button>
                    </el-tooltip>
                   <el-tooltip class="item" effect="dark" content="发货" placement="top">
-                    <el-button v-if="scope.row.order.status == 1" type="primary" size="mini" @click="handlDelivery(scope.row)">
+                    <el-button v-if="scope.row.status == 1" type="primary" size="mini" @click="handlDelivery(scope.row)">
                        <svg-icon icon-class="logistic" />
                     </el-button>
                   </el-tooltip>
-                  <el-tooltip class="item" effect="dark" content="修改价格" placement="top">
-                    <el-button v-if="scope.row.order.status == 0" type="info" icon="el-icon-edit" size="mini" @click="handleEditPrice(scope.row.order)"></el-button>
-                  </el-tooltip>
                   <el-tooltip class="item" effect="dark" content="打印出库单" placement="top">
-                    <el-button v-if="scope.row.order.status == 1 || scope.row.order.status == 2 || scope.row.order.status == 3" type="success"size="mini" @click.stop="handlePrint(scope.row)">
+                    <el-button v-if="scope.row.status == 1 || scope.row.status == 2 || scope.row.status == 3"  type="success"size="mini" @click.stop="handlePrint(scope.row)">
                         <svg-icon icon-class="pdf" />
                     </el-button>
                   </el-tooltip>
@@ -70,45 +62,42 @@
               </div>
             </div>
 
-            <div  class="flex  padding-tb10" :class="index < scope.row.orderDetailList.length-1 ? 'bottom-b':''" v-for="(item,index) in scope.row.orderDetailList">
+            <div  class="flex  padding-tb10">
               <el-image
               class="flex f-s-0 margin-r12"
                   style="height: 60px"
-                  :src="item.goodsMainImg"
-                  :preview-src-list="[item.goodsMainImg]">
+                  :src="scope.row.goodsMainImg"
+                  :preview-src-list="[scope.row.goodsMainImg]">
                 </el-image>
                 <div class="flex f-c">
-                  <span class="line1">{{item.goodsName}}</span>
-                  <span>{{item.goodsParamName}}</span>
-                  <span>¥{{ item.buyPrice | moneyFormat}} * {{item.buyNum}} = ¥{{item.buyTotalPrice | moneyFormat}}</span>
+                  <span class="line1">{{scope.row.goodsName}}</span>
+                  <span >{{ scope.row.buyPoint | moneyFormat}} 积分* {{scope.row.buyNum}} = {{scope.row.buyTotalPoint | moneyFormat}} 积分</span>
+                  <span v-if="scope.row.buyTotalPrice > 0">¥{{ scope.row.buyPrice | moneyFormat}} * {{scope.row.buyNum}} = ¥{{scope.row.buyTotalPrice | moneyFormat}}</span>
                 </div>
-                <span class="order-role flex f-a-c f-j-c" v-if="scope.row.order.type == 3 && scope.row.order.groupId != -1">拼</span>
-                <span class="order-role flex f-a-c f-j-c miaosha" v-if="scope.row.order.type == 2">秒</span>
             </div>
           </el-card>
 
 
 			  </template>
 			</el-table-column>
-			<el-table-column label="买家" prop="memberNickname" align="center" width="150">
+			<el-table-column label="买家" prop="memberName" align="center" width="150">
 			  <template slot-scope="scope">
-			    <span>{{ scope.row.order.memberNickname }}</span>
-          <el-tag type="danger" v-if="scope.row.order.selfLifting == 1">自提</el-tag>
+			    <span>{{ scope.row.memberName }}</span>
 			  </template>
 			</el-table-column>
 			<el-table-column label="实际支付" prop="price" width="150">
 			  <template slot-scope="scope">
-			    <p><span style="color:red; font-size: 18px; font-weight: bold;">¥{{ scope.row.order.payPrice | moneyFormat}}</span></p>
-					<p>(含运费:<span style="color:red">¥{{ scope.row.order.freightFee | moneyFormat}}</span>)</p>
+			    <p><span style="color:red; font-size: 18px; font-weight: bold;">{{ scope.row.buyTotalPoint | moneyFormat}}积分</span></p>
+			    <p><span style="color:red; font-size: 18px; font-weight: bold;" v-if="scope.row.buyTotalPrice > 0">¥{{ scope.row.buyTotalPrice | moneyFormat}}</span></p>
 			  </template>
 			</el-table-column>
 			<el-table-column label="状态" width="100"  align="center">
 			  <template slot-scope="scope">
-          <el-tag effect="plain" v-if="scope.row.order.status == 0" type="danger">{{ scope.row.order.status | statusFilter }}</el-tag>
-          <el-tag effect="plain" v-if="scope.row.order.status == 1" type="warning">{{ scope.row.order.status | statusFilter }}</el-tag>
-          <el-tag effect="plain" v-if="scope.row.order.status == 2" type="info">{{ scope.row.order.status | statusFilter }}</el-tag>
-          <el-tag effect="plain" v-if="scope.row.order.status == 3" type="success">{{ scope.row.order.status | statusFilter }}</el-tag>
-          <el-tag effect="plain" v-if="scope.row.order.status == 4" type="danger">{{ scope.row.order.status | statusFilter }}</el-tag>
+          <el-tag effect="plain" v-if="scope.row.status == 0" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
+          <el-tag effect="plain" v-if="scope.row.status == 1" type="warning">{{ scope.row.status | statusFilter }}</el-tag>
+          <el-tag effect="plain" v-if="scope.row.status == 2" type="info">{{ scope.row.status | statusFilter }}</el-tag>
+          <el-tag effect="plain" v-if="scope.row.status == 3" type="success">{{ scope.row.status | statusFilter }}</el-tag>
+          <el-tag effect="plain" v-if="scope.row.status == 4" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
           <br/>
           <a  class="link-type" @click="handleOrderDetail(scope.row)">订单详情</a>
 			  </template>
@@ -153,8 +142,7 @@
         </div>
         <div style="margin-bottom: 10px;">
           <span>订单号： {{order.orderNo}}</span>
-          <span style="margin-left: 20px;">买家：{{order.memberNickname}}</span>
-          <span style="margin-left: 20px;">核销码：{{order.verifyCode}}</span>
+          <span style="margin-left: 20px;">买家：{{order.memberName}}</span>
         </div>
 
         <el-table
@@ -175,32 +163,25 @@
                 <span class="line1">{{ scope.row.goodsName }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="购买规格" prop="goodsParamName" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.goodsParamName }}</span>
-              </template>
-            </el-table-column>
             <el-table-column label="数量" prop="buyNum" align="center" width="70">
               <template slot-scope="scope">
                 <span>{{ scope.row.buyNum }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="单价" prop="buyPrice" align="center" width="70">
+            <el-table-column label="单价" prop="buyPrice" align="center" width="140">
               <template slot-scope="scope">
-                <span>{{ scope.row.buyPrice | moneyFormat}}</span>
+                <p >{{ scope.row.buyPoint | moneyFormat}} 积分 <span v-if="scope.row.buyPrice > 0">+ ￥ {{ scope.row.buyPrice | moneyFormat}}</span></p>
               </template>
             </el-table-column>
-            <el-table-column label="总价" prop="buyTotalPrice" align="center" width="70">
+            <el-table-column label="总价" prop="buyTotalPrice" align="center" width="140">
               <template slot-scope="scope">
-                <span>{{ scope.row.buyTotalPrice | moneyFormat }}</span>
+                <p >{{ scope.row.buyTotalPoint | moneyFormat}} 积分 <span v-if="scope.row.buyTotalPrice > 0">+ ￥ {{ scope.row.buyTotalPrice | moneyFormat}}</span></p>
               </template>
             </el-table-column>
           </el-table>
           <div style="margin-top: 10px; font-weight: bold; font-size: 15px; float: right;">
-            <span >商品总价： <span style="color: red;">￥ {{order.totalPrice | moneyFormat}}</span></span>
-            <span style="margin-left: 20px;">运费： <span style="color: red;">￥ {{order.freightFee | moneyFormat}}</span></span>
-            <span style="margin-left: 20px;">优惠金额： <span style="color: red;">￥ {{order.couponAmount | moneyFormat}}</span></span>
-            <span style="margin-left: 20px;">实际支付： <span style="color: red;">￥ {{order.payPrice | moneyFormat}}</span></span>
+            <span >积分支付： <span style="color: red;">{{order.buyTotalPoint | moneyFormat}} 积分</span></span>
+            <span v-if="order.buyTotalPrice > 0" style="margin-left: 20px;">现金支付： <span style="color: red;">￥ {{order.buyTotalPrice | moneyFormat}}</span></span>
           </div>
           <div style="margin-top: 10px;">
             <p style="height: 30px;">交易状态：
@@ -210,32 +191,9 @@
               <el-tag effect="plain" v-if="order.status == 3" type="success">{{ order.status | statusFilter }}</el-tag>
               <el-tag effect="plain" v-if="order.status == 4" type="danger">{{ order.status | statusFilter }}</el-tag>
             </p>
-            <p style="height: 30px;">支付方式： {{order.payMethod | payMethodFilter}}</p>
+            <p style="height: 30px;">支付方式： 积分支付 + {{order.payMethod | payMethodFilter}}</p>
             <p style="height: 40px;">配送方式： {{order.deliveryType}}</p>
           </div>
-      </el-card>
-      <br>
-      <el-card class="box-card-dialog" shadow="hover" v-if="order.type == 3 && order.groupId != -1 && orderGroup">
-        <div slot="header" class="clearfix">
-          <span>拼团进度</span>
-        </div>
-        <el-descriptions title="" :column="1" border>
-            <el-descriptions-item>
-              <template slot="label">
-                进度
-              </template>
-              <span style="color: #f90647; font-weight: bold;">{{orderGroup.groupNum}}人团</span>
-              <span style="color: #f90647; font-weight: bold;" v-if="orderGroup.haveGroupNum < orderGroup.groupNum">, 距离拼团成功还差{{orderGroup.groupNum-orderGroup.haveGroupNum}}人</span>
-              <el-progress style="width: 150px;" status="exception" :text-inside="true" :stroke-width="15" :percentage="parseInt((orderGroup.haveGroupNum/orderGroup.groupNum*100).toFixed(2))">
-              </el-progress>
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                拼团成员
-              </template>
-              <el-avatar shape="square" size="small" v-for="item in groupMemberList" :src="item.memberHeadImg"></el-avatar>
-            </el-descriptions-item>
-          </el-descriptions>
       </el-card>
       <br>
       <el-card class="box-card-dialog" shadow="hover">
@@ -271,21 +229,15 @@
         <el-descriptions title="" :column="1" border>
             <el-descriptions-item>
               <template slot="label">
-                交易号
+                订单号
               </template>
-              {{order.payOrderNo}}
+               {{order.orderNo}}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 支付方式
               </template>
-              {{order.payMethod | payMethodFilter}}
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                订单号
-              </template>
-               {{order.orderNo}}
+              积分支付 + {{order.payMethod | payMethodFilter}}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
@@ -317,20 +269,6 @@
         			{{activity.detail}}
         		</el-timeline-item>
         	</el-timeline>
-      </el-card>
-
-      <br>
-      <el-card class="box-card-dialog" shadow="hover" v-if="orderPriceDetail.length > 0">
-        <div slot="header" class="clearfix">
-          <h3>价格修改记录</h3>
-        </div>
-        <el-timeline :reverse="true">
-        		<el-timeline-item  v-for="(price, index) in orderPriceDetail" :timestamp="price.addTime | parseTime">
-        				修改前:¥{{price.oldPrice | moneyFormat}}
-                修改后:¥{{price.nowPrice | moneyFormat}}
-                修改人:{{price.editName}}
-        		</el-timeline-item>
-        </el-timeline>
       </el-card>
 
 		</el-dialog>
@@ -368,11 +306,6 @@
                     <el-tag effect="plain" v-if="scope.row.status == 4" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
                   </template>
                 </el-table-column>
-                <el-table-column label="仓库状态"  align="center" width="80">
-                  <template slot-scope="scope">
-                    <el-tag effect="plain" type="danger">{{ scope.row.mergeStatus | mergeStatusFilter }}</el-tag>
-                  </template>
-                </el-table-column>
                 <el-table-column label="姓名"  align="center" width="100">
                   <template slot-scope="scope">
                     <span>{{ scope.row.receiveName }}</span>
@@ -403,26 +336,6 @@
 		    </div>
 		</el-dialog>
 
-		<!--修改价格框-->
-		<el-dialog title="修改价格" :visible.sync="dialogPriceVisible">
-		    <el-form ref="dataForm" :rules="editPriceRules" :model="order" label-width="80px" label-position="left" style="width: 100%; margin-left:50px;">
-		      <el-form-item label="订单编号" prop="orerNo">
-						<el-input v-model="order.orderNo" disabled style="width: 60%;"/>
-		      </el-form-item>
-					<el-form-item label="订单总价" prop="payPrice">
-						<el-input v-model="order.payPrice" disabled style="width: 60%;"/>
-					</el-form-item>
-					<el-form-item label="修改价格" prop="editPrice">
-						<el-input v-model="order.editPrice" style="width: 60%;"/>
-					</el-form-item>
-			</el-form>
-		    <div style="text-align:right;">
-		      <el-button type="danger" @click="dialogPriceVisible=false">取消</el-button>
-		      <el-button type="primary" @click="editPriceConfirm">确定</el-button>
-		    </div>
-		</el-dialog>
-
-
     <el-dialog title="打印" :visible.sync="dialogPrintVisible" width="760px">
         <template>
           <div id="print" class="f13-size">
@@ -431,7 +344,7 @@
             </div>
             <div class="flex margin-t30" style="margin-bottom: 10px;">
               <span class="flex flex-1 f-a-c">订单号： {{order.orderNo}}</span>
-              <span class="flex f-a-c flex-1" style="margin-left: 20px;">买家：{{order.memberNickname}}</span>
+              <span class="flex f-a-c flex-1" style="margin-left: 20px;">买家：{{order.memberName}}</span>
               <span class="flex f-a-c flex-1 f-j-e" style="margin-left: 20px;">下单时间：{{order.payTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
             </div>
 
@@ -449,33 +362,26 @@
                     <span class="line1">{{ scope.row.goodsName }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="购买规格" prop="goodsParamName" align="center" width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.goodsParamName }}</span>
-                  </template>
-                </el-table-column>
                 <el-table-column label="数量" prop="buyNum" align="center" width="70">
                   <template slot-scope="scope">
                     <span>{{ scope.row.buyNum }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="单价" prop="buyPrice" align="center" width="70">
+                <el-table-column label="单价" prop="buyPrice" align="center" width="140">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.buyPrice | moneyFormat}}</span>
+                    <p >{{ scope.row.buyPoint | moneyFormat}} 积分 <span v-if="scope.row.buyPrice > 0">+ ￥ {{ scope.row.buyPrice | moneyFormat}}</span></p>
                   </template>
                 </el-table-column>
-                <el-table-column label="总价" prop="buyTotalPrice" align="center" width="70">
+                <el-table-column label="总价" prop="buyTotalPrice" align="center" width="140">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.buyTotalPrice | moneyFormat }}</span>
+                    <p >{{ scope.row.buyTotalPoint | moneyFormat}} 积分 <span v-if="scope.row.buyTotalPrice > 0">+ ￥ {{ scope.row.buyTotalPrice | moneyFormat}}</span></p>
                   </template>
                 </el-table-column>
               </el-table>
               <div style="margin-top: 10px;" class="flex f-j-e">
-                <span >商品总价： <span>￥ {{order.totalPrice | moneyFormat}}</span></span>
-                <span style="margin-left: 20px;">运费： <span >￥ {{order.freightFee | moneyFormat}}</span></span>
-                <span style="margin-left: 20px;">优惠金额： <span >￥ {{order.couponAmount | moneyFormat}}</span></span>
-                <span style="margin-left: 20px;">实际支付： <span >￥ {{order.payPrice | moneyFormat}}</span></span>
-                <span style="margin-left: 20px;">付款方式： <span >   {{order.payMethod | payMethodFilter}}</span></span>
+                <span >积分支付： <span style="color: red;">{{order.buyTotalPoint | moneyFormat}} 积分</span></span>
+                <span v-if="order.buyTotalPrice > 0" style="margin-left: 20px;">现金支付： <span style="color: red;">￥ {{order.buyTotalPrice | moneyFormat}}</span></span>
+                <span style="margin-left: 20px;">付款方式： <span >   积分支付 + {{order.payMethod | payMethodFilter}}</span></span>
               </div>
               <div style="margin-bottom: 50px;"> </div>
               <!-- <div style="page-break-after: always;"></div> -->
@@ -728,10 +634,8 @@ export default {
 			this.multipleSelection = val;
      },
     handleOrderDetail(row){
-       this.order = row.order;
-       this.orderDetailList = row.orderDetailList;
-       this.orderGroup = row.orderGroup
-       this.groupMemberList = row.groupMemberList
+       this.order = row;
+       this.orderDetailList = [row];
        this.activeNum = this.order.status;
        if(this.activeNum == 4){
          this.activeNum = 0
@@ -743,17 +647,12 @@ export default {
            }
          })
        }
-       getPriceList({orderId:this.order.id}).then((result) => {
-       	this.orderPriceDetail = result.data;
-       })
        this.dialogDetailVisible = true;
     },
     handlePrint(row){
        this.editAddress = false
-       this.order = row.order;
-       this.orderDetailList = row.orderDetailList;
-       this.orderGroup = row.orderGroup
-       this.groupMemberList = row.groupMemberList
+       this.order = row;
+       this.orderDetailList = [row];
        this.activeNum = this.order.status;
        if(this.activeNum == 4){
          this.activeNum = 0
@@ -765,15 +664,12 @@ export default {
            }
          })
        }
-       getPriceList({orderId:this.order.id}).then((result) => {
-       	this.orderPriceDetail = result.data;
-       })
        this.dialogPrintVisible = true;
     },
 		handlDelivery(row){
       let valList = [];
-      if(row.order){
-        valList.push(row.order);
+      if(row){
+        valList.push(row);
       }else{
         const delVals = this.multipleSelection;
         if(!delVals || delVals.length <= 0){
@@ -785,7 +681,7 @@ export default {
           return;
         }
         delVals.forEach(val =>{
-          valList.push(val.order);
+          valList.push(val);
         })
       }
       if(!this.deliveryTypeOptions || this.deliveryTypeOptions.length == 0){
@@ -826,56 +722,6 @@ export default {
 			  }
 			})
 		},
-		handleEditPrice(row){
-			this.order = Object.assign({}, row) // copy obj
-			this.dialogPriceVisible = true
-			this.$nextTick(() => {
-			  this.$refs['dataForm'].clearValidate()
-			})
-		},
-		editPriceConfirm() {
-			this.$refs['dataForm'].validate((valid) => {
-			  if (valid) {
-			    let formData = {
-						id : this.order.id,
-						editPrice: this.order.editPrice
-					}
-			    editPrice(formData).then(() => {
-						this.getList()
-			      this.dialogPriceVisible = false
-			      this.$notify({
-			        title: '成功',
-			        message: '该订单价格修改成功!',
-			        type: 'success',
-			        duration: 2000
-			      })
-			    })
-			  }
-			})
-		},
-		/* viewOrderPriceLog(row){
-			orderPriceLog(row.id).then((result) => {
-				this.orderPriceDetail = result.data;
-				this.dialogPriceLogVisible = true
-			})
-		},
-		viewOrderLogistics(row){
-			this.orderLogistic = Object.assign({}, row) // copy obj
-			orderLogisticsDetail(row.id).then((result) => {
-				this.logisticDetail = result.data;
-				this.dialogWuliuVisible = true
-			})
-		},
-		handleAddLogistic(){
-			let formData = {
-				orderId : this.orderLogistic.id,
-				detail : this.orderLogistic.logisticContent
-			}
-			addOrderLogistic(formData).then((result) => {
-					this.logisticDetail = result.data;
-					this.orderLogistic.logisticContent = ''
-			})
-		}, */
     changeDeliveryType(){
       if(this.deliveryForm.deliveryType == 'none'){
         this.deliveryList.forEach(item=>{
