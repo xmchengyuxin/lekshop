@@ -230,7 +230,6 @@ public class ChatServiceImpl implements ChatService {
 		extras.put("content", JSONUtil.toJsonStr(targetLog));
 		extras.put("addTime", DateUtil.current()+"");
 		nettyPushUtil.sendMsg(JSONUtil.toJsonStr(extras));
-//		scheduleService.scheduleFixTimeJob(RobotAnswerJob.class, DateUtil.offsetSecond(targetLog.getSendTime(), 5), JSONUtil.toJsonStr(extras));
 	}
 
 	private UmsMember getMemberByRds(Integer memberId){

@@ -31,7 +31,7 @@ export default {
     AppMain,
     TagsView,
     Settings,
-    Message
+    Message,
   },
   mixins: [ResizeMixin],
   computed: {
