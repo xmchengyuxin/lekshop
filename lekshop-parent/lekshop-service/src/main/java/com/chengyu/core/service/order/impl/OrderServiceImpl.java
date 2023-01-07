@@ -638,7 +638,7 @@ public class OrderServiceImpl implements OrderService {
 					ConfigMissionDetail buyerConfigMissionDetail2 = configMissionService.getConfigMissionDetail(tjMember2.getMissionConfigId(), tjMember2.getGroupId());
 					if (buyerConfigMissionDetail2 != null) {
 						reward = (buyerConfigMissionDetail2.getMissionType() == null || buyerConfigMissionDetail2.getMissionType() == 1) ?
-								NumberUtil.mul(reward, buyerConfigMissionDetail2.getBuyerFinishRateTwo().divide(new BigDecimal(100)))
+								NumberUtil.mul(payPrice, buyerConfigMissionDetail2.getBuyerFinishRateTwo().divide(new BigDecimal(100)))
 								: buyerConfigMissionDetail2.getBuyerFinishRateTwo();
 						if (reward.compareTo(BigDecimal.ZERO) > 0) {
 							memberAccountLogService.inAccount(tjMember2, AccountEnums.MemberAccountTypes.ACCOUNT_SPREAD, orderNo,
@@ -650,7 +650,7 @@ public class OrderServiceImpl implements OrderService {
 						ConfigMissionDetail buyerConfigMissionDetail3 = configMissionService.getConfigMissionDetail(tjMember3.getMissionConfigId(), tjMember3.getGroupId());
 						if (buyerConfigMissionDetail3 != null) {
 							reward = (buyerConfigMissionDetail3.getMissionType() == null || buyerConfigMissionDetail3.getMissionType() == 1) ?
-									NumberUtil.mul(reward, buyerConfigMissionDetail3.getBuyerFinishRateThree().divide(new BigDecimal(100)))
+									NumberUtil.mul(payPrice, buyerConfigMissionDetail3.getBuyerFinishRateThree().divide(new BigDecimal(100)))
 									: buyerConfigMissionDetail3.getBuyerFinishRateThree();
 							if (reward.compareTo(BigDecimal.ZERO) > 0) {
 								memberAccountLogService.inAccount(tjMember2, AccountEnums.MemberAccountTypes.ACCOUNT_SPREAD, orderNo,
