@@ -1,5 +1,9 @@
 package com.chengyu.core.controller.common;
 
+import cn.hutool.core.util.PhoneUtil;
+import cn.hutool.http.Header;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.RedisEnums;
@@ -68,7 +72,12 @@ public class LoginController extends ShopBaseController {
 				throw new ServiceException("商户已被停止使用");
 			}
 		}
-		redisUtil.setRedisValue(RedisEnums.SHOP_TOKEN_PC_KEY.getKey()+member.getUsername(), token);
+		UserAgent ua = UserAgentUtil.parse(this.getRequest().getHeader(Header.USER_AGENT.toString()));
+		if(ua.isMobile()) {
+			redisUtil.setRedisValue(RedisEnums.SHOP_TOKEN_PHONE_KEY.getKey()+member.getUsername(), token);
+		} else {
+			redisUtil.setRedisValue(RedisEnums.SHOP_TOKEN_PC_KEY.getKey()+member.getUsername(), token);
+		}
 		tokenMap.put("member", member);
         return CommonResult.success(tokenMap);
 		

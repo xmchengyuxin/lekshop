@@ -11,8 +11,8 @@
       <!-- <el-tab-pane label="秒杀拼团" name="miaosha"></el-tab-pane> -->
       <el-tab-pane label="销售信息" name="xiaoshou"></el-tab-pane>
       <el-tab-pane label="图文描述" name="tuwen"></el-tab-pane>
-      <el-tab-pane label="支付信息" name="zhifu"></el-tab-pane>
-      <el-tab-pane label="物流信息" name="wuliu"></el-tab-pane>
+      <!-- <el-tab-pane label="支付信息" name="zhifu"></el-tab-pane> -->
+      <!-- <el-tab-pane label="物流信息" name="wuliu"></el-tab-pane> -->
       <el-tab-pane label="售后信息" name="shouhou"></el-tab-pane>
     </el-tabs>
     <div id="wrap-form" style="height:84vh;overflow-y: scroll;" class="flex flex-1 f-c">
@@ -21,13 +21,8 @@
         <div slot="header" class="clearfix">
           <span>快速录入</span>
         </div>
-        <el-form-item label="总商品库" prop="thirdGoodsUrl">
-          <el-button-group>
-            <el-button size="mini" type="primary"  @click="openGoodsDialog">选择商品</el-button>
-          </el-button-group>
-        </el-form-item>
         <el-form-item label="商品链接" prop="thirdGoodsUrl">
-          <el-input v-model="thirdGoodsUrl" style="width: 60%;" placeholder="淘宝,京东,拼多多等电商平台商品链接" />
+          <el-input v-model="thirdGoodsUrl" style="width: 60%;" placeholder="第三方电商平台商品链接" />
           <el-button @click="getThirdDetail()" size="mini" type="primary" :loading="autoGetLoading">自动识别</el-button>
         </el-form-item>
         <el-form-item label="温馨提醒" prop="thirdGoodsUrl">
@@ -37,13 +32,6 @@
           <p class="tips" style="color: #468847;">https://mobile.yangkeduo.com/goods.html?goods_id=373696623577
         </p>
         </el-form-item>
-
-        <goodsDialog
-         v-if="showGoods"
-          ref="goodsDialog"
-          @selected="selectedGoods"
-          @close="closeGoodsDialog"
-        ></goodsDialog>
         </el-card>
       <br>
       <el-card id="jichu" class="box-card" shadow="hover">
@@ -64,7 +52,7 @@
               :options="goodsCateOptions"
               filterable></el-cascader>
         </el-form-item>
-        <el-form-item prop="shopCateId" label="店铺类目" :rules="[{ required: true, message: '请选择', trigger: 'change' }]">
+        <!-- <el-form-item prop="shopCateId" label="店铺类目" :rules="[{ required: true, message: '请选择', trigger: 'change' }]">
           <el-cascader
               :props="props"
               style="width: 60%;"
@@ -73,8 +61,7 @@
               :options="shopCateOptions"
               filterable></el-cascader>
           <el-button @click="$router.push('/cate/cateList')"size="mini" type="danger">新建分类</el-button>
-          <el-button @click="getShopCateList"size="mini" type="danger">刷新</el-button>
-        </el-form-item>
+        </el-form-item> -->
       </el-card>
       <!-- <br>
       <el-card id="miaosha" class="box-card" shadow="hover">
@@ -286,7 +273,7 @@
           <Tinymce ref="editor" v-model="postForm.detail" :height="400" style="margin-left: 72px;width: 60%;"/>
         </el-form-item>
       </el-card>
-      <br>
+      <!-- <br>
       <el-card id="zhifu" class="box-card" shadow="hover">
         <div slot="header" class="clearfix">
           <span>支付信息</span>
@@ -315,7 +302,7 @@
             <el-button @click="$router.push('/freight/list')"size="mini" type="danger">新建模板</el-button>
             <el-button @click="getFreightTemplate"size="mini" type="danger">刷新</el-button>
         </el-form-item>
-      </el-card>
+      </el-card> -->
       <br>
       <el-card id="shouhou" class="box-card" shadow="hover">
         <div slot="header" class="clearfix">
@@ -323,8 +310,8 @@
         </div>
         <el-form-item label="上架状态" prop="status" :rules="[{ required: true, message: '请选择', trigger: 'change' }]">
             <el-radio-group v-model="postForm.status" size="small">
-              <el-radio :label="1" border>出售中宝贝</el-radio>
-              <el-radio :label="2" border>仓库中宝贝</el-radio>
+              <el-radio :label="1" border>上架</el-radio>
+              <el-radio :label="2" border>下架</el-radio>
             </el-radio-group>
         </el-form-item>
       </el-card>
@@ -343,10 +330,6 @@
   import Vue from 'vue'
   import MDinput from '@/components/MDinput'
   import {
-    getShopCateList,
-    getShopFreightList
-  } from '@/api/shop'
-  import {
     getGoodsCateList, getGoods, updateGoods, getThirdDetail
   } from '@/api/goods'
   import {
@@ -358,7 +341,6 @@
   import Tinymce from '@/components/Tinymce'
   import SingleVideoUpload from '@/components/Upload/singleVideo'
   import SingleUpload from '@/components/Upload/singleUpload'
-  import goodsDialog from '@/views/goods/publish/dialog/goods'
 
   const defaultForm = {
     type: 1,
@@ -375,8 +357,7 @@
       MultipleUpload,
       Tinymce,
       SingleVideoUpload,
-      SingleUpload,
-      goodsDialog
+      SingleUpload
     },
     props: {
       isEdit: {
@@ -403,8 +384,7 @@
         temp: {},
         attrLength: 0,
         thirdGoodsUrl: '',
-        autoGetLoading: false,
-        showGoods: false,
+        autoGetLoading: false
       }
     },
     created() {
@@ -427,28 +407,12 @@
         document.getElementById('wrap-form').scrollTop = top;
       },
       init(){
-        this.getShopCateList();
-        this.getFreightTemplate();
         getGoodsCateList().then(response => {
           this.goodsCateOptions = response.data
         }).catch(err => {
           console.log(err)
         })
         this.groupList.push({num: null, discounts: null})
-      },
-      getShopCateList(){
-        getShopCateList().then(response => {
-          this.shopCateOptions = response.data
-        }).catch(err => {
-          console.log(err)
-        })
-      },
-      getFreightTemplate(){
-        getShopFreightList().then(response => {
-          this.freightOptions = response.data.list
-        }).catch(err => {
-          console.log(err)
-        })
       },
       getGoods(id) {
         getGoods({
@@ -530,7 +494,7 @@
               // 调用全局挂载的方法
               this.$store.dispatch('tagsView/delView', this.$route)
               // 返回上一步路由
-              this.$router.push('/goods/list')
+              this.$router.push('/goods/platform')
             }).catch(err => {
               this.loading = false
               console.log(err)
@@ -665,43 +629,6 @@
         }).catch(err => {
           console.log(err)
           this.autoGetLoading = false;
-        })
-      },
-      openGoodsDialog(){
-        this.showGoods = true
-      },
-      closeGoodsDialog(){
-        this.showGoods = false
-      },
-      // 回调选择的商品
-      selectedGoods(goodsId) {
-        if(!goodsId){
-          return;
-        }
-        getGoods({
-          goodsId: goodsId
-        }).then(response => {
-          let goods = response.data.goods
-          if(goods.cateIds){
-            goods.goodsCateId = goods.cateIds.split(",").map(i => parseInt(i, 0))
-          }
-          this.postForm = goods;
-          this.postForm.id = null
-          this.attrKeyList = JSON.parse(response.data.attrKeyList);
-          this.attrKeyList.forEach(item =>{
-            item.attrValueList = JSON.parse(item.attrValueList);
-          })
-          let skuList = JSON.parse(response.data.skuList);
-          // skuList.forEach((item, index)=>{
-          //   item[1]=null;
-          //   item[2]=null;
-          //   item[3]=null;
-          // })
-          this.skuList = skuList;
-          this.attrLength = this.attrKeyList.length
-          this.allUnits = response.data.goodsUnitConvertList
-        }).catch(err => {
-          console.log(err)
         })
       },
 

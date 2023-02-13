@@ -16,6 +16,14 @@ export function getGoodsList(data) {
   })
 }
 
+export function getPlatformGoodsList(data) {
+  return request({
+    url: 'member/goods/getPlatformList',
+    method: 'get',
+		params: data
+  })
+}
+
 export function getGoods(data) {
   return request({
     url: 'member/goods/get',

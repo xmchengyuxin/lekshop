@@ -24,7 +24,7 @@ public interface GoodsCateService {
 	 * @param  img
 	 * @param  target
 	 */
-	void addGoodsCate(Integer pid, String name, Integer sort, String img, String target);
+	Integer addGoodsCate(Integer pid, String name, Integer sort, String img, String target);
 
 	/**
 	 * 更新商品分类

@@ -27,4 +27,41 @@
 	</select>
 
 
+	<insert id="insertGoodsList" keyProperty="id" useGeneratedKeys="true" parameterType="java.util.List" keyColumn="id">
+		insert into pms_goods (shop_id, shop_name, cate_pid,
+		cate_tid, cate_id, cate_ids,
+		cate_name, shop_cate_pid, shop_cate_tid,
+		shop_cate_id, shop_cate_ids, shop_cate_name,
+		type, title, description,
+		main_img, main_video, goods_img,
+		price, sort, weight,
+		status, stock_type, freight_template_id,
+		point_num, sell_num, pay_num,
+		comment_num, good_comment_num, bad_comment_num,
+		collection_num, group_type, group_num,
+		group_limit_hours, group_limit_buy, group_single_buy,
+		seckill_begin_time, seckill_end_time, seckill_limit_num,
+		add_time, add_by, upd_time,
+		upd_by, detail)
+		values
+		<foreach collection="list" item="item" separator="," index="index">
+			(#{item.shopId,jdbcType=INTEGER}, #{item.shopName,jdbcType=VARCHAR}, #{item.catePid,jdbcType=INTEGER},
+			#{item.cateTid,jdbcType=INTEGER}, #{item.cateId,jdbcType=INTEGER}, #{item.cateIds,jdbcType=VARCHAR},
+			#{item.cateName,jdbcType=VARCHAR}, #{item.shopCatePid,jdbcType=INTEGER}, #{item.shopCateTid,jdbcType=INTEGER},
+			#{item.shopCateId,jdbcType=INTEGER}, #{item.shopCateIds,jdbcType=VARCHAR}, #{item.shopCateName,jdbcType=VARCHAR},
+			#{item.type,jdbcType=INTEGER}, #{item.title,jdbcType=VARCHAR}, #{item.description,jdbcType=VARCHAR},
+			#{item.mainImg,jdbcType=VARCHAR}, #{item.mainVideo,jdbcType=VARCHAR}, #{item.goodsImg,jdbcType=VARCHAR},
+			#{item.price,jdbcType=DECIMAL}, #{item.sort,jdbcType=INTEGER}, #{item.weight,jdbcType=INTEGER},
+			#{item.status,jdbcType=INTEGER}, #{item.stockType,jdbcType=INTEGER}, #{item.freightTemplateId,jdbcType=INTEGER},
+			#{item.pointNum,jdbcType=INTEGER}, #{item.sellNum,jdbcType=INTEGER}, #{item.payNum,jdbcType=INTEGER},
+			#{item.commentNum,jdbcType=INTEGER}, #{item.goodCommentNum,jdbcType=INTEGER}, #{item.badCommentNum,jdbcType=INTEGER},
+			#{item.collectionNum,jdbcType=INTEGER}, #{item.groupType,jdbcType=INTEGER}, #{item.groupNum,jdbcType=INTEGER},
+			#{item.groupLimitHours,jdbcType=INTEGER}, #{item.groupLimitBuy,jdbcType=INTEGER}, #{item.groupSingleBuy,jdbcType=INTEGER},
+			#{item.seckillBeginTime,jdbcType=TIMESTAMP}, #{item.seckillEndTime,jdbcType=TIMESTAMP}, #{item.seckillLimitNum,jdbcType=INTEGER},
+			#{item.addTime,jdbcType=TIMESTAMP}, #{item.addBy,jdbcType=VARCHAR}, #{item.updTime,jdbcType=TIMESTAMP},
+			#{item.updBy,jdbcType=VARCHAR}, #{item.detail,jdbcType=LONGVARCHAR})
+		</foreach>
+
+	</insert>
+
 </mapper>

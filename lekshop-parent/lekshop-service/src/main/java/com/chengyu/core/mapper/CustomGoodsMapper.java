@@ -1,5 +1,6 @@
 package com.chengyu.core.mapper;
 
+import com.chengyu.core.domain.form.GoodsImportForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.GoodsStockResult;
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +17,6 @@ public interface CustomGoodsMapper {
      * @return List<GoodsStockResult>
      */
     List<GoodsStockResult> getGoodsStockList(@Param("form") GoodsSearchForm form);
+
+    void insertGoodsList(List<GoodsImportForm> goodsList);
 }

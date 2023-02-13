@@ -1,5 +1,6 @@
 package com.chengyu.core.service.goods;
 
+import com.chengyu.core.domain.form.GoodsImportForm;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.GoodsExportResult;
@@ -182,4 +183,14 @@ public interface GoodsService {
 	 * @return List<GoodsExportResult>
 	 */
 	List<GoodsExportResult> getExportList(GoodsSearchForm form, Integer page, Integer pageSize);
+
+	/**
+	 * 批量导入商品
+	 * @author LeGreen
+	 * @date   2023/2/13
+	 * @param  shop 店铺
+	 * @param  freightId 运费模板ID
+	 * @param  goodsList 商品列表
+	 */
+	void importGoods(UmsShop shop, Integer freightId, List<GoodsImportForm> goodsList);
 }

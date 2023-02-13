@@ -87,3 +87,19 @@ export function getGoodsQualityList(data) {
 		params: {goodsId : data}
   })
 }
+
+export function getPlatformGoodsList(data) {
+  return request({
+    url: 'system/goods/getListByPlatform',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getSkuList(data) {
+  return request({
+    url: 'system/goods/getSkuList',
+    method: 'get',
+		params: data
+  })
+}

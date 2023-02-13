@@ -1,20 +1,48 @@
 <template>
   <div class="app-container">
+    <el-alert
+        class="warn-content"
+        title="重要提示: 商品库为商家提供快速上架商品, 为无货源商家提供便利！"
+        type="success"
+        :closable="false">
+      </el-alert>
+      <br/>
+
 		<el-tabs v-model="activeName" @tab-click="handleClickTab">
-			  <el-tab-pane label="全部宝贝" name="first"></el-tab-pane>
-				<el-tab-pane label="出售中的宝贝" name="second"></el-tab-pane>
-				<el-tab-pane label="仓库中宝贝" name="third"></el-tab-pane>
+			  <el-tab-pane label="全部" name="first"></el-tab-pane>
+				<el-tab-pane label="已上架" name="second"></el-tab-pane>
+				<el-tab-pane label="已下架" name="third"></el-tab-pane>
 		</el-tabs>
     <div class="filter-container">
-      <el-input v-model="listQuery.title" clearable placeholder="宝贝名称" style="width: 200px;" class="filter-item" @keyup.enter.native="getList()" />
+      <el-input v-model="listQuery.title" clearable placeholder="商品名称" style="width: 200px;" class="filter-item" @keyup.enter.native="getList()" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
       <br>
 			<el-button-group>
-			<el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus"  @click="$router.push('/goods/publish')">发布宝贝</el-button>
+			<el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus"  @click="$router.push('/goods/publish')">添加商品</el-button>
 			<el-button class="filter-item" size="mini" type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
       <el-button class="filter-item" type="primary" size="mini" icon="el-icon-upload2" @click="handleShangjia">上架</el-button>
       <el-button class="filter-item" type="info" size="mini" icon="el-icon-download" @click="handleXiajia">下架</el-button>
 			</el-button-group>
+
+
+      <el-upload
+        style="float: right;"
+        class="upload-demo"
+        ref="upload"
+        :action="importGoodsUrl"
+        :multiple="false"
+        :auto-upload="false"
+        :on-success="uploadSus"
+        :on-error="uploadFail"
+        :file-list="fileList"
+        :headers="headers"
+        accept=".xls,.xlsx">
+        <el-button slot="trigger" size="mini" type="primary">选择 Excel 文件</el-button>
+        <el-button style="margin-bottom: 5px;" size="mini" type="success" @click="submitUpload">导入商品</el-button>
+        <el-button type="info" size="mini" :loading="downloadLoading" icon="el-icon-download" @click="handleDownload">导出商品</el-button>
+      </el-upload>
+
+
 		</div>
 		<el-table
       :key="tableKey"
@@ -32,21 +60,21 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="商品类目" width="100px"  align="center">
+      <el-table-column label="商品类目" width="150px"  align="center">
         <template slot-scope="scope">
       		<span>{{ scope.row.cateName}}</span>
         </template>
       </el-table-column>
-			<el-table-column label="宝贝标题" min-width="200px"  align="center">
+			<el-table-column label="商品标题" min-width="200px"  align="center">
 			  <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top">
-              <span class="line1 link-type" @click="$router.push('/goods/edit/'+scope.row.id)">
+            <span class="line1 link-type" @click="$router.push('/goods/edit/'+scope.row.id)">
               <span v-if="scope.row.type != 1" :style="scope.row.type == 2 ? 'color:red;' : 'color:green;' ">[{{ scope.row.type | typeFilter}}]</span>
               {{ scope.row.title }}</span>
           </el-tooltip>
 			  </template>
 			</el-table-column>
-			<el-table-column label="宝贝主图" width="80px"  align="center">
+			<el-table-column label="主图" width="80px"  align="center">
 			  <template slot-scope="scope">
           <el-image
               style="height: 30px"
@@ -55,7 +83,7 @@
             </el-image>
 			  </template>
 			</el-table-column>
-      <el-table-column label="宝贝相册" width="165px">
+      <el-table-column label="相册" width="165px">
         <template slot-scope="scope">
           <div class="line1">
             <el-image
@@ -67,46 +95,11 @@
           </div>
         </template>
       </el-table-column>
-			<el-table-column label="店铺内类目" width="100px"  align="center">
-			  <template slot-scope="scope">
-					 <span>{{ scope.row.shopCateName }}</span>
-			  </template>
-			</el-table-column>
 			<el-table-column label="价格" width="70px"  align="center">
 			  <template slot-scope="scope">
 					 <span>{{ scope.row.price | moneyFormat}}</span>
 			  </template>
 			</el-table-column>
-      <el-table-column label="点击" width="70px"  align="center">
-        <template slot-scope="scope">
-      		 <span>{{ scope.row.pointNum}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="销量" width="70px"  align="center">
-        <template slot-scope="scope">
-      		 <span>{{ scope.row.sellNum}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="付款人数" width="70px"  align="center">
-        <template slot-scope="scope">
-      		 <span>{{ scope.row.payNum}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="评论" width="70px"  align="center">
-        <template slot-scope="scope">
-      		 <span>{{ scope.row.commentNum}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="好评" width="70px"  align="center">
-        <template slot-scope="scope">
-      		 <span>{{ scope.row.goodCommentNum}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="收藏" width="70px"  align="center">
-        <template slot-scope="scope">
-      		 <span>{{ scope.row.collectionNum}}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="创建时间" width="150px" align="center" prop="addTime" >
         <template slot-scope="scope">
           <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -177,10 +170,11 @@
 </template>
 
 <script>
-import {getGoodsList, updateGoods, shangjiaGoods, xiajiaGoods, deleteGoods, getGoodsQualityList, addGoodsQuality, deleteGoodsQuality } from '@/api/goods'
+import {getPlatformGoodsList, updateGoods, shangjiaGoods, xiajiaGoods, deleteGoods, getGoodsQualityList, addGoodsQuality, deleteGoodsQuality } from '@/api/goods'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import { getToken } from '@/utils/auth'
 
 const typeOptions = [
   { key: 1, text: '普通' },
@@ -206,7 +200,7 @@ const statusKeyValue = statusOptions.reduce((acc, cur) => {
 }, {})
 
 export default {
-  name: 'goodsList',
+  name: 'platformGoodsList',
   components: { Pagination },
   directives: { waves },
 	filters: {
@@ -239,6 +233,11 @@ export default {
       shopCateOptions:[],
       goodsQuality:{},
       goodsQualityList:[],
+      importGoodsUrl: process.env.VUE_APP_BASE_API+"system/goods/import",
+      exportGoodsUrl: process.env.VUE_APP_BASE_API+"system/goods/export",
+      fileList: [],
+      downloadLoading:false,
+      headers:{Authorization: 'Bearer ' + getToken()}
     }
   },
   created() {
@@ -251,7 +250,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getGoodsList(this.listQuery).then(response => {
+      getPlatformGoodsList(this.listQuery).then(response => {
         this.list = response.data.list
         this.total = response.data.total
 				this.listLoading = false
@@ -414,6 +413,99 @@ export default {
     	    duration: 2000
     	  })
     	})
+    },
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    uploadSus(response, file, fileList){
+      this.fileList = []
+        const res = response
+        if (res.code !== 200) {
+          this.$notify({
+            title: '失败',
+            message: '上传失败',
+            type: 'error',
+            duration: 2000
+          })
+        } else {
+          this.$notify({
+            title: '成功',
+            message: '上传成功',
+            type: 'success',
+            duration: 2000
+          })
+          this.getList()
+        }
+    },
+    uploadFail(response, file, fileList){
+        const res = response
+        if (res.code !== 200) {
+          this.$notify({
+            title: '失败',
+            message: '上传失败',
+            type: 'error',
+            duration: 2000
+          })
+        } else {
+          this.$notify({
+            title: '成功',
+            message: '上传成功',
+            type: 'success',
+            duration: 2000
+          })
+        }
+    },
+    async getDownloadList(query) {
+       let list;
+       query.page = 1;
+       query.pageSize = 100000;
+       await getPlatformGoodsList(query).then(response => {
+          list = response.data.list
+        })
+       if(!list || list.length <= 0){
+       	this.$notify({
+       	  title: '失败',
+       	  message: "暂无数据,导出失败",
+       	  type: 'error',
+       	  duration: 2000
+       	})
+       	this.downloadLoading = false
+       	return;
+       }
+        return list;
+      },
+    handleDownload() {
+        this.downloadLoading = true
+        import('@/vendor/Export2Excel').then(excel => {
+          let list = [];
+          let query = Object.assign({}, this.listQuery) // copy obj
+          if(this.checkTargets && this.checkTargets.length > 0) {
+            query.targetIds = this.checkTargets.join(",")
+          }else{
+            query.targetIds = null
+          }
+          this.getDownloadList(query).then(res=>{
+             list = res;
+             let tHeader = ['商品类目(多类目/隔开)','商品标题', '商品主图', '商品相册(多图片链接|隔开)', '价格', '商品描述']
+             let filterVal = ['cateName','title', 'mainImg', 'goodsImg', 'price', 'description'];
+             const data = this.formatJson(filterVal, list)
+             excel.export_json_to_excel({
+               header: tHeader,
+               data,
+               filename: '商品列表',
+               autoWidth: true,
+               bookType: 'xlsx'
+             })
+             this.downloadLoading = false
+          });
+
+         })
+    },
+    formatJson(filterVal, jsonData) {
+      const data =  jsonData.map(v => filterVal.map((j, index) => {
+          return v[j]
+      }))
+     return data;
     },
 
   }

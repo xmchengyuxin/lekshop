@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.GoodsEnums;
+import com.chengyu.core.domain.form.GoodsImportForm;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.*;
@@ -68,6 +69,11 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		PmsGoodsExample.Criteria criteria = example.createCriteria();
 		criteria.andStatusNotEqualTo(GoodsEnums.GoodsStatus.DEL.getValue());
+		if(form.getQueryPlatformGoods()) {
+			criteria.andShopIdEqualTo(0);
+		} else {
+			criteria.andShopIdNotEqualTo(0);
+		}
 		if(form.getShopId() != null){
 			criteria.andShopIdEqualTo(form.getShopId());
 		}
@@ -129,16 +135,19 @@ public class GoodsServiceImpl implements GoodsService {
 		goods.setCateIds(publishForm.getGoodsCateIds());
 		goods.setCateName(goodsCateService.getGoodsCateName(CollectionUtil.newArrayList(goods.getCatePid(), goods.getCateTid(), goods.getCateId())));
 
-		String[] shopCateIdList = publishForm.getShopCateIds().split(CommonConstant.DH_REGEX);
-		goods.setShopCatePid(Integer.parseInt(shopCateIdList[0]));
-		if(shopCateIdList.length >=2 ){
-			goods.setShopCateTid(Integer.parseInt(shopCateIdList[1]));
+		//商品库商品不需要此字段
+		if(shop.getId() != 0) {
+			String[] shopCateIdList = publishForm.getShopCateIds().split(CommonConstant.DH_REGEX);
+			goods.setShopCatePid(Integer.parseInt(shopCateIdList[0]));
+			if(shopCateIdList.length >=2 ){
+				goods.setShopCateTid(Integer.parseInt(shopCateIdList[1]));
+			}
+			if(shopCateIdList.length >=3){
+				goods.setShopCateId(Integer.parseInt(shopCateIdList[2]));
+			}
+			goods.setShopCateIds(publishForm.getShopCateIds());
+			goods.setShopCateName(shopCateService.getGoodsCateName(CollectionUtil.newArrayList(goods.getShopCatePid(), goods.getShopCateTid(), goods.getShopCateId())));
 		}
-		if(shopCateIdList.length >=3){
-			goods.setShopCateId(Integer.parseInt(shopCateIdList[2]));
-		}
-		goods.setShopCateIds(publishForm.getShopCateIds());
-		goods.setShopCateName(shopCateService.getGoodsCateName(CollectionUtil.newArrayList(goods.getShopCatePid(), goods.getShopCateTid(), goods.getShopCateId())));
 		goods.setSort(9999);
 		goods.setWeight(0);
 		goods.setUpdTime(DateUtil.date());
@@ -511,6 +520,72 @@ public class GoodsServiceImpl implements GoodsService {
 			list.add(result);
 		}
 		return list;
+	}
+
+	@Override
+	public void importGoods(UmsShop shop, Integer freightId, List<GoodsImportForm> goodsList) {
+		Map<String, Integer> cateMap = new HashMap<>();
+		for(GoodsImportForm form : goodsList) {
+			form.setShopId(shop.getId());
+			form.setShopName(shop.getName());
+			form.setType(GoodsEnums.GoodsType.NORMAL_GOODS.getValue());
+			form.setStatus(GoodsEnums.GoodsStatus.SELL.getValue());
+			form.setFreightTemplateId(freightId);
+			form.setPrice(new BigDecimal(form.getPrices().split(CommonConstant.SLASH_REGEX)[0]));
+			String[] cateNames = form.getCateName().split(CommonConstant.SLASH_REGEX);
+			List<Integer> cateIds = new ArrayList<>();
+			form.setCatePid(this.getCateIdByName(cateMap, cateNames[0], 0));
+			cateIds.add(form.getCatePid());
+			if(cateNames.length >=2 ){
+				form.setCateTid(this.getCateIdByName(cateMap, cateNames[1], form.getCatePid()));
+				cateIds.add(form.getCateTid());
+			}
+			if(cateNames.length >=3){
+				form.setCateId(this.getCateIdByName(cateMap, cateNames[2], form.getCateTid()));
+				cateIds.add(form.getCateId());
+			}
+			form.setCateIds(StringUtils.join(cateIds, ","));
+			form.setSort(9999);
+			form.setWeight(0);
+			form.setUpdTime(DateUtil.date());
+		}
+		customGoodsMapper.insertGoodsList(goodsList);
+
+		for(GoodsImportForm form : goodsList) {
+			PmsGoodsAttrKey goodsAttrKey = new PmsGoodsAttrKey();
+			goodsAttrKey.setGoodsId(form.getId());
+			goodsAttrKey.setName("规格");
+			goodsAttrKeyMapper.insertSelective(goodsAttrKey);
+
+			PmsGoodsAttrVal goodsAttrVal = new PmsGoodsAttrVal();
+			goodsAttrVal.setGoodsId(form.getId());
+			goodsAttrVal.setAttrKeyId(goodsAttrKey.getId());
+			goodsAttrVal.setAttrKeyName(goodsAttrKey.getName());
+			goodsAttrVal.setValue("默认");
+			goodsAttrValMapper.insertSelective(goodsAttrVal);
+
+			PmsGoodsSku sku = new PmsGoodsSku();
+			sku.setGoodsId(form.getId());
+			sku.setAttrSymbolPath(goodsAttrVal.getId().toString());
+			sku.setAttrSymbolName(goodsAttrVal.getValue());
+			sku.setPrice(form.getPrice());
+			sku.setOriPrice(sku.getPrice());
+			sku.setStock(1000);
+			sku.setImg(form.getMainImg());
+			goodsSkuMapper.insertSelective(sku);
+		}
+	}
+
+
+	private Integer getCateIdByName(Map<String, Integer> cateMap, String name, Integer parentId) {
+		if(cateMap.get(name+"-"+parentId) != null) {
+			return cateMap.get(name+"-"+parentId);
+		}else {
+			//创建新分类
+			Integer cateId = goodsCateService.addGoodsCate(parentId == 0 ? null : parentId, name, 99, null, null);
+			cateMap.put(name+"-"+parentId, cateId);
+			return cateId;
+		}
 	}
 
 	private List<PmsGoodsAttrKey> getGoodsAttrKeyList(Integer goodsId){

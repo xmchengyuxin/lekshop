@@ -162,4 +162,9 @@ public class CommonConstant {
      * 拼多多
      */
     public static final String PINDUODUO = "pdd";
+
+    /**
+     * 上传路径前缀
+     */
+    public static final String UPLOAD_PRE = "lekshop";
 }

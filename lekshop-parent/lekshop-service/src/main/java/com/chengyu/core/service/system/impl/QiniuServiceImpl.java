@@ -1,5 +1,6 @@
 package com.chengyu.core.service.system.impl;
 
+import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.RedisEnums;
 import com.chengyu.core.mapper.SysQiniuConfigMapper;
 import com.chengyu.core.model.SysQiniuConfig;
@@ -56,7 +57,8 @@ public class QiniuServiceImpl implements QiniuService {
 		String area = config.getImgZone();
 		boolean isPublic = true;
 		String viewUrl = config.getImgViewUrl();
-		
+
+		fileName = CommonConstant.UPLOAD_PRE + "/" + fileName;
 		String upToken = QiniuUploadUtil.getUpToken(ak, sk, bucketName, fileName);
 		String pathKey = QiniuUploadUtil.upload(file, fileName, bucketName, upToken, area);
 		return QiniuUploadUtil.getFilePath(isPublic, viewUrl, pathKey, ak, sk);
@@ -71,7 +73,8 @@ public class QiniuServiceImpl implements QiniuService {
 		String area = config.getVideoZone();
 		boolean isPublic = true;
 		String viewUrl = config.getVideoViewUrl();
-		
+
+		fileName = CommonConstant.UPLOAD_PRE + "/" + fileName;
 		String upToken = QiniuUploadUtil.getUpToken(ak, sk, bucketName, fileName);
 		String pathKey = QiniuUploadUtil.upload(file, fileName, bucketName, upToken, area);
 		return QiniuUploadUtil.getFilePath(isPublic, viewUrl, pathKey, ak, sk);
