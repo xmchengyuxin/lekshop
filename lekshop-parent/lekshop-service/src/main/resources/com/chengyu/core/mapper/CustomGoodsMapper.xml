@@ -64,4 +64,115 @@
 
 	</insert>
 
+	<resultMap id="BaseResultMap" type="com.chengyu.core.model.PmsGoods">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="shop_id" jdbcType="INTEGER" property="shopId" />
+		<result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+		<result column="cate_pid" jdbcType="INTEGER" property="catePid" />
+		<result column="cate_tid" jdbcType="INTEGER" property="cateTid" />
+		<result column="cate_id" jdbcType="INTEGER" property="cateId" />
+		<result column="cate_ids" jdbcType="VARCHAR" property="cateIds" />
+		<result column="cate_name" jdbcType="VARCHAR" property="cateName" />
+		<result column="shop_cate_pid" jdbcType="INTEGER" property="shopCatePid" />
+		<result column="shop_cate_tid" jdbcType="INTEGER" property="shopCateTid" />
+		<result column="shop_cate_id" jdbcType="INTEGER" property="shopCateId" />
+		<result column="shop_cate_ids" jdbcType="VARCHAR" property="shopCateIds" />
+		<result column="shop_cate_name" jdbcType="VARCHAR" property="shopCateName" />
+		<result column="type" jdbcType="INTEGER" property="type" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="main_img" jdbcType="VARCHAR" property="mainImg" />
+		<result column="main_video" jdbcType="VARCHAR" property="mainVideo" />
+		<result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
+		<result column="price" jdbcType="DECIMAL" property="price" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="weight" jdbcType="INTEGER" property="weight" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="stock_type" jdbcType="INTEGER" property="stockType" />
+		<result column="freight_template_id" jdbcType="INTEGER" property="freightTemplateId" />
+		<result column="point_num" jdbcType="INTEGER" property="pointNum" />
+		<result column="sell_num" jdbcType="INTEGER" property="sellNum" />
+		<result column="pay_num" jdbcType="INTEGER" property="payNum" />
+		<result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+		<result column="good_comment_num" jdbcType="INTEGER" property="goodCommentNum" />
+		<result column="bad_comment_num" jdbcType="INTEGER" property="badCommentNum" />
+		<result column="collection_num" jdbcType="INTEGER" property="collectionNum" />
+		<result column="group_type" jdbcType="INTEGER" property="groupType" />
+		<result column="group_num" jdbcType="INTEGER" property="groupNum" />
+		<result column="group_limit_hours" jdbcType="INTEGER" property="groupLimitHours" />
+		<result column="group_limit_buy" jdbcType="INTEGER" property="groupLimitBuy" />
+		<result column="group_single_buy" jdbcType="INTEGER" property="groupSingleBuy" />
+		<result column="seckill_begin_time" jdbcType="TIMESTAMP" property="seckillBeginTime" />
+		<result column="seckill_end_time" jdbcType="TIMESTAMP" property="seckillEndTime" />
+		<result column="seckill_limit_num" jdbcType="INTEGER" property="seckillLimitNum" />
+		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="add_by" jdbcType="VARCHAR" property="addBy" />
+		<result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+		<result column="upd_by" jdbcType="VARCHAR" property="updBy" />
+	</resultMap>
+
+	<select id="getGoodsList" resultMap="BaseResultMap">
+		select
+		*
+		from pms_goods where 1=1
+		<choose>
+			<when test="form.queryPlatformGoods">
+				and shop_id = 0
+			</when>
+			<otherwise>
+				and shop_id != 0
+			</otherwise>
+		</choose>
+		<if test="form.shopId != null">
+			and shop_id = #{form.shopId}
+		</if>
+		<if test="form.cateId != null">
+			and cate_id = #{form.cateId}
+		</if>
+		<if test="form.catePid != null">
+			and cate_pid = #{form.catePid}
+		</if>
+		<if test="form.cateTid != null">
+			and cate_tid = #{form.cateTid}
+		</if>
+		<if test="form.shopCateId != null">
+			and shop_cate_id = #{form.shopCateId}
+		</if>
+		<if test="form.shopCatePid != null">
+			and shop_cate_pid = #{form.shopCatePid}
+		</if>
+		<if test="form.shopCateTid != null">
+			and shop_cate_tid = #{form.shopCateTid}
+		</if>
+		<if test="form.status != null">
+			and status = #{form.status}
+		</if>
+		<if test="form.type != null">
+			and type = #{form.type}
+		</if>
+		<if test="form.minAmount != null">
+			and price &gt;= #{form.minAmount}
+		</if>
+		<if test="form.maxAmount != null">
+			and price &lt;= #{form.maxAmount}
+		</if>
+		<if test="form.catePidList != null">
+			and cate_pid in
+			<foreach close=")" collection="form.catePidList" item="item" open="(" separator=",">
+				#{item}
+			</foreach>
+		</if>
+		<if test="form.title != null and !''.equals(form.title)">
+			and MATCH ( cate_name, shop_cate_name, title, description, detail ) against (#{form.title})
+		</if>
+		<choose>
+			<when test="form.sort != null">
+				order by sort asc
+			</when>
+			<otherwise>
+				order by sort asc, weight desc, id desc
+			</otherwise>
+		</choose>
+	</select>
+
 </mapper>

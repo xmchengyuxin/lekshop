@@ -1,5 +1,8 @@
 package com.chengyu.core.component;
 
+import cn.hutool.http.Header;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.enums.RedisEnums;
 import com.chengyu.core.entity.CommonResult;
@@ -65,8 +68,14 @@ public class LoginAspect extends ShopBaseController {
         if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
             String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
-            
-            String token = (String) redisUtil.getRedisValue(RedisEnums.SHOP_TOKEN_PC_KEY.getKey()+username);
+
+            UserAgent ua = UserAgentUtil.parse(request.getHeader(Header.USER_AGENT.toString()));
+            String token;
+            if(ua.isMobile()) {
+                token = (String) redisUtil.getRedisValue(RedisEnums.SHOP_TOKEN_PHONE_KEY.getKey()+username);
+            } else {
+                token = (String) redisUtil.getRedisValue(RedisEnums.SHOP_TOKEN_PC_KEY.getKey()+username);
+            }
             if(StringUtils.isBlank(token)) {
                 return CommonResult.unauthorized("您的登录信息已过期,请重新登录");
             }

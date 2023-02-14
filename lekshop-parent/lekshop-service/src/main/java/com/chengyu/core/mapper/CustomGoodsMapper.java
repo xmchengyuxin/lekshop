@@ -3,6 +3,7 @@ package com.chengyu.core.mapper;
 import com.chengyu.core.domain.form.GoodsImportForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.GoodsStockResult;
+import com.chengyu.core.model.PmsGoods;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface CustomGoodsMapper {
     List<GoodsStockResult> getGoodsStockList(@Param("form") GoodsSearchForm form);
 
     void insertGoodsList(List<GoodsImportForm> goodsList);
+
+    List<PmsGoods> getGoodsList(@Param("form")GoodsSearchForm form);
 }

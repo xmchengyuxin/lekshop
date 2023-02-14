@@ -61,7 +61,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<PmsGoods> getGoodsList(GoodsSearchForm form, Integer page, Integer pageSize) {
 		PageHelper.startPage(page, pageSize);
 
-		PmsGoodsExample example = new PmsGoodsExample();
+		//使用全文检索
+		return customGoodsMapper.getGoodsList(form);
+		/*PmsGoodsExample example = new PmsGoodsExample();
 		if(StringUtils.isNotBlank(form.getSort())){
 			example.setOrderByClause(form.getSort());
 		}else{
@@ -113,7 +115,7 @@ public class GoodsServiceImpl implements GoodsService {
 		if(form.getMaxAmount() != null){
 			criteria.andPriceLessThanOrEqualTo(form.getMaxAmount());
 		}
-		return goodsMapper.selectByExample(example);
+		return goodsMapper.selectByExample(example);*/
 	}
 
 	@Override
