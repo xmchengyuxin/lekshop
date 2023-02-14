@@ -4,11 +4,13 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
+import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.domain.form.GoodsImportForm;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
 import com.chengyu.core.domain.result.GoodsExportResult;
 import com.chengyu.core.domain.result.GoodsResult;
+import com.chengyu.core.domain.result.GoodsThirdResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -17,6 +19,8 @@ import com.chengyu.core.model.PmsGoodsGroup;
 import com.chengyu.core.model.PmsGoodsSku;
 import com.chengyu.core.model.UmsShop;
 import com.chengyu.core.service.goods.GoodsService;
+import com.chengyu.core.service.system.ThirdConfigService;
+import com.chengyu.core.util.third.manager.ThirdManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.CellType;
@@ -51,6 +55,10 @@ public class GoodsController extends AdminBaseController {
 	
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private ThirdManager thirdManager;
+	@Autowired
+	private ThirdConfigService thirdConfigService;
 	
 	@ApiOperation(value = "店铺商品列表")
 	@ResponseBody
@@ -233,7 +241,6 @@ public class GoodsController extends AdminBaseController {
 				GoodsImportForm goods = new GoodsImportForm();
 				//商品类目
 				if (row.getCell(0) != null) {
-					row.getCell(0).setCellType(CellType.STRING);
 					if(com.chengyu.core.utils.StringUtils.isEmpty(row.getCell(0).getStringCellValue())){
 						continue;
 					}
@@ -241,7 +248,6 @@ public class GoodsController extends AdminBaseController {
 				}
 				//标题
 				if (row.getCell(1) != null) {
-					row.getCell(1).setCellType(CellType.STRING);
 					if(com.chengyu.core.utils.StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
 						continue;
 					}
@@ -249,14 +255,12 @@ public class GoodsController extends AdminBaseController {
 				}
 				//商品主图
 				if (row.getCell(2) != null) {
-					row.getCell(2).setCellType(CellType.STRING);
 					if(com.chengyu.core.utils.StringUtils.isNotEmpty(row.getCell(2).getStringCellValue())){
 						goods.setMainImg(row.getCell(2).getStringCellValue().trim());
 					}
 				}
 				//商品相册
 				if (row.getCell(3) != null) {
-					row.getCell(3).setCellType(CellType.STRING);
 					if(com.chengyu.core.utils.StringUtils.isNotEmpty(row.getCell(3).getStringCellValue())){
 						goods.setGoodsImg(row.getCell(3).getStringCellValue().trim());
 					}
@@ -271,7 +275,6 @@ public class GoodsController extends AdminBaseController {
 				}
 				//商品描述
 				if (row.getCell(5) != null) {
-					row.getCell(5).setCellType(CellType.STRING);
 					if(com.chengyu.core.utils.StringUtils.isNotEmpty(row.getCell(5).getStringCellValue())){
 						goods.setDescription(row.getCell(5).getStringCellValue().trim());
 					}
@@ -284,5 +287,14 @@ public class GoodsController extends AdminBaseController {
 			e.printStackTrace();
 			throw new ServiceException("导入失败");
 		}
+	}
+
+
+	@ApiOperation(value = "识别第三方商品详情")
+	@ResponseBody
+	@RequestMapping(value="/goods/getThirdDetail", method=RequestMethod.GET)
+	public CommonResult<GoodsThirdResult> getThirdDetail(String url) throws ServiceException {
+		GoodsThirdResult goods = thirdManager.getThidFactory(thirdConfigService.getThirdConfigByNid(ThirdEnums.GOODS.getKey())).getGoodsDetail(url);
+		return CommonResult.success(goods);
 	}
 }
