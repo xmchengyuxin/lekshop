@@ -23,7 +23,7 @@
 - 开源免费：LEKSHOP以开源方式发布, 允许用户自由使用、修改。
 - 多商户系统：商户入驻, 后台审批。
 - 逛一逛：短视频带货。
-- 多语言支持：支持多种语言(简体,英,繁体)切换，我司有另外的跨境电商系统, <a href="https://www.lekshop.cn/16552.html">前往体验</a>。
+- 多语言支持：支持多种语言(简体,英,繁体)切换，我司有另外的<a href="https://www.lekshop.cn/16552.html">跨境电商系统, 前往体验</a>。
 - 商城装修：支持商城自定义装修.
 - 在线聊天：内置在线客服聊天系统
 <br>
@@ -48,7 +48,7 @@
 商城H5网页：http://m.lekshop.cn 账号：13666011848/123456
 </p>
 
-<a href="https://www.lekshop.cn/1325.html" target="_blank">完整介绍, 点此前往</a>
+<a href="https://www.lekshop.cn/1325.html" target="_blank">完整介绍, 点此前往 [多语言多商户商城系统]</a>
 
 
 
