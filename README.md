@@ -16,6 +16,8 @@
 
 具体详细介绍, 请前往官网查看, 如要商用，需要我公司授权。
 
+<br>
+买家端在此项目中 <a href="https://github.com/xmchengyuxin/chengyu_shops_ui.git" target="_blank">https://github.com/xmchengyuxin/chengyu_shops_ui.git</a>
 
 ## LEKSHOP系统亮点
 - 开源免费：LEKSHOP以开源方式发布, 允许用户自由使用、修改。
