@@ -56,10 +56,19 @@
 <br>
 
 ## 页面展示
-![ ](https://beikeshop.com/readme/README-7.png)
-![ ](https://beikeshop.com/readme/README-5.png)
-![ ](https://beikeshop.com/readme/README-6.png)
-![ ](https://beikeshop.com/readme/README-8.png)
+ <img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片1.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片2.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片3.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片4.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片5.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片6.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片7.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片8.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片9.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片10.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片11.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片12.png" width="200">
+<img src="https://www.lekshop.cn/wp-content/uploads/2023/05/图片13.png" width="200">
 
 
 ## 软件架构
@@ -75,4 +84,4 @@ Java语言开发，基于 SpringBoot 框架，前端 uniapp, 后台使用 vue-el
 
 
 ## 商用请联系作者： 
-![ ]([https://beikeshop.com/readme/README-7.png](https://www.lekshop.cn/wp-content/uploads/2023/05/企业微信.jpg))
+![ ](https://www.lekshop.cn/wp-content/uploads/2023/05/企业微信.jpg)
