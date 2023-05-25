@@ -6930,7 +6930,7 @@ CREATE TABLE `sys_alisms_config` (
 -- ----------------------------
 -- Records of sys_alisms_config
 -- ----------------------------
-INSERT INTO `sys_alisms_config` VALUES ('1', 'LTAI4FiqTo2aK1WG3aGnxZko', 'tyTc5xsbTSQJV7uXIrVVwPcRMRQp6l', 'dysmsapi.aliyuncs.com', '80', 'LEKSHOP', 'SMS_215405324', 'SMS_215405324', 'SMS_215405324', 'SMS_215405324', 'SMS_215405324', 'SMS_205055010', '2019-06-28 11:27:11', 'admin', '2022-05-07 15:35:59', 'admin', '');
+INSERT INTO `sys_alisms_config` VALUES ('1', 'test', 'test', 'dysmsapi.aliyuncs.com', '80', 'LEKSHOP', 'SMS_215405324', 'SMS_215405324', 'SMS_215405324', 'SMS_215405324', 'SMS_215405324', 'SMS_205055010', '2019-06-28 11:27:11', 'admin', '2022-05-07 15:35:59', 'admin', '');
 
 -- ----------------------------
 -- Table structure for sys_approve_config
@@ -6951,7 +6951,7 @@ CREATE TABLE `sys_approve_config` (
 -- ----------------------------
 -- Records of sys_approve_config
 -- ----------------------------
-INSERT INTO `sys_approve_config` VALUES ('3', '595836', '190bdb2429d34c378bced5c612329a65', '2021-01-29 12:02:12', '', '2022-02-14 23:57:11', '', 'http://route.showapi.com');
+INSERT INTO `sys_approve_config` VALUES ('3', '595836', 'test', '2021-01-29 12:02:12', '', '2022-02-14 23:57:11', '', 'http://route.showapi.com');
 
 -- ----------------------------
 -- Table structure for sys_bank_config
