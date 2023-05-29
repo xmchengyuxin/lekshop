@@ -2,6 +2,7 @@ package com.chengyu.core.controller.goods;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONArray;
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.enums.ThirdEnums;
@@ -108,6 +109,7 @@ public class GoodsController extends AdminBaseController {
 		return CommonResult.success(null);
 	}
 
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除商品")
 	@ResponseBody

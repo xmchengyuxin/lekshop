@@ -1,5 +1,6 @@
 package com.chengyu.core.controller.content;
 
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.entity.CommonPage;
@@ -58,7 +59,8 @@ public class ArticleCateController extends AdminBaseController {
 		
 		return CommonResult.success(null);
 	}
-	
+
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除文章分类")
 	@ResponseBody

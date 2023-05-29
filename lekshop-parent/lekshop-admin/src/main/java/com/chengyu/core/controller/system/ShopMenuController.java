@@ -1,5 +1,6 @@
 package com.chengyu.core.controller.system;
 
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
@@ -35,6 +36,7 @@ public class ShopMenuController extends AdminBaseController {
         return CommonResult.success(list);
     }
 
+    @DemoStationForbid
     @OperationLog
     @ApiOperation(value = "添加编辑菜单")
     @ResponseBody
@@ -49,6 +51,7 @@ public class ShopMenuController extends AdminBaseController {
         return CommonResult.success(null);
     }
 
+    @DemoStationForbid
     @OperationLog
     @ApiOperation(value = "删除菜单")
     @ResponseBody

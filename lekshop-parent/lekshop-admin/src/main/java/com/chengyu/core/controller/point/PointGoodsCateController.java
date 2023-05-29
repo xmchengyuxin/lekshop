@@ -1,5 +1,6 @@
 package com.chengyu.core.controller.point;
 
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
@@ -105,6 +106,7 @@ public class PointGoodsCateController extends AdminBaseController {
 		return CommonResult.success(result);
 	}
 
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除电商分类")
 	@ResponseBody

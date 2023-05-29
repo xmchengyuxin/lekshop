@@ -1,5 +1,6 @@
 package com.chengyu.core.controller.floor;
 
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.entity.CommonPage;
@@ -52,6 +53,7 @@ public class FloorController extends AdminBaseController {
 		return CommonResult.success(null);
 	}
 
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除装修模板")
 	@ResponseBody

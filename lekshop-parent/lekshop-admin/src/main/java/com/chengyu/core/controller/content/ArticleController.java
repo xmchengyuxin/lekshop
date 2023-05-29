@@ -2,6 +2,7 @@ package com.chengyu.core.controller.content;
 
 import java.util.List;
 
+import com.chengyu.core.component.DemoStationForbid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -61,7 +62,8 @@ public class ArticleController extends AdminBaseController {
 		
 		return CommonResult.success(null);
 	}
-	
+
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除文章")
 	@ResponseBody
