@@ -171,6 +171,33 @@
       </el-col>
     </el-row>
 
+    <el-dialog
+      title="Java免费开源商城"
+      :visible.sync="showTips"
+      width="40%"
+      center>
+      <p class="margin-t10">1. 该项目已完全开源,不留后门,不留核心代码,喜欢的朋友帮忙git上点个star即可</p>
+      <p class="margin-t10">2.
+        <a class="link-type margin-r10" href="https://github.com/xmchengyuxin/lekshop" target="_blank">Github</a>
+        <a class="link-type margin-r10" href="https://gitee.com/chengyuwb/lekshop" target="_blank">Gitee</a>
+        <a class="link-type" href="https://www.lekshop.cn/" target="_blank">官网</a>
+      </p>
+      <p class="margin-t10">3. 如果需要商用或者有问题需要交流, 可以添加我的企业微信
+      </p>
+      <p class="margin-t10" style="margin-left: 10px;">
+       <el-image
+           style="height: 150px"
+           src="https://www.lekshop.cn/wp-content/uploads/2023/05/企业微信.jpg">
+         </el-image>
+      </p>
+      <p class="margin-t10">4. 目前这套没有买家pc端,但是其实已经开发一半了,因为种种原因停工,希望以后有机会可以开发完再开源出来</p>
+      <p class="margin-t10">5. 千万不要拿此项目做违法犯罪的事情,违法必究!!!</p>
+      <p class="margin-t10" >6. 另外我司有销售<span style="font-size: 17px; color: rgb(245, 108, 108); font-weight: bold;">多语言多货币跨境商城软件</span>, 十五种语言, 100多个国家, 内置20万商品数据, 开箱即用, 有兴趣的也可以前往查看
+        <a href="https://www.lekshop.cn/16552.html" target="_blank" class="link-type">https://www.lekshop.cn/16552.html</a>
+      </p>
+
+    </el-dialog>
+
   </div>
 </template>
 
@@ -243,7 +270,8 @@ export default {
       loginData:{},
       platformIncome: 0,
       shopData: [],
-      goodsData: []
+      goodsData: [],
+      showTips: true
     }
   },
 	created() {
