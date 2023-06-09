@@ -3,6 +3,7 @@ package com.chengyu.core.controller.member;
 import cn.hutool.crypto.SecureUtil;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.UserBaseController;
+import com.chengyu.core.domain.enums.MemberTypes;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
@@ -11,6 +12,7 @@ import com.chengyu.core.service.member.MemberAccountService;
 import com.chengyu.core.service.order.OrderService;
 import com.chengyu.core.service.system.QiniuService;
 import com.chengyu.core.service.system.VerifyCodeService;
+import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -261,18 +263,45 @@ public class MemberController extends UserBaseController {
 	})
 	@ResponseBody
 	@RequestMapping(value={"/updatePhone"}, method=RequestMethod.POST)
-	public CommonResult<String> updatePhone(String phone, String code) throws Exception {
+	public CommonResult<Map<String, Object>> updatePhone(String phone, String code) throws Exception {
 		//校验短信验证码
 		UmsMember member = getCurrentMember();
 		if(!"102938".equals(code)){
 			verifyCodeService.validateCode(phone, code);
 		}
 
-		UmsMember updateMember = new UmsMember();
-		updateMember.setId(member.getId());
-		updateMember.setPhone(phone);
-		updateMember.setCode(phone);
-		memberService.updateMember(updateMember);
+		//校验该手机号是否已被绑定
+		UmsMember haveMember = memberService.getMemberByParams(phone, MemberTypes.PHONE);
+		if(haveMember == null) {
+			UmsMember updateMember = new UmsMember();
+			updateMember.setId(member.getId());
+			updateMember.setPhone(phone);
+			updateMember.setCode(phone);
+			memberService.updateMember(updateMember);
+		} else {
+			if(StringUtils.isBlank(haveMember.getXcxOpenId())) {
+				//如果手机号已被注册,但未绑定微信,合并两个账号
+				String xcxOpenId = haveMember.getXcxOpenId();
+
+				UmsMember oldMember = new UmsMember();
+				oldMember.setId(member.getId());
+				oldMember.setXcxOpenId(xcxOpenId+"_cancel");
+				memberService.updateMember(oldMember);
+
+				UmsMember updateMember = new UmsMember();
+				updateMember.setId(haveMember.getId());
+				updateMember.setXcxOpenId(xcxOpenId);
+				memberService.updateMember(updateMember);
+
+				//返回新账号的Token
+				String token = memberService.loginByNoPassword(haveMember.getCode());
+				Map<String, Object> tokenMap = new HashMap<>(16);
+				tokenMap.put("token", token);
+				tokenMap.put("tokenHead", tokenHead);
+				tokenMap.put("member", haveMember);
+				return CommonResult.success(tokenMap);
+			}
+		}
 		return CommonResult.success(null);
 	}
 
