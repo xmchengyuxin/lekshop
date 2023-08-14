@@ -27,3 +27,4 @@ crm-ui/duty/crmduty_ui_admin/.env.development
 *.development
 **/unpackage/
 *.apk
+lekshop-parent/lekshop-admin/src/main/resources/application-prod.yml
