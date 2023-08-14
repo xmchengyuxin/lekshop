@@ -6,6 +6,11 @@ spring:
       enabled: true
       max-file-size: 20MB
       max-request-size: 20MB
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 mybatis:
   mapper-locations:

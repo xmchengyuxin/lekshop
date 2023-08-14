@@ -50,6 +50,21 @@ public class SysWeixinConfig implements Serializable {
     @ApiModelProperty(value = "修改人")
     private String updBy;
 
+    @ApiModelProperty(value = "同步回调")
+    private String notifyUrl;
+
+    @ApiModelProperty(value = "商户证书序列号")
+    private String merchantSerialNumber;
+
+    @ApiModelProperty(value = "商户APIV3密钥")
+    private String apiV3Key;
+
+    @ApiModelProperty(value = "商户API私钥路径")
+    private String privateKeyPath;
+
+    @ApiModelProperty(value = "证书路径")
+    private String wechatPayCertificatePath;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -172,6 +187,46 @@ public class SysWeixinConfig implements Serializable {
         this.updBy = updBy;
     }
 
+    public String getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
+    }
+
+    public String getMerchantSerialNumber() {
+        return merchantSerialNumber;
+    }
+
+    public void setMerchantSerialNumber(String merchantSerialNumber) {
+        this.merchantSerialNumber = merchantSerialNumber;
+    }
+
+    public String getApiV3Key() {
+        return apiV3Key;
+    }
+
+    public void setApiV3Key(String apiV3Key) {
+        this.apiV3Key = apiV3Key;
+    }
+
+    public String getPrivateKeyPath() {
+        return privateKeyPath;
+    }
+
+    public void setPrivateKeyPath(String privateKeyPath) {
+        this.privateKeyPath = privateKeyPath;
+    }
+
+    public String getWechatPayCertificatePath() {
+        return wechatPayCertificatePath;
+    }
+
+    public void setWechatPayCertificatePath(String wechatPayCertificatePath) {
+        this.wechatPayCertificatePath = wechatPayCertificatePath;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -193,6 +248,11 @@ public class SysWeixinConfig implements Serializable {
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);
         sb.append(", updBy=").append(updBy);
+        sb.append(", notifyUrl=").append(notifyUrl);
+        sb.append(", merchantSerialNumber=").append(merchantSerialNumber);
+        sb.append(", apiV3Key=").append(apiV3Key);
+        sb.append(", privateKeyPath=").append(privateKeyPath);
+        sb.append(", wechatPayCertificatePath=").append(wechatPayCertificatePath);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -1124,6 +1124,356 @@ public class SysWeixinConfigExample {
             addCriterion("upd_by not between", value1, value2, "updBy");
             return (Criteria) this;
         }
+
+        public Criteria andNotifyUrlIsNull() {
+            addCriterion("notify_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlIsNotNull() {
+            addCriterion("notify_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlEqualTo(String value) {
+            addCriterion("notify_url =", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlNotEqualTo(String value) {
+            addCriterion("notify_url <>", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlGreaterThan(String value) {
+            addCriterion("notify_url >", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("notify_url >=", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlLessThan(String value) {
+            addCriterion("notify_url <", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlLessThanOrEqualTo(String value) {
+            addCriterion("notify_url <=", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlLike(String value) {
+            addCriterion("notify_url like", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlNotLike(String value) {
+            addCriterion("notify_url not like", value, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlIn(List<String> values) {
+            addCriterion("notify_url in", values, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlNotIn(List<String> values) {
+            addCriterion("notify_url not in", values, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlBetween(String value1, String value2) {
+            addCriterion("notify_url between", value1, value2, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifyUrlNotBetween(String value1, String value2) {
+            addCriterion("notify_url not between", value1, value2, "notifyUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberIsNull() {
+            addCriterion("merchant_serial_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberIsNotNull() {
+            addCriterion("merchant_serial_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberEqualTo(String value) {
+            addCriterion("merchant_serial_number =", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberNotEqualTo(String value) {
+            addCriterion("merchant_serial_number <>", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberGreaterThan(String value) {
+            addCriterion("merchant_serial_number >", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("merchant_serial_number >=", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberLessThan(String value) {
+            addCriterion("merchant_serial_number <", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberLessThanOrEqualTo(String value) {
+            addCriterion("merchant_serial_number <=", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberLike(String value) {
+            addCriterion("merchant_serial_number like", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberNotLike(String value) {
+            addCriterion("merchant_serial_number not like", value, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberIn(List<String> values) {
+            addCriterion("merchant_serial_number in", values, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberNotIn(List<String> values) {
+            addCriterion("merchant_serial_number not in", values, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberBetween(String value1, String value2) {
+            addCriterion("merchant_serial_number between", value1, value2, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andMerchantSerialNumberNotBetween(String value1, String value2) {
+            addCriterion("merchant_serial_number not between", value1, value2, "merchantSerialNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyIsNull() {
+            addCriterion("api_v3_key is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyIsNotNull() {
+            addCriterion("api_v3_key is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyEqualTo(String value) {
+            addCriterion("api_v3_key =", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyNotEqualTo(String value) {
+            addCriterion("api_v3_key <>", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyGreaterThan(String value) {
+            addCriterion("api_v3_key >", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyGreaterThanOrEqualTo(String value) {
+            addCriterion("api_v3_key >=", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyLessThan(String value) {
+            addCriterion("api_v3_key <", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyLessThanOrEqualTo(String value) {
+            addCriterion("api_v3_key <=", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyLike(String value) {
+            addCriterion("api_v3_key like", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyNotLike(String value) {
+            addCriterion("api_v3_key not like", value, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyIn(List<String> values) {
+            addCriterion("api_v3_key in", values, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyNotIn(List<String> values) {
+            addCriterion("api_v3_key not in", values, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyBetween(String value1, String value2) {
+            addCriterion("api_v3_key between", value1, value2, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiV3KeyNotBetween(String value1, String value2) {
+            addCriterion("api_v3_key not between", value1, value2, "apiV3Key");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathIsNull() {
+            addCriterion("private_key_path is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathIsNotNull() {
+            addCriterion("private_key_path is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathEqualTo(String value) {
+            addCriterion("private_key_path =", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathNotEqualTo(String value) {
+            addCriterion("private_key_path <>", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathGreaterThan(String value) {
+            addCriterion("private_key_path >", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathGreaterThanOrEqualTo(String value) {
+            addCriterion("private_key_path >=", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathLessThan(String value) {
+            addCriterion("private_key_path <", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathLessThanOrEqualTo(String value) {
+            addCriterion("private_key_path <=", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathLike(String value) {
+            addCriterion("private_key_path like", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathNotLike(String value) {
+            addCriterion("private_key_path not like", value, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathIn(List<String> values) {
+            addCriterion("private_key_path in", values, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathNotIn(List<String> values) {
+            addCriterion("private_key_path not in", values, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathBetween(String value1, String value2) {
+            addCriterion("private_key_path between", value1, value2, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrivateKeyPathNotBetween(String value1, String value2) {
+            addCriterion("private_key_path not between", value1, value2, "privateKeyPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathIsNull() {
+            addCriterion("wechat_pay_certificate_path is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathIsNotNull() {
+            addCriterion("wechat_pay_certificate_path is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathEqualTo(String value) {
+            addCriterion("wechat_pay_certificate_path =", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathNotEqualTo(String value) {
+            addCriterion("wechat_pay_certificate_path <>", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathGreaterThan(String value) {
+            addCriterion("wechat_pay_certificate_path >", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathGreaterThanOrEqualTo(String value) {
+            addCriterion("wechat_pay_certificate_path >=", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathLessThan(String value) {
+            addCriterion("wechat_pay_certificate_path <", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathLessThanOrEqualTo(String value) {
+            addCriterion("wechat_pay_certificate_path <=", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathLike(String value) {
+            addCriterion("wechat_pay_certificate_path like", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathNotLike(String value) {
+            addCriterion("wechat_pay_certificate_path not like", value, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathIn(List<String> values) {
+            addCriterion("wechat_pay_certificate_path in", values, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathNotIn(List<String> values) {
+            addCriterion("wechat_pay_certificate_path not in", values, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathBetween(String value1, String value2) {
+            addCriterion("wechat_pay_certificate_path between", value1, value2, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andWechatPayCertificatePathNotBetween(String value1, String value2) {
+            addCriterion("wechat_pay_certificate_path not between", value1, value2, "wechatPayCertificatePath");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

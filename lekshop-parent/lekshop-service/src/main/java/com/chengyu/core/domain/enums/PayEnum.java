@@ -31,7 +31,9 @@ public class PayEnum {
 		/**xcx>>gzh>>app**/
 		XCX("xcx"),
 		GZH("gzh"),
-		APP("app");
+		APP("app"),
+		H5("h5"),
+		NATIVE("native");
 
 		private final String value;
 

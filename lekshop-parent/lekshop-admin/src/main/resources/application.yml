@@ -1,7 +1,11 @@
 spring:
   profiles:
     active: dev #默认为开发环境
-
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 mybatis:
   mapper-locations:
     - classpath:dao/*.xml
