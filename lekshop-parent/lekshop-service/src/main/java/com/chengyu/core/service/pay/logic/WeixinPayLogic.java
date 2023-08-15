@@ -11,8 +11,10 @@ import com.chengyu.core.service.pay.wxpay.WeixinPayForm;
 import com.chengyu.core.service.pay.wxpay.WeixinRefundForm;
 import com.chengyu.core.util.weixin.WechatUtil;
 import com.chengyu.core.utils.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 /**
@@ -20,9 +22,8 @@ import java.math.BigDecimal;
  * @author LeGreen
  * @date   2022/6/9
  */
-@Service("weixinPayLogic")
+@Service(" new WeixinPay()Logic")
 public class WeixinPayLogic extends PayFactory {
-
 
 	@Override
 	public String pay(UmsMember member, String orderNo, BigDecimal amount, PayBaseForm payBaseForm) throws Exception {
