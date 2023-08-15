@@ -745,24 +745,27 @@ public class OrderServiceImpl implements OrderService {
 		orderExample.createCriteria().andPayOrderNoEqualTo(payOrderNo).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
 		List<OmsOrder> orderList = orderMapper.selectByExample(orderExample);
 
-		OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
-		detailExample.createCriteria().andOrderIdIn(orderList.stream().map(OmsOrder::getId).collect(Collectors.toList())).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
-		List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(detailExample);
+		if(CollectionUtil.isNotEmpty(orderList)) {
+			OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
+			detailExample.createCriteria().andOrderIdIn(orderList.stream().map(OmsOrder::getId).collect(Collectors.toList())).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
+			List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(detailExample);
 
-		for(OmsOrderDetail detail : detailList){
-			if(detail.getStockType() == GoodsEnums.StockType.ORDER_REDUCE.getValue()){
-				goodsService.addStock(detail.getGoodsSkuId(), detail.getBuyNum());
+			for(OmsOrderDetail detail : detailList){
+				if(detail.getStockType() == GoodsEnums.StockType.ORDER_REDUCE.getValue()){
+					goodsService.addStock(detail.getGoodsSkuId(), detail.getBuyNum());
+				}
 			}
+
+			OmsOrderDetail updateDetail = new OmsOrderDetail();
+			updateDetail.setStatus(OrderEnums.OrderStatus.CANCEL.getValue());
+			updateDetail.setUpdTime(DateUtil.date());
+			orderDetailMapper.updateByExampleSelective(updateDetail, detailExample);
 		}
+
 		OmsOrder updateOrder = new OmsOrder();
 		updateOrder.setStatus(OrderEnums.OrderStatus.CANCEL.getValue());
 		updateOrder.setUpdTime(DateUtil.date());
 		orderMapper.updateByExampleSelective(updateOrder, orderExample);
-
-		OmsOrderDetail updateDetail = new OmsOrderDetail();
-		updateDetail.setStatus(OrderEnums.OrderStatus.CANCEL.getValue());
-		updateDetail.setUpdTime(DateUtil.date());
-		orderDetailMapper.updateByExampleSelective(updateDetail, detailExample);
 	}
 
 	@Override

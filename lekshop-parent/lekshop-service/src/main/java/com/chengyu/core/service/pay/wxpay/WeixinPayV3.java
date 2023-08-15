@@ -19,6 +19,11 @@ import com.wechat.pay.java.service.refund.RefundService;
 import com.wechat.pay.java.service.refund.model.CreateRequest;
 import com.wechat.pay.java.service.refund.model.Refund;
 import com.wechat.pay.java.service.refund.model.Status;
+import com.wechat.pay.java.service.transferbatch.TransferBatchService;
+import com.wechat.pay.java.service.transferbatch.model.GetTransferDetailByOutNoRequest;
+import com.wechat.pay.java.service.transferbatch.model.InitiateBatchTransferRequest;
+import com.wechat.pay.java.service.transferbatch.model.InitiateBatchTransferResponse;
+import com.wechat.pay.java.service.transferbatch.model.TransferDetailEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +40,7 @@ public class WeixinPayV3 {
 	public static JsapiServiceExtension jsapiService;
 	public static NativePayService nativePayService;
 	public static RefundService refundService;
+	public static TransferBatchService transferBatchService;
 	public static RSAAutoCertificateConfig rsaConfig = null;
 
 	private RSAAutoCertificateConfig getRSAConfig(SysWeixinConfig weixinConfig){
@@ -92,6 +98,15 @@ public class WeixinPayV3 {
 		}
 		return refundService;
 	}
+
+	private TransferBatchService getTransferBatchServiceInstance(SysWeixinConfig weixinConfig) {
+		if(transferBatchService == null) {
+			// 初始化服务
+			transferBatchService = new TransferBatchService.Builder().config(this.getRSAConfig(weixinConfig)).build();
+		}
+		return transferBatchService;
+	}
+
 
 	public String pay(WeixinPayForm form) throws Exception{
 		if(PayEnum.PayChannel.H5.getValue().equals(form.getWxType())){
@@ -197,7 +212,7 @@ public class WeixinPayV3 {
 		request.setMchid(config.getMchId());
 		request.setDescription(form.getBody());
 		request.setOutTradeNo(form.getOutTradeNo());
-		request.setNotifyUrl(config.getNotifyUrl());
+		request.setNotifyUrl(form.getNotifyUrl());
 		com.wechat.pay.java.service.payments.jsapi.model.Amount amount = new com.wechat.pay.java.service.payments.jsapi.model.Amount();
 		amount.setTotal(form.getTotalAmount().multiply(new BigDecimal(100)).intValue());
 		request.setAmount(amount);
@@ -287,6 +302,35 @@ public class WeixinPayV3 {
 			// 调用e.getMessage()获取信息打印日志或上报监控，更多方法见MalformedMessageException定义
 			log.info(e.getMessage());
 		}
+	}
+
+	public String transfer(WeixinTransferForm form) throws ServiceException {
+		SysWeixinConfig config = WechatUtil.config;
+		InitiateBatchTransferRequest initiateBatchTransferRequest =
+				new InitiateBatchTransferRequest();
+		initiateBatchTransferRequest.setAppid(config.getGzhAppId());
+		initiateBatchTransferRequest.setOutBatchNo(form.getOutBatchNo());
+		initiateBatchTransferRequest.setBatchName(form.getBatchName());
+		initiateBatchTransferRequest.setBatchRemark(initiateBatchTransferRequest.getBatchName());
+		initiateBatchTransferRequest.setTotalAmount(form.getTotalAmount());
+		initiateBatchTransferRequest.setTotalNum(form.getTotalNum());
+		initiateBatchTransferRequest.setTransferDetailList(form.getTransferDetailListList());
+		initiateBatchTransferRequest.setTransferSceneId("1001");
+		InitiateBatchTransferResponse response =
+				getTransferBatchServiceInstance(config).initiateBatchTransfer(initiateBatchTransferRequest);
+		if("CLOSED".equals(response.getBatchStatus())) {
+			throw new ServiceException("发起微信转账失败");
+		}
+		return null;
+	}
+
+	public TransferDetailEntity queryTransferResult(String outBatchNo, String outDetailNo) {
+		SysWeixinConfig config = WechatUtil.config;
+		GetTransferDetailByOutNoRequest request =
+				new GetTransferDetailByOutNoRequest();
+		request.setOutDetailNo(outDetailNo);
+		request.setOutBatchNo(outBatchNo);
+		return getTransferBatchServiceInstance(config).getTransferDetailByOutNo(request);
 	}
 
 }

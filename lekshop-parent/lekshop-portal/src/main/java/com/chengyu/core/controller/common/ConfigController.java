@@ -69,7 +69,6 @@ public class ConfigController extends UserBaseController {
 	@Autowired
 	private FloorGlobalStyleService floorGlobalStyleService;
 
-
 	@ApiOperation(value = "系统参数列表")
 	@ResponseBody
 	@RequestMapping(value="/config/getList", method=RequestMethod.GET)
