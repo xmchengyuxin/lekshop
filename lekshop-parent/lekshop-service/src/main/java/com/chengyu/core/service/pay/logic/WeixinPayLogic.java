@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  * @author LeGreen
  * @date   2022/6/9
  */
-@Service(" new WeixinPay()Logic")
+@Service("weixinPayLogic")
 public class WeixinPayLogic extends PayFactory {
 
 	@Override
