@@ -28,7 +28,7 @@
          <el-form-item label="微信商户号" prop="mchId">
            <el-input v-model="config.mchId"></el-input>
          </el-form-item>
-         <el-form-item label="微信商户密钥" prop="mchKey">
+         <el-form-item label="V2商户密钥" prop="mchKey">
            <el-input type="password" autocomplete="off" v-model="config.mchKey"></el-input>
          </el-form-item>
          <el-form-item label="支付回调" prop="payNotifyUrl">
@@ -36,6 +36,17 @@
          </el-form-item>
          <el-form-item label="API安全证书" prop="certPath">
            <el-input v-model="config.certPath"></el-input>
+           <p class="tips">apiclient_cert.p12文件存放服务器地址</p>
+         </el-form-item>
+         <el-form-item label="商户证书序列号" prop="merchantSerialNumber">
+           <el-input v-model="config.merchantSerialNumber"></el-input>
+         </el-form-item>
+         <el-form-item label="V3密钥" prop="apiV3Key">
+           <el-input v-model="config.apiV3Key"></el-input>
+         </el-form-item>
+         <el-form-item label="私钥路径" prop="privateKeyPath">
+           <el-input v-model="config.privateKeyPath"></el-input>
+           <p class="tips">apiclient_key.pem文件存放服务器地址</p>
          </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="updateConfig">更新配置</el-button>
