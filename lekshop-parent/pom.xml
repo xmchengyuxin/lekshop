@@ -115,11 +115,6 @@
 	            <artifactId>lekshop-service</artifactId>
 	            <version>${lekshop-service.version}</version>
 	        </dependency>
-            <dependency>
-                <groupId>com.chengyu.lekshop</groupId>
-                <artifactId>lekshop-pscommon</artifactId>
-                <version>${lekshop-pscommon.version}</version>
-            </dependency>
             <!--MyBatis分页插件starter-->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>

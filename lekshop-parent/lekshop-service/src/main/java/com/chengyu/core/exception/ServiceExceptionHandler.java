@@ -11,6 +11,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.lang.reflect.UndeclaredThrowableException;
+
 /**
  * @title  全局异常捕捉类
  * @author LeGreen
@@ -41,6 +43,8 @@ public class ServiceExceptionHandler{
 		}else if(e instanceof UsernameNotFoundException){
 			LOGGER.info("全局异常捕获>>找不到用户名");
 			return CommonResult.failed(messageSourceUtil.getMessage("username.notfound"));
+		} else if(e instanceof UndeclaredThrowableException) {
+			return CommonResult.failed(((UndeclaredThrowableException) e).getUndeclaredThrowable().getMessage());
 		}
 		LOGGER.error(e.getMessage(),e);
 

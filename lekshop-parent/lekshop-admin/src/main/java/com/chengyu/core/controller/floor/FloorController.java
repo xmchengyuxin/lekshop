@@ -63,6 +63,7 @@ public class FloorController extends AdminBaseController {
 		return CommonResult.success(null);
 	}
 
+	@DemoStationForbid
 	@ApiOperation(value = "保存装修模板")
 	@ResponseBody
 	@RequestMapping(value="/floor/savePageData", method=RequestMethod.POST)
