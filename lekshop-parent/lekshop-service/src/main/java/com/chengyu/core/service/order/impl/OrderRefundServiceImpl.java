@@ -509,6 +509,9 @@ public class OrderRefundServiceImpl implements OrderRefundService {
 		updateRefund.setStatus(OrderEnums.RefundDetailStatus.REFUND_SUS.getValue());
 		orderRefundMapper.updateByPrimaryKeySelective(updateRefund);
 
+		//退款
+		payService.refund(refund.getRefundNo());
+
 		this.refundSusForUpdateOrder(refund);
 
 		//记录
