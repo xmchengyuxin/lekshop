@@ -1,13 +1,25 @@
 package com.chengyu.core.controller.callback;
 
+import cn.hutool.json.JSONUtil;
 import com.chengyu.core.controller.UserBaseController;
 import com.chengyu.core.controller.callback.manager.CallbackManager;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.entity.CommonResult;
+import com.chengyu.core.model.SysWeixinConfig;
+import com.chengyu.core.service.pay.wxpay.WeixinPayV3;
 import com.chengyu.core.util.weixin.WechatUtil;
 import com.chengyu.core.util.weixin.WeixinResponse;
 import com.chengyu.core.utils.StringUtils;
+import com.wechat.pay.java.core.RSAAutoCertificateConfig;
+import com.wechat.pay.java.core.exception.ValidationException;
+import com.wechat.pay.java.core.notification.NotificationConfig;
+import com.wechat.pay.java.core.notification.NotificationParser;
+import com.wechat.pay.java.core.notification.RequestParam;
+import com.wechat.pay.java.service.payments.model.Transaction;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,12 +45,13 @@ import java.util.Map;
  *     -----------------------------------------------------------
  * </pre>
  */
+@Log4j2
 @Controller
 public class PayCallbackController extends UserBaseController {
 	
 	@Autowired
 	private CallbackManager paySusManager;
-	
+
     public CommonResult<String> paySusForZfb(HttpServletRequest request, HttpServletResponse response, String type) throws Exception{
 		 //1.从支付宝回调的request域中取值 
 		 //获取支付宝返回的参数集合
@@ -73,8 +87,12 @@ public class PayCallbackController extends UserBaseController {
     	}
 		return CommonResult.success(null);
     }
-	
-    public String paySusForWx(HttpServletRequest request, String type) throws Exception{
+
+	public String paySusForWx(HttpServletRequest request, String type) throws Exception{
+		return paySusForWxV2(request, type);
+	}
+
+    public String paySusForWxV2(HttpServletRequest request, String type) throws Exception{
 		InputStream inStream = request.getInputStream(); 
 		int _buffer_size = 1024; 
 		if (inStream != null) { 
@@ -102,5 +120,49 @@ public class PayCallbackController extends UserBaseController {
 		
 		return "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
     }
+
+
+	public String paySusForWxV3(HttpServletRequest request, String type) throws Exception{
+		SysWeixinConfig weixinConfig = WechatUtil.config;
+		// 构造 RequestParam
+		RequestParam requestParam = new RequestParam.Builder()
+				.serialNumber(weixinConfig.getMerchantSerialNumber())
+				.nonce(StringUtils.genenrateUniqueInd())
+				.signature("")
+				.timestamp(String.valueOf(new Date().getTime()))
+				.body("")
+				.build();
+
+		// 如果已经初始化了 RSAAutoCertificateConfig，可直接使用
+		// 没有的话，则构造一个
+		NotificationConfig config = new RSAAutoCertificateConfig.Builder()
+				.merchantId(weixinConfig.getMchId())
+				.privateKeyFromPath(weixinConfig.getPrivateKeyPath())
+				.merchantSerialNumber(weixinConfig.getMerchantSerialNumber())
+				.apiV3Key(weixinConfig.getApiV3Key())
+				.build();
+
+		// 初始化 NotificationParser
+		NotificationParser parser = new NotificationParser(config);
+
+		Transaction transaction;
+		try {
+			// 以支付通知回调为例，验签、解密并转换成 Transaction
+			transaction = parser.parse(requestParam, Transaction.class);
+		} catch (ValidationException e) {
+			// 签名验证失败，返回 401 UNAUTHORIZED 状态码
+			log.error("sign verification failed", e);
+			return JSONUtil.toJsonStr(ResponseEntity.status(HttpStatus.UNAUTHORIZED));
+		}
+
+		// 如果处理失败，应返回 4xx/5xx 的状态码，例如 500 INTERNAL_SERVER_ERROR
+		if (transaction == null || transaction.getTradeState() != Transaction.TradeStateEnum.SUCCESS) {
+			return JSONUtil.toJsonStr(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR));
+		}
+		//支付成功
+		paySusManager.getPaySusFactory(type).paySus(transaction.getOutTradeNo());
+		// 处理成功，返回 200 OK 状态码
+		return JSONUtil.toJsonStr(ResponseEntity.status(HttpStatus.OK));
+	}
 	
 }
