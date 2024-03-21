@@ -194,9 +194,6 @@
      </p>
      <p class="margin-t10">4. 目前这套没有买家pc端,但是其实已经开发一半了,因为种种原因停工,希望以后有机会可以开发完再开源出来</p>
      <p class="margin-t10">5. 千万不要拿此项目做违法犯罪的事情,违法必究!!!</p>
-     <p class="margin-t10" >6. 另外我司有销售<span style="font-size: 17px; color: rgb(245, 108, 108); font-weight: bold;">多语言多货币跨境商城软件</span>, 十五种语言, 100多个国家, 内置20万商品数据, 开箱即用, 有兴趣的也可以前往查看
-       <a href="https://www.lekshop.cn/16552.html" target="_blank" class="link-type">https://www.lekshop.cn/16552.html</a>
-     </p>
    
    </el-dialog>
    
