@@ -66,7 +66,14 @@
 
 ## 常见问题
 - 启动lekshop-admin会有一个连接xxl-job失败的错误, 代表没有启动xxl-job项目, 具体可百度xxl-job的官网, 是一个定时任务管理系统
-- lekshop_ui_admin项目启动报错问题, 目前我用的是node v14.21.3, 可能跟版本有关, 也可看下[vue-element-admin](https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/)相关文档, 本项目是基于此项目二开.
+- lekshop_ui_admin项目启动报错问题, 目前我用的是node v18, 可能跟版本有关, 也可看下[vue-element-admin](https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/)相关文档, 本项目是基于此项目二开.
+- 如果npm install一直卡住不动或报git的错误, 可以尝试使用npm install --registry=https://registry.npmmirror.com
+- 如果npm run dev报Error: error:0308010C:digital envelope routines::unsupported, 
+ <code> ①Windows平台
+	我的电脑上右键 → 属性 → 高级系统设置 → 添加系统变量：NODE_OPTIONS = --openssl-legacy-provider
+  ②Linux / Mac 平台
+	export NODE_OPTIONS=--openssl-legacy-provider
+  完成后，建议重新打开一个命令行窗口启动服务。</code>
 - 平台对接了微信支付和支付宝支付, 是可以正常使用的, 通过总后台的三方配置那里修改相关配置
 - 分销推广哪里体现?  分销的话, 在钱包->我的推广里面, 实现机制就是用户分享小程序出去, 其他用户注册成为下级, java代码实现比较完善, 但是在小程序体现的不是很完善, 有能力的小伙伴可以自行修改.
 - 后续有没有什么升级计划? 买家pc端即将发布, 敬请期待! 不过预计会收费, 以前授权过的客户会免费升级, 所以想要授权的客户要趁早, 授权费用仅为500元 
