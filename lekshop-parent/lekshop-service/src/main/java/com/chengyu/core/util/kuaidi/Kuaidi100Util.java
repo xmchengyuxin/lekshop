@@ -1,25 +1,28 @@
 package com.chengyu.core.util.kuaidi;
 
+import cn.hutool.json.JSONUtil;
+import com.chengyu.core.exception.ServiceException;
+import com.chengyu.core.utils.StringUtils;
 import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.QueryTrack;
 import com.kuaidi100.sdk.api.Subscribe;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
-import com.kuaidi100.sdk.contant.CompanyConstant;
 import com.kuaidi100.sdk.core.IBaseClient;
+import com.kuaidi100.sdk.pojo.HttpResult;
 import com.kuaidi100.sdk.request.*;
 import com.kuaidi100.sdk.response.BaseResponse;
 import com.kuaidi100.sdk.utils.SignUtils;
 
 public class Kuaidi100Util {
 
-    String key = PropertiesReader.get("key");
-    String customer = PropertiesReader.get("customer");
-    String secret = PropertiesReader.get("secret");
-    String siid = PropertiesReader.get("siid");
-    String userid = PropertiesReader.get("userid");
-    String tid = PropertiesReader.get("tid");
-    String secret_key = PropertiesReader.get("secret_key");
-    String secret_secret = PropertiesReader.get("secret_secret");
+    static String key = "MlywewRS7534";//PropertiesReader.get("key");
+    static String customer = "8F8243C126DE7B0D38B186DB7BC936FA";//PropertiesReader.get("customer");
+    static String secret = PropertiesReader.get("secret");
+    static String siid = PropertiesReader.get("siid");
+    static String userid = PropertiesReader.get("userid");
+    static String tid = PropertiesReader.get("tid");
+    static String secret_key = PropertiesReader.get("secret_key");
+    static String secret_secret = PropertiesReader.get("secret_secret");
 
 
     /**
@@ -31,7 +34,10 @@ public class Kuaidi100Util {
      * @param  company 快递公司
      * @return BaseResponse
      */
-    public BaseResponse queryTrack(String num, String phone, String company) throws Exception{
+    public static QueryDeliveryResponse queryTrack(String num, String phone, String company) throws Exception{
+        if(StringUtils.isBlank(company)) {
+            throw new ServiceException("快递公司不在查询范围内");
+        }
         QueryTrackReq queryTrackReq = new QueryTrackReq();
         QueryTrackParam queryTrackParam = new QueryTrackParam();
         queryTrackParam.setCom(company);
@@ -44,7 +50,12 @@ public class Kuaidi100Util {
         queryTrackReq.setSign(SignUtils.querySign(param ,key,customer));
 
         IBaseClient baseClient = new QueryTrack();
-        return baseClient.executeToObject(queryTrackReq);
+        HttpResult result = baseClient.execute(queryTrackReq);
+        return JSONUtil.toBean(result.getBody(), QueryDeliveryResponse.class);
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(queryTrack("JD0145976299959", "13666011848","jd"));
     }
 
     /**
@@ -56,7 +67,7 @@ public class Kuaidi100Util {
      * @param  num 快递单号
      * @param  company 快递公司
      */
-    public BaseResponse subscribe(String callbackUrl, String phone, String num, String company) throws Exception{
+    public static BaseResponse subscribe(String callbackUrl, String phone, String num, String company) throws Exception{
         SubscribeParameters subscribeParameters = new SubscribeParameters();
         subscribeParameters.setCallbackurl(callbackUrl);
         subscribeParameters.setPhone(phone);

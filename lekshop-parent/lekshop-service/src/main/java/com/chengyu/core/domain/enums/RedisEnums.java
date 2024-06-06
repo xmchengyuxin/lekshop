@@ -136,7 +136,11 @@ public enum RedisEnums {
 	/**
 	 * 运营后台token
 	 */
-	ADMIN_TOKEN_KEY("admin-token-");
+	ADMIN_TOKEN_KEY("admin-token-"),
+	/**
+	 * 实时快递
+	 */
+	KUAIDI_KEY("kuaidi-");
 
 	private final String key;
 
