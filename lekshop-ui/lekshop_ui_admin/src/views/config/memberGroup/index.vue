@@ -134,7 +134,7 @@
             </el-form-item>
           </el-form>
         </el-tab-pane> -->
-        <el-tab-pane label="邀请注册设置" name="five">
+        <!-- <el-tab-pane label="邀请注册设置" name="five">
 
           <el-form ref="inviteCodeForm" :model="inviteCodeConfig" label-width="210px" label-position="right">
             <el-form-item label="是否允许注册" prop="registerStatus" :rules="[{ required: true, message: '请选择是否开启', trigger: 'change' }]">
@@ -149,7 +149,7 @@
                 <el-switch :active-value="1" :inactive-value="0" v-model="inviteCodeConfig.regNeedInvite"></el-switch>
                 <span class="tips">*开启后，注册必须使用邀请码注册</span>
             </el-form-item>
-            <!-- <el-form-item label="邀请码使用期限" prop="useDays" :rules="[{ required: true, message: '请填写邀请码使用期限', trigger: 'blur' }]">
+            <el-form-item label="邀请码使用期限" prop="useDays" :rules="[{ required: true, message: '请填写邀请码使用期限', trigger: 'blur' }]">
                 <el-input v-model.number="inviteCodeConfig.useDays" style="width: 100px;"></el-input> 天
                 <span class="tips">*邀请码有效天数</span>
             </el-form-item>
@@ -160,13 +160,13 @@
             <el-form-item label="每天申请邀请码数量" prop="dayApplyNum" :rules="[{ required: true, message: '请填写每天申请邀请码数量', trigger: 'blur' }]">
                 <el-input v-model.number="inviteCodeConfig.dayApplyNum" style="width: 100px;"></el-input> 个
                 <span class="tips">*每天可申请邀请码数量</span>
-            </el-form-item> -->
+            </el-form-item> 
             <el-form-item>
               <el-button type="primary" @click="updateConfig">保存</el-button>
             </el-form-item>
           </el-form>
 
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </el-tabs>
 

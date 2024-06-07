@@ -1,5 +1,7 @@
 package com.chengyu.core.service.system.impl;
 
+import cn.hutool.crypto.SecureUtil;
+import com.baidu.aip.util.Base64Util;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.RedisEnums;
 import com.chengyu.core.exception.ServiceException;
@@ -8,10 +10,14 @@ import com.chengyu.core.model.SysConfig;
 import com.chengyu.core.model.SysConfigExample;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.util.RedisUtil;
+import com.chengyu.core.utils.Base64Utils;
+import com.chengyu.core.utils.MD5Util;
 import com.chengyu.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +132,6 @@ public class ConfigServiceImpl implements ConfigService {
 		for(String key : configMap.keySet()) {
 			resultMap.put(key, configMap.get(key).getValue());
 		}
-		
 		return resultMap;
 	}
 	

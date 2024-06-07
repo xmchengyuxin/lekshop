@@ -216,4 +216,11 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 			System.out.println(genenrateUniqueInd().substring(0,16));
 		}
 	}
+	public static String get12Code() {
+		String result = "";
+		for (int i = 0; i < 12; i++) {
+			result += new Random().nextInt(10);
+		}
+		return result;
+	}
 }

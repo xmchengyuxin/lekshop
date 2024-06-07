@@ -16,6 +16,14 @@ export function getGoodsList(data) {
   })
 }
 
+export function getPlatformGoodsList(data) {
+  return request({
+    url: 'member/goods/getPlatformList',
+    method: 'get',
+		params: data
+  })
+}
+
 export function getGoods(data) {
   return request({
     url: 'member/goods/get',
@@ -87,5 +95,112 @@ export function deleteGoodsQuality(data) {
     url: 'member/goodsQuality/delete',
     method: 'post',
     params: {ids:data}
+  })
+}
+
+
+export function getStockList(data) {
+  return request({
+    url: 'member/goods/getStockList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function updateStock(data) {
+  return request({
+    url: 'member/goods/updateStock',
+    method: 'post',
+    data
+  })
+}
+
+export function synStock(data) {
+  return request({
+    url: 'member/goods/synStock',
+    method: 'post',
+    data
+  })
+}
+
+export function getGoodsRelateList(data) {
+  return request({
+    url: 'member/goodsRelate/getList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function addGoodsRelate(data) {
+  return request({
+    url: 'member/goodsRelate/add',
+    method: 'post',
+    data
+  })
+}
+
+export function updateRelateSort(data) {
+  return request({
+    url: 'member/goodsRelate/updateSort',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteGoodsRelate(data) {
+  return request({
+    url: 'member/goodsRelate/delete',
+    method: 'post',
+    params: {ids:data}
+  })
+}
+
+
+export function updateSeckill(data) {
+  return request({
+    url: 'member/seckill/editSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteSeckill(data) {
+  return request({
+    url: 'member/seckill/delete',
+    method: 'post',
+    params: {ids:data}
+  })
+}
+
+export function updateGroup(data) {
+  return request({
+    url: 'member/group/editSubmit',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteGroup(data) {
+  return request({
+    url: 'member/group/delete',
+    method: 'post',
+    params: {ids:data}
+  })
+}
+
+export function getSkuList(data) {
+  return request({
+    url: 'member/goods/getSkuList',
+    method: 'get',
+		params: data
+  })
+}
+
+
+export function getExportGoodsList(data) {
+  return request({
+    url: 'member/goods/getExportList',
+    method: 'get',
+		params: data
   })
 }

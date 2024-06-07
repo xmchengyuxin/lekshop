@@ -7,7 +7,9 @@
 		</el-tabs>
     <div class="filter-container">
 			<el-button-group>
-			<el-button class="filter-item" size="mini" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+      <!-- <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-promotion" @click="handlePresent">发券</el-button> -->
+      <el-button class="filter-item" size="mini" type="primary" icon="el-icon-s-claim" @click="handleFullSend">满送券</el-button>
+			<el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus" @click="handleCreate">添加</el-button>
 			<el-button class="filter-item" size="mini" type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
 			</el-button-group>
 		</div>
@@ -20,6 +22,7 @@
       highlight-current-row
       style="width: 100%;"
 			@selection-change="handleSelectionChange"
+      @row-click="handleUpdate"
     >
 			<el-table-column type="selection" width="55" align="center"></el-table-column>
       <el-table-column label="ID" prop="id" align="center" width="65">
@@ -30,6 +33,13 @@
       <el-table-column label="优惠券类型" width="100px"  align="center">
         <template slot-scope="scope">
       		<el-tag :type="scope.row.type == 1 ? 'success' : 'danger'">{{ scope.row.type | typeFilter}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="领取条件" width="130px"  align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.sendCondition == 1">手动领取</span>
+          <span v-else-if="scope.row.sendCondition == 2">后台发券</span>
+          <span v-else>消费满{{scope.row.fullSendAmount}}元赠送</span>
         </template>
       </el-table-column>
 			<el-table-column label="优惠券名称" min-width="200px"  align="center">
@@ -80,11 +90,21 @@
           <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="60px">
+      <el-table-column label="状态" width="100px"  align="center">
         <template slot-scope="scope">
+           <el-tag :type="scope.row.status !=1 ? 'danger' : '' ">{{ scope.row.status | statusFilter}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('table.actions')" class-name="small-padding" fixed="right" width="120px">
+        <template slot-scope="scope">
+          <el-button-group>
           <el-tooltip class="item" effect="dark" content="编辑" placement="top">
-             <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)"></el-button>
+             <el-button type="primary" size="mini" icon="el-icon-edit" @click.stop="handleUpdate(scope.row)"></el-button>
           </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="查看已领人员" placement="top">
+             <el-button type="primary" size="mini" icon="el-icon-search" @click.stop="handleViewDraw(scope.row)"></el-button>
+          </el-tooltip>
+          </el-button-group>
         </template>
       </el-table-column>
     </el-table>
@@ -92,8 +112,34 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
 		<!--添加编辑框-->
-		<el-dialog :title="dialogType==='edit'?'编辑':'新增'" :visible.sync="dialogFormVisible">
+		<el-dialog :title="dialogStatus==='edit'?'编辑':'新增'" :visible.sync="dialogFormVisible">
 		    <el-form ref="dataForm" :rules="rules" :model="couponConfig" label-width="100px" label-position="left" style="width: 100%; margin-left:50px;">
+
+          <el-form-item label="选择客户" prop="memberIds" v-if="showSelectCustomer">
+            <div>
+              <el-button
+                @click="bindMemberId()"
+                size="mini"
+                plain
+                type="danger"
+                >选择客户</el-button
+              >
+              <el-tooltip placement="top" effect="light" v-if="memberList && memberList.length > 0">
+                <div slot="content">
+                  <div
+                    v-for="(item, index) in memberList"
+                    :key="index"
+                  >
+                    {{ item.nickname }}  &nbsp;<span class="link-type" @click="deleteMember(index)">删除</span>
+                  </div>
+                </div>
+                <el-button size="mini">查看已选人员</el-button>
+              </el-tooltip>
+            </div>
+          </el-form-item>
+          <el-form-item label="赠送条件" prop="fullSendAmount" v-if="couponConfig.sendCondition == 3">
+          	<el-input v-model.number="couponConfig.fullSendAmount" style="width: 60%;" placeholder="消费满多少金额才能赠送" />
+          </el-form-item>
           <el-form-item label="券类型" prop="type">
           	<el-radio-group v-model="couponConfig.type">
           		<el-radio :label="1" border>满减券</el-radio>
@@ -113,10 +159,10 @@
             <el-input v-model="couponConfig.amount" style="width: 60%;" placeholder="请输入折扣" /> 折
             <p class="tips">温馨提示：95折直接输入9.5</p>
           </el-form-item>
-					<el-form-item label="发放数量" prop="totalNum">
+					<el-form-item label="发放数量" prop="totalNum" v-if="!showSelectCustomer">
 					  <el-input v-model.number="couponConfig.totalNum" style="width: 60%;" placeholder="请输入发放数量" />
 					</el-form-item>
-					<el-form-item label="每人限领" prop="limitNum">
+					<el-form-item label="每人限领" prop="limitNum" v-if="!showSelectCustomer">
 					  <el-input v-model.number="couponConfig.limitNum"style="width: 60%;" placeholder="请输入每人限领" />
 					</el-form-item>
 					<el-form-item label="有效期类型" prop="validityType">
@@ -200,12 +246,50 @@
 		    </div>
 		</el-dialog>
 
+    <el-dialog title="选择用户"
+        :visible.sync="showMember"
+        >
+        <MemberDialog
+          ref="memberDialog"
+          @selected="selectedMemberData"
+          @close="closeMemberDialog"
+        ></MemberDialog>
+    </el-dialog>
+
+    <el-dialog title="查看已领人员" :visible.sync="dialogDrawVisible">
+      <el-table :data="drawList" border fit highlight-current-row style="width: 100%;"
+      >
+        <el-table-column label="用户名称"  align="center" prop="code" >
+        	  <template slot-scope="scope">
+                <span class="link-type">{{ scope.row.memberName }}</span>
+        	  </template>
+        	</el-table-column>
+        	<el-table-column label="优惠券" align="center" prop="level">
+        	  <template slot-scope="scope">
+        	    <span>{{scope.row.name}}</span>
+        	  </template>
+        	</el-table-column>
+          <el-table-column label="状态" align="center">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.status != 0 ? 'danger' : ''">{{ scope.row.status | couponStatusFilter}}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="领取时间"  align="center" prop="addTime" >
+            <template slot-scope="scope">
+              <span>{{ scope.row.addTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            </template>
+          </el-table-column>
+      </el-table>
+      <pagination v-show="drawTotal>0" :total="drawTotal" :page.sync="drawListQuery.page" :limit.sync="drawListQuery.pageSize" @pagination="getDrawList()" />
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import {getShopCouponList, updateCoupon, deleteShopCoupon, getShopCateList, getAllShopCate} from '@/api/shop'
+import {getShopCouponList, updateCoupon, deleteShopCoupon, getShopCateList, getAllShopCate, getCouponDrawList, presentCoupon} from '@/api/shop'
 import {getGoodsList} from '@/api/goods'
+import MemberDialog from '@/views/lek-dialog/member/index'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -233,9 +317,33 @@ const useTypeKeyValue = useTypeOptions.reduce((acc, cur) => {
   return acc
 }, {})
 
+const statusOptions = [
+  { key: 1, text: '发放中' },
+  { key: 2, text: '已领完' },
+  { key: 3, text: '已过期' },
+]
+
+// arr to obj ,such as { CN : "China", US : "USA" }
+const statusKeyValue = statusOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.text
+  return acc
+}, {})
+
+const couponStatusOptions = [
+  { key: 0, text: '未使用' },
+  { key: 1, text: '已使用' },
+  { key: 2, text: '已过期' },
+]
+
+// arr to obj ,such as { CN : "China", US : "USA" }
+const couponStatusKeyValue = couponStatusOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.text
+  return acc
+}, {})
+
 export default {
   name: 'coupon',
-  components: { Pagination },
+  components: { Pagination, MemberDialog },
   directives: { waves },
 	filters: {
 	  typeFilter(status) {
@@ -244,6 +352,12 @@ export default {
     useTypeFilter(type) {
 	    return useTypeKeyValue[type]
 	  },
+    statusFilter(status){
+      return statusKeyValue[status]
+    },
+    couponStatusFilter(status){
+      return couponStatusKeyValue[status]
+    }
 	},
   data() {
     return {
@@ -258,13 +372,15 @@ export default {
       },
       couponConfig: {},
       dialogFormVisible: false,
-      dialogType: '',
+      dialogDrawVisible: false,
+      dialogStatus: '',
 			multipleSelection: [],
 			rules: {
 			  name: [{ required: true, message: '优惠券名称不能为空', trigger: 'blur' }],
 			  type: [{ required: true, message: '请选择优惠券类型', trigger: 'change' }],
 				amount: [{ required: true, message: '优惠力度不能为空', trigger: 'blur' }],
 				fullAmount: [{ required: true, message: '最低金额不能为空', trigger: 'blur' }],
+				fullSendAmount: [{ required: true, message: '满送金额不能为空', trigger: 'blur' }],
 				validityType: [{ required: true, message: '有效期类型不能为空', trigger: 'blur' }],
 				totalNum: [{ required: true, message: '发放数量不能为空', trigger: 'blur' }],
 				limitNum: [{ required: true, message: '每人限领不能为空', trigger: 'blur' }],
@@ -280,7 +396,17 @@ export default {
 			typeOptions,
 			activeName: 'first',
       goodsOptions:[],
-      shopCateOptions:[]
+      shopCateOptions:[],
+      showSelectCustomer: false,
+      memberList: [],
+      showMember: false,
+      drawList: [],
+      drawTotal: 0,
+      drawListLoading: true,
+      drawListQuery: {
+        page: 1,
+        pageSize: 20,
+      },
     }
   },
   created() {
@@ -306,16 +432,40 @@ export default {
       })
     },
 		handleCreate() {
+      this.showSelectCustomer = false;
 		  this.dialogStatus = 'add'
 		  this.dialogFormVisible = true
-			this.couponConfig = {validityType:1}
+			this.couponConfig = {validityType:1, sendCondition: 1}
       this.getShopCateSelector()
       this.getGoodsSelector()
 			this.$nextTick(() => {
 			  this.$refs['dataForm'].clearValidate()
 			})
 		},
+    handlePresent() {
+      this.showSelectCustomer = true;
+      this.dialogStatus = 'add'
+      this.dialogFormVisible = true
+    	this.couponConfig = {validityType:1, sendCondition: 2}
+      this.getShopCateSelector()
+      this.getGoodsSelector()
+    	this.$nextTick(() => {
+    	  this.$refs['dataForm'].clearValidate()
+    	})
+    },
+    handleFullSend(){
+      this.showSelectCustomer = false;
+      this.dialogStatus = 'add'
+      this.dialogFormVisible = true
+    	this.couponConfig = {validityType:1, sendCondition: 3}
+      this.getShopCateSelector()
+      this.getGoodsSelector()
+    	this.$nextTick(() => {
+    	  this.$refs['dataForm'].clearValidate()
+    	})
+    },
 		handleUpdate(row) {
+      this.showSelectCustomer = false;
 		  this.couponConfig = Object.assign({}, row) // copy obj
 			this.couponConfig.validityDateRange = [this.couponConfig.fixedBeginDate, this.couponConfig.fixedEndDate]
       this.couponConfig.activityDateRange = [this.couponConfig.beginDate, this.couponConfig.endDate]
@@ -354,16 +504,37 @@ export default {
             console.log(formData.ptid)
             formData.useGoodsCateIds = formData.ptid.join(",")
           }
-			    updateCoupon(formData).then(() => {
-						this.getList()
-			      this.dialogFormVisible = false
-			      this.$notify({
-			        title: '成功',
-			        message: '优惠券配置保存成功',
-			        type: 'success',
-			        duration: 2000
-			      })
-			    })
+          if(this.showSelectCustomer) {
+            if(this.memberList && this.memberList.length > 0) {
+              let memberIds = []
+              this.memberList.forEach(item=>{
+                memberIds.push(item.id);
+              })
+              formData.memberIds = memberIds.join(",")
+            }
+            presentCoupon(formData).then(() => {
+            	this.getList()
+              this.dialogFormVisible = false
+              this.$notify({
+                title: '成功',
+                message: '成功发券'+this.memberList.length+"张",
+                type: 'success',
+                duration: 2000
+              })
+            })
+          }else {
+            updateCoupon(formData).then(() => {
+            	this.getList()
+              this.dialogFormVisible = false
+              this.$notify({
+                title: '成功',
+                message: '优惠券配置保存成功',
+                type: 'success',
+                duration: 2000
+              })
+            })
+          }
+
 			  }
 			})
 		},
@@ -415,6 +586,41 @@ export default {
 			}
 			this.getList()
 		},
+    // 绑定客户
+    bindMemberId() {
+      this.showMember = true;
+    },
+    // 回调的用户信息
+    selectedMemberData(val) {
+      if (!val) return false;
+      let data = val.map((item) => {
+        return {
+          id: item.id,
+          nickname: item.nickname,
+        };
+      });
+      this.memberList = data;
+    },
+    closeMemberDialog(){
+      this.showMember = false;
+    },
+    deleteMember(index) {
+      this.memberList.splice(index, 1)
+    },
+    handleViewDraw(row){
+      this.drawListQuery.couponConfigId = row.id
+      this.drawList = []
+      this.getDrawList()
+      this.dialogDrawVisible = true;
+    },
+    getDrawList() {
+      this.drawListLoading = true
+      getCouponDrawList(this.drawListQuery).then(response => {
+        this.drawList = response.data.list
+        this.drawTotal = response.data.total
+        this.drawListLoading = false
+      })
+    },
 
   }
 }

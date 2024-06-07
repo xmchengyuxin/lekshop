@@ -1,8 +1,15 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+			 <el-input v-model="listQuery.accountName" clearable placeholder="操作人" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
        <el-input v-model="listQuery.keyword" clearable placeholder="操作内容" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
 			 <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" circle @click="getList"></el-button>
+       <br/>
+       <el-button-group>
+        <el-button class="filter-item" size="mini" type="danger" plain icon="el-icon-delete" @click="handleDelete(3)">删除3天前日志</el-button>
+        <el-button class="filter-item" size="mini" type="danger" plain icon="el-icon-delete" @click="handleDelete(7)">删除7天前日志</el-button>
+        <el-button class="filter-item" size="mini" type="danger" plain icon="el-icon-delete" @click="handleDelete(30)">删除30天前日志</el-button>
+       </el-button-group>
 		</div>
 		<el-table
       :key="tableKey"
@@ -13,9 +20,9 @@
       highlight-current-row
       style="width: 100%;"
     >
-			<el-table-column label="操作用户" prop="memberName" align="center" width="150">
+			<el-table-column label="操作用户" prop="accountName" align="center" width="150">
 			  <template slot-scope="scope">
-			      <p class="link-type">{{ scope.row.memberName }}</p>
+			      <p class="link-type">{{ scope.row.accountName }}</p>
 			  </template>
 			</el-table-column>
       <el-table-column label="操作IP" prop="ip" align="center" width="150">
@@ -66,13 +73,13 @@
 
 
 <script>
-import {getOperationLogList, deleteOperationLog} from '@/api/member'
+import {getOperationLogList, deleteOperationLog} from '@/api/log'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime, moneyFormat} from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'memberLog',
+  name: 'accountLog',
   components: { Pagination },
   directives: { waves },
   data() {

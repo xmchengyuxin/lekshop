@@ -1,9 +1,11 @@
 package com.chengyu.core.controller.shop;
 
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.ShopSearchForm;
+import com.chengyu.core.domain.result.ShopDataResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
@@ -46,6 +48,18 @@ public class ShopController extends AdminBaseController {
 		return CommonResult.success(CommonPage.restPage(list));
 	}
 
+	@ApiOperation(value = "店铺数据")
+	@ResponseBody
+	@RequestMapping(value="/shop/getDataList", method=RequestMethod.GET)
+	public CommonResult<CommonPage<ShopDataResult>> getDataList(
+			ShopSearchForm form,
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+
+		List<ShopDataResult> list = shopService.getShopDataList(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(list));
+	}
+
 	@OperationLog
 	@ApiOperation(value = "编辑店铺")
 	@ResponseBody
@@ -55,6 +69,7 @@ public class ShopController extends AdminBaseController {
 		return CommonResult.success(null);
 	}
 
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除店铺")
 	@ResponseBody

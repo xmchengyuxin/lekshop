@@ -1,4 +1,4 @@
-import { loginByUsername, logout, getUserInfo,phoneLogin } from '@/api/login'
+import { loginByUsername, logout, getUserInfo,phoneLogin, getAllRole, changeRole } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -9,7 +9,11 @@ const state = {
   introduction: '',
   roles: [],
 	menus: [],
-  wsId: ''
+  wsId: '',
+  userData: {},
+  shopData: {},
+  rolesList: [],
+  rolesId: null,
 }
 
 const mutations = {
@@ -42,6 +46,18 @@ const mutations = {
   },
   SET_ID: (state, id) => {
     state.id = id
+  },
+  SET_USER_DATA: (state, data) => {
+    state.userData = Object.assign({},data)
+  },
+  SET_SHOP_DATA: (state, data) => {
+    state.shopData = Object.assign({},data)
+  },
+  SET_ROLES_LIST: (state, data) => {
+    state.rolesList = data
+  },
+  SET_ROLESID:(state,id) => {
+    state.rolesId = id
   },
 }
 
@@ -88,18 +104,24 @@ const mutations = {
           if(!data){
             data = {};
           }
+          let allPermissions = [];
+          allPermissions = allPermissions.concat(data.roles);
+          if(data.permissions) {
+           allPermissions = allPermissions.concat(data.permissions);
+          }
+          commit('SET_ROLES', allPermissions)
+          data.roles = allPermissions
+          commit('SET_USER_DATA',data.member)
 
-          data.roles = ['admin']
-          commit('SET_ROLES', data.roles)
-          /* if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-          } else {
-            reject('getInfo: roles must be a non-null array!')
-          } */
+          let shopInfo = data.shopInfo;
+          if(shopInfo) {
+            commit('SET_SHOP_DATA', shopInfo)
+            commit('SET_NAME', shopInfo.name)
+            commit('SET_AVATAR', shopInfo.logo )
+            commit('SET_WS_ID', 'member-'+shopInfo.memberId )
+            commit('SET_ID', shopInfo.memberId )
+          }
 
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.logo )
-          commit('SET_WS_ID', 'member-'+data.memberId )
-          commit('SET_ID', data.memberId )
           /* commit('SET_MENUS', data.menus )
           commit('SET_BRAND_NAME', data.brandName )
           commit('SET_BRAND_LOGO', data.brandLogo ) */
@@ -121,6 +143,7 @@ const mutations = {
 					commit('SET_MENUS', [])
           removeToken()
 					resetRouter()
+          location.reload()
           resolve()
         }).catch(error => {
           reject(error)
@@ -139,27 +162,52 @@ const mutations = {
       })
     },
 
-    // 动态修改权限
-    changeRoles({ commit, dispatch }, role) {
+  getRolesList({commit,dispatch}) {
       return new Promise(async resolve => {
-        const token = role + '-token'
+        await getAllRole().then(res => {
+          commit('SET_ROLES_LIST',res.data)
+          commit('SET_ROLESID',res.data && res.data.length > 0 ? res.data[0].roleId : null)
+          resolve()
+        })
+      })
+    },
 
-        commit('SET_TOKEN', token)
-        setToken(token)
-
-        const { roles } = await dispatch('getInfo')
-
-        resetRouter()
-
-        // generate accessible routes map based on roles
-        const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
-
-        // dynamically add accessible routes
-        router.addRoutes(accessRoutes)
-
+    // 动态修改权限
+    changeRoles({ commit, dispatch }, roleId) {
+      return new Promise(resolve => {
+        changeRole({ roleId:roleId }).then(async res => {
+            let data = await dispatch('getUserInfo')
+            commit('SET_ROLESID',roleId)
+            resolve()
+            //刷新页面
+            router.push(`/dashboard`)
+            location.reload()
+        })
         resolve()
       })
-    }
+    },
+
+    // 动态修改权限
+    // changeRoles({ commit, dispatch }, role) {
+    //   return new Promise(async resolve => {
+    //     const token = role + '-token'
+
+    //     commit('SET_TOKEN', token)
+    //     setToken(token)
+
+    //     const { roles } = await dispatch('getInfo')
+
+    //     resetRouter()
+
+    //     // generate accessible routes map based on roles
+    //     const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+
+    //     // dynamically add accessible routes
+    //     router.addRoutes(accessRoutes)
+
+    //     resolve()
+    //   })
+    // }
 }
 
 export default {

@@ -23,13 +23,14 @@ const memberRouter = {
       path: 'detail',
       component: () => import('@/views/member/index/detailInfo'),
       name: 'memberDetailInfo',
-      meta: { title: '会员详情',  role: ['admin'] }
+      meta: { title: '会员详情',  role: ['admin'], activeMenu: '/member/list'  },
+      hidden: true
     },
     {
     	path: 'detail/:id(\\d+)',
     	component: () => import('@/views/member/index/detail'),
     	name: 'editMember',
-    	meta: { title: '编辑会员详情', noCache: true, role: [] },
+    	meta: { title: '编辑会员详情', noCache: true, role: [], activeMenu: '/member/list' },
     	hidden: true
     },
     {
@@ -66,14 +67,14 @@ const memberRouter = {
   	path: 'phonebook/viewLog/:id(\\d+)',
   	component: () => import('@/views/phonebook/log/index'),
   	name: 'viewPhonebookLog',
-  	meta: { title: '查看通讯录', noCache: true, role: [] },
+  	meta: { title: '查看通讯录', noCache: true, role: [], activeMenu: '/member/phonebook' },
   	hidden: true
   },
   {
   	path: 'phonebook/viewMsg/:id(\\d+)',
   	component: () => import('@/views/phonebook/message/index'),
   	name: 'viewPhonebookMsg',
-  	meta: { title: '查看短信', noCache: true, role: [] },
+  	meta: { title: '查看短信', noCache: true, role: [], activeMenu: '/member/phonebook'  },
   	hidden: true
   },
     {

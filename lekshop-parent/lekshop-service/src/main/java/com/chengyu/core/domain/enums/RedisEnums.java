@@ -66,6 +66,10 @@ public enum RedisEnums {
 	 */
 	GZH_CONFIG("rds-config-gzh"),
 	/**
+	 * 积分配置缓存key
+	 */
+	POINT_CONFIG("rds-config-point"),
+	/**
 	 * 电商网站类别缓存key
 	 */
 	SHOP_CATE("rds-config-shopCate"),
@@ -108,7 +112,35 @@ public enum RedisEnums {
 	/**
 	 * 移动端全局样式
 	 */
-	MOBILE_GLOBAL_STYLE("rds-mobile-global-style");
+	MOBILE_GLOBAL_STYLE("rds-mobile-global-style"),
+	/**
+	 * 菜单
+	 */
+	MENU("menu"),
+	/**
+	 * 定价器
+	 */
+	POLICY("policy"),
+	/**
+	 * 记录用户不符合的定价器
+	 */
+	POLICY_NOT_MEMBER("policy-not-member"),
+	/**
+	 * 商家PC端token
+	 */
+	SHOP_TOKEN_PC_KEY("shop-pc-token-"),
+	/**
+	 * 商家手机端token
+	 */
+	SHOP_TOKEN_PHONE_KEY("shop-phone-token-"),
+	/**
+	 * 运营后台token
+	 */
+	ADMIN_TOKEN_KEY("admin-token-"),
+	/**
+	 * 实时快递
+	 */
+	KUAIDI_KEY("kuaidi-");
 
 	private final String key;
 

@@ -25,7 +25,7 @@ public interface MemberCouponService {
      * @param  pageSize
      * @return List<UmsMemberCoupon>
      */
-    List<UmsMemberCoupon> getMemberCouponList(Integer memberId, Integer status, Integer page, Integer pageSize);
+    List<UmsMemberCoupon> getMemberCouponList(Integer memberId, Integer couponConfigId, Integer status, Integer page, Integer pageSize);
 
     /**
      * 使用优惠券

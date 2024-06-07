@@ -92,21 +92,25 @@
 	    </dependency>
 	    
 	    <!-- 微信支付 -->
-	    <dependency>
-            <groupId>com.github.wxpay</groupId>
-            <artifactId>wxpay-sdk</artifactId>
-        </dependency>
-		
+<!--	    <dependency>-->
+<!--            <groupId>com.github.wxpay</groupId>-->
+<!--            <artifactId>wxpay-sdk</artifactId>-->
+<!--        </dependency>-->
+<!--		-->
+<!--		<dependency>-->
+<!--            <groupId>org.dom4j</groupId>-->
+<!--            <artifactId>dom4j</artifactId>-->
+<!--       	</dependency>-->
+<!--       	-->
+<!--       	<dependency>-->
+<!--		    <groupId>com.github.wechatpay-apiv3</groupId>-->
+<!--		    <artifactId>wechatpay-apache-httpclient</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
-            <groupId>org.dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-       	</dependency>
-       	
-       	<dependency>
-		    <groupId>com.github.wechatpay-apiv3</groupId>
-		    <artifactId>wechatpay-apache-httpclient</artifactId>
+			<groupId>com.github.wechatpay-apiv3</groupId>
+			<artifactId>wechatpay-java</artifactId>
 		</dependency>
-        
+
         <dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
@@ -119,10 +123,10 @@
 		</dependency>
 		
 		<!--SpringBoot集成QuartZ-->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-quartz</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--		    <groupId>org.springframework.boot</groupId>-->
+<!--		    <artifactId>spring-boot-starter-quartz</artifactId>-->
+<!--		</dependency>-->
 
 		<!--Kaptcha是一个基于SimpleCaptcha的验证码开源项目-->
 		<dependency>
@@ -139,6 +143,21 @@
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.kuaidi100-api</groupId>
+			<artifactId>sdk</artifactId>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.redisson</groupId>-->
+<!--			<artifactId>redisson-spring-data-21</artifactId>-->
+<!--		</dependency>-->
+
 
 	</dependencies>
 

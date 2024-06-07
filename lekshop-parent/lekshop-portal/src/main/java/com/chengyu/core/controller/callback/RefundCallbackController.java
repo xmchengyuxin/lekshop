@@ -81,7 +81,7 @@ public class RefundCallbackController extends UserBaseController {
 			//通知成功
 			if(StringUtils.isNotBlank(notifyResponse.getRefund_status()) && "SUCCESS".equals(notifyResponse.getRefund_status())){
 					System.out.println("退款单号："+notifyResponse.getOut_refund_no());
-					callbackManager.getPaySusFactory(type).refundSus(response.getOut_refund_no());
+					callbackManager.getPaySusFactory(type).refundSus(notifyResponse.getOut_refund_no());
 				}
 		}
 		

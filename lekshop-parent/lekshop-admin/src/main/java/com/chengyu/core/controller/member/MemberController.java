@@ -336,7 +336,7 @@ public class MemberController extends AdminBaseController {
 					.replaceAll("https://", "")
 					.replaceAll("/", ""));
 		}
-		memberService.register(member);
+		memberService.register(member, false);
 		return CommonResult.success(null);
 	}
 

@@ -3,10 +3,21 @@
   <el-button @click="chooseImage" style="width: 100px;" size="mini">素材库选择>></el-button>
 
 <el-dialog title="选择图片" :visible.sync="dialogFormVisible" append-to-body>
-    <el-tabs type="border-card" tab-position="top" v-model="activeName" @tab-click="handleClickTab">
+
+  <div class="filter-container">
+    <el-input v-model="cate" clearable placeholder="分组名称" style="width: 200px;" class="filter-item" />
+    <el-button-group>
+      <el-button @click="addSourceCate" class="filter-item" type="primary" size="mini" icon="el-icon-edit">
+        添加分组
+      </el-button>
+    </el-button-group>
+  </div>
+
+    <el-tabs closable type="border-card" tab-position="top" v-model="activeName" @tab-click="handleClickTab" @tab-remove="removeTab">
       <el-tab-pane v-for="item in cateOptions" :label="item.name" :name="item.id + ''">
 
         <div class="flex f-w">
+          <MultipleSource @successCBK="imageSuccessCBK" />
         <div  class="image-preview flex f-s-0"
                 v-if="list"
                 v-for="(item,index) in list">
@@ -50,15 +61,21 @@
 
 import {
     getSourceCateList,
+    updateSourceCate,
+    deleteSourceCate,
     getSourceList,
+    updateSource,
+    deleteSource,
+    moveCate
   } from '@/api/source'
+  import MultipleSource from '@/components/Upload/multipleSource'
   import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 
 export default {
   name: 'ImageSource',
   components: {
-    Pagination
+    Pagination, MultipleSource
   },
   props: {
     mul: {
@@ -164,6 +181,25 @@ export default {
         this.listLoading = false
       })
     },
+    addSourceCate() {
+      if(this.cate == null || this.cate == '') {
+        this.$message({
+          message: "请填写分组名称",
+          type: 'error'
+        })
+        return;
+      }
+      updateSourceCate({
+        name: this.cate
+      }).then(response => {
+        this.$message({
+          message: "添加成功",
+          type: 'success'
+        })
+
+        this.getSourceCateList()
+      })
+    },
     getSourceCateList() {
       getSourceCateList().then(response => {
         this.cateOptions = response.data
@@ -173,9 +209,50 @@ export default {
         this.getList()
       })
     },
+    removeTab(targetName) {
+      this.$confirm('删除分组,分组内的图片将被全部清除,您确定要删除吗?', '提醒', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          deleteSourceCate(targetName).then(() => {
+            this.getSourceCateList()
+            this.$notify({
+              title: '成功',
+              message: '删除成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
     handleClickTab(tab, event) {
       this.cateId = tab.name
       this.getList()
+    },
+    imageSuccessCBK(arr) {
+      const _this = this
+      let sources = []
+      arr.forEach(v => {
+        sources.push(v.url)
+      })
+    
+        updateSource({
+          sources: sources.join("|"),
+          cateId: this.cateId,
+          type: '1'
+        }).then(response => {
+          this.$message({
+            message: "添加成功",
+            type: 'success'
+          })
+    
+          this.getList()
+        })
+    
     },
     chooseImage(){
       this.dialogFormVisible = true

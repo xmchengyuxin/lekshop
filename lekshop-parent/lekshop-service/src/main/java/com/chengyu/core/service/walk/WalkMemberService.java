@@ -2,9 +2,6 @@ package com.chengyu.core.service.walk;
 
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.WalkMember;
-import org.quartz.Job;
-
-import java.util.Date;
 
 /**
  * @title  创作号

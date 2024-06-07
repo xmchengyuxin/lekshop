@@ -93,6 +93,15 @@ public interface OrderService {
     void confirmOrder(UmsMember member, Integer orderId) throws ServiceException;
 
     /**
+     * 完成订单
+     * @author LeGreen
+     * @date   2022/9/20
+     * @param  order 订单
+     * @throws ServiceException 业务异常
+     */
+    void finishOrder(OmsOrder order) throws ServiceException;
+
+    /**
      * 修改订单地址
      * @author LeGreen
      * @date   2022/4/29

@@ -46,4 +46,7 @@ public class GoodsSearchForm {
 
 	private String cityCode;
 
+	@ApiModelProperty(value = "是否查询平台商品库")
+	private Boolean queryPlatformGoods = false;
+
 }

@@ -16,9 +16,9 @@ import com.chengyu.core.service.member.MemberNewsService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderGroupService;
 import com.chengyu.core.service.pay.PayService;
-import com.chengyu.core.service.schedule.job.OrderGroupAutoCancelJob;
+import com.chengyu.core.service.schedule.RedisDelayQueueEnum;
+import com.chengyu.core.service.schedule.RedisDelayQueueUtil;
 import com.chengyu.core.service.shop.ShopService;
-import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +46,9 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 	@Autowired
 	private PayService payService;
 	@Autowired
-	private TaskTriggerService taskTriggerService;
-	@Autowired
 	private ShopService shopService;
+	@Autowired
+	private RedisDelayQueueUtil redisDelayQueueUtil;
 	
 	@Override
 	public List<OmsOrderGroup> getOrderGroupList(OrderGroupSearchForm form, Integer page, Integer pageSize) {
@@ -137,7 +137,8 @@ public class OrderGroupServiceImpl implements OrderGroupService {
 		assembleMemberMapper.insertSelective(assembleMember);
 		
 		//发团成功后添加拼团到期定时器
-		taskTriggerService.addTrigger(OrderGroupAutoCancelJob.class, orderGroup.getEndTime(), orderGroup.getId().toString());
+		redisDelayQueueUtil.addDelayQueue(orderGroup.getId().toString(), orderGroup.getEndTime(), RedisDelayQueueEnum.ORDER_GROUP_AUTO_CANCEL_JOB.getCode());
+//		taskTriggerService.addTrigger(OrderGroupAutoCancelJob.class, orderGroup.getEndTime(), orderGroup.getId().toString());
 	}
 
 	@Override

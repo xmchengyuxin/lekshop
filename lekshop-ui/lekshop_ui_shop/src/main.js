@@ -23,6 +23,8 @@ import 'lemon-imui/dist/index.css';
 Vue.use(LemonIMUI);
 
 import * as filters from './filters' // global filters
+import lekDialog from '@/views/lek-dialog'
+import permission from '@/directive/permission/index.js' // 权限判断指令
 
 // import { mockXHR } from '../mock' // simulation data
 
@@ -40,6 +42,8 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
+Vue.component('lekDialog',lekDialog)
+Vue.directive('permission',permission)
 
 new Vue({
   el: '#app',

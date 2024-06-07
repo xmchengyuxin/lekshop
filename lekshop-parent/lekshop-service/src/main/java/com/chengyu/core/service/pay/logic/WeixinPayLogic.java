@@ -8,9 +8,11 @@ import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.service.pay.manager.PayFactory;
 import com.chengyu.core.service.pay.wxpay.WeixinPay;
 import com.chengyu.core.service.pay.wxpay.WeixinPayForm;
+import com.chengyu.core.service.pay.wxpay.WeixinPayV3;
 import com.chengyu.core.service.pay.wxpay.WeixinRefundForm;
 import com.chengyu.core.util.weixin.WechatUtil;
 import com.chengyu.core.utils.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,6 +25,8 @@ import java.math.BigDecimal;
 @Service("weixinPayLogic")
 public class WeixinPayLogic extends PayFactory {
 
+	@Autowired
+	private WeixinPayV3 weixinPayV3;
 
 	@Override
 	public String pay(UmsMember member, String orderNo, BigDecimal amount, PayBaseForm payBaseForm) throws Exception {
@@ -35,6 +39,7 @@ public class WeixinPayLogic extends PayFactory {
 		wxForm.setWxType(payBaseForm.getApplicationType());
 		wxForm.setOpenId(this.getMemberOpenId(member, payBaseForm.getApplicationType()));
 		wxForm.setNotifyUrl(config.getPayNotifyUrl()+ payBaseForm.getPayNotifyUrl());
+//		return weixinPayV3.pay(wxForm);
 		return new WeixinPay().pay(wxForm);
 	}
 
@@ -48,6 +53,7 @@ public class WeixinPayLogic extends PayFactory {
 		refundForm.setRefundFee(refundBaseForm.getRefundAmount());
 		refundForm.setTotalAmount(refundBaseForm.getOrderAmount());
 		refundForm.setNotifyUrl(config.getPayNotifyUrl()+refundBaseForm.getRefundNotifyUrl());
+//		weixinPayV3.refund(refundForm);
 		new WeixinPay().refund(refundForm);
 		return null;
 	}

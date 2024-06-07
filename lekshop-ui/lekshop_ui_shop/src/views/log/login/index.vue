@@ -15,9 +15,9 @@
 			@selection-change="handleSelectionChange"
     >
 			<el-table-column type="selection" width="55" align="center" ></el-table-column>
-			<el-table-column label="登录用户" prop="adminName" align="center">
+			<el-table-column label="登录用户" prop="accountName" align="center">
 			  <template slot-scope="scope">
-			    <span>{{ scope.row.memberName }}</span>
+			    <span>{{ scope.row.accountName }}</span>
 			  </template>
 			</el-table-column>
 			<el-table-column label="登录IP" prop="ip" align="center">

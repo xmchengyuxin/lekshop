@@ -28,7 +28,7 @@ const configRouter = {
     	path: 'mission/edit/:id(\\d+)',
     	component: () => import('@/views/config/mission/detail'),
     	name: 'editConfigMission',
-    	meta: { title: '设置佣金组别比例', role: [] },
+    	meta: { title: '设置佣金组别比例', role: [], activeMenu: '/config/mission' },
     	hidden: true
     },
     {

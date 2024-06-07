@@ -68,11 +68,11 @@ public class WeixinPay {
 		System.out.println(xmlParams);
 		System.out.println("=======签名XML结束==========");
 		String message = HttpUtil.doPostByXml(WechatUtil.GEN_ORDER_URL, xmlParams);
-	    WeixinResponse response = WechatUtil.xmlToBean(message, WeixinResponse.class); 
-	    System.out.println("=======返回信息开始==========");
+		WeixinResponse response = WechatUtil.xmlToBean(message, WeixinResponse.class);
+		System.out.println("=======返回信息开始==========");
 		System.out.println(message);
-		 System.out.println("=======返回结束开始==========");
-		
+		System.out.println("=======返回结束开始==========");
+
 		if("SUCCESS".equals(response.getReturn_code())){
 			if(StringUtils.isNotBlank(response.getResult_code()) && "SUCCESS".equals(response.getResult_code())){
 				//返回公众号，小程序前端所需参数
@@ -93,7 +93,7 @@ public class WeixinPay {
 					result.put("partnerid", config.getMchId());
 					result.put("prepayid", response.getPrepay_id());
 					long timeStampSec = System.currentTimeMillis()/1000;
-			        String timestamp = String.format("%010d", timeStampSec);
+					String timestamp = String.format("%010d", timeStampSec);
 					result.put("timestamp", timestamp);
 					result.put("sign", WechatUtil.MD5(result, config.getMchKey()));
 				}
@@ -105,7 +105,7 @@ public class WeixinPay {
 			throw new ServiceException("支付失败,失败原因:"+response.getReturn_msg());
 		}
 	}
-	
+
 	public void refund(WeixinRefundForm form) throws ServiceException{
 		String appId;
 		boolean isApp;
@@ -141,14 +141,14 @@ public class WeixinPay {
 		System.out.println(xmlParams);
 		System.out.println("=======签名XML结束==========");
 		String message = CertHttpUtil.postData(WechatUtil.REFUND_ORDER_URL, xmlParams, config.getMchId(), config.getCertPath());
-	    WeixinRefundResponse response = WechatUtil.xmlToBean(message, WeixinRefundResponse.class); 
-	    System.out.println("=======返回信息开始==========");
+		WeixinRefundResponse response = WechatUtil.xmlToBean(message, WeixinRefundResponse.class);
+		System.out.println("=======返回信息开始==========");
 		System.out.println(message);
-		 System.out.println("=======返回结束开始==========");
-		
+		System.out.println("=======返回结束开始==========");
+
 		if("SUCCESS".equals(response.getReturn_code())){
 			if(StringUtils.isNotBlank(response.getResult_code()) && PAY_SUCCESS.equals(response.getResult_code())){
-				//退款申请成功,结果通过退款查询接口查询 
+				//退款申请成功,结果通过退款查询接口查询
 			}else{
 				throw new ServiceException("退款申请失败,失败原因:"+response.getErr_code_des());
 			}
@@ -156,7 +156,7 @@ public class WeixinPay {
 			throw new ServiceException("退款申请失败,失败原因:"+response.getReturn_msg());
 		}
 	}
-	
+
 	/**
 	 * @功能描述    获取支付XML格式
 	 * @作者      LeGreen
@@ -165,43 +165,43 @@ public class WeixinPay {
 	 * @return	  String
 	 */
 	private String getPayXmlString(Map<String,String> paramMap, boolean isApp){
-		StringBuilder sb = new StringBuilder(); 
-		sb.append("<xml>"); 
-		sb.append("<appid><![CDATA["+MapUtil.getStr(paramMap, "appid")+"]]></appid>"); 
-		sb.append("<body><![CDATA["+MapUtil.getStr(paramMap, "body")+"]]></body>"); 
-		sb.append("<device_info><![CDATA["+MapUtil.getStr(paramMap, "device_info")+"]]></device_info>"); 
-		sb.append("<fee_type><![CDATA["+MapUtil.getStr(paramMap, "fee_type")+"]]></fee_type>"); 
-		sb.append("<limit_pay><![CDATA["+MapUtil.getStr(paramMap, "limit_pay")+"]]></limit_pay>"); 
-		sb.append("<mch_id><![CDATA["+MapUtil.getStr(paramMap, "mch_id")+"]]></mch_id>"); 
-		sb.append("<nonce_str><![CDATA["+MapUtil.getStr(paramMap, "nonce_str")+"]]></nonce_str>"); 
-		sb.append("<notify_url><![CDATA["+MapUtil.getStr(paramMap, "notify_url")+"]]></notify_url>"); 
+		StringBuilder sb = new StringBuilder();
+		sb.append("<xml>");
+		sb.append("<appid><![CDATA["+MapUtil.getStr(paramMap, "appid")+"]]></appid>");
+		sb.append("<body><![CDATA["+MapUtil.getStr(paramMap, "body")+"]]></body>");
+		sb.append("<device_info><![CDATA["+MapUtil.getStr(paramMap, "device_info")+"]]></device_info>");
+		sb.append("<fee_type><![CDATA["+MapUtil.getStr(paramMap, "fee_type")+"]]></fee_type>");
+		sb.append("<limit_pay><![CDATA["+MapUtil.getStr(paramMap, "limit_pay")+"]]></limit_pay>");
+		sb.append("<mch_id><![CDATA["+MapUtil.getStr(paramMap, "mch_id")+"]]></mch_id>");
+		sb.append("<nonce_str><![CDATA["+MapUtil.getStr(paramMap, "nonce_str")+"]]></nonce_str>");
+		sb.append("<notify_url><![CDATA["+MapUtil.getStr(paramMap, "notify_url")+"]]></notify_url>");
 		if(!isApp){
 			sb.append("<openid><![CDATA["+MapUtil.getStr(paramMap, "openid")+"]]></openid>");
 		}
-		sb.append("<out_trade_no><![CDATA["+MapUtil.getStr(paramMap, "out_trade_no")+"]]></out_trade_no>"); 
-		sb.append("<sign_type><![CDATA["+MapUtil.getStr(paramMap, "sign_type")+"]]></sign_type>"); 
-		sb.append("<spbill_create_ip><![CDATA["+MapUtil.getStr(paramMap, "spbill_create_ip")+"]]></spbill_create_ip>"); 
-		sb.append("<total_fee><![CDATA["+MapUtil.getStr(paramMap, "total_fee")+"]]></total_fee>"); 
-		sb.append("<trade_type><![CDATA["+MapUtil.getStr(paramMap, "trade_type")+"]]></trade_type>"); 
-		sb.append("<sign><![CDATA["+MapUtil.getStr(paramMap, "sign")+"]]></sign>"); 
-		sb.append("</xml>"); 
+		sb.append("<out_trade_no><![CDATA["+MapUtil.getStr(paramMap, "out_trade_no")+"]]></out_trade_no>");
+		sb.append("<sign_type><![CDATA["+MapUtil.getStr(paramMap, "sign_type")+"]]></sign_type>");
+		sb.append("<spbill_create_ip><![CDATA["+MapUtil.getStr(paramMap, "spbill_create_ip")+"]]></spbill_create_ip>");
+		sb.append("<total_fee><![CDATA["+MapUtil.getStr(paramMap, "total_fee")+"]]></total_fee>");
+		sb.append("<trade_type><![CDATA["+MapUtil.getStr(paramMap, "trade_type")+"]]></trade_type>");
+		sb.append("<sign><![CDATA["+MapUtil.getStr(paramMap, "sign")+"]]></sign>");
+		sb.append("</xml>");
 		return sb.toString();
 	}
-	
+
 	private String getRefundXmlString(Map<String,String> paramMap, boolean isApp){
-		StringBuilder sb = new StringBuilder(); 
-		sb.append("<xml>"); 
+		StringBuilder sb = new StringBuilder();
+		sb.append("<xml>");
 		sb.append("<appid><![CDATA["+MapUtil.getStr(paramMap, "appid")+"]]></appid>");
-		sb.append("<mch_id><![CDATA["+MapUtil.getStr(paramMap, "mch_id")+"]]></mch_id>"); 
-		sb.append("<nonce_str><![CDATA["+MapUtil.getStr(paramMap, "nonce_str")+"]]></nonce_str>"); 
-		sb.append("<notify_url><![CDATA["+MapUtil.getStr(paramMap, "notify_url")+"]]></notify_url>"); 
-		sb.append("<out_refund_no><![CDATA["+MapUtil.getStr(paramMap, "out_refund_no")+"]]></out_refund_no>"); 
-		sb.append("<out_trade_no><![CDATA["+MapUtil.getStr(paramMap, "out_trade_no")+"]]></out_trade_no>"); 
-		sb.append("<refund_fee><![CDATA["+MapUtil.getStr(paramMap, "refund_fee")+"]]></refund_fee>"); 
-		sb.append("<sign_type><![CDATA["+MapUtil.getStr(paramMap, "sign_type")+"]]></sign_type>"); 
-		sb.append("<total_fee><![CDATA["+MapUtil.getStr(paramMap, "total_fee")+"]]></total_fee>"); 
-		sb.append("<sign><![CDATA["+MapUtil.getStr(paramMap, "sign")+"]]></sign>"); 
-		sb.append("</xml>"); 
+		sb.append("<mch_id><![CDATA["+MapUtil.getStr(paramMap, "mch_id")+"]]></mch_id>");
+		sb.append("<nonce_str><![CDATA["+MapUtil.getStr(paramMap, "nonce_str")+"]]></nonce_str>");
+		sb.append("<notify_url><![CDATA["+MapUtil.getStr(paramMap, "notify_url")+"]]></notify_url>");
+		sb.append("<out_refund_no><![CDATA["+MapUtil.getStr(paramMap, "out_refund_no")+"]]></out_refund_no>");
+		sb.append("<out_trade_no><![CDATA["+MapUtil.getStr(paramMap, "out_trade_no")+"]]></out_trade_no>");
+		sb.append("<refund_fee><![CDATA["+MapUtil.getStr(paramMap, "refund_fee")+"]]></refund_fee>");
+		sb.append("<sign_type><![CDATA["+MapUtil.getStr(paramMap, "sign_type")+"]]></sign_type>");
+		sb.append("<total_fee><![CDATA["+MapUtil.getStr(paramMap, "total_fee")+"]]></total_fee>");
+		sb.append("<sign><![CDATA["+MapUtil.getStr(paramMap, "sign")+"]]></sign>");
+		sb.append("</xml>");
 		return sb.toString();
 	}
 

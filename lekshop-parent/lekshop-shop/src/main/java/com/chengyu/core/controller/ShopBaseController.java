@@ -4,9 +4,11 @@ import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsShop;
+import com.chengyu.core.model.UmsShopAccount;
 import com.chengyu.core.model.WalkMember;
 import com.chengyu.core.security.util.JwtTokenUtil;
 import com.chengyu.core.service.member.MemberService;
+import com.chengyu.core.service.shop.ShopAccountService;
 import com.chengyu.core.service.shop.ShopService;
 import com.chengyu.core.service.system.ThirdConfigService;
 import com.chengyu.core.service.walk.WalkMemberService;
@@ -35,7 +37,9 @@ import java.util.concurrent.TimeUnit;
  */
 @Controller
 public class ShopBaseController {
-	
+
+	@Autowired
+	protected ShopAccountService shopAccountService;
 	@Autowired
 	protected MemberService memberService;
 	@Autowired
@@ -49,20 +53,20 @@ public class ShopBaseController {
 	@Autowired
 	protected ThirdManager thirdManager;
 	@Autowired
-	private ThirdConfigService thirdConfigService;
+	protected ThirdConfigService thirdConfigService;
 	@Autowired
-	private ShopService shopService;
+	protected ShopService shopService;
 	@Autowired
-	private WalkMemberService walkMemberService;
+	protected WalkMemberService walkMemberService;
 	
 	@InitBinder
-	protected void initBinder(WebDataBinder binder) throws Exception {
+	protected void initBinder(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");        
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-	
-	public UmsMember getCurrentMember() throws ServiceException {
-		UmsMember member = memberService.getCurrentMember();
+
+	public UmsShopAccount getCurrentAccount() throws ServiceException {
+		UmsShopAccount member = shopAccountService.getCurrentAccount();
 		if(member.getStatus() != CommonConstant.SUS_INT){
 			String msg = "账号已被冻结";
 			if(StringUtils.isNotBlank(member.getFreezeReason())){
@@ -70,15 +74,21 @@ public class ShopBaseController {
 			}
 			throw new ServiceException(CommonConstant.WARN_MSG, msg);
 		}
+		member.setPassword(null);
+		member.setPayPassword(null);
 		return member;
 	}
-	
-	public UmsMember getCurrentMemberOrNull(){
-		return memberService.getCurrentMemberOrNull();
+
+	public UmsShopAccount getCurrentAccountOrNull(){
+		return shopAccountService.getCurrentAccountOrNull();
 	}
-	
+
+	public UmsMember getCurrentMember() throws ServiceException {
+		return memberService.getMemberById(getCurrentMemberId());
+	}
+
 	public Integer getCurrentMemberId() throws ServiceException {
-		return getCurrentMember().getId();
+		return getCurrentAccount().getMemberId();
 	}
 	public UmsShop getCurrentShop() throws ServiceException {
 		Integer memberId = getCurrentMemberId();
@@ -87,7 +97,18 @@ public class ShopBaseController {
 			return shop;
 		}
 		shop = shopService.getShopByMemberId(memberId);
+		if(shop == null) {
+			throw new ServiceException("商户不存在");
+		}
+		if(shop.getStatus() == CommonConstant.NO_INT) {
+			throw new ServiceException("商户已被停止使用");
+		}
+		redisUtil.setRedisValue("SHOP-"+memberId, shop);
 		return shop;
+	}
+
+	public Integer getCurrentShopId() throws ServiceException {
+		return getCurrentShop().getId();
 	}
 
 	public WalkMember getCurrentWalkMember() throws ServiceException {

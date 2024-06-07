@@ -22,16 +22,21 @@ import com.chengyu.core.model.*;
 import com.chengyu.core.service.config.ConfigMissionService;
 import com.chengyu.core.service.config.ConfigOrderService;
 import com.chengyu.core.service.funds.MemberAccountLogService;
+import com.chengyu.core.service.funds.MemberPointLogService;
 import com.chengyu.core.service.goods.GoodsService;
 import com.chengyu.core.service.im.ChatService;
-import com.chengyu.core.service.member.*;
+import com.chengyu.core.service.member.MemberAddressService;
+import com.chengyu.core.service.member.MemberCouponService;
+import com.chengyu.core.service.member.MemberNewsService;
+import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.*;
-import com.chengyu.core.service.schedule.job.OrderAutoCancelJob;
-import com.chengyu.core.service.schedule.job.OrderAutoCommentJob;
+import com.chengyu.core.service.point.PointConfigService;
+import com.chengyu.core.service.schedule.RedisDelayQueueEnum;
+import com.chengyu.core.service.schedule.RedisDelayQueueUtil;
 import com.chengyu.core.service.shop.ShopConfigService;
+import com.chengyu.core.service.shop.ShopCouponService;
 import com.chengyu.core.service.shop.ShopFreightService;
 import com.chengyu.core.service.shop.ShopService;
-import com.chengyu.core.service.task.TaskTriggerService;
 import com.chengyu.core.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -73,8 +78,6 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OmsPayOrderMapper payOrderMapper;
 	@Autowired
-	private TaskTriggerService taskTriggerService;
-	@Autowired
 	private MemberAddressService memberAddressService;
 	@Autowired
 	private OrderCommentService orderCommentService;
@@ -91,8 +94,6 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderGroupService orderGroupService;
 	@Autowired
-	private MemberRemindService memberRemindService;
-	@Autowired
 	private MemberNewsService memberNewsService;
 	@Autowired
 	private MemberService memberService;
@@ -104,6 +105,14 @@ public class OrderServiceImpl implements OrderService {
 	private ConfigMissionService configMissionService;
 	@Autowired
 	private ChatService chatService;
+	@Autowired
+	private ShopCouponService shopCouponService;
+	@Autowired
+	private RedisDelayQueueUtil redisDelayQueueUtil;
+	@Autowired
+	private PointConfigService pointConfigService;
+	@Autowired
+	private MemberPointLogService memberPointLogService;
 
 	@Override
 	public CommonPage<OrderResult> getOrderList(OrderSearchForm form, Integer page, Integer pageSize) {
@@ -140,11 +149,18 @@ public class OrderServiceImpl implements OrderService {
 		if(form.getType() != null){
 			criteria.andTypeEqualTo(form.getType());
 		}
+		if(CollectionUtil.isNotEmpty(form.getOrderIdList())){
+			criteria.andIdIn(form.getOrderIdList());
+		}
+		if(form.getMergeStatus() != null) {
+			criteria.andMergeStatusEqualTo(form.getMergeStatus());
+		}
 		List<OmsOrder> list = orderMapper.selectByExample(example);
 
 		List<OrderResult> orderList = new ArrayList<>();
 		for(OmsOrder order : list){
 			OrderResult orderResult = new OrderResult();
+			orderResult.setMemberId(order.getMemberId());
 			orderResult.setOrder(order);
 
 			OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
@@ -319,6 +335,8 @@ public class OrderServiceImpl implements OrderService {
 			order.setReceiveLng(address.getLng());
 			order.setReceiveLat(address.getLat());
 			order.setRemark(form.getRemark());
+			//核销码
+			order.setVerifyCode(StringUtils.get12Code());
 			order.setAddTime(now);
 			order.setUpdTime(now);
 			//判断是新客单还是老客单
@@ -350,7 +368,8 @@ public class OrderServiceImpl implements OrderService {
 		payOrderMapper.insertSelective(payOrder);
 
 		//超时未支付自动取消
-		taskTriggerService.addTrigger(OrderAutoCancelJob.class, payOrder.getPayEndTime(), payOrder.getPayOrderNo());
+		redisDelayQueueUtil.addDelayQueue(payOrder.getPayOrderNo(), payOrder.getPayEndTime(), RedisDelayQueueEnum.ORDER_AUTO_CANCEL_JOB.getCode());
+//		taskTriggerService.addTrigger(OrderAutoCancelJob.class, payOrder.getPayEndTime(), payOrder.getPayOrderNo());
 
 		OrderPayResult result = new OrderPayResult();
 		result.setAmount(payOrder.getAmount());
@@ -496,7 +515,8 @@ public class OrderServiceImpl implements OrderService {
 				//添加物流信息
 				orderFreightService.initOrderFreight(updatedOrder);
 				//添加自动确认收货
-				taskTriggerService.addTrigger(OrderAutoCancelJob.class, updatedOrder.getFinishExpiredTime(), order.getOrderNo());
+				redisDelayQueueUtil.addDelayQueue(order.getOrderNo(), updatedOrder.getFinishExpiredTime(), RedisDelayQueueEnum.ORDER_AUTO_FINISH_JOB.getCode());
+//				taskTriggerService.addTrigger(OrderAutoCancelJob.class, updatedOrder.getFinishExpiredTime(), order.getOrderNo());
 
 				//发货通知
 				UmsMember member = memberService.getMemberById(order.getMemberId());
@@ -537,7 +557,9 @@ public class OrderServiceImpl implements OrderService {
 		this.finishOrder(order);
 	}
 
-	private void finishOrder(OmsOrder order) throws ServiceException {
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void finishOrder(OmsOrder order) throws ServiceException {
 		ConfigOrder config = configOrderService.getConfigOrder();
 
 		OmsOrder updateOrder = new OmsOrder();
@@ -561,12 +583,24 @@ public class OrderServiceImpl implements OrderService {
 		memberAccountLogService.inAccount(shopMember, AccountEnums.MemberAccountTypes.ACCOUNT_TRADE_IN, order.getOrderNo(), order.getPayPrice(),
 				"商品交易收款", null);
 
-		//分销收益
+		//赠送优惠券
 		UmsMember member = memberService.getMemberById(order.getMemberId());
+		shopCouponService.sendCouponByConsumption(member, order.getShopId(), order.getPayPrice());
+
+		//分销收益
 		this.settleDistribution(member, order.getOrderNo(), order.getPayPrice());
+
+		//积分收益
+		PointConfig pointConfig = pointConfigService.getPointConfig();
+		if(pointConfig != null) {
+			memberPointLogService.inAccount(member, AccountEnums.MemberPointTypes.ACCOUNT_CONSUME,
+					order.getOrderNo(), pointConfig.getConsumePoint(), "消费获得积分", null);
+		}
+
 		//添加自动评价定时器
 		orderCommentService.initComment(detailList);
-		taskTriggerService.addTrigger(OrderAutoCommentJob.class, updateOrder.getCommentExpiredTime(), order.getOrderNo());
+		redisDelayQueueUtil.addDelayQueue(order.getOrderNo(), updateOrder.getCommentExpiredTime(), RedisDelayQueueEnum.ORDER_AUTO_COMMENT_JOB.getCode());
+//		taskTriggerService.addTrigger(OrderAutoCommentJob.class, updateOrder.getCommentExpiredTime(), order.getOrderNo());
 
 		//订单评价提醒
 		UmsShop shop = shopService.getShopById(order.getShopId());
@@ -604,7 +638,7 @@ public class OrderServiceImpl implements OrderService {
 					ConfigMissionDetail buyerConfigMissionDetail2 = configMissionService.getConfigMissionDetail(tjMember2.getMissionConfigId(), tjMember2.getGroupId());
 					if (buyerConfigMissionDetail2 != null) {
 						reward = (buyerConfigMissionDetail2.getMissionType() == null || buyerConfigMissionDetail2.getMissionType() == 1) ?
-								NumberUtil.mul(reward, buyerConfigMissionDetail2.getBuyerFinishRateTwo().divide(new BigDecimal(100)))
+								NumberUtil.mul(payPrice, buyerConfigMissionDetail2.getBuyerFinishRateTwo().divide(new BigDecimal(100)))
 								: buyerConfigMissionDetail2.getBuyerFinishRateTwo();
 						if (reward.compareTo(BigDecimal.ZERO) > 0) {
 							memberAccountLogService.inAccount(tjMember2, AccountEnums.MemberAccountTypes.ACCOUNT_SPREAD, orderNo,
@@ -616,7 +650,7 @@ public class OrderServiceImpl implements OrderService {
 						ConfigMissionDetail buyerConfigMissionDetail3 = configMissionService.getConfigMissionDetail(tjMember3.getMissionConfigId(), tjMember3.getGroupId());
 						if (buyerConfigMissionDetail3 != null) {
 							reward = (buyerConfigMissionDetail3.getMissionType() == null || buyerConfigMissionDetail3.getMissionType() == 1) ?
-									NumberUtil.mul(reward, buyerConfigMissionDetail3.getBuyerFinishRateThree().divide(new BigDecimal(100)))
+									NumberUtil.mul(payPrice, buyerConfigMissionDetail3.getBuyerFinishRateThree().divide(new BigDecimal(100)))
 									: buyerConfigMissionDetail3.getBuyerFinishRateThree();
 							if (reward.compareTo(BigDecimal.ZERO) > 0) {
 								memberAccountLogService.inAccount(tjMember2, AccountEnums.MemberAccountTypes.ACCOUNT_SPREAD, orderNo,
@@ -711,24 +745,27 @@ public class OrderServiceImpl implements OrderService {
 		orderExample.createCriteria().andPayOrderNoEqualTo(payOrderNo).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
 		List<OmsOrder> orderList = orderMapper.selectByExample(orderExample);
 
-		OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
-		detailExample.createCriteria().andOrderIdIn(orderList.stream().map(OmsOrder::getId).collect(Collectors.toList())).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
-		List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(detailExample);
+		if(CollectionUtil.isNotEmpty(orderList)) {
+			OmsOrderDetailExample detailExample = new OmsOrderDetailExample();
+			detailExample.createCriteria().andOrderIdIn(orderList.stream().map(OmsOrder::getId).collect(Collectors.toList())).andStatusEqualTo(OrderEnums.OrderStatus.WAIT_PAY.getValue());
+			List<OmsOrderDetail> detailList = orderDetailMapper.selectByExample(detailExample);
 
-		for(OmsOrderDetail detail : detailList){
-			if(detail.getStockType() == GoodsEnums.StockType.ORDER_REDUCE.getValue()){
-				goodsService.addStock(detail.getGoodsSkuId(), detail.getBuyNum());
+			for(OmsOrderDetail detail : detailList){
+				if(detail.getStockType() == GoodsEnums.StockType.ORDER_REDUCE.getValue()){
+					goodsService.addStock(detail.getGoodsSkuId(), detail.getBuyNum());
+				}
 			}
+
+			OmsOrderDetail updateDetail = new OmsOrderDetail();
+			updateDetail.setStatus(OrderEnums.OrderStatus.CANCEL.getValue());
+			updateDetail.setUpdTime(DateUtil.date());
+			orderDetailMapper.updateByExampleSelective(updateDetail, detailExample);
 		}
+
 		OmsOrder updateOrder = new OmsOrder();
 		updateOrder.setStatus(OrderEnums.OrderStatus.CANCEL.getValue());
 		updateOrder.setUpdTime(DateUtil.date());
 		orderMapper.updateByExampleSelective(updateOrder, orderExample);
-
-		OmsOrderDetail updateDetail = new OmsOrderDetail();
-		updateDetail.setStatus(OrderEnums.OrderStatus.CANCEL.getValue());
-		updateDetail.setUpdTime(DateUtil.date());
-		orderDetailMapper.updateByExampleSelective(updateDetail, detailExample);
 	}
 
 	@Override

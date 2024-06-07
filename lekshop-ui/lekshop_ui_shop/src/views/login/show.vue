@@ -79,7 +79,8 @@
     position: relative;
     width: 100%;
     margin: auto;
-    height: 100%;
+    /* height: 100%; */
+    min-height: 100vh;
     z-index: 2;
 
     background-image: url(./img/banner.jpeg);

@@ -25,6 +25,12 @@ const shopRouter = {
       meta: { title: '新店铺审核', icon:'', role: ['admin'] }
     },
     {
+      path: 'data',
+      component: () => import('@/views/shop/data/index'),
+      name: 'shopDataList',
+      meta: { title: '店铺数据', icon:'', role: ['admin'] }
+    },
+    {
       path: 'shopService',
       component: () => import('@/views/shop/service/index'),
       name: 'shopService',

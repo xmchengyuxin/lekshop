@@ -3,6 +3,7 @@ package com.chengyu.core.controller.system;
 import java.security.Principal;
 import java.util.List;
 
+import com.chengyu.core.component.DemoStationForbid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +55,8 @@ public class MenuController extends AdminBaseController {
 	public CommonResult<MenuSingleResult> get(Integer id) throws Exception {
 		return CommonResult.success(menuService.getMenuById(id));
 	}
-	
+
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "提交菜单")
 	@ResponseBody
@@ -64,7 +66,8 @@ public class MenuController extends AdminBaseController {
 		menuService.updateMenu(menu);
 		return CommonResult.success(null);
 	}
-	
+
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除菜单")
 	@ResponseBody

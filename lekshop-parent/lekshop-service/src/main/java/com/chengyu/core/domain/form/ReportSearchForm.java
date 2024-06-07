@@ -22,6 +22,8 @@ public class ReportSearchForm {
 	private Date dateFrom;
 	
 	private Date dateTo;
+
+	private String sort;
 	
 	public void validateDayRange() throws ServiceException {
 		if(dateFrom == null){

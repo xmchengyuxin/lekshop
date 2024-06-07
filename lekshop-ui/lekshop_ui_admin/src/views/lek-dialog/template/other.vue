@@ -84,6 +84,11 @@ export default {
           icon: "report-brand",
           ___ptype: "sign",
         },
+        {
+          title: "积分商城",
+          icon: "example",
+          ___type: "point",
+        },
         /* {
           title: "小程序直播",
           icon: "ios-videocam",
@@ -94,11 +99,7 @@ export default {
           icon: "md-share-alt",
           ___type: "kanjia",
         },
-        {
-          title: "积分商城",
-          icon: "ios-basket",
-          ___type: "point",
-        }, */
+        */
       ],
       linkItem: {
         title: "外部链接",

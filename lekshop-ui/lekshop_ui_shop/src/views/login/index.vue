@@ -391,7 +391,8 @@ $light_gray:#eee;
   color: #468847;
 }
 .login-container {
-  min-height: 100%;
+  // min-height: 100%;
+  min-height: 100vh;
   width: 100%;
   background-color: #FFFFFF;
   padding-top: 120px;

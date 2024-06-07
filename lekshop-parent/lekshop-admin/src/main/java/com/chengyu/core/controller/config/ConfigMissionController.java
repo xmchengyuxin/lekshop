@@ -1,5 +1,6 @@
 package com.chengyu.core.controller.config;
 
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
@@ -68,6 +69,7 @@ public class ConfigMissionController extends AdminBaseController {
 		return CommonResult.success(null);
 	}
 
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除佣金组别")
 	@ResponseBody

@@ -9,14 +9,15 @@ const cateRouter = {
   name: 'cate',
   meta: {
     title: '类目管理',
-    icon: 'table'
+    icon: 'table',
+    roles: ['cate']
   },
   children: [
 		{
 		  path: 'cateList',
 		  component: () => import('@/views/goods/cate/index'),
 		  name: 'cateList',
-		  meta: { title: '类目管理', icon:'table', role: ['admin'] }
+		  meta: { title: '类目管理', icon:'table', roles: ['cate:list'] }
 		},
   ]
 }

@@ -32,7 +32,7 @@ public class GoodsCateServiceImpl implements GoodsCateService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void addGoodsCate(Integer pid, String name, Integer sort, String img, String target) {
+	public Integer addGoodsCate(Integer pid, String name, Integer sort, String img, String target) {
 		PmsGoodsCate cate = new PmsGoodsCate();
 		if(pid == null){
 			cate.setPid(0);
@@ -48,7 +48,8 @@ public class GoodsCateServiceImpl implements GoodsCateService {
 		cate.setStatus(CommonConstant.YES_INT);
 		cate.setAddTime(DateUtil.date());
 		cate.setUpdTime(cate.getAddTime());
-		goodsCateMapper.insert(cate);
+		goodsCateMapper.insertSelective(cate);
+		return cate.getId();
 	}
 
 	@Override

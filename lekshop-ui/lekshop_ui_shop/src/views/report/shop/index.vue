@@ -45,6 +45,7 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      @sort-change="handleSortChange"
     >
       <el-table-column label="统计时间" align="center" width="120">
         <template slot-scope="scope">
@@ -57,47 +58,47 @@
 			    <p>{{ scope.row.shopName }}</p>
 			  </template>
 			</el-table-column>
-      <el-table-column label="销售额" prop="goodsAmount" align="center">
+      <el-table-column label="销售额" align="center"  prop="goods_amount" sortable="custom">
         <template slot-scope="scope">
           <span style="color:red">{{ scope.row.goodsAmount | moneyFormat}}</span>
         </template>
       </el-table-column>
-			<el-table-column label="实际收款" prop="businessAmount" align="center">
+			<el-table-column label="实际收款" align="center"  prop="business_amount" sortable="custom">
 			  <template slot-scope="scope">
 			    <span style="color:red">{{ scope.row.businessAmount | moneyFormat}}</span>
 			  </template>
 			</el-table-column>
-      <el-table-column label="有效订单" align="center">
+      <el-table-column label="有效订单" align="center"  prop="order_num" sortable="custom">
         <template slot-scope="scope">
       		<p><span style="color:red">{{ scope.row.orderNum}}</span></p>
       	</template>
       </el-table-column>
-      <el-table-column label="取消订单" align="center">
+      <el-table-column label="取消订单" align="center"  prop="cancel_num" sortable="custom">
         <template slot-scope="scope">
       		<p><span style="color:red">{{ scope.row.cancelNum}}</span></p>
       	</template>
       </el-table-column>
-      <el-table-column label="申请退款" align="center">
+      <el-table-column label="申请退款" align="center"  prop="refund_num" sortable="custom">
         <template slot-scope="scope">
       		<p><span style="color:red">{{ scope.row.refundNum}}</span></p>
       	</template>
       </el-table-column>
-      <el-table-column label="退单率" align="center">
+      <el-table-column label="退单率" align="center"  prop="refund_rate" sortable="custom">
         <template slot-scope="scope">
       		<p><span style="color:red">{{ scope.row.refundRate}}%</span></p>
       	</template>
       </el-table-column>
-			<el-table-column label="下单人数" align="center">
+			<el-table-column label="下单人数" align="center"  prop="member_num" sortable="custom">
 			  <template slot-scope="scope">
 					<p><span style="color:red">{{ scope.row.memberNum}}</span></p>
 				</template>
 			</el-table-column>
-      <el-table-column label="好评数量" align="center">
+      <el-table-column label="好评数量" align="center"  prop="good_comment_num" sortable="custom">
         <template slot-scope="scope">
           <p><span style="color:red"> {{ scope.row.goodCommentNum}}</span></p>
       	</template>
       </el-table-column>
-      <el-table-column label="差评数量" align="center">
+      <el-table-column label="差评数量" align="center"  prop="bad_comment_num" sortable="custom">
         <template slot-scope="scope">
           <p><span style="color:red"> {{ scope.row.badCommentNum}}</span></p>
       	</template>
@@ -233,6 +234,16 @@ export default {
      handleClickTab(tab, event) {
      	this.activeName = tab.name
       this.getList()
+     },
+     handleSortChange(item){
+       if(item.order == null){
+         this.listQuery.sort = ''
+       }else if(item.order == 'ascending'){
+         this.listQuery.sort = item.prop+" asc";
+       }else if(item.order == 'descending') {
+         this.listQuery.sort = item.prop+" desc";
+       }
+       this.getList()
      },
   }
 }

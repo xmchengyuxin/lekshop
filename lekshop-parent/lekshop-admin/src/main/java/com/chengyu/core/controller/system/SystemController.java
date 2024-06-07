@@ -2,6 +2,7 @@ package com.chengyu.core.controller.system;
 
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.RedisEnums;
 import com.chengyu.core.domain.form.UmsAdminLoginParam;
 import com.chengyu.core.domain.result.CustomerConstant;
 import com.chengyu.core.entity.CommonResult;
@@ -15,7 +16,6 @@ import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,11 +56,6 @@ public class SystemController extends AdminBaseController {
     @Autowired
     private MemberAccountLogService memberAccountLogService;
 
-    @Value("${jwt.tokenHeader}")
-    private String tokenHeader;
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
-
     @ApiOperation(value = "登录以后返回token")
     @RequestMapping(value = "/common/login", method = RequestMethod.POST)
     @ResponseBody
@@ -72,6 +67,7 @@ public class SystemController extends AdminBaseController {
         if (token == null) {
         	return CommonResult.validateFailed("用户名或密码错误");
         }
+        redisUtil.setRedisValue(RedisEnums.ADMIN_TOKEN_KEY.getKey()+umsAdminLoginParam.getUsername(), token);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);

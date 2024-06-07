@@ -1,9 +1,12 @@
 package com.chengyu.core.service.goods;
 
+import com.chengyu.core.domain.form.GoodsImportForm;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
+import com.chengyu.core.domain.result.GoodsExportResult;
 import com.chengyu.core.domain.result.GoodsResult;
 import com.chengyu.core.domain.result.GoodsSkuResult;
+import com.chengyu.core.domain.result.GoodsStockResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoods;
 import com.chengyu.core.model.PmsGoodsGroup;
@@ -143,4 +146,51 @@ public interface GoodsService {
 	 * @return PmsGoodsGroup
 	 */
 	PmsGoodsGroup getGoodsGroup(Integer groupId);
+
+	/**
+	 * 库存列表
+	 * @author LeGreen
+	 * @date   2022/9/18
+	 * @param  form
+	 * @param  page
+	 * @param  pageSize
+	 * @return List<GoodsStockResult>
+	 */
+	List<GoodsStockResult> getGoodsStockList(GoodsSearchForm form, Integer page, Integer pageSize);
+
+	/**
+	 * 更新库存
+	 * @author LeGreen
+	 * @date   2022/9/18
+	 * @param  stockList
+	 */
+	void updateGoodsStock(List<PmsGoodsSku> stockList);
+
+	/**
+	 * 同步仓库库存
+	 * @author LeGreen
+	 * @date   2022/9/18
+	 */
+	void synStock(Integer shopId);
+
+	/**
+	 * 查询导出商品列表
+	 * @author LeGreen
+	 * @date   2022/10/31
+	 * @param  form 查询表单
+	 * @param  page 分页
+	 * @param  pageSize 分页
+	 * @return List<GoodsExportResult>
+	 */
+	List<GoodsExportResult> getExportList(GoodsSearchForm form, Integer page, Integer pageSize);
+
+	/**
+	 * 批量导入商品
+	 * @author LeGreen
+	 * @date   2023/2/13
+	 * @param  shop 店铺
+	 * @param  freightId 运费模板ID
+	 * @param  goodsList 商品列表
+	 */
+	void importGoods(UmsShop shop, Integer freightId, List<GoodsImportForm> goodsList);
 }

@@ -137,3 +137,68 @@ export function getPriceList(data) {
 		params: data
   })
 }
+
+
+export function writeOff(data) {
+  return request({
+    url: 'member/order/writeOff',
+    method: 'post',
+    data
+  })
+}
+
+export function getWriteOffList(data) {
+  return request({
+    url: 'member/order/getWriteOffList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getOrderMergeList(data) {
+  return request({
+    url: 'member/orderMerge/getList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getOrderMergeDetail(data) {
+  return request({
+    url: 'member/orderMerge/getDetail',
+    method: 'get',
+		params: data
+  })
+}
+
+export function mergeOrder(data) {
+  return request({
+    url: 'member/orderMerge/merge',
+    method: 'post',
+    data
+  })
+}
+
+export function distributionOrder(data) {
+  return request({
+    url: 'member/orderMerge/distribution',
+    method: 'post',
+    data
+  })
+}
+
+export function sortOutOrder(data) {
+  return request({
+    url: 'member/orderMerge/sortOut',
+    method: 'post',
+    data
+  })
+}
+
+export function cancelMerge(data) {
+  return request({
+    url: 'member/orderMerge/cancel',
+    method: 'post',
+    data
+  })
+}

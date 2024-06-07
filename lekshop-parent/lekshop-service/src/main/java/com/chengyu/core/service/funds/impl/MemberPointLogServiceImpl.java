@@ -83,6 +83,9 @@ public class MemberPointLogServiceImpl implements MemberPointLogService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void inAccount(UmsMember member, AccountEnums.MemberPointTypes accountType, String orderNo, BigDecimal amount, String remark, String ip) {
+		if(amount.compareTo(BigDecimal.ZERO) <= 0) {
+			return;
+		}
 		UmsMemberAccount memberAccount = accountService.getMemberAccount(member.getId());
 		BigDecimal beforeAmount = memberAccount.getPoint();
 		BigDecimal afterAmount = NumberUtil.add(beforeAmount, amount);

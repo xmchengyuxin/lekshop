@@ -3,8 +3,8 @@ package com.chengyu.core.component;
 import cn.hutool.core.map.MapUtil;
 import com.chengyu.core.controller.ShopBaseController;
 import com.chengyu.core.domain.CommonConstant;
-import com.chengyu.core.model.UmsMember;
-import com.chengyu.core.service.member.MemberOperationLogService;
+import com.chengyu.core.model.UmsShopAccount;
+import com.chengyu.core.service.shop.ShopAccountOperationLogService;
 import com.chengyu.core.utils.JsonUtils;
 import io.swagger.annotations.ApiOperation;
 import org.aspectj.lang.JoinPoint;
@@ -38,7 +38,7 @@ import java.util.Map;
 public class OperationLogAspect extends ShopBaseController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OperationLogAspect.class);
     @Autowired
-	private MemberOperationLogService operationLogService;
+	private ShopAccountOperationLogService operationLogService;
     
     @Pointcut("@annotation(com.chengyu.core.component.OperationLog)")
     private void operationLog() {
@@ -56,6 +56,10 @@ public class OperationLogAspect extends ShopBaseController {
 	@Around("operationLog()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = joinPoint.proceed();
+        UmsShopAccount member = this.getCurrentAccountOrNull();
+        if(member == null) {
+            return result;
+        }
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
@@ -73,12 +77,7 @@ public class OperationLogAspect extends ShopBaseController {
                 }
             }
         }
-        UmsMember member = this.getCurrentMemberOrNull();
-        if(member == null) {
-            return result;
-        }
-
-        operationLogService.addMemberOperationLog(member, ip, remark,
+        operationLogService.addOperationLog(member, ip, remark,
                 !CollectionUtils.isEmpty(list) ? JsonUtils.object2JsonString(getParameter(method, joinPoint.getArgs())) : null);
         return result;
 

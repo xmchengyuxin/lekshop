@@ -1,19 +1,19 @@
 package com.chengyu.core.security.util;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import com.chengyu.core.utils.StringUtils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JwtToken生成的工具类
@@ -24,7 +24,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * {"sub":"wang","created":1489079981393,"exp":1489684781}
  * signature的生成算法：
  * HMACSHA512(base64UrlEncode(header) + "." +base64UrlEncode(payload),secret)
- * Created by macro on 2018/4/26.
  */
 public class JwtTokenUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
@@ -128,7 +127,7 @@ public class JwtTokenUtil {
      * @param oldToken 带tokenHead的token
      */
     public String refreshHeadToken(String oldToken) {
-        if(StrUtil.isEmpty(oldToken)){
+        if(StringUtils.isBlank(oldToken)){
             return null;
         }
         String token = oldToken.substring(tokenHead.length());

@@ -44,11 +44,12 @@ router.beforeEach(async (to, from, next) => {
 				next()
 			} else {
 				try {
+          await store.dispatch('user/getRolesList')
 					// get user info
 					// note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           // const { roles} = await store.dispatch('user/getUserInfo')
-          const { roles, name} = await store.dispatch('user/getUserInfo')
-          if(!name){
+          const { roles, shopInfo} = await store.dispatch('user/getUserInfo')
+          if(!shopInfo || !shopInfo.name){
             next({
             	path: '/join'
             })

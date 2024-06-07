@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
+import com.chengyu.core.component.DemoStationForbid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +46,8 @@ public class ConfigController extends AdminBaseController {
 		String value = configService.getValueByNid(nid);
 		return CommonResult.success(value);
 	}
-	
+
+	@DemoStationForbid
 	@OperationLog
 	@ResponseBody
 	@ApiOperation("修改系统参数")

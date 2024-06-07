@@ -178,6 +178,13 @@
         this.multipleSelection = val;
       },
       addSourceCate() {
+        if(this.cate == null || this.cate == '') {
+          this.$message({
+            message: "请填写分组名称",
+            type: 'error'
+          })
+          return;
+        }
         updateSourceCate({
           name: this.cate
         }).then(response => {

@@ -42,6 +42,7 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      @sort-change="handleSortChange"
     >
 			<el-table-column label="统计时间" align="center" width="120">
 			  <template slot-scope="scope">
@@ -59,27 +60,27 @@
             <p class="line2">{{ scope.row.goodsName }}</p>
         </template>
       </el-table-column>
-			<el-table-column label="销售数量" prop="businessAmount" align="center" width="70">
+			<el-table-column label="销售数量" prop="sell_num" align="center" width="150" sortable="custom">
 			  <template slot-scope="scope">
           <span style="color:red;">{{ scope.row.sellNum}}</span>
 			  </template>
 			</el-table-column>
-			<el-table-column label="销售额" align="center" width="70">
+			<el-table-column label="销售额" align="center" width="150" prop="sell_amount" sortable="custom">
 			  <template slot-scope="scope">
 					<span style="color:red">{{ scope.row.sellAmount | moneyFormat}}</span>
 				</template>
 			</el-table-column>
-      <el-table-column label="好评数量" align="center" width="70">
+      <el-table-column label="好评数量" align="center" width="150" prop="good_comment_num" sortable="custom">
         <template slot-scope="scope">
           <p><span style="color:red"> {{ scope.row.goodCommentNum}}</span></p>
       	</template>
       </el-table-column>
-      <el-table-column label="差评数量" align="center" width="70">
+      <el-table-column label="差评数量" align="center" width="150" prop="bad_comment_num"  sortable="custom">
         <template slot-scope="scope">
           <p><span style="color:red"> {{ scope.row.badCommentNum}}</span></p>
       	</template>
       </el-table-column>
-      <el-table-column label="复购率" align="center" width="70">
+      <el-table-column label="复购率" align="center" width="150" prop="rebuy_rate"  sortable="custom">
         <template slot-scope="scope">
          <span style="color:red">{{ scope.row.rebuyRate}}%</span>
       	</template>
@@ -216,6 +217,16 @@ export default {
      handleClickTab(tab, event) {
      	this.activeName = tab.name
       this.getList()
+     },
+     handleSortChange(item){
+       if(item.order == null){
+         this.listQuery.sort = ''
+       }else if(item.order == 'ascending'){
+         this.listQuery.sort = item.prop+" asc";
+       }else if(item.order == 'descending') {
+         this.listQuery.sort = item.prop+" desc";
+       }
+       this.getList()
      },
   }
 }

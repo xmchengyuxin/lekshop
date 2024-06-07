@@ -8,17 +8,21 @@ import com.chengyu.core.domain.form.PayBaseForm;
 import com.chengyu.core.domain.form.RefundBaseForm;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.*;
+import com.chengyu.core.service.member.MemberAccountService;
 import com.chengyu.core.service.member.MemberRechargeService;
 import com.chengyu.core.service.member.MemberService;
 import com.chengyu.core.service.order.OrderRefundService;
 import com.chengyu.core.service.order.OrderService;
 import com.chengyu.core.service.pay.PayService;
 import com.chengyu.core.service.pay.manager.PayManager;
+import com.chengyu.core.service.point.PointOrderService;
 import com.chengyu.core.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 
 @Service
 public class PayServiceImpl implements PayService {
@@ -33,6 +37,10 @@ public class PayServiceImpl implements PayService {
     private OrderRefundService orderRefundService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private PointOrderService pointOrderService;
+    @Autowired
+    private MemberAccountService memberAccountService;
 
     @Override
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor=Exception.class)
@@ -132,5 +140,38 @@ public class PayServiceImpl implements PayService {
         }catch (Exception e){
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+    public String pointOrderPay(UmsMember member, String payOrderNo, PayBaseForm baseForm) throws Exception {
+        PointOrder payOrder = pointOrderService.getOrderByOrderNo(payOrderNo);
+        if(payOrder == null || payOrder.getStatus() != CommonConstant.WAIT_INT){
+            throw new ServiceException("status.error");
+        }
+        //校验积分是否足够
+        UmsMemberAccount memberAccount = memberAccountService.getMemberAccount(member.getId());
+        if(memberAccount.getPoint().compareTo(payOrder.getBuyTotalPoint()) < 0) {
+            throw new ServiceException("member.point.noenough");
+        }
+        String message = "noneedpay";
+        //需要现金支付
+        if(payOrder.getBuyTotalPrice().compareTo(BigDecimal.ZERO) > 0) {
+            pointOrderService.updateOrderPayMethod(payOrderNo, baseForm.getPayMethod(), baseForm.getApplicationType());
+            baseForm.setBody("积分商城订单支付-"+payOrderNo);
+            if(PayEnum.PayMethod.WX_PAY.getValue().equals(baseForm.getPayMethod())){
+                baseForm.setPayNotifyUrl(PayService.WXPAY_NOTIFY_URL_POINT_ORDER);
+            }else if(PayEnum.PayMethod.ALI_PAY.getValue().equals(baseForm.getPayMethod())){
+                baseForm.setPayNotifyUrl(PayService.ALIPAY_NOTIFY_URL_POINT_ORDER);
+            }else if(PayEnum.PayMethod.BALANCE.getValue().equals(baseForm.getPayMethod())){
+                baseForm.setMemberAccountTypes(AccountEnums.MemberAccountTypes.ACCOUNT_TRADE_OUT);
+                baseForm.setBody("兑换商品");
+            }
+            message = payManager.getPayFactory(baseForm.getPayMethod()).pay(member, payOrderNo, payOrder.getBuyTotalPrice(), baseForm);
+        }
+        if("noneedpay".equals(message)){
+            pointOrderService.paySus(payOrderNo);
+        }
+        return message;
     }
 }

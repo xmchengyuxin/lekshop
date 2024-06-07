@@ -81,6 +81,12 @@ public class UmsShopCoupon implements Serializable {
     @ApiModelProperty(value = "修改人")
     private String updBy;
 
+    @ApiModelProperty(value = "发放条件>>1手动领取>>2后台发券>>3满送条件")
+    private Integer sendCondition;
+
+    @ApiModelProperty(value = "满多少才赠送")
+    private BigDecimal fullSendAmount;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -283,6 +289,22 @@ public class UmsShopCoupon implements Serializable {
         this.updBy = updBy;
     }
 
+    public Integer getSendCondition() {
+        return sendCondition;
+    }
+
+    public void setSendCondition(Integer sendCondition) {
+        this.sendCondition = sendCondition;
+    }
+
+    public BigDecimal getFullSendAmount() {
+        return fullSendAmount;
+    }
+
+    public void setFullSendAmount(BigDecimal fullSendAmount) {
+        this.fullSendAmount = fullSendAmount;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -314,6 +336,8 @@ public class UmsShopCoupon implements Serializable {
         sb.append(", addBy=").append(addBy);
         sb.append(", updTime=").append(updTime);
         sb.append(", updBy=").append(updBy);
+        sb.append(", sendCondition=").append(sendCondition);
+        sb.append(", fullSendAmount=").append(fullSendAmount);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -48,6 +48,16 @@ export function getGoods(data) {
   })
 }
 
+
+export function getThirdDetail(data) {
+  return request({
+    url: 'system/goods/getThirdDetail',
+    method: 'get',
+		params: data
+  })
+}
+
+
 export function updateGoods(data) {
   return request({
     url: 'system/goods/editSubmit',
@@ -85,5 +95,21 @@ export function getGoodsQualityList(data) {
     url: 'system/goodsQuality/query',
     method: 'get',
 		params: {goodsId : data}
+  })
+}
+
+export function getPlatformGoodsList(data) {
+  return request({
+    url: 'system/goods/getListByPlatform',
+    method: 'get',
+		params: data
+  })
+}
+
+export function getSkuList(data) {
+  return request({
+    url: 'system/goods/getSkuList',
+    method: 'get',
+		params: data
   })
 }

@@ -9,20 +9,21 @@ const reportRouter = {
   name: 'report',
   meta: {
     title: '报表统计',
-    icon: 'search'
+    icon: 'search',
+    roles: ['report']
   },
   children: [
 		{
 		  path: 'shopReport',
 		  component: () => import('@/views/report/shop/index'),
 		  name: 'shopReport',
-		  meta: { title: '店铺营业', icon: 'list', role: ['admin'] }
+		  meta: { title: '店铺营业', icon: 'list', roles: ['report:business'] }
 		},
 		{
 		  path: 'goodsReport',
 		  component: () => import('@/views/report/goods/index'),
 		  name: 'goodsReport',
-		  meta: { title: '商品统计', icon: 'list',  role: ['admin'] }
+		  meta: { title: '商品统计', icon: 'list',  roles: ['report:goods'] }
 		},
   ]
 }

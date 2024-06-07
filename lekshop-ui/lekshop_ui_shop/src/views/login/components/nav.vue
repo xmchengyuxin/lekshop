@@ -5,6 +5,7 @@
         <h1>LEKSHOP</h1>
         <!-- <img @click="$router.push('/show')" class="h-34 cursor" src="../img/logo-login.png" alt=""> -->
         <div class="flex">
+          <div @click="goHome" class="flex f-a-c padding-lr15 cursor t-color-w" style="font-size: 14px; color: #aaa;">官网</div>
           <div @click="$router.push('/show')" class="flex f-a-c padding-lr15 cursor t-color-w" style="font-size: 14px; color: #aaa;">首页</div>
           <div @click="$router.push('/join')" class="flex f-a-c padding-lr15 cursor t-color-w" style="font-size: 14px; color: #aaa;">商家入驻</div>
           <div  v-if="$store.state.user.name == ''" @click="$router.push('/login')" class="flex f-a-c padding-lr15 cursor t-color-w"  style="font-size: 14px; color: #aaa;">登录</div>
@@ -69,6 +70,9 @@
         })
       },
       init() {},
+      goHome(){
+        window.open('https://www.lekshop.cn');
+      }
 
 
     },

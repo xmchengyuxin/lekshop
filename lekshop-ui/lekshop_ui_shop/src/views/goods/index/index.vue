@@ -40,7 +40,7 @@
 			<el-table-column label="宝贝标题" min-width="200px"  align="center">
 			  <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top">
-            <span class="line1">
+              <span class="line1 link-type" @click="$router.push('/goods/edit/'+scope.row.id)">
               <span v-if="scope.row.type != 1" :style="scope.row.type == 2 ? 'color:red;' : 'color:green;' ">[{{ scope.row.type | typeFilter}}]</span>
               {{ scope.row.title }}</span>
           </el-tooltip>

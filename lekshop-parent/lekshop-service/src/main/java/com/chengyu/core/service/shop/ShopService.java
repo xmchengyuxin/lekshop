@@ -1,6 +1,7 @@
 package com.chengyu.core.service.shop;
 
 import com.chengyu.core.domain.form.ShopSearchForm;
+import com.chengyu.core.domain.result.ShopDataResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.UmsMember;
 import com.chengyu.core.model.UmsShop;
@@ -68,4 +69,15 @@ public interface ShopService {
 	 * @return UmsMember
 	 */
 	UmsMember getMemberByShopId(Integer shopId);
+
+	/**
+	 * 获取店铺数据列表
+	 * @author LeGreen
+	 * @date   2022/11/2
+	 * @param  form 查询表单
+	 * @param  page	分页
+	 * @param  pageSize 分页
+	 * @return List<ShopDataResult>
+	 */
+	List<ShopDataResult> getShopDataList(ShopSearchForm form, Integer page, Integer pageSize);
 }

@@ -1,7 +1,5 @@
 package com.chengyu.core.domain.result;
 
-import com.chengyu.core.model.OmsOrder;
-import com.chengyu.core.model.OmsOrderDetail;
 import com.chengyu.core.model.OmsOrderFreight;
 import com.chengyu.core.model.OmsOrderFreightDetail;
 import lombok.Getter;

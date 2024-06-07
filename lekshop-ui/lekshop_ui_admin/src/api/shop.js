@@ -95,3 +95,12 @@ export function deleteShopInfo(data) {
     params: {ids:data}
   })
 }
+
+
+export function getShopDataList(data) {
+  return request({
+    url: '/system/shop/getDataList',
+    method: 'get',
+		params: data
+  })
+}

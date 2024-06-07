@@ -64,6 +64,14 @@ export function getShop(data) {
   })
 }
 
+export function getShopDetail(data) {
+  return request({
+    url: 'member/shop/getInfo',
+    method: 'get',
+		params: data
+  })
+}
+
 export function updateShop(data) {
   return request({
     url: 'member/shop/update',
@@ -136,6 +144,7 @@ export function submitShopDetail(data) {
     data
   })
 }
+
 export function submitShop(data) {
   if(data.addTime) {
     data.addTime = null;
@@ -153,6 +162,22 @@ export function getShopCouponList(data) {
     url: 'member/coupon/getList',
     method: 'get',
 		params: data
+  })
+}
+
+export function getCouponDrawList(data) {
+  return request({
+    url: 'member/coupon/getDrawList',
+    method: 'get',
+		params: data
+  })
+}
+
+export function presentCoupon(data) {
+  return request({
+    url: 'member/coupon/present',
+    method: 'post',
+    data
   })
 }
 

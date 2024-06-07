@@ -8,10 +8,18 @@ export function getLoginLoginLog(data) {
   })
 }
 
-export function getMemberOperationLog(data) {
+export function getOperationLogList(data) {
   return request({
-    url: 'member/memberOperation/getList',
+    url: 'member/accountOperation/getList',
     method: 'get',
 		params: data
+  })
+}
+
+export function deleteOperationLog(data) {
+  return request({
+    url: 'member/accountOperation/delete',
+    method: 'post',
+    data
   })
 }

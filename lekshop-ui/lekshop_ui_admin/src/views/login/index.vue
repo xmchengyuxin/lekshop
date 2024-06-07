@@ -1,37 +1,13 @@
 <template>
-  <div class="login-container flex f-a-c f-j-c">
+  <div class="login-container flex f-a-c f-j-e">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
-     <el-menu
-      default-active="1"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      mode="horizontal">
-        <el-menu-item index="1" style="width: 100%;text-align: center;">{{title}}</el-menu-item>
-      </el-menu>
-
-     <!-- <div class="title-container">
-         <img src="./img/logo-login.png" alt="" style="height: 100px;margin-bottom: 30px; margin-left: 90px;border-radius: 10px;">
-      </div> -->
-
-     <!-- <el-form-item prop="brandName">
-        <span class="svg-container">
-          <svg-icon icon-class="guide" />
-        </span>
-        <el-input
-          ref="brandName"
-          v-model="loginForm.brandName"
-          placeholder="请填写商户名称"
-          name="brandName"
-          type="text"
-          auto-complete="on"
-        />
-      </el-form-item> -->
-
+    <div class="login_title">
+      <div class="title_sub">HELLO!</div>
+      <div class="title_box">欢迎登录{{ title }}</div>
+    </div>
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon class="wuroom_color" icon-class="wr_username" />
         </span>
         <el-input
           ref="username"
@@ -45,7 +21,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon class="wuroom_color" icon-class="wr_password" />
         </span>
         <el-input
           ref="password"
@@ -60,14 +36,16 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+      <!-- <div class="info_box">
+         <el-checkbox v-model="loginForm.checked">一周内免登录</el-checkbox>
+      </div> -->
+      <el-button :loading="loading" type="primary"  style="width:100%;margin: 58px 0 48px;" @click.native.prevent="handleLogin">
         登录
       </el-button>
-
+      <!-- <div class="login_bottom_img">
+        <img :src="wuroomImg">
+      </div> -->
     </el-form>
-		<!-- <p style="color:#eee;text-align: center; font-size: 12px;">厦门诚禹信信息科技提供技术支持</p> -->
-
   </div>
 </template>
 
@@ -105,7 +83,7 @@ export default {
       loginForm: {
         username: '',
         password: '',
-        brandName: ''
+        checked: true
       },
       loginRules: {
         brandName:  [{ required: true, trigger: 'blur', message:'请填写商户名称'}],
@@ -116,7 +94,8 @@ export default {
       loading: false,
       showDialog: false,
       redirect: undefined,
-      title: process.env.VUE_APP_TITLE
+      title: process.env.VUE_APP_TITLE,
+      hello: '早上好！',
     }
   },
   watch: {
@@ -131,6 +110,17 @@ export default {
     // window.addEventListener('hashchange', this.afterQRScan)
   },
   mounted() {
+    let time = new Date()
+    if(time.getHours() >= 0 && time.getHours() <= 10) {
+      this.hello ='早上好！'
+    } else if(time.getHours() >= 11 && time.getHours() <= 14) {
+      this.hello ='中午好！'
+    } else if(time.getHours() >= 15 && time.getHours() <= 18) {
+      this.hello ='下午好！'
+    } else if(time.getHours() >= 19 && time.getHours() <= 24) {
+      this.hello ='晚上好！'
+    }
+
     if (this.loginForm.username === '') {
       this.$refs.username.focus()
     } else if (this.loginForm.password === '') {
@@ -155,7 +145,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then(res => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
@@ -193,8 +183,8 @@ export default {
   /* 修复input 背景不协调 和光标变色 */
   /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-  $bg:#283443;
-  $light_gray:#000;
+  $bg:#3662EC;
+  $light_gray:#333;
   $cursor: #fff;
 
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -228,13 +218,19 @@ export default {
       }
     }
     .el-form-item {
-      border: 1px solid #E5E5E5;
+      border: 1px solid $bg;
+      border-radius: 23px;
       background: #fff;
-      border-radius: 5px;
       color: #454545;
+      &:hover {
+        border-bottom-color: $bg;
+      }
+      &:active {
+        border-bottom-color: $bg;
+      }
     }
     .svg-container {
-      color: #000!important;
+      color: $bg!important;
     }
     .el-input input:-webkit-autofill {
       caret-color:#000!important;
@@ -262,28 +258,65 @@ export default {
     }
   }
 </style>
-
+<style>
+  .info_box .el-checkbox__inner:hover {
+    border-color:#3662EC;
+  }
+  .info_box .el-checkbox__input.is-checked .el-checkbox__inner {
+    border-color:#3662EC;
+    background-color:#3662EC;
+  }
+  .info_box .el-checkbox__input.is-checked+.el-checkbox__label {
+    color:#3662EC
+  }
+  .info_box .el-checkbox__input .el-checkbox__label {
+    color:#333
+  }
+  .wuroom_color {
+    color:#3662EC
+  }
+</style>
 <style rel="stylesheet/scss" lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#3662EC;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background:url(img/background.jpg) center no-repeat;
+  // background:url(img/login_bg.png) center no-repeat;
   background-size: cover;
   overflow: hidden;
   .login-form {
     position: relative;
-    width: 300px;
-    box-sizing: content-box;
+    width: 1200px;
+    height: 760px;
+    box-sizing: border-box;
     max-width: 100%;
-    padding: 50px 160px 35px 160px;
-    margin: 0 auto;
-    // background-color: #fff;
-    background-color: rgba(9,9,9,0.4);
-    border-radius: 0.5%;
+    border-radius: 8px;
+    box-shadow: 0px 0px 18px 2px rgba(0,0,0,0.2);
+    margin:0 auto;
+    padding: 0 123px 0 777px;
+    // padding: 88px 64px;
+    // margin-right: 278px;
+    // margin: 0 auto;
+    background:#fff url('img/login.png') -95px top no-repeat;
+  }
+  .login_bottom_img {
+    text-align: center;
+  }
+  .login_title {
+    line-height: 41px;
+    margin:150px 0 88px;
+    .title_box {
+      font-size :30px;
+      color:#333;
+    }
+    .title_sub {
+      font-size: 36px;
+      color:#3662EC;
+      font-weight: bold;
+    }
   }
   // .login-form::after {
   //   content: '';
@@ -371,9 +404,11 @@ $light_gray:#eee;
   }
   ::v-deep .el-button {
     height: 50px;
-    background: #1890ff;
-    border-color: #1890ff;
+    background: $bg;
+    border-color: $bg;
     font-size: 14px;
+    box-shadow: 0px 8px 10px 0px rgba(29,54,148,0.2);
+    border-radius: 23px;
   }
 }
 </style>

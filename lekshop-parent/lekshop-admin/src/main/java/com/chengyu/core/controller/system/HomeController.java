@@ -1,8 +1,11 @@
 package com.chengyu.core.controller.system;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
+import com.chengyu.core.domain.enums.DeliveryEnums;
 import com.chengyu.core.domain.enums.ThirdEnums;
+import com.chengyu.core.domain.result.KeyNameResult;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.service.system.ConfigService;
 import com.chengyu.core.service.system.ThirdConfigService;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -107,6 +111,18 @@ public class HomeController extends AdminBaseController {
 			break;
 		}
 		return CommonResult.success(result);
+	}
+
+	@ApiOperation(value = "物流选择器")
+	@ResponseBody
+	@RequestMapping(value="/deliveryType/getSelector", method=RequestMethod.GET)
+	public CommonResult<List<KeyNameResult>> getSelector() {
+		List<KeyNameResult> list = CollectionUtil.newArrayList();
+		DeliveryEnums.DeliveryType[] types = DeliveryEnums.DeliveryType.values();
+		for (DeliveryEnums.DeliveryType mtype : types) {
+			list.add(new KeyNameResult(mtype.getName(), mtype.getKey()));
+		}
+		return CommonResult.success(list);
 	}
     
 }

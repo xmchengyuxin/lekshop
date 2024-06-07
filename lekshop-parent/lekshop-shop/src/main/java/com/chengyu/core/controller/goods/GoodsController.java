@@ -9,17 +9,21 @@ import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.enums.ThirdEnums;
 import com.chengyu.core.domain.form.GoodsPublishForm;
 import com.chengyu.core.domain.form.GoodsSearchForm;
+import com.chengyu.core.domain.result.GoodsExportResult;
 import com.chengyu.core.domain.result.GoodsResult;
+import com.chengyu.core.domain.result.GoodsStockResult;
 import com.chengyu.core.domain.result.GoodsThirdResult;
 import com.chengyu.core.entity.CommonPage;
 import com.chengyu.core.entity.CommonResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.model.PmsGoods;
 import com.chengyu.core.model.PmsGoodsGroup;
+import com.chengyu.core.model.PmsGoodsSku;
 import com.chengyu.core.service.goods.GoodsService;
-import com.chengyu.core.util.third.logic.TaofakeLogic;
 import com.chengyu.core.utils.StringUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,9 +47,7 @@ public class GoodsController extends ShopBaseController {
 	
 	@Autowired
 	private GoodsService goodsService;
-	@Autowired
-	private TaofakeLogic taofakeLogic;
-	
+
 	@ApiOperation(value = "商品列表")
 	@ResponseBody
 	@RequestMapping(value="/goods/getList", method=RequestMethod.GET)
@@ -53,6 +55,17 @@ public class GoodsController extends ShopBaseController {
 													   @RequestParam(value = "page", defaultValue = "1") Integer page,
 													   @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws ServiceException {
 		form.setShopId(getCurrentShop().getId());
+		List<PmsGoods> list = goodsService.getGoodsList(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(list));
+	}
+
+	@ApiOperation(value = "商品库商品列表")
+	@ResponseBody
+	@RequestMapping(value="/goods/getPlatformList", method=RequestMethod.GET)
+	public CommonResult<CommonPage<PmsGoods>> getPlatformList(GoodsSearchForm form,
+													  @RequestParam(value = "page", defaultValue = "1") Integer page,
+													  @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws ServiceException {
+		form.setQueryPlatformGoods(true);
 		List<PmsGoods> list = goodsService.getGoodsList(form, page, pageSize);
 		return CommonResult.success(CommonPage.restPage(list));
 	}
@@ -75,6 +88,14 @@ public class GoodsController extends ShopBaseController {
 		}
 		goodsService.publishGoods(getCurrentShop(), publishForm);
 		return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "商品Sku列表")
+	@ResponseBody
+	@RequestMapping(value = "/goods/getSkuList", method = RequestMethod.GET)
+	public CommonResult<List<PmsGoodsSku>> getSkuList(Integer goodsId) {
+		List<PmsGoodsSku> list = goodsService.getGoodsSkuList(goodsId).getSkuList();
+		return CommonResult.success(list);
 	}
 
 	@OperationLog
@@ -129,4 +150,50 @@ public class GoodsController extends ShopBaseController {
 		return CommonResult.success(goods);
 	}
 
+
+	@ApiOperation(value = "商品库存列表")
+	@ResponseBody
+	@RequestMapping(value = "/goods/getStockList", method = RequestMethod.GET)
+	public CommonResult<CommonPage<GoodsStockResult>> getStockList(
+			GoodsSearchForm form,
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) throws ServiceException {
+		form.setShopId(getCurrentShopId());
+		List<GoodsStockResult> list = goodsService.getGoodsStockList(form, page, pageSize);
+		return CommonResult.success(CommonPage.restPage(list));
+	}
+
+	@OperationLog
+	@ApiOperation(value = "更新商品库存")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "stockJson", value = "[{id:商品ID,stock:库存}]"),
+	})
+	@ResponseBody
+	@RequestMapping(value = {"/goods/updateStock"}, method = RequestMethod.POST)
+	public CommonResult<String> updateStock(String stockJson) {
+		if(StringUtils.isBlank(stockJson)){
+			return CommonResult.failed("请填写库存");
+		}
+		List<PmsGoodsSku> stockList = JSONArray.parseArray(stockJson, PmsGoodsSku.class);
+		goodsService.updateGoodsStock(stockList);
+		return CommonResult.success(null);
+	}
+
+	@OperationLog
+	@ApiOperation(value = "同步仓库库存")
+	@ResponseBody
+	@RequestMapping(value = {"/goods/synStock"}, method = RequestMethod.POST)
+	public CommonResult<String> synStock() throws ServiceException {
+		goodsService.synStock(getCurrentShopId());
+		return CommonResult.success(null);
+	}
+
+	@ApiOperation(value = "导出商品列表")
+	@ResponseBody
+	@RequestMapping(value="/goods/getExportList", method=RequestMethod.GET)
+	public CommonResult<List<GoodsExportResult>> getExportList(GoodsSearchForm form) throws ServiceException {
+		form.setShopId(getCurrentShop().getId());
+		List<GoodsExportResult> list = goodsService.getExportList(form, 1, 99999);
+		return CommonResult.success(list);
+	}
 }

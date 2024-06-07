@@ -18,6 +18,9 @@ import cateRouter from './modules/cate'
 import freightRouter from './modules/freight'
 import trendsRouter from './modules/trends'
 import reportRouter from './modules/report'
+import orgRouter from './modules/org'
+import stockRouter from './modules/stock'
+
 
 
 
@@ -85,6 +88,13 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/info',
+    component: () => import('@/views/org/account/info'),
+    name: 'accountInfo',
+    meta: { title: '个人中心'},
+    hidden: true
+  },
+  {
     path: '',
     component: Layout,
     redirect: 'dashboard',
@@ -108,6 +118,8 @@ export const asyncRoutes = [
 	promotionRouter,
   freightRouter,
   fundRouter,
+  orgRouter,
+  stockRouter,
   reportRouter,
   logRouter,
   configRouter,

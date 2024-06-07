@@ -10,7 +10,7 @@
 		</el-tabs>
     <div class="filter-container">
 			 <el-input v-model="listQuery.orderNo" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
-			 <el-input v-model="listQuery.memberName" clearable placeholder="买家" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
+			 <el-input v-model="listQuery.memberNickname" clearable placeholder="买家" style="width: 200px;" class="filter-item" @keyup.enter.native="getList" />
 			 <el-select v-model="listQuery.type" placeholder="订单类型" clearable class="filter-item" style="width: 130px">
 			   <el-option v-for="item in orderTypeOptions" :key="item.key" :label="item.text" :value="item.key" />
 			 </el-select>
@@ -52,7 +52,7 @@
               <div style="float: right; padding: 3px 10px">
                 <el-button-group>
                    <el-tooltip class="item" effect="dark" content="联系买家" placement="top">
-                      <el-button  type="danger" icon="el-icon-s-comment" size="mini" @click="handleContact(scope.row.order.memberId)">
+                      <el-button  v-permission="['admin']" type="danger" icon="el-icon-s-comment" size="mini" @click="handleContact(scope.row.order.memberId)">
                       </el-button>
                    </el-tooltip>
                   <el-tooltip class="item" effect="dark" content="发货" placement="top">
@@ -64,7 +64,7 @@
                     <el-button v-if="scope.row.order.status == 0" type="info" icon="el-icon-edit" size="mini" @click="handleEditPrice(scope.row.order)"></el-button>
                   </el-tooltip>
                   <el-tooltip class="item" effect="dark" content="打印出库单" placement="top">
-                    <el-button v-if="scope.row.order.status == 1" type="success"size="mini">
+                    <el-button v-if="scope.row.order.status == 1 || scope.row.order.status == 2 || scope.row.order.status == 3" type="success"size="mini" @click.stop="handlePrint(scope.row)">
                         <svg-icon icon-class="pdf" />
                     </el-button>
                   </el-tooltip>
@@ -93,9 +93,10 @@
 
 			  </template>
 			</el-table-column>
-			<el-table-column label="买家" prop="memberName" align="center" width="150">
+			<el-table-column label="买家" prop="memberNickname" align="center" width="150">
 			  <template slot-scope="scope">
-			    <span>{{ scope.row.order.memberName }}</span>
+			    <span>{{ scope.row.order.memberNickname }}</span>
+          <el-tag type="danger" v-if="scope.row.order.selfLifting == 1">自提</el-tag>
 			  </template>
 			</el-table-column>
 			<el-table-column label="实际支付" prop="price" width="150">
@@ -155,7 +156,8 @@
         </div>
         <div style="margin-bottom: 10px;">
           <span>订单号： {{order.orderNo}}</span>
-          <span style="margin-left: 20px;">买家：{{order.memberName}}</span>
+          <span style="margin-left: 20px;">买家：{{order.memberNickname}}</span>
+          <span style="margin-left: 20px;">核销码：{{order.verifyCode}}</span>
         </div>
 
         <el-table
@@ -369,6 +371,11 @@
                     <el-tag effect="plain" v-if="scope.row.status == 4" type="danger">{{ scope.row.status | statusFilter }}</el-tag>
                   </template>
                 </el-table-column>
+                <el-table-column label="仓库状态"  align="center" width="80">
+                  <template slot-scope="scope">
+                    <el-tag effect="plain" type="danger">{{ scope.row.mergeStatus | mergeStatusFilter }}</el-tag>
+                  </template>
+                </el-table-column>
                 <el-table-column label="姓名"  align="center" width="100">
                   <template slot-scope="scope">
                     <span>{{ scope.row.receiveName }}</span>
@@ -417,7 +424,76 @@
 		      <el-button type="primary" @click="editPriceConfirm">确定</el-button>
 		    </div>
 		</el-dialog>
+
+
+    <el-dialog title="打印" :visible.sync="dialogPrintVisible" width="760px">
+        <template>
+          <div id="print" class="f13-size">
+            <div slot="header" class="clearfix">
+              <h3 class="flex f-a-c f-j-c">商品发货单</h3>
+            </div>
+            <div class="flex margin-t30" style="margin-bottom: 10px;">
+              <span class="flex flex-1 f-a-c">订单号： {{order.orderNo}}</span>
+              <span class="flex f-a-c flex-1" style="margin-left: 20px;">买家：{{order.memberNickname}}</span>
+              <span class="flex f-a-c flex-1 f-j-e" style="margin-left: 20px;">下单时间：{{order.payTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            </div>
+
+            <div class="flex" style="margin-bottom: 20px;">
+              <span class="flex flex-1 f-a-c">收货人： {{order.receiveName}}</span>
+              <span class="flex flex-1 f-a-c" style="margin-left: 20px;">手机：{{order.receivePhone}}</span>
+              <span class="flex flex-1 f-a-c f-j-e" style="margin-left: 20px;">收货地址：{{order.receiveAddress}}</span>
+            </div>
+
+            <el-table
+                :data="orderDetailList"
+                style="width: 100%">
+                <el-table-column label="商品名称" prop="goodsName" align="center">
+                  <template slot-scope="scope">
+                    <span class="line1">{{ scope.row.goodsName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="购买规格" prop="goodsParamName" align="center" width="100">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.goodsParamName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="数量" prop="buyNum" align="center" width="70">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.buyNum }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="单价" prop="buyPrice" align="center" width="70">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.buyPrice | moneyFormat}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="总价" prop="buyTotalPrice" align="center" width="70">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.buyTotalPrice | moneyFormat }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div style="margin-top: 10px;" class="flex f-j-e">
+                <span >商品总价： <span>￥ {{order.totalPrice | moneyFormat}}</span></span>
+                <span style="margin-left: 20px;">运费： <span >￥ {{order.freightFee | moneyFormat}}</span></span>
+                <span style="margin-left: 20px;">优惠金额： <span >￥ {{order.couponAmount | moneyFormat}}</span></span>
+                <span style="margin-left: 20px;">实际支付： <span >￥ {{order.payPrice | moneyFormat}}</span></span>
+                <span style="margin-left: 20px;">付款方式： <span >   {{order.payMethod | payMethodFilter}}</span></span>
+              </div>
+              <div style="margin-bottom: 50px;"> </div>
+              <!-- <div style="page-break-after: always;"></div> -->
+          </div>
+        </template>
+
+        <div class="flex f-j-e margin-t10">
+          <el-button type="danger" @click="dialogPrintVisible=false">取消</el-button>
+          <el-button type="primary" v-print="printObj">打印</el-button>
+        </div>
+    </el-dialog>
+
   </div>
+
+
 </template>
 
 <style>
@@ -463,6 +539,48 @@
     .miaosha{
       background-color: #ffaa00;
     }
+    #print {
+      table {
+         font-family: Arial, sans-serif;
+         font-size: 14px;
+         background-color: #f0f2f5;
+         border-collapse: collapse;
+         color: #454545;
+         table-layout: auto;
+         width: 100%;
+         text-align: center;
+         border-bottom-width: 1px;
+         border-bottom-style: solid;
+         border-bottom-color: #dadcde;
+         thead {
+           border-top-width: 1px;
+           border-top-style: solid;
+           border-top-color: #dadcde;
+           line-height: 40px;
+           font-weight: bold;
+           color: #454c70;
+         }
+         tr {
+           border-top-width: 1px;
+           border-top-style: solid;
+           border-top-color: #dadcde;
+           line-height: 23px;
+         }
+         td{
+           padding: 5px 10px;
+           font-size: 14px;
+           font-family: Verdana;
+           width: 100px;
+           word-break: break-all;
+         }
+         tr:nth-child(even) {
+           background: #F5F7F9;
+         }
+         tr:nth-child(odd) {
+           background: #FFF;
+         }
+       }
+    }
 </style>
 
 <script>
@@ -471,6 +589,7 @@ import {getDeliveryTypeSelector} from '@/api/system'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime, renderTime, moneyFormat} from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import print from 'vue-print-nb'
 
 //0待支付>>1待发货>>2待收货>>3已完成>>4已取消
 const statusOptions = [
@@ -515,10 +634,25 @@ const payMethodKeyValue = payMethodOptions.reduce((acc, cur) => {
   return acc
 }, {})
 
+
+const mergeStatusOptions = [
+  { key: 0, text: '待配货' },
+  { key: 1, text: '待配货' },
+  { key: 2, text: '已配货' },
+  { key: 3, text: '已分拣' },
+  { key: 4, text: '已配货' }
+]
+
+const mergeStatusKeyValue = mergeStatusOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.text
+  return acc
+}, {})
+
+
 export default {
   name: 'orderList',
   components: { Pagination },
-  directives: { waves },
+  directives: { waves, print },
 	filters: {
 	  statusFilter(status) {
 	    return statusKeyValue[status]
@@ -528,7 +662,10 @@ export default {
     },
     payMethodFilter(type) {
       return payMethodKeyValue[type]
-    }
+    },
+    mergeStatusFilter(status) {
+      return mergeStatusKeyValue[status]
+    },
 	},
   data() {
     return {
@@ -549,6 +686,7 @@ export default {
 			dialogWuliuVisible: false,
 			dialogPriceVisible: false,
 			dialogPriceLogVisible: false,
+      dialogPrintVisible: false,
 			multipleSelection: [],
 			rules: {
 			  logisticType: [{ required: true, message: '请选择发货方式', trigger: 'change' }]
@@ -567,7 +705,12 @@ export default {
       freightDetailList: [],
       activeNum: 0,
       orderGroup: {},
-      groupMemberList: []
+      groupMemberList: [],
+      printObj:{
+          id:"print",
+          popTitle:"发货单",
+          extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>,<style>  #print {  100%; !important; } <style>'
+      },
     }
   },
   created() {
@@ -607,6 +750,28 @@ export default {
        	this.orderPriceDetail = result.data;
        })
        this.dialogDetailVisible = true;
+    },
+    handlePrint(row){
+       this.editAddress = false
+       this.order = row.order;
+       this.orderDetailList = row.orderDetailList;
+       this.orderGroup = row.orderGroup
+       this.groupMemberList = row.groupMemberList
+       this.activeNum = this.order.status;
+       if(this.activeNum == 4){
+         this.activeNum = 0
+       }
+       if(this.order.status == 2 || this.order.status == 3){
+         getFreightList({orderId:this.order.id}).then((result) => {
+           if(result.data){
+              this.freightDetailList = result.data.freightDetailList;
+           }
+         })
+       }
+       getPriceList({orderId:this.order.id}).then((result) => {
+       	this.orderPriceDetail = result.data;
+       })
+       this.dialogPrintVisible = true;
     },
 		handlDelivery(row){
       let valList = [];

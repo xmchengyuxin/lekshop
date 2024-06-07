@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/lekshop?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: chengyu
+    username: lekshop
+    password: ptLTiaa3GMArGNPz
     druid:
       initial-size: 5 #连接池初始化大小
       min-idle: 10 #最小空闲连接数
@@ -23,37 +23,30 @@ spring:
     password: # Redis服务器连接密码（默认为空）
     timeout: 300ms # 连接超时时间（毫秒）
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    virtual-host: /
-    username: guest
-    password: guest
-    publisher-confirms: true #如果对异步消息需要回调必须设置为true
-
-  quartz:
-    job-store-type: jdbc # quartz任务存储类型：jdbc或memory
-    wait-for-jobs-to-complete-on-shutdown: true # 关闭时等待任务完成
-    overwrite-existing-jobs: true # 可以覆盖已有的任务
-    properties: # quartz原生配置
-      org:
-        quartz:
-          scheduler:
-            instanceName: scheduler # 调度器实例名称
-            instanceId: AUTO # 调度器实例ID自动生成
-          jobStore:
-            class: org.quartz.impl.jdbcjobstore.JobStoreTX # 调度信息存储处理类
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate # 使用完全兼容JDBC的驱动
-            tablePrefix: QRTZ_ # quartz相关表前缀
-            useProperties: false # 是否将JobDataMap中的属性转为字符串存储
-          threadPool:
-            class: org.quartz.simpl.SimpleThreadPool # 指定线程池实现类，对调度器提供固定大小的线程池
-            threadCount: 10 # 设置并发线程数量
-            threadPriority: 5 # 指定线程优先级
-
+# xxl-job配置
+xxl:
+  job:
+    admin:
+      # 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
+      addresses: http://127.0.0.1:8090/xxl-job-admin
+    executor:
+      # 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
+      address:
+      # 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
+      appname: lekshop-admin
+      # 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
+      ip:
+      # 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
+      port: 0
+      # 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
+      logpath: /www/wwwroot/lekshop/jar/logs
+      # 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
+      logretentiondays: 15
+    # 执行器通讯TOKEN [选填]：非空时启用；
+    accessToken:
 # 日志配置
 logging:
-  path: C:/java/prod/jar/logs
+  path: /www/wwwroot/lekshop/jar/logs
 
 netty:
-  url: http://127.0.0.1:8008
+  url: http://127.0.0.1:9009

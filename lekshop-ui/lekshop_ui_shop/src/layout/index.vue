@@ -11,7 +11,7 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
-      <message ref="immessage"/>
+      <message  v-if="checkPermission(['admin'])" ref="immessage"/>
     </div>
   </div>
 
@@ -22,6 +22,7 @@ import RightPanel from '@/components/RightPanel'
 import { Navbar, Sidebar, AppMain, TagsView, Settings, Message } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
+import checkPermission from '@/utils/permission' // 权限判断函数
 
 export default {
   name: 'Layout',
@@ -53,16 +54,19 @@ export default {
     }
   },
   methods: {
+    checkPermission,
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
   },
   created(){
-    const self = this;
-    self.socket.creatSocket();
-    self.$nextTick(() => {
-      self.socket.setDom(self.$refs.immessage);
-    })
+    if(this.checkPermission(['admin'])) {
+      const self = this;
+      self.socket.creatSocket();
+      self.$nextTick(() => {
+        self.socket.setDom(self.$refs.immessage);
+      })
+    }
   }
 }
 </script>

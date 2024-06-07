@@ -29,6 +29,7 @@
     </el-dialog>
 
     <audio ref="chataudio"  src="./ding.mp3"></audio>
+    <notice ref="noticeFlash"/>
   </div>
 
 </template>
@@ -46,11 +47,13 @@
   Vue.component(LemonMessageGoods.name,LemonMessageGoods);
   Vue.component(LemonMessageOrder.name,LemonMessageOrder);
   Vue.component(LemonMessageNotice.name,LemonMessageNotice);
+  import Notice from '@/layout/components/Notice'
 
   let IMUI;
   export default {
     directives: { elDragDialog },
     components: {
+      Notice
     },
     data() {
       return {
@@ -93,6 +96,15 @@
         },
         page: 1,
         totalUnReadNum: 0
+      }
+    },
+    watch: {
+      totalUnReadNum(newValue, oldValue) {
+        if(newValue > 0) {
+          this.$refs.noticeFlash.tip('您有新的消息, 请及时查看!','新消息');
+        }else {
+          this.$refs.noticeFlash.doClearTimer();
+        }
       }
     },
     methods: {
@@ -395,7 +407,7 @@
   ::v-deep .lemon-wrapper *{
     box-sizing: content-box;
   }
-  
+
   ::v-deep .el-dialog__wrapper{
     pointer-events:none;
   }

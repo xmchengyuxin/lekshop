@@ -1702,6 +1702,126 @@ public class UmsShopCouponExample {
             addCriterion("upd_by not between", value1, value2, "updBy");
             return (Criteria) this;
         }
+
+        public Criteria andSendConditionIsNull() {
+            addCriterion("send_condition is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionIsNotNull() {
+            addCriterion("send_condition is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionEqualTo(Integer value) {
+            addCriterion("send_condition =", value, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionNotEqualTo(Integer value) {
+            addCriterion("send_condition <>", value, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionGreaterThan(Integer value) {
+            addCriterion("send_condition >", value, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionGreaterThanOrEqualTo(Integer value) {
+            addCriterion("send_condition >=", value, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionLessThan(Integer value) {
+            addCriterion("send_condition <", value, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionLessThanOrEqualTo(Integer value) {
+            addCriterion("send_condition <=", value, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionIn(List<Integer> values) {
+            addCriterion("send_condition in", values, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionNotIn(List<Integer> values) {
+            addCriterion("send_condition not in", values, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionBetween(Integer value1, Integer value2) {
+            addCriterion("send_condition between", value1, value2, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendConditionNotBetween(Integer value1, Integer value2) {
+            addCriterion("send_condition not between", value1, value2, "sendCondition");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountIsNull() {
+            addCriterion("full_send_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountIsNotNull() {
+            addCriterion("full_send_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountEqualTo(BigDecimal value) {
+            addCriterion("full_send_amount =", value, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountNotEqualTo(BigDecimal value) {
+            addCriterion("full_send_amount <>", value, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountGreaterThan(BigDecimal value) {
+            addCriterion("full_send_amount >", value, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("full_send_amount >=", value, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountLessThan(BigDecimal value) {
+            addCriterion("full_send_amount <", value, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("full_send_amount <=", value, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountIn(List<BigDecimal> values) {
+            addCriterion("full_send_amount in", values, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountNotIn(List<BigDecimal> values) {
+            addCriterion("full_send_amount not in", values, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("full_send_amount between", value1, value2, "fullSendAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFullSendAmountNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("full_send_amount not between", value1, value2, "fullSendAmount");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,11 +1,13 @@
 package com.chengyu.core.service.shop.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.TypeReference;
 import com.chengyu.core.domain.CommonConstant;
 import com.chengyu.core.domain.form.ShopSearchForm;
+import com.chengyu.core.domain.result.ShopDataResult;
 import com.chengyu.core.exception.ServiceException;
 import com.chengyu.core.mapper.*;
 import com.chengyu.core.model.*;
@@ -19,7 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @title  店铺接口
@@ -51,6 +56,10 @@ public class ShopServiceImpl implements ShopService {
 	private MemberService memberService;
 	@Autowired
 	private ShopServiceService shopServiceService;
+	@Autowired
+	private PmsGoodsSkuMapper goodsSkuMapper;
+	@Autowired
+	private OmsOrderMapper orderMapper;
 
 	@Override
 	public List<UmsShop> getShopList(ShopSearchForm form, Integer page, Integer pageSize) {
@@ -145,5 +154,39 @@ public class ShopServiceImpl implements ShopService {
 	public UmsMember getMemberByShopId(Integer shopId) {
 		UmsShop shop = this.getShopById(shopId);
 		return memberService.getMemberById(shop.getMemberId());
+	}
+
+	@Override
+	public List<ShopDataResult> getShopDataList(ShopSearchForm form, Integer page, Integer pageSize) {
+		List<UmsShop> list = this.getShopList(form, page, pageSize);
+		if(CollectionUtil.isEmpty(list)) {
+			return new ArrayList<>();
+		}
+		List<ShopDataResult> shopDataList = new ArrayList<>();
+		for(UmsShop shop : list) {
+			ShopDataResult result = new ShopDataResult();
+			BeanUtil.copyProperties(shop, result);
+			//会员数、商品数、SKU数、总订单额、订单笔数
+			PmsGoodsExample goodsExample = new PmsGoodsExample();
+			goodsExample.createCriteria().andShopIdEqualTo(shop.getId());
+			List<PmsGoods> goodsList = goodsMapper.selectByExample(goodsExample);
+			result.setGoodsNum(goodsList.size());
+
+			if(result.getGoodsNum() == 0) {
+				result.setGoodsSkuNum(0L);
+			}else {
+				PmsGoodsSkuExample skuExample = new PmsGoodsSkuExample();
+				skuExample.createCriteria().andGoodsIdIn(goodsList.stream().map(PmsGoods::getId).collect(Collectors.toList()));
+				result.setGoodsSkuNum(goodsSkuMapper.countByExample(skuExample));
+			}
+
+			OmsOrderExample orderExample = new OmsOrderExample();
+			orderExample.createCriteria().andShopIdEqualTo(shop.getId()).andStatusIn(CollectionUtil.newArrayList(1,2,3));
+			List<OmsOrder> orderList = orderMapper.selectByExample(orderExample);
+			result.setOrderNum(orderList.size());
+			result.setBusinessAmount(orderList.stream().map(OmsOrder::getPayPrice).reduce(BigDecimal.ZERO,BigDecimal::add));
+			shopDataList.add(result);
+		}
+		return shopDataList;
 	}
 }

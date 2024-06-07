@@ -2,6 +2,7 @@ package com.chengyu.core.controller.walk;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.TypeReference;
+import com.chengyu.core.component.DemoStationForbid;
 import com.chengyu.core.component.OperationLog;
 import com.chengyu.core.controller.AdminBaseController;
 import com.chengyu.core.domain.CommonConstant;
@@ -53,6 +54,7 @@ public class WalkTrendsController extends AdminBaseController {
 	}
 
 
+	@DemoStationForbid
 	@OperationLog
 	@ApiOperation(value = "删除动态")
 	@ResponseBody

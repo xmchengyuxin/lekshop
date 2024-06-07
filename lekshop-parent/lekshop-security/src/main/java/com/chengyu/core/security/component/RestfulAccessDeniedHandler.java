@@ -1,21 +1,17 @@
 package com.chengyu.core.security.component;
 
-import java.io.IOException;
+import cn.hutool.json.JSONUtil;
+import com.chengyu.core.entity.CommonResult;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
-
-import com.chengyu.core.entity.CommonResult;
-
-import cn.hutool.json.JSONUtil;
+import java.io.IOException;
 
 /**
  * 自定义返回结果：没有权限访问时
- * Created by macro on 2018/4/26.
  */
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler{
     @Override

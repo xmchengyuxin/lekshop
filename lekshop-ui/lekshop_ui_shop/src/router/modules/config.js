@@ -9,14 +9,15 @@ const configRouter = {
   name: 'config',
   meta: {
     title: '店铺配置',
-    icon: 'order-setting'
+    icon: 'order-setting',
+    roles: ['config:shop']
   },
   children: [
 		{
 		  path: 'config',
 		  component: () => import('@/views/config/shop/index'),
 		  name: 'shopConfig',
-		  meta: { title: '店铺配置', icon:'order-setting', role: ['admin'] }
+		  meta: { title: '店铺配置', icon:'order-setting', roles: ['config:shop'] }
 		},
   ]
 }

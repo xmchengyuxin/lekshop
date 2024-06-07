@@ -173,6 +173,32 @@
       </el-col>
     </el-row> -->
 
+   <el-dialog
+     title="Java免费开源商城"
+     :visible.sync="showTips"
+     width="40%"
+     center>
+     <p class="margin-t10">1. 该项目已完全开源,不留后门,不留核心代码,喜欢的朋友帮忙git上点个star即可</p>
+     <p class="margin-t10">2.
+       <a class="link-type margin-r10" href="https://github.com/xmchengyuxin/lekshop" target="_blank">Github</a>
+       <a class="link-type margin-r10" href="https://gitee.com/chengyuwb/lekshop" target="_blank">Gitee</a>
+       <a class="link-type" href="https://www.lekshop.cn/" target="_blank">官网</a>
+     </p>
+     <p class="margin-t10">3. 如果需要商用或者有问题需要交流, 可以添加我的企业微信
+     </p>
+     <p class="margin-t10" style="margin-left: 10px;">
+      <el-image
+          style="height: 150px"
+          src="https://www.lekshop.cn/wp-content/uploads/2023/05/企业微信.jpg">
+        </el-image>
+     </p>
+     <p class="margin-t10">4. 目前这套没有买家pc端,但是其实已经开发一半了,因为种种原因停工,希望以后有机会可以开发完再开源出来</p>
+     <p class="margin-t10">5. 千万不要拿此项目做违法犯罪的事情,违法必究!!!</p>
+   
+   </el-dialog>
+   
+
+
     <audio src="https://qiniuvideo.wurun.net/appoint_order.wav" id="audio-tip"></audio>
     <audio src="https://qiniuvideo.wurun.net/order_sound_exception.ogg" id="audio-exception"></audio>
 
@@ -181,7 +207,7 @@
 
 <script>
 import {countGoods, getOrderAddList, countNumber, getGoodsSellList, getLoginInfo} from '@/api/index'
-import { getShop } from '@/api/shop'
+import { getShopDetail } from '@/api/shop'
 import PanThumb from '@/components/PanThumb'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
@@ -249,10 +275,12 @@ export default {
       loginData:{},
       platformIncome: 0,
       goodsSellList: [],
-      shop: {}
+      shop: {},
+      showTips: true
     }
   },
 	created() {
+    // this.centerDialogVisible = true;
 	  this.getInfo()
 	},
   methods: {
@@ -268,7 +296,7 @@ export default {
         this.loginData = result
       })
 
-      getShop().then(response => {
+      getShopDetail().then(response => {
         this.shop = response.data
       })
 
