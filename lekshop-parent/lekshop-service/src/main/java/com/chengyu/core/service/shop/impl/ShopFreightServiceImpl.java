@@ -121,7 +121,7 @@ public class ShopFreightServiceImpl implements ShopFreightService {
 		if(StringUtils.isNotBlank(provinceCode) || StringUtils.isNotBlank(cityCode)){
 			//判断是否在特殊地区运费里面
 			UmsShopFreightTemplateAreaExample example = new UmsShopFreightTemplateAreaExample();
-			example.createCriteria().andTemplateIdEqualTo(freightId).andProvinceCodeEqualTo(provinceCode).andCityCodeIsNull();
+			example.createCriteria().andTemplateIdEqualTo(freightId).andProvinceCodeEqualTo(provinceCode).andCityEqualTo("全部");
 			List<UmsShopFreightTemplateArea> areaList = shopFreightTemplateAreaMapper.selectByExample(example);
 			if(CollectionUtil.isNotEmpty(areaList)){
 				UmsShopFreightTemplateArea area = areaList.get(0);
